@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Listen to my music on Philipp Leppert</title>
+    <link>https://philippleppert.de/music/</link>
+    <description>Recent content in Listen to my music on Philipp Leppert</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 21 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://philippleppert.de/music/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Electronic</title>
+      <link>https://philippleppert.de/music/electronic/</link>
+      <pubDate>Sat, 21 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/music/electronic/</guid>
+      <description>A collection of my favorite compositions related to the electronic music genre.</description>
+    </item>
+    
+    <item>
+      <title>Hip-hop</title>
+      <link>https://philippleppert.de/music/hip-hop/</link>
+      <pubDate>Sat, 21 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/music/hip-hop/</guid>
+      <description>A collection of my favorite compositions related to the more traditional hip-hop music genre.</description>
+    </item>
+    
+    <item>
+      <title>Trap</title>
+      <link>https://philippleppert.de/music/trap/</link>
+      <pubDate>Sat, 21 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/music/trap/</guid>
+      <description>A collection of my favorite compositions related to the trap music genre.</description>
+    </item>
+    
+  </channel>
+</rss>

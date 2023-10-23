@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.118.2">
+<title>Flurstücke visualisieren | Philipp Leppert</title>
+
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="My homepage">
+
+
+<meta property="og:site_name" content="Philipp Leppert">
+<meta property="og:title" content="Flurstücke visualisieren | Philipp Leppert">
+<meta property="og:description" content="My homepage" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://philippleppert.de/blog/flurstuecke-visualisieren/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="https://philippleppert.de/blog/flurstuecke-visualisieren/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://philippleppert.de/blog/flurstuecke-visualisieren/featured.png" >
+    
+    
+  <meta itemprop="name" content="Flurstücke visualisieren">
+<meta itemprop="description" content="Wie kann man mit R einfach Flurstücke kartieren?"><meta itemprop="datePublished" content="2021-10-11T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-10-11T00:00:00+00:00" />
+<meta itemprop="wordCount" content="908"><meta itemprop="image" content="https://philippleppert.de/blog/flurstuecke-visualisieren/featured.png">
+<meta itemprop="keywords" content="" />
+  
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.c58592178c2d9fef4fa6c608d93927a9187d53faa34b2e7c9e8c6e6cf370c83f.css" integrity="sha256-xYWSF4wtn&#43;9PpsYI2TknqRh9U/qjSy58noxubPNwyD8=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.b2cad19798d2e5451244dfcd623848782a1de625dac7e4d6d6e5cb542c993994.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://philippleppert.de/" title="Home">
+      <span class="f4 fw7">Philipp Leppert</span>
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Read my blog">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/music/" title="Listen to my music">Music</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tutorials/" title="Browse my tutorials">Tutorials</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Flurstücke visualisieren</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Philipp Leppert in <a href="https://philippleppert.de/categories/r">R</a>  <a href="https://philippleppert.de/categories/kartierung">Kartierung</a> </p>
+        <p class="f7 db mv0 ttu">October 11, 2021</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>Benötigte R-Pakete:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">library</span>(tidyverse)
+</span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(sf)
+</span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(ggsn)
+</span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(ggmap)
+</span></span></code></pre></div>
+
+
+
+<h2 id="datenbeschaffung"><strong>Datenbeschaffung</strong>
+  <a href="#datenbeschaffung"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Digitalisierung sei Dank muss man heute nicht mehr auf das Grundbuchamt um sich über Bodenrichtwerte und Flurstücke zu informieren. Die meisten Bundesländer bieten dafür GIS-Anwendungen an, mit denen man interaktiv das Land erkunden kann. In Thüringen funktioniert das z.B. mit 
+<a href="https://thueringenviewer.thueringen.de/thviewer/boris.html#" target="_blank" rel="noopener">BORIS-TH</a>. Je weiter man in die Karte hereinzoomt, um so detaillierte Informationen zu den Flurstücken werden eingeblendet. Dennoch vermisse ich in dieser Darstellung die Nutzungsart eines Flurstücks. Also ob es sich bei Flächen, die nicht als Bauland ausgewiesen sind, z.B. um Acker- oder Grünland handelt. Daher kam mir die Idee selbst so eine Karte mit R zu erstellen.</p>
+<p>Auf der Webseite 
+<a href="https://www.geoportal-th.de/de-de/Downloadbereiche/Download-Offene-Geodaten-Th%C3%BCringen/Download-ALKIS-flurweise" target="_blank" rel="noopener">Geodatenportal Thüringen</a> kann man sich Daten aus dem <em>Amtlichen Liegenschaftskataster-Informationssystem (ALKIS)</em> (wer hat sich diese tollen Akronyme eigentlich ausgedacht?!) herunterladen. In der .zip Datei gibt es mehrere sog. <em>Shapefiles</em>, in denen Geometriedaten gespeichert sind. Für meine Karte benötige ich die Dateien <code>3438-000_flurstueck.shp</code> und <code>3438-000_nutzungFlurstueck.shp</code>. Die erste Datei enthält Angaben zu den Grenzen der jeweiligen Flurstücke in der gewählten Gemarkung und der zweite Datensatz enthält Angaben zur Nutzungsart der Flurstücke. Mit der Funktion <code>st_read()</code> aus dem R-Paket <code>sf</code> ist das Einlesen trivial.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>flurstuecke <span style="color:#666">&lt;-</span> <span style="color:#06287e">st_read</span>(<span style="color:#4070a0">&#34;3438-000_flurstueck.shp&#34;</span>)
+</span></span><span style="display:flex;"><span>nutzung <span style="color:#666">&lt;-</span> <span style="color:#06287e">st_read</span>(<span style="color:#4070a0">&#34;3438-000_nutzungFlurstueck.shp&#34;</span>)
+</span></span></code></pre></div>
+
+
+
+<h2 id="datenaufbereitung"><strong>Datenaufbereitung</strong>
+  <a href="#datenaufbereitung"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Die eingelesenen Shapefiles sehen bis auf die Spalte <code>geometry</code> wie ein gewöhnlicher Datensatz aus. Jede Zeile repräsentiert ein Flurstück, welches über die Spalte <code>flurstnr</code> identifiziert werden kann. In der Spalte <code>geometry</code> befinden sich jedoch eine ganze Menge Informationen: nämlich wie ein Flurstück abzugrenzen ist. In einer Zeile dieser Spalte findet man meist mehrere Listenelemente, die so verschachtelt sind, dass sie in zwei Dimensionen dargestellt werden können. Eine Liste stellt hier ein sog. <em>Polygon</em> dar.</p>
+<p>Die <code>geometry</code> Spalte bringt einige Eigenheiten mit sich, bspw. bei der Anwendung von Aggregationsfunktionen wie <code>summarise()</code> und <code>group_by()</code> aus dem R-Paket <code>dplyr</code>. Möchte ich überprüfen, ob jedes Flurstück tatsächlich nur ein mal im Datensatz vorkommt, muss ich zunächst mit der Funktion <code>st_set_geometry()</code> diese Spalte aus dem Datensatz entfernen.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>checkData <span style="color:#666">&lt;-</span> <span style="color:#06287e">st_set_geometry</span>(flurstuecke, <span style="color:#007020;font-weight:bold">NULL</span>) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>checkData <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(flurstnr) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarise</span>(cases <span style="color:#666">=</span> <span style="color:#06287e">n</span>()) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(cases <span style="color:#666">&gt;</span> <span style="color:#40a070">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">## # A tibble: 0 x 2</span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">## # ... with 2 variables: flurstnr &lt;chr&gt;, cases &lt;int&gt;</span>
+</span></span></code></pre></div><p>Ich habe mir eine fiktive Liste von Flurstücken in der Gemarkung erstellt, die ich auf einer Karte hervorheben möchte. Hierzu lege ich die Spalte <code>indikator</code> an.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>geoData <span style="color:#666">&lt;-</span> 
+</span></span><span style="display:flex;"><span>  flurstuecke <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(indikator <span style="color:#666">=</span> <span style="color:#06287e">case_when</span>( <span style="color:#60a0b0;font-style:italic"># Flurstücke zuweisen</span>
+</span></span><span style="display:flex;"><span>    flurstnr <span style="color:#666">%in%</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;874&#34;</span>,<span style="color:#4070a0">&#34;581&#34;</span>,<span style="color:#4070a0">&#34;462/2&#34;</span>,<span style="color:#4070a0">&#34;454&#34;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#4070a0">&#34;486&#34;</span>,<span style="color:#4070a0">&#34;594/6&#34;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#4070a0">&#34;602/2&#34;</span>,<span style="color:#4070a0">&#34;914/2&#34;</span>,<span style="color:#4070a0">&#34;831/2&#34;</span>,<span style="color:#4070a0">&#34;906/6&#34;</span>) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;von Interesse&#34;</span>,
+</span></span><span style="display:flex;"><span>    flurstnr <span style="color:#666">==</span> <span style="color:#4070a0">&#34;881/22&#34;</span> <span style="color:#666">~</span> <span style="color:#4070a0">&#34;im Besitz&#34;</span>)) 
+</span></span></code></pre></div><p>Zum Schluss füge ich für jedes Flurstück den geometrischen Schwerpunkt (<em>Centroid</em>) hinzu, welcher eine Art Mittelpunkt des Polygons (Flurstücks) darstellt. Diesen Schwerpunkt kann ich später bspw. für das Hinzufügen von Labels der Flurstücke verwenden. Die Spalte <code>geometry</code> gibt lediglich Auskunft über die Grenzen bzw. Form des Flurstücks. Nach Anwendung der Funktion <code>st_centroid()</code> findet man den geometrischen Schwerpunkt eines Flurstücks durch die Spalten <code>X</code> und <code>Y</code>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>geoData <span style="color:#666">&lt;-</span> <span style="color:#06287e">cbind</span>(geoData, <span style="color:#06287e">st_coordinates</span>(<span style="color:#06287e">st_centroid</span>(geoData))) 
+</span></span></code></pre></div>
+
+
+
+<h2 id="datenanalyse"><strong>Datenanalyse</strong>
+  <a href="#datenanalyse"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Nun erstelle ich eine Karte der Gemarkung Friedelshausen, die sich aus den Grenzen der einzelnen Flurstücke ergibt. Im R-Paket <code>ggplot2</code> gibt es die Funktion <code>geom_sf()</code> mit welcher sich die Informationen in der Spalte <code>geometry</code> visualisieren lassen. Mit der Funktion <code>geom_label_repel()</code> weise ich den einzelnen Flurstücken ihre Bezeichnung zu (hier wird der geometrische Schwerpunkt verwendet). Die Flurstücke von Interesse sind farblich hervorgehoben. Damit man sich auf dem Kartenausschnitt besser zurechtfindet, füge ich eine Kompassrose mit der Funktion <code>north()</code> aus dem R-Paket <code>ggsn</code> ein.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>() <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_sf</span>(data <span style="color:#666">=</span> geoData, <span style="color:#06287e">aes</span>(fill <span style="color:#666">=</span> indikator)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  ggrepel<span style="color:#666">::</span><span style="color:#06287e">geom_label_repel</span>(data <span style="color:#666">=</span> <span style="color:#06287e">filter</span>(geoData, <span style="color:#666">!</span><span style="color:#06287e">is.na</span>(indikator)), 
+</span></span><span style="display:flex;"><span>            <span style="color:#06287e">aes</span>(X, Y, label <span style="color:#666">=</span> flurstnr), size <span style="color:#666">=</span> <span style="color:#40a070">3</span>, min.segment.length <span style="color:#666">=</span> <span style="color:#40a070">0</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_fill_manual</span>(values <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;#66CC00&#34;</span>, <span style="color:#4070a0">&#34;#FFCC33&#34;</span>,<span style="color:#4070a0">&#34;#CCCCC&#34;</span>),
+</span></span><span style="display:flex;"><span>                    na.translate <span style="color:#666">=</span> F) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>       fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>       subtitle <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Gemarkung Friedelshausen, Flur 000&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme_bw</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  ggsn<span style="color:#666">::</span><span style="color:#06287e">north</span>(geoData, location <span style="color:#666">=</span> <span style="color:#4070a0">&#34;topleft&#34;</span>, scale <span style="color:#666">=</span> <span style="color:#40a070">0.2</span>, symbol <span style="color:#666">=</span> <span style="color:#40a070">3</span>)
+</span></span></code></pre></div><img src="https://philippleppert.de/blog/flurstuecke-visualisieren/index_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" />
+<hr>
+<p>Nun ergänze ich die Nutzungsart der Flurstücke, die mir beim Suchen mit der GIS-Anwendung <em>BORIS-TH</em> fehlten. Hier erkennt man nun, ob es sich bei einem Flurstück um Ackerland, Grünland, Wald usw. handelt.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>() <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_sf</span>(data <span style="color:#666">=</span> nutzung, <span style="color:#06287e">aes</span>(fill <span style="color:#666">=</span> bez)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  ggrepel<span style="color:#666">::</span><span style="color:#06287e">geom_label_repel</span>(data <span style="color:#666">=</span> <span style="color:#06287e">filter</span>(geoData, <span style="color:#666">!</span><span style="color:#06287e">is.na</span>(indikator)), 
+</span></span><span style="display:flex;"><span>                            <span style="color:#06287e">aes</span>(X, Y, label <span style="color:#666">=</span> flurstnr), size <span style="color:#666">=</span> <span style="color:#40a070">3</span>, min.segment.length <span style="color:#666">=</span> <span style="color:#40a070">0</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>       fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>       subtitle <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Gemarkung Friedelshausen, Flur 000&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme_bw</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  ggsn<span style="color:#666">::</span><span style="color:#06287e">north</span>(geoData, location <span style="color:#666">=</span> <span style="color:#4070a0">&#34;topleft&#34;</span>, scale <span style="color:#666">=</span> <span style="color:#40a070">0.2</span>, symbol <span style="color:#666">=</span> <span style="color:#40a070">3</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme_bw</span>()
+</span></span></code></pre></div><img src="https://philippleppert.de/blog/flurstuecke-visualisieren/index_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
+<hr>
+<p>Zum Schluss möchte ich die Flurstücke auf einer Satellitenkarte darstellen. Zuerst muss der relevante Kartenausschnitt mit der Funktion <code>get_map()</code> aus dem R-Paket <code>ggmap</code> ausgewählt werden.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>map <span style="color:#666">&lt;-</span> <span style="color:#06287e">get_map</span>(<span style="color:#4070a0">&#34;Friedelshausen&#34;</span>, 
+</span></span><span style="display:flex;"><span>               maptype <span style="color:#666">=</span> <span style="color:#4070a0">&#34;satellite&#34;</span>, 
+</span></span><span style="display:flex;"><span>               zoom <span style="color:#666">=</span> <span style="color:#40a070">14</span>, source <span style="color:#666">=</span> <span style="color:#4070a0">&#34;google&#34;</span>)
+</span></span></code></pre></div><p>Leider lassen sich die Flurstücke hier nicht so einfach in die Karte einzeichnen wie bei den vorherigen Karten. Durch unterschiedliche Koordinatenreferenzsystemen (<em>CRS</em>) zwischen der Satellitenkarte und den zugrundeliegenden Daten der Flurstücke würden die Flurstücksgrenzen nicht korrekt auf der Karte eingezeichnet werden. Das CRS der Satellitenkarte ist vom Typ <em>WGS 1984 (= EPSG: 4326)</em>, während die Flurstücke vom Typ <em>EPSG:3857</em> sind.</p>
+<p>Die untenstehende Funktion ermöglicht das Anwenden von <code>geom_sf()</code> auf die Satellitenkarte. 
+<a href="https://stackoverflow.com/questions/47749078/how-to-put-a-geom-sf-produced-map-on-top-of-a-ggmap-produced-raster" target="_blank" rel="noopener">Hier</a> findet man die Funktion sowie weiterführende Informationen.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>ggmap_bbox <span style="color:#666">&lt;-</span> <span style="color:#06287e">function</span>(map) {
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">if </span>(<span style="color:#666">!</span><span style="color:#06287e">inherits</span>(map, <span style="color:#4070a0">&#34;ggmap&#34;</span>)) <span style="color:#06287e">stop</span>(<span style="color:#4070a0">&#34;map must be a ggmap object&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  map_bbox <span style="color:#666">&lt;-</span> <span style="color:#06287e">setNames</span>(<span style="color:#06287e">unlist</span>(<span style="color:#06287e">attr</span>(map, <span style="color:#4070a0">&#34;bb&#34;</span>)), 
+</span></span><span style="display:flex;"><span>                       <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;ymin&#34;</span>, <span style="color:#4070a0">&#34;xmin&#34;</span>, <span style="color:#4070a0">&#34;ymax&#34;</span>, <span style="color:#4070a0">&#34;xmax&#34;</span>))
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  bbox_3857 <span style="color:#666">&lt;-</span> <span style="color:#06287e">st_bbox</span>(<span style="color:#06287e">st_transform</span>(<span style="color:#06287e">st_as_sfc</span>(<span style="color:#06287e">st_bbox</span>(map_bbox, crs <span style="color:#666">=</span> <span style="color:#40a070">4326</span>)), <span style="color:#40a070">3857</span>))
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">attr</span>(map, <span style="color:#4070a0">&#34;bb&#34;</span>)<span style="color:#666">$</span>ll.lat <span style="color:#666">&lt;-</span> bbox_3857[<span style="color:#4070a0">&#34;ymin&#34;</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">attr</span>(map, <span style="color:#4070a0">&#34;bb&#34;</span>)<span style="color:#666">$</span>ll.lon <span style="color:#666">&lt;-</span> bbox_3857[<span style="color:#4070a0">&#34;xmin&#34;</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">attr</span>(map, <span style="color:#4070a0">&#34;bb&#34;</span>)<span style="color:#666">$</span>ur.lat <span style="color:#666">&lt;-</span> bbox_3857[<span style="color:#4070a0">&#34;ymax&#34;</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">attr</span>(map, <span style="color:#4070a0">&#34;bb&#34;</span>)<span style="color:#666">$</span>ur.lon <span style="color:#666">&lt;-</span> bbox_3857[<span style="color:#4070a0">&#34;xmax&#34;</span>]
+</span></span><span style="display:flex;"><span>  map
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Die fertige Satellitenkarte sieht so aus:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>geoDataSatellite <span style="color:#666">&lt;-</span> <span style="color:#06287e">ggmap_bbox</span>(map)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>geoData_3857 <span style="color:#666">&lt;-</span> <span style="color:#06287e">st_transform</span>(geoData, <span style="color:#40a070">3857</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">ggmap</span>(geoDataSatellite) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">coord_sf</span>(crs <span style="color:#666">=</span> <span style="color:#06287e">st_crs</span>(<span style="color:#40a070">3857</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_sf</span>(data <span style="color:#666">=</span> <span style="color:#06287e">filter</span>(geoData_3857, <span style="color:#666">!</span><span style="color:#06287e">is.na</span>(indikator)), 
+</span></span><span style="display:flex;"><span>          color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;red&#34;</span>, size <span style="color:#666">=</span> <span style="color:#40a070">1</span>, alpha<span style="color:#666">=</span><span style="color:#40a070">0.1</span>, inherit.aes <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>       subtitle <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Gemarkung Friedelshausen, Flur 000&#34;</span>)
+</span></span></code></pre></div><img src="https://philippleppert.de/blog/flurstuecke-visualisieren/index_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" />
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">October 11, 2021</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">5 minute read, 908 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="https://philippleppert.de/categories/r">R</a>  <a href="https://philippleppert.de/categories/kartierung">Kartierung</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://philippleppert.de/blog/dynamik-bu/">&larr; Dynamik in der Berufsunfähigkeitsversicherung</a>
+  
+  
+  
+</div>
+
+      </footer>
+    </article>
+    
+      
+<div class="post-comments pa0 pa4-l mt4">
+
+</div>
+
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2023 Philipp Leppert
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

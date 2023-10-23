@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Philipp Leppert</title>
+    <link>https://philippleppert.de/categories/</link>
+    <description>Recent content in Categories on Philipp Leppert</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 18 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://philippleppert.de/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Analyse</title>
+      <link>https://philippleppert.de/categories/analyse/</link>
+      <pubDate>Fri, 18 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/categories/analyse/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Finanzen</title>
+      <link>https://philippleppert.de/categories/finanzen/</link>
+      <pubDate>Fri, 18 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/categories/finanzen/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>https://philippleppert.de/categories/r/</link>
+      <pubDate>Fri, 18 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/categories/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kartierung</title>
+      <link>https://philippleppert.de/categories/kartierung/</link>
+      <pubDate>Mon, 11 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/categories/kartierung/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

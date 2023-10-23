@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.118.2">
+<title>Dynamik in der Berufsunfähigkeitsversicherung | Philipp Leppert</title>
+
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="My homepage">
+
+
+<meta property="og:site_name" content="Philipp Leppert">
+<meta property="og:title" content="Dynamik in der Berufsunfähigkeitsversicherung | Philipp Leppert">
+<meta property="og:description" content="My homepage" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://philippleppert.de/blog/dynamik-bu/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="https://philippleppert.de/blog/dynamik-bu/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://philippleppert.de/blog/dynamik-bu/featured.png" >
+    
+    
+  <meta itemprop="name" content="Dynamik in der Berufsunfähigkeitsversicherung">
+<meta itemprop="description" content="Welchen Einfluss hat die Dynamikanpassung auf die Entwicklung der versichreten BU-Rente?"><meta itemprop="datePublished" content="2022-02-18T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-02-18T00:00:00+00:00" />
+<meta itemprop="wordCount" content="872"><meta itemprop="image" content="https://philippleppert.de/blog/dynamik-bu/featured.png">
+<meta itemprop="keywords" content="" />
+  
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.c58592178c2d9fef4fa6c608d93927a9187d53faa34b2e7c9e8c6e6cf370c83f.css" integrity="sha256-xYWSF4wtn&#43;9PpsYI2TknqRh9U/qjSy58noxubPNwyD8=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.b2cad19798d2e5451244dfcd623848782a1de625dac7e4d6d6e5cb542c993994.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://philippleppert.de/" title="Home">
+      <span class="f4 fw7">Philipp Leppert</span>
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Read my blog">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/music/" title="Listen to my music">Music</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tutorials/" title="Browse my tutorials">Tutorials</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Dynamik in der Berufsunfähigkeitsversicherung</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Philipp Leppert in <a href="https://philippleppert.de/categories/r">R</a>  <a href="https://philippleppert.de/categories/finanzen">Finanzen</a>  <a href="https://philippleppert.de/categories/analyse">Analyse</a> </p>
+        <p class="f7 db mv0 ttu">February 18, 2022</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <script src="https://philippleppert.de/blog/dynamik-bu/index_files/kePrint/kePrint.js"></script>
+<script src="https://philippleppert.de/blog/dynamik-bu/index_files/kePrint/kePrint.js"></script>
+<script src="https://philippleppert.de/blog/dynamik-bu/index_files/kePrint/kePrint.js"></script>
+<p>Benötigte R-Pakete:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">library</span>(tidyverse)
+</span></span></code></pre></div>
+
+
+
+<h2 id="datenbeschaffung"><strong>Datenbeschaffung</strong>
+  <a href="#datenbeschaffung"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Anfang 2017 hatte ich eine Berufsunfähigkeitsversicherung abgeschlossen bei der eine jährliche Anpassung zum Inflationsausgleich (sog. <strong>Dynamik</strong>) von 6 % vereinbart ist. Da ich damals gerade meinen ersten Job nach dem Studium angetreten hatte, habe ich mich bei Abschluss der Versicherung relativ wenig mit den Versicherungsbedingungen auseinandergesetzt. Die Möglichkeit die Rente im Zeitverlauf dynamisch anzupassen zu können, erschien mir recht sinnvoll, da ich ein etwas geringeres Rentenniveau zur Absicherung gewählt hatte, als in Relation zum Nettoeinkommen angeraten wird (bspw. 
+<a href="https://www.dieversicherer.de/versicherer/beruf-freizeit/news/berufsunfaehigkeit-ursachen-33756" target="_blank" rel="noopener">hier</a> ca. 70-80 %).</p>
+<p>Im Angebot meines Versicherers fand sich zur Dynamikanpassung der folgende Hinweis:</p>
+<blockquote>
+<p>Durch den vereinbarten Dynamikplan mit planmäßiger Beitragserhöhung erhöhen sich die angegeben Leistungen zusätzlich.</p>
+</blockquote>
+<p>Ohne mir weiter darüber Gedanken zu machen, hatte ich damals angenommen, dass sich die Beitragserhöhung von 6 % proportional zur Rentenanpassung verhält - d.h. 6 % Beitragserhöhung entspricht 6 % Rentenerhöhung. Sollten mir die Beitrage irgendwann zu hoch erscheinen oder ich ein Rentenniveau erreichen, welches ich als ausreichend erachte, so würde ich der Dynamik widersprechen. Das geht bei meiner Versicherung bis zu zwei Mal hintereinander.</p>
+<p>Im ersten Jahr der Dynamikanpassung stieg mein Beitrag um 6 % an und die versicherte BU-Rente um 6,026%. Damit war meine Vermutung zunächst bestätigt, dass sich die Anpassung ungefähr proportional verhält. In 2019 betrug der Anstieg der Rente jedoch nur noch 5,895 % in Bezug auf 2018, woraufhin ich den Berater angerufen habe, der mir die Versicherung vermittelt hatte. Dieser war zunächst sehr amüsiert darüber, dass ich mir die Arbeit mache die Dynamikanpassung nachzurechnen und versicherte mir, dass es bei den Versicherern immer mal zu <em>Rundungsabweichungen</em> kommen könne und davon auszugehen ist, dass im nächsten Jahr die Anpassung wieder bei etwa 6 % liegt. Nun ja, 2020 betrug der Rentenzuwachs dann nur noch 5,764%. Zum Dynamikplan meiner Versicherung gibt es separate AVB, die ich nicht mehr finden konnte (oder möglicherweise auch  bei Versicherungsabschluss nicht erhalten hatte). Darin findet sich dann folgende Angabe:</p>
+<blockquote>
+<p>Die Versicherungsleistungen erhöhen sich nicht im gleichen Verhältnis wie die Tarifbeiträge. Die Erhöhung der Versicherungsleistungen errechnet sich nach dem am Erhöhungstermin erreichten Alter der versicherten Person, der restlichen Beitragszahlungsdauer und einem eventuell vereinbarten Beitragszuschlag.</p>
+</blockquote>
+<p>Obwohl damit der Sachverhalt für mich geklärt war, wollte ich trotzdem versuchen nachzuvollziehen, mit welchen Abschlägen auf die Anpassung der Rentenerhöhung ich in Zukunft rechnen kann.</p>
+
+
+
+
+<h2 id="datenaufbereitung"><strong>Datenaufbereitung</strong>
+  <a href="#datenaufbereitung"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Da ich in diesem Beitrag keine Empfehlung abgeben möchte, wie hoch eine monatliche BU-Rente mindestens ausfallen sollte, da dies sehr von den persönlichen Verhältnissen und dem ausgeübten Beruf abhängt, habe ich fiktive Daten generiert, bei denen jedoch die prozentuale Anpassung der Rente pro Jahr mit meinen tatsächlichen Versicherungsdaten übereinstimmt.</p>
+<p>Im Jahr 2017 wurde daher eine fiktive monatliche BU-Rente von 1250,00 € bei einem monatlichen Beitrag von 65,24 € versichert. In den darauffolgenden Jahren erhöht sich der monatliche Beitrag um jeweils 6 % im Vergleich zum Vorjahresniveau. Die prozentuale Erhöhung der BU-Rente ist in der Spalte <code>delta_rente</code> hinterlegt.</p>
+<br>
+<table class="table table-responsive" style="font-size: 11px; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> jahr </th>
+   <th style="text-align:right;"> beitrag </th>
+   <th style="text-align:right;"> rente </th>
+   <th style="text-align:right;"> delta_rente </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2017 </td>
+   <td style="text-align:right;"> 65.24 </td>
+   <td style="text-align:right;"> 1250.00 </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2018 </td>
+   <td style="text-align:right;"> 69.15 </td>
+   <td style="text-align:right;"> 1325.33 </td>
+   <td style="text-align:right;"> 0.06026 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2019 </td>
+   <td style="text-align:right;"> 73.30 </td>
+   <td style="text-align:right;"> 1403.45 </td>
+   <td style="text-align:right;"> 0.05895 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2020 </td>
+   <td style="text-align:right;"> 77.70 </td>
+   <td style="text-align:right;"> 1484.35 </td>
+   <td style="text-align:right;"> 0.05764 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2021 </td>
+   <td style="text-align:right;"> 82.36 </td>
+   <td style="text-align:right;"> 1568.09 </td>
+   <td style="text-align:right;"> 0.05641 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2022 </td>
+   <td style="text-align:right;"> 87.31 </td>
+   <td style="text-align:right;"> 1654.90 </td>
+   <td style="text-align:right;"> 0.05536 </td>
+  </tr>
+</tbody>
+</table>
+<p>Um abschätzen zu können, wie sich die Reduzierung der Anpassung der Rente fortsetzt, habe ich zudem  für jedes Jahr die Differenz zwischen der prozentualen Anpassung der BU-Rente zu berechnet. Diese Differenz wird im nächsten Abschnitt genauer analysiert.</p>
+<br>
+<table class="table table-responsive" style="font-size: 11px; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> jahr </th>
+   <th style="text-align:right;"> beitrag </th>
+   <th style="text-align:right;"> rente </th>
+   <th style="text-align:right;"> delta_rente </th>
+   <th style="text-align:right;"> differenz_delta_rente </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2017 </td>
+   <td style="text-align:right;"> 65.24 </td>
+   <td style="text-align:right;"> 1250.00 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2018 </td>
+   <td style="text-align:right;"> 69.15 </td>
+   <td style="text-align:right;"> 1325.33 </td>
+   <td style="text-align:right;"> 0.06026 </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2019 </td>
+   <td style="text-align:right;"> 73.30 </td>
+   <td style="text-align:right;"> 1403.45 </td>
+   <td style="text-align:right;"> 0.05895 </td>
+   <td style="text-align:right;"> 0.131 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2020 </td>
+   <td style="text-align:right;"> 77.70 </td>
+   <td style="text-align:right;"> 1484.35 </td>
+   <td style="text-align:right;"> 0.05764 </td>
+   <td style="text-align:right;"> 0.130 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2021 </td>
+   <td style="text-align:right;"> 82.36 </td>
+   <td style="text-align:right;"> 1568.09 </td>
+   <td style="text-align:right;"> 0.05641 </td>
+   <td style="text-align:right;"> 0.123 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2022 </td>
+   <td style="text-align:right;"> 87.31 </td>
+   <td style="text-align:right;"> 1654.90 </td>
+   <td style="text-align:right;"> 0.05536 </td>
+   <td style="text-align:right;"> 0.105 </td>
+  </tr>
+</tbody>
+</table>
+
+
+
+
+<h2 id="datenanalyse"><strong>Datenanalyse</strong>
+  <a href="#datenanalyse"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Grafisch zeigt die Entwicklung der Differenz der Rentenanpassungen in Prozentpunkten einen nicht linearen Verlauf.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(bu_daten, <span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> jahr, y <span style="color:#666">=</span> differenz_delta_rente)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_point</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Jahr&#34;</span>, y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Differenz der prozentualen Anpassung der BU-Rente zum Vorjahr&#34;</span>) 
+</span></span></code></pre></div><img src="https://philippleppert.de/blog/dynamik-bu/index_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" />
+<p>Wie setzt sich dieser Verlauf nun in 2023 und den folgenden Jahren bei Inanspruchnahme der Dynamikanpassung fort? Um dies zu ermitteln habe ich zwei lineare Regressionsmodelle aufgestellt. Beide Modelle erklären die Differenz der Rentenanpassung durch den Zeitverlauf (bzw. mein Alter). Im zweiten Modell verwende ich zusätzlich einen quadrierten Term, um einen nicht linearen Zusammenhang zu modellieren.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>model1 <span style="color:#666">&lt;-</span> <span style="color:#06287e">lm</span>(differenz_delta_rente <span style="color:#666">~</span> jahr, data <span style="color:#666">=</span> bu_daten)
+</span></span><span style="display:flex;"><span>model2 <span style="color:#666">&lt;-</span> <span style="color:#06287e">lm</span>(differenz_delta_rente <span style="color:#666">~</span> <span style="color:#06287e">poly</span>(jahr, degrees <span style="color:#666">=</span> <span style="color:#40a070">2</span>), data <span style="color:#666">=</span> bu_daten)
+</span></span></code></pre></div><p>Mit diesen Modellen können wir nun versuchen die Rentendifferenz für die künftigen Zeiträume (ab 2023) zu prognostizieren.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">tibble</span>(jahr <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">2019</span>,<span style="color:#40a070">2020</span>,<span style="color:#40a070">2021</span>,<span style="color:#40a070">2022</span>,<span style="color:#40a070">2023</span>,<span style="color:#40a070">2024</span>,<span style="color:#40a070">2025</span>),
+</span></span><span style="display:flex;"><span>       differenz_delta_rente <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">0.131</span>, <span style="color:#40a070">0.130</span>,<span style="color:#40a070">0.123</span>,<span style="color:#40a070">0.105</span>, <span style="color:#007020;font-weight:bold">NA</span>,<span style="color:#007020;font-weight:bold">NA</span>,<span style="color:#007020;font-weight:bold">NA</span>)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(fit1 <span style="color:#666">=</span> <span style="color:#06287e">predict</span>(model1, newdata <span style="color:#666">=</span> .),
+</span></span><span style="display:flex;"><span>         fit2 <span style="color:#666">=</span> <span style="color:#06287e">predict</span>(model2, newdata <span style="color:#666">=</span> .)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">pivot_longer</span>(cols <span style="color:#666">=</span> <span style="color:#666">-</span>jahr, names_to <span style="color:#666">=</span> <span style="color:#4070a0">&#34;type&#34;</span>, values_to <span style="color:#666">=</span> <span style="color:#4070a0">&#34;value&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(x<span style="color:#666">=</span>jahr, y <span style="color:#666">=</span> value, color <span style="color:#666">=</span> type)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>() <span style="color:#666">+</span> <span style="color:#06287e">geom_point</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">2019</span>,<span style="color:#40a070">2027</span>,<span style="color:#40a070">1</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_color_brewer</span>(name <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>                     palette <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Dark2&#34;</span>,
+</span></span><span style="display:flex;"><span>                     labels <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;Reale Werte&#34;</span>,<span style="color:#4070a0">&#34;Linearer Fit&#34;</span>,<span style="color:#4070a0">&#34;Quadratischer Fit&#34;</span>)
+</span></span><span style="display:flex;"><span>                     ) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Jahr&#34;</span>, y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Differenz der prozentualen Anpassung der BU-Rente zum Vorjahr&#34;</span>) 
+</span></span></code></pre></div><img src="https://philippleppert.de/blog/dynamik-bu/index_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
+<p>Man erkennt hier gut, dass das Modell mit dem quadratischen Term die tatsächlichen Werte sehr gut beschreibt. Unklar ist jedoch wie es nach 2025 weitergeht. Laut dem zweiten Modell würde die Differenz ab 2026 negativ werden, d.h. die prozentuale Anpassung würde also wieder steigen und nicht weiter abnehmen.</p>
+<p>Mit dem Modell kann ich nun die Entwicklung der monatlichen BU-Rente für die nächsten Jahre vorhersagen.</p>
+<br>
+<table class="table table-responsive" style="font-size: 11px; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> jahr </th>
+   <th style="text-align:right;"> beitrag </th>
+   <th style="text-align:right;"> rente </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2023 </td>
+   <td style="text-align:right;"> 92.55 </td>
+   <td style="text-align:right;"> 1745.19 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2024 </td>
+   <td style="text-align:right;"> 98.10 </td>
+   <td style="text-align:right;"> 1839.61 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2025 </td>
+   <td style="text-align:right;"> 103.99 </td>
+   <td style="text-align:right;"> 1939.08 </td>
+  </tr>
+</tbody>
+</table>
+<p>Ich werde diesen Artikel daher in Zukunft fortlaufend aktualisieren und ggf. mein Prognosemodell anpassen.</p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">February 18, 2022</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">5 minute read, 872 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="https://philippleppert.de/categories/r">R</a>  <a href="https://philippleppert.de/categories/finanzen">Finanzen</a>  <a href="https://philippleppert.de/categories/analyse">Analyse</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://philippleppert.de/blog/flurstuecke-visualisieren/">Flurstücke visualisieren &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      
+<div class="post-comments pa0 pa4-l mt4">
+
+</div>
+
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2023 Philipp Leppert
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Finanzen on Philipp Leppert</title>
+    <link>https://philippleppert.de/categories/finanzen/</link>
+    <description>Recent content in Finanzen on Philipp Leppert</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 18 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://philippleppert.de/categories/finanzen/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dynamik in der Berufsunfähigkeitsversicherung</title>
+      <link>https://philippleppert.de/blog/dynamik-bu/</link>
+      <pubDate>Fri, 18 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/blog/dynamik-bu/</guid>
+      <description>Welchen Einfluss hat die Dynamikanpassung auf die Entwicklung der versichreten BU-Rente?</description>
+    </item>
+    
+  </channel>
+</rss>

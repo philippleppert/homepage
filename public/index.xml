@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Philipp Leppert</title>
+    <link>https://philippleppert.de/</link>
+    <description>Recent content on Philipp Leppert</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 21 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://philippleppert.de/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Applied data analysis with R</title>
+      <link>https://philippleppert.de/tutorials/applied-data-analysis/</link>
+      <pubDate>Sat, 21 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/tutorials/applied-data-analysis/</guid>
+      <description>Tutorials for applied data analysis with R.</description>
+    </item>
+    
+    <item>
+      <title>Electronic</title>
+      <link>https://philippleppert.de/music/electronic/</link>
+      <pubDate>Sat, 21 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/music/electronic/</guid>
+      <description>A collection of my favorite compositions related to the electronic music genre.</description>
+    </item>
+    
+    <item>
+      <title>Hip-hop</title>
+      <link>https://philippleppert.de/music/hip-hop/</link>
+      <pubDate>Sat, 21 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/music/hip-hop/</guid>
+      <description>A collection of my favorite compositions related to the more traditional hip-hop music genre.</description>
+    </item>
+    
+    <item>
+      <title>Trap</title>
+      <link>https://philippleppert.de/music/trap/</link>
+      <pubDate>Sat, 21 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/music/trap/</guid>
+      <description>A collection of my favorite compositions related to the trap music genre.</description>
+    </item>
+    
+    <item>
+      <title>Dynamik in der Berufsunfähigkeitsversicherung</title>
+      <link>https://philippleppert.de/blog/dynamik-bu/</link>
+      <pubDate>Fri, 18 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/blog/dynamik-bu/</guid>
+      <description>Welchen Einfluss hat die Dynamikanpassung auf die Entwicklung der versichreten BU-Rente?</description>
+    </item>
+    
+    <item>
+      <title>Flurstücke visualisieren</title>
+      <link>https://philippleppert.de/blog/flurstuecke-visualisieren/</link>
+      <pubDate>Mon, 11 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/blog/flurstuecke-visualisieren/</guid>
+      <description>Wie kann man mit R einfach Flurstücke kartieren?</description>
+    </item>
+    
+    <item>
+      <title>License</title>
+      <link>https://philippleppert.de/license/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.de/license/</guid>
+      <description>My blog posts are released under a Creative Commons Attribution-ShareAlike 4.0 International License.</description>
+    </item>
+    
+  </channel>
+</rss>
