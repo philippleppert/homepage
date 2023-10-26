@@ -8,13 +8,13 @@ show_intro: true
 show_outro: false
 intro: |
 
-  I am currently employed as a data scientist at [IDG Institut für digitale Gesundheitsdaten RLP gGmbH](https://www.idg-rlp.de/) where I work with R shiny. I love the statistical programming language R, reading and music.
+  As a data scientist I use [shiny](https://www.rstudio.com/products/shiny/) and [shiny server](https://posit.co/products/open-source/shinyserver/) as end-to-end solution for creating and deploying dashboards. I am also interested in data engineering and data analysis topics. I'm a fan of self-study tutorials and you can find some of my own over [here](/tutorials/).
+  
+  I studied business administration and economics with a focus on statistics and statistical programming. 
 
-  I studied business administration and economics with a strong focus on statistical programming. I like creating self-study tutorials. You can find me on [GitHub](https://github.com/philippleppert). 
+  I was born in Thuringia und currently live in Mainz with my wife.
 
-  I live in Mainz with my wife.
-
-  This blog is built with [blogdown](https://github.com/rstudio/blogdown) and [Hugo](https://gohugo.io/), and deployed using [Netlify](https://www.netlify.com/). My illustrated portrait was drawn by [Liza Donnely](https://twitter.com/lizadonnelly).
+  This website is built with [blogdown](https://github.com/rstudio/blogdown) and [Hugo](https://gohugo.io/), and deployed using [Netlify](https://www.netlify.com/). My illustrated portrait was drawn by [Liza Donnely](https://twitter.com/lizadonnelly).
   
   If you liked some of the contents on this website feel free to drop me an [e-mail](mailto:philipp-leppert@posteo.de).
 
