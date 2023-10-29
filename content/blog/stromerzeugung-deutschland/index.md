@@ -1,0 +1,312 @@
+---
+title: "Stromerzeugung in Deutschland"
+date: "2020-04-05"
+format: hugo
+slug: stromerzeugung-deutschland
+categories: 
+  - R
+  - Analyse
+  - Kartierung
+summary: "Welche Energieträger werden für die Stromerzeugung in Deutschland verwendet und wo wird dieser produziert?"
+---
+
+<script src="index_files/libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+Kürzlich hat mich die ZDF-Serie [Unterleuten - Das zerrissene Dorf](https://de.wikipedia.org/wiki/Unterleuten_%E2%80%93_Das_zerrissene_Dorf) wieder einmal mit den gesellschaftlichen Hürden beim Ausbau von erneuerbaren Energien konfrontiert. Meine Generation findet erneuerbare Energien ja zumeist ganz toll. Keine CO<sub>2</sub>-Emissionen, neue Arbeitsplätze und eine Möglichkeit, die Klimaziele doch noch irgendwie zu wuppen. In *Unterleuten* sind mir einige Parallelen zu meiner südthüringischen Heimat aufgefallen. Hier gab es im letzten Jahr Proteste gegen ein Windvorranggebiet, welches den Bau von 20-30 Windkraftanlagen vorsieht. Weil es bisher kaum Windräder in der Region gibt, ist die Debatte entsprechend emotional aufgeladen. Ich hatte mich schon oft gefragt, warum das eigentlich so ist. Südthüringen ist dünn besiedelt und ziemlich strukturschwach. Ausreichend Platz für Windräder wäre wohl vorhanden.
+
+Der Widerstand organisiert sich in einer Bürgerinitiative, welche sich mit der Aussage *"Wir sind für den Schutz unserer Wildtiere und einmaligen Natur und gegen die Industrialisierung des Waldes"* positioniert. Frage: Wird der Wald nicht schon seit Hunderten von Jahren industrialisiert und wurde bzw. wird nicht auch für den Braunkohletagebau Wald gerodet (siehe jüngst die Protestaktionen im Hambacher Forst)? Gut, Letzteres passiert ja irgendwo drüben in NRW und nicht vor der eigenen Haustür. Und damit komme ich schon zu den Kernfragen dieses Artikels:
+
+-   Wo und wie wird Strom in Deutschland produziert?
+-   Wie viel Strom erzeugen wir mit erneuerbaren Energieträgern und wie hoch ist der Anteil der Windkraft?
+-   Und wo stehen dann die ganzen Windräder, wenn nicht in Südthüringen?
+
+## **Datenbeschaffung**
+
+Die Bundesnetzagentur (BNetzA) erfasst wesentliche Daten einzelner Kraftwerke in jährlich durchgeführten Monitoringerhebungen und stellt diese auf ihrer Website in einer [Kraftwerksliste](https://www.bundesnetzagentur.de/DE/Sachgebiete/ElektrizitaetundGas/Unternehmen_Institutionen/Versorgungssicherheit/Erzeugungskapazitaeten/Kraftwerksliste/kraftwerksliste-node.html) zur Verfügung. Auf den ersten Blick findet man hier nur Daten für das Jahr 2020. Via Google konnte ich auch die Kraftwerkslisten für die vorherigen Jahre bis einschließlich 2017 finden. Möglicherweise gibt es bei anderen Behörden und/oder Verbänden weiterführende Daten -- für den Anfang soll diese Datengrundlage aber ausreichen. Die Kraftwerkslisten stehen im .XLSX Format zur Verfügung und haben einen Bearbeitungsstand zwischen Februar und April des jeweiligen Jahres. Zunächst konvertiere ich die einzelnen Listen ins .CSV Format und entferne uninteressante Spalten. Eine Zeile im Datensatz repräsentiert ein Kraftwerk bzw. einen Kraftwerksblock. So stehen u.a. Informationen über den Standort, den primär verwendeten Energieträger, die Netto-Nennleistung und den Betriebsstatus des Kraftwerks zur Verfügung.
+
+## **Datenaufbereitung**
+
+Für die Datenaufbereitung greife ich ausschließlich auf die R-Paket Sammlung [tidyverse](https://www.tidyverse.org/) zurück. Zunächst lese ich mit dem Paket [readr](https://readr.tidyverse.org/) die .CSV Kraftwerkslisten der Jahre 2017 bis 2020 ein. Die `read_delim()` Funktion gewährleistet dabei eine sinnvolle Zuweisung von Formaten für jede Spalte. Setzt man die Zeichencodierung auf `latin1` werden unter Windows Umlaute in RStudio korrekt dargestellt und fehlerfrei verarbeitet. In Kombination mit der Funktion `map_dfr()` aus dem Paket [purrr](https://purrr.tidyverse.org/) können die Kraftwerkslisten iterativ eingelesen und als Dataframe gespeichert werden. Der Code bleibt so kompakt und übersichtlich. Ich hatte in den .CSV Dateien bereits eine Spalte für das jeweilige Jahr angelegt, damit die einzelnen Kraftwerkslisten im kombinierten Datensatz unterscheidbar bleiben.
+
+``` r
+library(tidyverse) 
+
+# Einlesen der .CSV Kraftwerkslisten von 2017-2020
+roh_daten <- purrr::map_dfr(c("2017","2018","2019","2020"), 
+                            ~readr::read_delim(
+                              delim = ";",
+                              locale=locale(decimal_mark = ",", encoding = "latin1"),
+                              paste0("01_Daten/Kraftwerke_", .,".csv")
+                              )
+                            )
+```
+
+Auszug aus dem Datensatz:
+
+<br>
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+
+| Kraftwerksnummer | Unternehmen                                                    | Kraftwerksname                                                 | PLZ   | Ort           | Strasse_Hausnummer                                        | Bundesland          | Blockname | Aufnahme_Stromerzeugung | Kraftwerksstatus | Energieträger                | Vergütungsfähig_EEG | Wärmeauskopplung | Netto_Nennleistung | Stromnetzbetreiber                             | Jahr | Klasse                  | Typ           |
+|:-----------------|:---------------------------------------------------------------|:---------------------------------------------------------------|:------|:--------------|:----------------------------------------------------------|:--------------------|:----------|:------------------------|:-----------------|:-----------------------------|:--------------------|:-----------------|-------------------:|:-----------------------------------------------|-----:|:------------------------|:--------------|
+| BNA1011          | Breeze Three Energy GmbH & Co. KG                              | Windpark Waldhausen                                            | 73433 | Aalen         | NA                                                        | Baden-Württemberg   | NA        | 2006                    | in Betrieb       | Windenergie (Onshore-Anlage) | Ja                  | Nein             |               14.0 | Netzgesellschaft Ostwürttemberg DonauRies GmbH | 2017 | Windenergie             | Erneuerbar    |
+| BNA0029          | ESK Solarenergie GmbH & Co. KG                                 | Solarpark Petzenbach                                           | 94424 | Arnstorf      | NA                                                        | Bayern              | NA        | 2010                    | in Betrieb       | Solare Strahlungsenergie     | Ja                  | NA               |               10.0 | Bayernwerk AG                                  | 2017 | Solarenergie            | Erneuerbar    |
+| BNA0194          | Kraftwerk Dessau GmbH                                          | Kraftwerk Dessau                                               | 06842 | Dessau-Roßlau | NA                                                        | Sachsen-Anhalt      | NA        | 1996                    | in Betrieb       | Braunkohle                   | Nein                | ja               |               49.0 | Dessauer Stromversorgung GmbH                  | 2017 | Braun-/Steinkohle       | Konventionell |
+| BNA1353          | LHI Solar Georgsdorf GmbH & Co. KG                             | NA                                                             | 49828 | Georgsdorf    | Georgsdorf 14/10; 1/41; 1/39; 2/7; 1/42; 11/4; 11/5; u.a. | Niedersachsen       | NA        | 2011                    | in Betrieb       | Solare Strahlungsenergie     | Ja                  | NA               |               24.7 | Westnetz GmbH                                  | 2017 | Solarenergie            | Erneuerbar    |
+| BNA0405b         | Windpark GmbH & Co. Hamburg KG                                 | Windpark Hamburg                                               | 21129 | Hamburg       | NA                                                        | Hamburg             | NA        | 2009                    | in Betrieb       | Windenergie (Onshore-Anlage) | Ja                  | nein             |               12.0 | Stromnetz Hamburg GmbH                         | 2017 | Windenergie             | Erneuerbar    |
+| BNA1289          | AMK - Abfallentsorgungsgesellschaft des Märkischen Kreises mbH | AMK - Abfallentsorgungsgesellschaft des Märkischen Kreises mbH | 58636 | Iserlohn      | Giesestraße 10                                            | Nordrhein-Westfalen | NA        | 1981                    | in Betrieb       | Abfall                       | Nein                | Ja               |               12.6 | Stadtwerke Iserlohn GmbH                       | 2017 | Sonstige Konventionelle | Konventionell |
+| BNA0555          | KOGEP vierzehn GmbH & Co. Solar 1411 KG                        | NA                                                             | 06366 | Köthen        | NA                                                        | Sachsen-Anhalt      | NA        | 2010                    | in Betrieb       | Solare Strahlungsenergie     | Ja                  | NA               |               11.7 | Mitteldeutsche Netzgesellschaft Strom mbH      | 2017 | Solarenergie            | Erneuerbar    |
+| BNA0775          | EEV BioEnergie GmbH & Co. KG                                   | Biomasse-HKW                                                   | 26871 | Papenburg     | Am Nordhafen 5                                            | Niedersachsen       | NA        | 2003                    | in Betrieb       | Biomasse                     | Ja                  | Nein             |               20.0 | EWE NETZ GmbH                                  | 2017 | Biomasse                | Erneuerbar    |
+
+</div>
+
+<br>
+
+Für die weiteren Analysen halte ich mich an die Auswertungsmethodik der BNetzA. Ich berücksichtige anhand des Merkmals Kraftwerkstatus für das jeweilige Jahr alle Kraftwerke, die nicht endgültig stillgelegt wurden. Nach kurzer Recherche im Internet bin ich bspw. darauf gestoßen, dass mit (zusätzlichen) konventionellen Energieträgern Strom in das Netz eingespeist wird, wenn es zu Schwankungen bei erneuerbaren Energieträgern kommt. Die BNetzA bezeichnet diese als *Kraftwerke außerhalb des Strommarktes*.
+
+Im Jahr 2019 tauchen beim Merkmal Bundesland fehlende Werte auf, während in den restlichen Jahren hier die Kategorie `ohne Zuordnung` verwendet wurde. `NA` Werte werden daher mit der Funktion `mutate()` umgeschlüsselt.
+
+``` r
+# Filtern und Bereinigen der Daten
+roh_daten %>%
+  # Alle aktiven Kraftwerke auswählen (auch solche, die nur im Notfall einspringen)
+  filter(Kraftwerksstatus %in% c("in Betrieb","In Betrieb", 
+                                 "Vorläufig Stillgelegt (mit StA)",
+                                 "Gesetzlich an Stilllegung gehindert", 
+                                 "gesetzlich an Stilllegung gehindert",
+                                 "Netzreserve", "Saisonale Konservierung", 
+                                 "Sicherheitsbereitschaft", "Sonderfall")) %>%
+  # 2019: NA in "ohne Zuordnung" umcodieren
+  mutate(Bundesland = ifelse(is.na(Bundesland), "ohne Zuordnung", Bundesland)) -> strom_df
+```
+
+Das Merkmal `Energieträger` ist mit 20 verschiedenen Ausprägungen sehr detailliert untergliedert und ich möchte einige Energieträger in einem neuen Merkmal `Klasse` zusammenfassen. Hierfür ist die Funktion `case_when()` aus dem R-Paket [dplyr](https://dplyr.tidyverse.org/) sehr gut geeignet. Das Merkmal `Klasse` enthält nun u.a. die Ausprägungen `Sonstige Konventionelle` bzw. `Sonstige Erneuerbare`, bei welchen ich mich an der BNetzA orientiert habe. Lediglich den Energieträger `Abfall` rechne ich vollständig der Kategorie `Sonstige Konventionelle` zu, während die BNetzA diesen aufteilt. Leider gibt es auch beim Merkmal `Energieträger` in einem Jahr zwei `NA` Werte, welche ich nach einer Inspektion der Daten zu `Sonstige Konventionelle` zähle. Das Merkmal `Klasse` hat nun nur noch 10 Ausprägungen, was die folgenden Auswertungen erleichtern soll. Ausgehend vom Merkmal `Klasse` habe ich zusätzlich das Merkmal `Typ` generiert, welches jede Klasse in `Konventionell` oder `Erneuerbar` einteilt.
+
+``` r
+strom_df %>%
+  mutate(
+    # Neue Klassifizierung der Energieträger (10 statt 20 Ausprägungen)
+    Klasse = case_when(
+      Energieträger=="Biomasse" ~ "Biomasse",
+      Energieträger=="Solare Strahlungsenergie" ~ "Solarenergie",
+      Energieträger=="Laufwasser" ~ "Wasserkraft",
+      Energieträger=="Speicherwasser (ohne Pumpspeicher)" ~ "Wasserkraft",
+      Energieträger=="Windenergie (Offshore-Anlage)" ~ "Windenergie",
+      Energieträger=="Windenergie (Onshore-Anlage)" ~ "Windenergie",
+      Energieträger=="Deponiegas" ~ "Sonstige Erneuerbare",
+      Energieträger=="Geothermie" ~ "Sonstige Erneuerbare",
+      Energieträger=="Klärgas" ~ "Sonstige Erneuerbare",
+      Energieträger=="Braunkohle" ~ "Braun-/Steinkohle",
+      Energieträger=="Steinkohle" ~ "Braun-/Steinkohle",
+      Energieträger=="Erdgas" ~ "Erdgas",
+      Energieträger=="Kernenergie" ~ "Kernenergie",
+      Energieträger=="Pumpspeicher" ~ "Pumpspeicher",
+      Energieträger=="Abfall" ~ "Sonstige Konventionelle",
+      Energieträger=="Grubengas" ~ "Sonstige Erneuerbare",
+      Energieträger=="Mineralölprodukte" ~ "Sonstige Konventionelle",
+      Energieträger=="Sonstige Energieträger\n(nicht erneuerbar)" ~ "Sonstige Konventionelle",
+      Energieträger=="Sonstige Energieträger\n(nicht erneuerbar) " ~ "Sonstige Konventionelle",
+      Energieträger=="Mehrere Energieträger\n(nicht erneuerbar)" ~ "Sonstige Konventionelle",
+      Energieträger=="Unbekannter Energieträger\n(nicht erneuerbar)" ~ "Sonstige Konventionelle",
+      Energieträger=="Mehrere Energieträger" ~ "Sonstige Konventionelle",
+      Energieträger=="Unbekannter Energieträger" ~ "Sonstige Konventionelle",
+      is.na(Energieträger) ~ "Sonstige Konventionelle"),
+    
+    # Typ: erneuerbar vs. konventionell
+    Typ = case_when(
+      Klasse=="Biomasse" ~ "Erneuerbar",
+      Klasse=="Solarenergie" ~ "Erneuerbar",
+      Klasse=="Wasserkraft" ~ "Erneuerbar",
+      Klasse=="Windenergie" ~ "Erneuerbar",
+      Klasse=="Sonstige Erneuerbare" ~ "Erneuerbar",
+      Klasse=="Pumpspeicher" ~ "Konventionell",
+      Klasse=="Braun-/Steinkohle" ~ "Konventionell",
+      Klasse=="Erdgas" ~ "Konventionell",
+      Klasse=="Kernenergie" ~ "Konventionell",
+      Klasse=="Sonstige Konventionelle" ~ "Konventionell")
+  ) -> strom_df
+```
+
+Es ist immer eine gute Idee, die Zuordnungen mit `table()` inkl. dem Argument `useNA = "always"` zu überprüfen. Tauchen `NA` auf, deutet dies auf ein Problem bei der Zuordnung mit `case_when()` hin.
+
+<br>
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+
+|                         | Erneuerbar | Konventionell |  NA |
+|:------------------------|-----------:|--------------:|----:|
+| Biomasse                |        305 |             0 |   0 |
+| Braun-/Steinkohle       |          0 |           594 |   0 |
+| Erdgas                  |          0 |          1103 |   0 |
+| Kernenergie             |          0 |            28 |   0 |
+| Pumpspeicher            |          0 |           269 |   0 |
+| Solarenergie            |        640 |             0 |   0 |
+| Sonstige Erneuerbare    |        272 |             0 |   0 |
+| Sonstige Konventionelle |          0 |           724 |   0 |
+| Wasserkraft             |        456 |             0 |   0 |
+| Windenergie             |       3488 |             0 |   0 |
+| NA                      |          0 |             0 |   0 |
+
+</div>
+
+## **Datenanalyse**
+
+Eingangs hatte ich einige Fragen notiert, die ich nun mit den aufbereiteten Daten beantworten will. Zunächst betrachte ich die Höhe der Netto-Nennleistungen je Energieträger. Da zwischen 2017 und 2020 Kraftwerke stillgelegt wurden, ist es sinnvoll diese Frage für jedes Jahr getrennt zu betrachten. Grundsätzlich eignet sich ein Balkendiagramm für die Darstellung, da neben der absoluten Nennleistung auch die jeweiligen Anteile der Energieträger betrachtet werden kann. Ich verwende hierzu das Merkmal `Klasse`. Da ich auch daran interessiert bin, ob erneuerbare oder konventionelle Energieträger im jeweiligen Jahr die Nase vorn haben, gruppieren ich die Balken mit dem Merkmal `Typ`.
+
+Die einzelnen Energieträger sollten farblich unterscheidbar sein. Besonders leicht fällt die Interpretation, wenn die Farben nicht zufällig gewählt sind. Wenn ich die Farbe Braun in einem Balkendiagramm sehe, welches Informationen zum Thema Stromerzeugung enthält, erwarte ich, dass diese Farbe Informationen zu (Braun)kohle enthält. Ebenso erwarte ich bei der Farbe Gelb Informationen zur Solarenergie. Wie man sich eine eigene Farbpalette zusammenstellt, habe ich in diesem [Artikel](https://dataphile.de/tutorials/2018-04-16-farbpalette-mit-rcolorbrewer-zusammenstellen/) beschrieben.
+
+``` r
+# Passende Farbskala definieren
+farbskala <- c("#33A02C", "#B15928", "#E31A1C","#6A3D9A","#CAB2D6","#FFFF99",
+               "#B2DF8A","#FF7F00","#1F78B4","#A6CEE3")
+```
+
+**Netto-Nennleistung nach Energieträger**
+
+Momentan enthält der Datensatz noch Angaben auf Ebene der einzelnen Kraftwerke. Ziel ist es jedoch Informationen auf Ebene der Energieträger darzustellen. Via `group_by()` und `summarise()` summiert man die `Netto-Nennleistung` pro `Jahr`, `Typ` und `Klasse` auf und rechnet die Angaben von Megawatt in Gigawatt um. Das Balkendiagramm erstelle ich mit dem R-Paket [ggplot2](https://ggplot2.tidyverse.org/). Auf der X-Achse findet sich der `Typ` des Energieträgers wieder und auf der Y-Achse die aggregierte `Netto-Nennleistung`. Mittels `fill = Klasse` wird die Einfärbung der einzelnen Energieträger festgelegt. Mit `facet_grid()` wird das Balkendiagramm nach `Jahr` gruppiert.
+
+``` r
+strom_df %>%
+  # Netto-Nennleistung pro Jahr, Typ und Energieträger (Klasse) aufsummieren
+  group_by(Jahr, Typ, Klasse) %>%
+  summarise(Summe_Nennleistung = sum(Netto_Nennleistung, na.rm = TRUE)/1000) %>%
+  # Balkendiagramm mit ggplot erstellen
+  ggplot(data=., aes(x = reorder(Typ, Summe_Nennleistung), 
+                     y = Summe_Nennleistung, fill = Klasse)) +
+    geom_bar(stat = "identity") +
+    facet_grid(. ~ Jahr) +
+    scale_y_continuous(breaks = c(0, 25, 50, 75, 100, 125), limits = c(0, 125)) +
+    scale_fill_manual(name = "Energieträger:",
+                      values = farbskala) +
+    labs(title = "",
+         x = "",
+         y = "Netto-Nennleistung in Gigawatt") +
+    theme(legend.position = "bottom") +
+    guides(fill = guide_legend(nrow = 2))
+```
+
+<img src="index.markdown_strict_files/figure-markdown_strict/plot1-1.png" data-fig-align="center" width="768" />
+
+Viele Informationen komprimiert in einem einzigen Balkendiagramm - puh! Man erkennt, dass vor allem die Windenergie von 2017 bis 2020 ausgebaut wurde, während Braun- und Steinkohle einen Rückgang aufweisen. Von 2019 zu 2020 ist der Ausbau der Windkraft allerdings etwas langsamer verlaufen als in den Vorjahren. Von 2019 zu 2020 kann zudem die Solarenergie einen relativ hohen Zuwachs verzeichnen. Seit 2018 wird durch erneuerbare Energieträger **mehr** Strom produziert als durch konventionelle Energieträger. In 2020 befinden sich dennoch Steinkohlekraftwerke mit einer Gesamtleistung von 2,3 Gigawatt am Netz, welche gesetzlich an der Stillegung gehindert wurden.
+
+**Netto-Nennleistung pro Energieträger regionalisieren**
+
+Als nächstes wird die Netto-Nennleistung regional ausgewertet. Ich konzentriere mich dabei auf Kraftwerke, zu denen eine Standortangabe auf dem deutschen Festland vorhanden ist. Ausgeschlossen werden damit Kraftwerke in Dänemark, Luxemburg, Österreich, Schweiz sowie Offshore-Anlagen in der Nordsee. Diese Kraftwerke haben 2020 nur einen Anteil von etwa 7 % an der gesamten Netto-Nennleistung aller Kraftwerke, sodass man weiterhin ein realtiv vollständiges Bild der Stromproduktion erhält. Erneut wird die `Netto-Nennleistung` aller Kraftwerke pro `Jahr` und `Energieträger` und nun auch nach `Bundesland` aggregiert. Das `Bundesland` wird anstatt `Typ` an der X-Achse abgebildet und die Achsen werden via `coord_flip()` vertauscht. Dies hat den Vorteil, dass nun jedes Bundesland nur einmal auf der Y-Achse auftaucht und die invertierten Balken einen besseren Vergleich zwischen den Bundesländern ermöglichen.
+
+``` r
+# Sortierreihenfolge für regionale Auswertung
+sort_data <- strom_df %>%
+  # Netto-Nennleistung pro Jahr, Bundesland und Energieträger (Klasse) aufsummieren
+  group_by(Bundesland) %>%
+  summarise(Reihenfolge_Nennleistung = sum(Netto_Nennleistung, na.rm = TRUE)/1000) 
+
+strom_df %>%
+  # Nur Kraftwerke mit Standort in einem Bundesland behalten
+  filter(!(Bundesland %in% c("AWZ","Dänemark","Luxemburg", 
+                             "Österreich", "Schweiz","ohne Zuordnung"))) %>%
+  # Netto-Nennleistung pro Jahr, Bundesland und Energieträger (Klasse) aufsummieren
+  group_by(Jahr, Bundesland, Klasse) %>%
+  summarise(Summe_Nennleistung = sum(Netto_Nennleistung, na.rm = TRUE)/1000) %>%
+  # Merkmal für Sortierung verknüpfen
+  left_join(sort_data, by = "Bundesland") %>%
+  # Balkendiagramm mit ggplot erstellen
+  ggplot(data = ., aes(x = reorder(Bundesland, Reihenfolge_Nennleistung), 
+                       y = Summe_Nennleistung, fill = Klasse)) +
+    geom_bar(stat = "identity") + 
+    coord_flip() + 
+    facet_grid(. ~ Jahr) +
+    scale_y_continuous(breaks = c(0, 10, 20, 30, 40), 
+                      limits = c(0, 45)) +
+    scale_fill_manual(name = "Energieträger:",
+                      values = farbskala) +
+    labs(title = "",
+         x = "",
+         y = "Netto-Nennleistung in Gigawatt") +
+    theme(legend.position = "bottom") +
+    guides(fill = guide_legend(nrow = 4)) 
+```
+
+<img src="index.markdown_strict_files/figure-markdown_strict/plot2-1.png" data-fig-align="center" width="768" />
+
+Nordrhein-Westfalen ist Deutschlands Spitzenreiter bei der Stromproduktion! Braun- und Steinkohle sowie Erdgas sind hier die dominanten Energieträger. Dabei produziert NRW fast genau so viel Strom wie alle neuen Bundesländer zusammen. Interessant finde ich, dass in Bayern die Solarenergie einen sehr hohen Anteil an der Stromerzeugung aufweist. Dies könnte möglicherweise auf viele private Haushalte und landwirtschaftliche Betriebe zurückzuführen sein, die Solarstrom in das Netz einspeisen. Niedersachsen ist der Vorreiter bei der Windenergie, dicht gefolgt von Brandenburg und Schleswig-Holstein. Auch Thüringen hat gemessen an ihrer eigenen Stromproduktion einen hohen Anteil bei der Wind- und Solarenergie. Rheinland-Pfalz hat allerdings einen mehr als doppelt so hohen Anteil bei der Windenergie bei nur geringfügig höherer Gesamtfläche als Thüringen. Doch auch Bayern liegt beim Thema Windkraft trotz seiner großen Fläche auf einem abgeschlagenen Platz. Aber von hier kamen ja kürzlich erst Forderungen nach strengeren Abstandsregelungen.
+
+**Kraftwerksstandorte kartieren**
+
+In den Daten befinden sich genaue Angaben zum Standort der Kraftwerke. Ich will daher die [Geocoding API](https://developers.google.com/maps/documentation/geocoding/intro?hl=de) von Google nutzen, um deren Koordinaten zu beschaffen und diese dann auf einer Deutschlandkarte abzubilden. Da einige Kraftwerke mehrere Anlagen oder Blöcke am selben Standort haben, berücksichtige ich pro Energieträger eines Kraftwerks, den Standort nur einmal. Wie man in RStudio mit der Geocoding API von Google Adressangaben in Koordinaten umwandelt, habe ich in diesem [Artikel](https://dataphile.de/tutorials/2019-11-19-google-geocoding-api-in-r-verwenden/) beschrieben.
+
+Im Datensatz gibt es auf Ebene der Energieträger 1.714 Standorte innerhalb von Deutschland. Zu 12 Adressen konnten keine Koordinaten gefunden werden. Teilweise befinden sich Namen der Flurstücke in den Adressfeldern, sodass hier eine gründliche Datenbereinigung durchgeführt werden müsste.
+
+Für die Kartierung der Standorte verwende ich das R-Paket [ggmap](https://cran.r-project.org/web/packages/ggmap/ggmap.pdf). Wichtig: Man benötigt auch für die Kartierung einen *API Key*, um den Google-Dienst [Maps Static API](https://developers.google.com/maps/documentation/maps-static/intro) zu nutzen. [Hier](https://developers.google.com/maps/documentation/javascript/get-api-key?hl=de) gibt es eine Anleitung, wie man sich diesen generiert. Für die Kartierung werden nur Kraftwerke aus dem Jahr 2020 verwendet, um ein möglichst aktuelles Bild zu erhalten. Mit der Funktion `get_map()` erstellt man nun eine Basiskarte von Deutschland, auf welcher dann die Koordinaten eingezeichnet werden. Eine farbliche Unterscheidung der Standorte wird mit dem Merkmal `Klasse` vorgenommen.
+
+``` r
+library(ggmap)
+
+# Adressfeld aus den vorhandenen Standort-Merkmalen generieren
+strom_df %>%
+  mutate(adressen = trimws(
+    str_c(
+      PLZ, Ort, str_replace_na(strom_df$Strasse_Hausnummer, replacement = ""), sep = " "
+      )
+    )
+  ) -> strom_df
+
+strom_df %>%
+  # Standorte ohne Adressfeld entfernen
+  filter(Jahr == 2020 & !is.na(adressen)) %>%
+  # Extrahierte Koordinaten mit mod_data verknüpfen
+  left_join(koordinaten_df, by = "adressen") %>%
+  group_by(Energieträger) %>%
+  distinct(adressen, .keep_all = T) -> karte_df
+
+# Basiskarte Deutschland
+Get_Map_Country <- get_map(location = "Germany", zoom = 6, maptype = "toner-background", 
+                           filename = "ggmapTemp", color = "bw", source = "stamen")
+
+karte_deutschland <- ggmap(ggmap = Get_Map_Country)
+
+# Karte für 2020
+karte_deutschland + 
+  geom_point(data = karte_df, 
+             aes(x = longitude, y = latitude, color = Klasse), 
+             size = 2) +
+    scale_color_manual(name = "Energieträger:",
+                       values = farbskala) +
+  labs(title = "Kraftwerksstandorte in Deutschland (April 2020)", 
+       x = "Längengrad", 
+       y = "Breitengrad") +
+  theme(legend.position="bottom") +
+  guides(colour = guide_legend(nrow = 4))
+```
+
+<img src="index.markdown_strict_files/figure-markdown_strict/map1-1.png" data-fig-align="center" width="576" />
+
+Man erkennt eine hohe Dichte von Windkraftanlagen im Norden von Deutschland sowie eine Konzentration von Kohle- und Erdgaskraftwerken im Ruhrgebiet. Auch Wasserkraftwerke an Donau, Lech, Isar und Inn sowie entlang der Mosel sind gut zu sehen. Bayern hatte einen hohen Anteil der Solarenergie aufgewiesen, obwohl ich anhand der Karte nicht sonderlich viele Solarparks erkennen kann. Die These, dass diese erzeugte Strommenge von privaten Haushalten und landwirtschaftlichen Betrieben stammt, könnte also stimmen, da nur geringfügig eingespeiste Mengen aus erneuerbaren Energien in der Kraftwerksliste nicht mit einem genauen Standort erfasst werden. Was ist so in Südthüringen los? Ziemlich viel Platz bis auf ein Paar Erdgaskraftwerke und zwei Pumpspeicher. Im Norden Thüringens sind jedoch schon einige Windräder in Betrieb.
+
+**Kraftwerksstandorte animieren**
+
+Mit dem R-Paket [gganimate](https://gganimate.com/articles/gganimate.html) kann man die Ausprägungen vom Merkmal `Klasse` nacheinander und einblenden lassen, sodass die Standortverteilung auf der Karte noch präziser ablesbar ist.
+
+``` r
+library(gganimate) 
+
+# Karte erstellen und Animation spezifizeren
+karte_animation <- karte_deutschland + 
+  geom_point(data = karte_df, 
+             aes(x = longitude, y = latitude, color = Klasse), 
+             size = 2) +
+  scale_color_manual(name = "Energieträger:",
+                     values = farbskala)  +
+  labs(title = "Kraftwerksstandorte in Deutschland (April 2020)", 
+       x = "Längengrad", 
+       y = "Breitengrad") +
+  transition_states(Klasse,
+                    transition_length = 12,
+                    state_length = 12) +
+  ggtitle("Zeigt gerade Standorte von: {closest_state}")
+
+# Animation starten (Achtung: relativ lange Ladezeit)
+animate(karte_animation, nframes = 100, fps = 3)
+```
+
+<img src="index.markdown_strict_files/figure-markdown_strict/animate_map-1.gif" data-fig-align="center" />

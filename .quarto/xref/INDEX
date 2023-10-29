@@ -10,5 +10,23 @@
   },
   "public/blog/flurstuecke-visualisieren/index.qmd": {
     "index.md": "9504a384"
+  },
+  "content/blog/atomkraft-europa/index.qmd": {
+    "index.md": "e6b93d77"
+  },
+  "content/blog/stromerzeugung-deutschland/index.qmd": {
+    "index.md": "f40cebb2"
+  },
+  "content/blog/datenanalyse-autokauf/index.qmd": {
+    "index.md": "db3bdd95"
+  },
+  "content/blog/landtagswahlen-rlp/index.qmd": {
+    "index.md": "2753da56"
+  },
+  "content/blog/schwankung-stromerzeugung/index.qmd": {
+    "index.md": "3c46b784"
+  },
+  "content/blog/spotify-streamingverlauf/index.qmd": {
+    "index.md": "e325430d"
   }
 }

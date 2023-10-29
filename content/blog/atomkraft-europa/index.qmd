@@ -1,0 +1,410 @@
+---
+title: "Atomkraftwerke in Europa"
+date: 2021-09-08
+format: hugo
+slug: atomkraft-europa
+categories: 
+  - R
+  - Kartierung
+  - Webscraping
+summary: "Eine datengetriebene Übersicht über die Entwicklung der Kernernergie in Europa."
+---
+
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, warning = FALSE, message = FALSE,
+                      fig.align = "center", collapse = TRUE)
+
+# Benötigte R-Pakete
+library(tidyverse)
+library(ggmap)
+library(gganimate)
+library(rvest)
+library(knitr)
+library(kableExtra)
+library(klippy)
+
+# ggplot Layout festlegen
+ggplot2::theme_set(ggplot2::theme_bw())
+
+# API Key registrieren
+register_google(key = gmaps_api_key)
+
+# PRIS gescrapter Datenbestand
+operatingHistory <- readRDS("data/pris_operatingHistory.rds")
+```
+
+Benötigte R-Pakete:
+
+```{r, eval = FALSE}
+library(tidyverse)
+library(ggmap)
+library(gganimate)
+library(rvest)
+```
+
+## **Datenbeschaffung**
+
+Die Internationale Atomenergie-Organisation (*IAEA*) unterhält auf ihrer Webseite eine Datenbank, in der sich detallierte Angaben zu allen Atomreaktoren weltweit befinden - das [Power Reactor Information System (PRIS)](https://pris.iaea.org/PRIS/home.aspx). Auf GitHub habe ich einen [Auszug](https://github.com/cristianst85/GeoNuclearData) aus dieser Datenbank (Stand 21.06.2021) gefunden, den ich für die Auswertungen in diesem Artikel verwende. Die Daten befinden sich im .CSV Format und müssen nur in R eingelesen werden.
+
+Der Datenbestand umfasst allerdings nur allgemeine Angaben zu den Reaktoren und ich möchte diese um die ins Netz eingespeiste Energiemenge erweitern. Diese Angaben findet man ebenfalls für jeden Reaktor im *PRIS* unter der Rubrik [Operating History](https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=85), welche jährlich vom Betreiber gepflegt wird (sofern dieser Daten an die IAEA übermittelt). Mittels Webscraping extrahiere ich dabei die Spalte `Electricity Supplied [GW.h]` von jedem Reaktor. Jeder Reaktor besitzt in der Datenbank eine ID, welche auch auf der Webseite verwendet wird. Unten findet man den Code für die Extraktion der Daten. Die Liste der relevanten Reaktor-IDs ergibt sich aus dem ersten Datenbestand von GitHub. Ich verwende die Funktion `tryCatch()` um mögliche Fehlermeldungen zu überspringen, falls eine Reaktor-ID nicht mehr auf der Webseite verfügbar ist.
+
+```{r, eval = FALSE}
+scraper_pris <- function(url){
+  
+  # Vectors
+  reactor_name <- vector(mode = "character")
+  year <- vector(mode = "double")
+  electricity <- vector(mode = "double")
+  
+  # Name
+  tryCatch(
+    reactor_name <-
+      url %>%
+      read_html() %>%
+      html_nodes("#MainContent_MainContent_lblReactorName") %>%
+      html_text(),
+    error = function(e){NA})  
+    
+  # Year
+  tryCatch(
+    year <- 
+      url %>%
+      read_html() %>%
+      html_nodes(".active td:nth-child(1)") %>%
+      html_text() %>%
+      str_replace_all("\r\n","") %>%
+      str_trim() %>%
+      as.numeric(),
+    error = function(e){NA})  
+    
+  # Electricity supplied
+  tryCatch(
+    electricity <- 
+      url %>%
+      read_html() %>%
+      html_nodes(".active td:nth-child(2)") %>%
+      html_text() %>%
+      str_replace_all("\r\n","") %>%
+      str_trim() %>%
+      as.numeric(),
+    error = function(e){NA}) 
+    
+  # Data
+    scraped_data <- tibble(
+      reactor_name, year, electricity
+    )
+
+  return(scraped_data)
+}
+```
+
+
+## **Datenaufbereitung**
+
+Im Datenbankauszug mit den allgemeinen Reaktorangaben gibt es 3 .CSV Dateien, die Schlüsseltabellen für die Länderkürzel, den Reaktorstatus sowie den Reaktortyp enthalten.
+
+```{r echo = TRUE, eval = TRUE}
+data_countries <-
+  read_delim(
+    file = "data/1-countries.csv", 
+    delim = ","
+    ) %>%
+  rename("CountryCode" = Code, "CountryName" = Name)
+
+data_status <- 
+  read_delim(
+    file = "data/2-nuclear_power_plant_status_type.csv", 
+    delim = ","
+    ) %>%
+  rename("StatusId" = Id, "StatusType" = Type)
+
+data_reactors <- 
+  read_delim(
+    file = "data/3-nuclear_reactor_type.csv", 
+    delim = ","
+    ) %>%
+  rename("ReactorTypeId" = Id, "ReactorType" = Type)
+```
+
+Die 4. .CSV Datei enthält die Grunddaten für die einzelnen Atomreaktoren. Jede Zeile dieses Datensatzes repräsentiert einen Reaktor. Am Standort eines Atomkraftwerks kann es mehrere Reaktoren geben. Die Grunddaten der Reaktoren verknüpfe ich mit den drei zuvor eingelesenen Schlüsseltabellen.
+
+```{r}
+data_raw <- 
+  read_delim(
+    file = "data/4-nuclear_power_plants.csv", 
+    delim = ",")
+
+data_wide <-  
+  data_raw %>%
+  left_join(data_status,  by = "StatusId") %>%
+  left_join(data_reactors,  by = "ReactorTypeId") %>%
+  left_join(data_countries,  by = "CountryCode") %>%
+  select(-c(StatusId, ReactorTypeId, Id)) 
+```
+
+Die Daten sehen so aus:
+
+<br>
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+data_wide %>%
+  slice(1:50) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+In diesem Datensatz existieren die Spalten `ConstructionStartAt`, `OperationalFrom` und `OperationalTo`, welche den Zeitpunkt markieren an dem der Bau, der Betrieb und die Stilllegung des Reaktors stattfand. Später möchte ich eine animierte Karte erstellen, bei der sich diese fixen Datumsangaben wie eine Zeitreihe verhalten - d.h. ab dem Zeitpunkt an dem der Bau beginnt, befindet sich das AKW solange im Bau bis sich der Status ändert (bspw. wenn ein Reaktor in Betrieb gesetzt wird). Hierfür transformiere ich den Datensatz und fasse das Ereignis, das jede Spalte repräsentiert, in der Spalte (`TimeEvent`) zusammen und hinterlege das jeweilige Datum in der Spalte (`Date`). Ist ein Ereignis für einen Reaktor noch nicht eingetreten so wird es entfernt.
+
+```{r}
+data_long <-
+  data_wide %>%
+  pivot_longer(cols = c("ConstructionStartAt", "OperationalFrom", "OperationalTo"), 
+               names_to = "TimeEvent", 
+               values_to = "Date") %>%
+  mutate(Year = lubridate::year(Date),
+         TimeEvent_Animation = case_when(
+           TimeEvent == "ConstructionStartAt" ~ "under construction",
+           TimeEvent == "OperationalFrom" ~ "active",
+           TimeEvent == "OperationalTo" ~ "decommissioned"
+         )) %>%
+  filter(!is.na(Date))
+```
+
+Die transformierten Daten (ausgewählte Spalten) sehen so aus:
+
+<br>
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+data_long %>%
+  select(Name, TimeEvent, Date, TimeEvent_Animation) %>%
+  slice(1:50) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+Zum Schluss erweitere ich noch die Grunddaten um die eingespeiste Energiemenge. Zunächst erstelle ich einen Vektor mit den relevanten Reaktor-IDs. Diese werden jeweils an die URL der PRIS-Datenbank angehangen, sodass der jeweilige Reaktor aufgerufen wird. Anschließend fasse ich alle extrahierten Daten im Tibble `operatingHistory` zusammen.
+
+```{r, eval = FALSE}
+# relevante Reaktoren (IEAD ID)
+reactor_ids <- 
+  data_wide %>%
+  select(IAEAId) %>%
+  filter(!is.na(IAEAId)) %>%
+  arrange(IAEAId) %>%
+  pull()
+
+pages <- tibble(
+  IAEAId = reactor_ids,
+  url = str_c("https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=",
+              reactor_ids),
+  running_id = 1:length(reactor_ids)
+  )
+
+operatingHistory <- purrr::map_dfr(.x = pages$url, 
+                                   .f = ~scraper_pris(url = .x), 
+                                   .id = "IAEAId") 
+
+operatingHistory <- operatingHistory %>%
+  mutate(running_id = as.numeric(running_id)) %>%
+  left_join(pages, by="running_id")
+```
+
+Die extrahierten Daten werden dann mit den Basisdaten der Reaktoren verknüpft und sehen so aus (ausgewählte Spalten):
+
+```{r}
+data_oH <-
+  data_wide %>%
+  left_join(operatingHistory, by = "IAEAId")
+```
+
+<br>
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+data_oH %>%
+  filter(!is.na(electricity)) %>%
+  select(Name, Latitude, Longitude, Capacity, year, electricity ) %>%
+  slice(1:50) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+Für die Datenanalyse möchte ich ausschließlich Reaktoren berücksichtigen, die sich in Europa befinden und reduziere die Datensätze auf die relevanten Länder.
+
+```{r}
+data_wide_eu <-
+  data_wide %>%
+  filter(CountryName %in% c(
+    "Austria","Belarus","Belgium","Bulgaria",
+    "Czechia","Finland","France","Germany","Hungary",
+    "Italy","Lithunia","Netherlands","Romania",
+    "Slovakia","Slovenia","Spain","Sweden",
+    "Switzerland","Turkey","Ukraine","United Kingdom")
+    ) %>%
+  mutate(StatusType = ifelse(
+    StatusType %in% c("Cancelled Construction",
+                      "Never Commissioned",
+                      "Suspended Construction",
+                      "Unknown"), 
+    "Not Built", StatusType),
+    StatusType = fct_relevel(StatusType, 
+                             "Not Built", "Planned",
+                             "Under Construction",
+                             "Operational", "Shutdown")
+    )
+
+data_long_eu <-
+  data_long %>%
+  filter(CountryName %in% c(
+    "Austria","Belarus","Belgium","Bulgaria",
+    "Czechia","Finland","France","Germany","Hungary",
+    "Italy","Lithunia","Netherlands","Romania",
+    "Slovakia","Slovenia","Spain","Sweden",
+    "Switzerland","Turkey","Ukraine","United Kingdom")
+    )
+
+data_oH_eu <- 
+  data_oH %>%
+  filter(CountryName %in% c(
+    "Austria","Belarus","Belgium","Bulgaria",
+    "Czechia","Finland","France","Germany","Hungary",
+    "Italy","Lithunia","Netherlands","Romania",
+    "Slovakia","Slovenia","Spain","Sweden",
+    "Switzerland","Turkey","Ukraine","United Kingdom")
+    )
+```
+
+## **Datenanalyse**
+
+Unten findet man eine Übersicht der europäischen Atomreaktoren. 103 Reaktoren wurden bereits stillgelegt und 7 Reaktoren sind nie in Betrieb gegangen bzw. haben das Planungsstadium verlassen. Dennoch befinden sich noch 141 Reaktoren in Betrieb und sogar 12 Reaktoren in Bau bzw. 9 in Planung.
+
+```{r}
+data_wide_eu %>%
+  group_by(StatusType) %>%
+  summarise(anzahl = n()) %>%
+  mutate(anteil = round(anzahl / sum(anzahl), digits = 2)) %>%
+  ggplot(data = ., aes(x = "", y = anteil, fill = StatusType)) +
+  geom_col(color = "black") +
+  geom_text(aes(label = anzahl),
+            position = position_stack(vjust = 0.5)) +
+  coord_polar(theta = "y") +
+  scale_fill_manual(values = c("grey", "#3399FF","#FFCC00","#00CC00","#CC0000")) +
+  labs(fill = "") +
+  theme_void()
+```
+
+***
+
+Für jedes europäische Land ist die geplante bzw. realisierte Leistung aller Reaktoren nachfolgend dargestellt. Besonders in Deutschland wurden bereits viele Reaktoren vom Netz genommen, während sich in Frankreich der Großteil der Reaktoren noch im Betrieb befindet.
+
+```{r}
+data_wide_eu %>%
+  group_by(CountryName) %>%
+  summarise(tot_capa_country = sum(Capacity, na.rm = TRUE)/1000) %>%
+  left_join(data_wide_eu %>%
+              group_by(CountryName, StatusType) %>%
+              summarise(tot_capa_status = sum(Capacity, na.rm = TRUE)/1000), 
+            by = "CountryName") %>%
+  ggplot(data = ., aes(x = reorder(CountryName, tot_capa_country), 
+                       y = tot_capa_status, 
+                       fill =StatusType)) +
+  geom_bar(stat = "identity", color = "black") +
+  coord_flip() +
+  scale_y_continuous(breaks = seq(0,70,10)) +
+  scale_fill_manual(values = c("grey", "#3399FF","#FFCC00","#00CC00","#CC0000")) +
+  labs(x = "", y = "Total capacity (gigawatt)", fill = "")
+```
+
+***
+
+Als Nächstes betrachte ich die ins Netz eingespeiste Energiemenge der europäischen Atommeiler. Auf der x-Achse habe ich die Reaktorunfälle von Tschernobyl im Jahr 1986 und Fukushima im Jahr 2011 in rot hervorgehoben. Nur Italien ist im Anchschluss an Tschernobyl vollständig aus der Kernergie ausgestiegen. Bei den anderen europäischen Ländern ist kein Rückgang der Nutzung der Atomkraft zu erkennen - in Frankreich ist diese sogar deutlich gestiegen. In Deutschland ist ein starker Rückgang der eingespeisten Energiemenge nach dem Reaktorunglück von Fukushima zu erkennen.
+
+```{r}
+data_oH_eu %>%
+  group_by(CountryName, year) %>%
+  summarise(sum_ele_europe = sum(electricity, na.rm = T)/1000) %>%
+  ggplot(data =., aes(x= year, y = sum_ele_europe, group = CountryName)) +
+  geom_line() +
+  geom_vline(xintercept=1986, color = "red") +
+  geom_vline(xintercept = 2011, color = "red") +
+  facet_wrap(. ~ CountryName) +
+  scale_x_continuous(limits = c(1950, 2022),
+                     breaks = seq(1960,2020,10)) +
+  labs(x = "", y = "Electricity supplied (TW/h)") +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+
+***
+
+Zum Schluss möchte ich mir einen Überblick verschaffen, wie sich der Ausbau der Kernergie in Europa im Zeitverlauf verändert hat. Dazu nutze ich den Datensatz `datal_long_eu`, in welchem ich die Reaktordaten so transfomiert hatte, dass sich der Zeitpunkt des Baus, der Inbetriebesetzung oder der Stilllegung wie eine Zeitreihe verhält. Unten ist dargestellt bei wie vielen Reaktoren in einem Jahr mit dem Bau begonnen wurde bzw. wie viele Reaktoren in Betrieb gesetzt oder stillgelegt wurden. Zwischen 1970 und 1990 wurden die meisten Reaktoren gebaut bzw. in Betrieb genommen. Ab 1990 wurden zunehmend Reaktoren stillgelegt.
+
+```{r}
+data_long_eu %>%
+  ggplot(aes(x = Year, fill = TimeEvent_Animation)) +
+  geom_bar(color = "black") +
+  scale_x_continuous(limits = c(1950, 2022),
+                     breaks = seq(1950,2022,10)) +
+  scale_fill_manual(name = "", values = c("#00CC00","#CC0000","#FFCC00")) +
+  labs(x = "", y = "Number of reactors")
+```
+
+***
+
+Unten habe ich für Deutschland die Entwicklung der Atomreaktoren mit einer Leistung von mindestens 300 Megawatt auf einem Zeitstrahl dargestellt. Dafür nutze ich die Funktion `geom_segment()` mit der eine gerade Linie zwischen zwei Punkten gezeichnet werden kann. Das Ende des jeweiligen Ereignisses auf dem Zeitstrahl begrenze ich mithilfe der Funktion `lead()` auf das nächstfolgende Ereignis. Aktuell sind in Deutschland noch 7 Reaktoren am Netz. Besonders interessant finde ich das Kernkraftwerk Mülheim-Kärlich, welches nach seiner Inbetriebnahme nur etwa 1 Jahr am Netz war. Auch die nach dem Reaktorunglück von Fukushima (2011) stillgelegten Reaktoren können dieser Darstellung entnommen werden.
+
+```{r}
+data_long_eu %>%
+  group_by(Name) %>%
+  mutate(End = lead(Year),
+         End = ifelse(is.na(End),2021,End)) %>%
+  filter(CountryName =="Germany" & Capacity >= 300) %>%
+  ggplot() +
+  geom_segment(aes(x = Year, xend = End, 
+                   y = Name, yend = Name, 
+                   col = TimeEvent_Animation), 
+               lineend = "round", size = 2) +
+  scale_color_manual(name = "", values = c("#00CC00","#CC0000","#FFCC00")) +
+  scale_x_continuous(limits = c(1965, 2021),
+                     breaks = seq(1965,2020,5)) +
+  labs(x = "", y = "") +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+***
+
+Mit einer animierten Karte möchte ich diese Informationen für ganz Europa darstellen. Mit der Funktion `shadow_mark()` aus dem R-Paket `ggmaps` kann man steuern, dass Punkte, die ein mal auf einer Karte hinterlegt wurden, auch im Zeitverlauf auf der Karte verbleiben. So bleibt der Status eines Reaktors so lange gültig bis ein anderer Status eintritt. Da es am Standort eines Atomkraftwerks meist mehrere Reaktoren gibt, ist diese Darstellung nicht vollständig präzise, da die Reaktoren nicht unbedingt zur selben Zeit gebaut oder in Betrieb genommen werden. So kann ein zweiter (dritter, vierter, ...) Reaktor an einem Standort den Status des ersten Reaktors überscheiben.
+
+```{r}
+Get_Map_Country <- get_map(location = "Europe", zoom = 4, maptype = "toner-background", 
+                           filename = "ggmapTemp", color = "bw", source = "stamen")
+
+
+karte_europa <- ggmap(ggmap = Get_Map_Country)
+
+karte_animation <- karte_europa + 
+  geom_point(data = data_long_eu, 
+             aes(x = Longitude, 
+                 y = Latitude, 
+                 fill = TimeEvent_Animation,
+                 group = Year), 
+             shape = 21, size = 3, alpha = 1.0) +
+  transition_time(Year) +
+  scale_fill_manual(values = c("#00FF00","#FF0000","#FFFF00")) +
+  labs(title = "Reaktorstandorte in Europa im Jahr = {as.integer(frame_time)}",
+       x = "Längengrad", 
+       y = "Breitengrad",
+       fill = "") +
+  shadow_mark(past = TRUE) 
+
+animate(karte_animation, nframes = 100, fps = 2,
+        width = 800,
+        height = 600)
+```
+

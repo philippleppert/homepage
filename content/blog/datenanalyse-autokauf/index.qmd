@@ -1,0 +1,511 @@
+---
+title: "Datenanalyse vor Gebrauchtwagenkauf?"
+date: 2021-02-09
+format: hugo
+slug: datenanalyse-autokauf
+categories: 
+  - R
+  - Finanzen
+summary: "Wie kann man vor dem Kauf eines Gebrauchtwagens den Markt analysieren?"
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", collapse = TRUE)
+
+# Benötigte R-Pakete
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(klippy)
+
+# Rohdaten
+inserate <- readRDS(file = "data/20210209_opel_adam_90+.rds")
+
+# ggplot Layout festlegen
+ggplot2::theme_set(ggplot2::theme_bw())
+```
+
+Das Internet bringt uns im Großen und Ganzen eine ganze Menge Erleichterungen. Nahezu alles kann man sich online bestellen oder, bei größeren Anschaffungen, zumindest schon mal von zu Hause aus in aller Ruhe begutachten. Da unser Auto über die Weihnachtsfeiertage zum wiederholten Male gestreikt hat, haben wir uns entschieden, dass ein neues (gebrauchtes) Auto angeschafft werden muss. Die beiden größten Internetportale für die Automobilsuche [autoscout24.de](https://www.autoscout24.de/) und [mobile.de](https://www.mobile.de/) haben sehr detaillierte Suchmasken, sodass man sich das gewünschte Auto ziemlich genau *konfigurieren* kann.
+
+Doch genau hier beginnt auch ein Problem. Selbst wenn man sich auf einen Hersteller und ein Modell festgelegt hat, wird die Suche aufgrund der Vielzahl von Anzeigen schnell unübersichtlich. Zwar bieten die beiden Portale auch eine *unabhängige* Preisbewertung der Inserate an, also ob das Auto relativ zu vergleichbaren Inseraten im Segment eher teuer oder günstig ist, jedoch werden dabei viele Faktoren nicht berücksicht. Auf Bagatellschäden wird in der Anzeige meistens nicht hingewiesen und die Nachfrage nach der Unfallfreiheit des PKW, sofern diese nicht explizit im Inserat bestätigt ist, ergibt häufig eine negative Antwort bei vermeintlich besonders günstigen Angeboten. Auch ist selten erkennbar, ob der PKW privat oder gewerblich genutzt wurde. Ein neuer Anbieter names [Autohero](https://www.autohero.com/de/), bei dem man sich den Gebrauchtwagen direkt nach Hause liefern lassen kann, ist hier transparenter und führt zumindest die Eigenschaft *Gewerbliche Nutzung* auf.
+
+Insgesamt erscheint mir als Laie der Gebrauchtwagenmarkt ziemlich schwer zu durchblicken. Für ein bestimmtes Modell eines Herstellers gibt es oft zahlreiche Ausstattungsvarianten, die einen objektiven Vergleich ziemlich erschweren. Am besten man informiert sich hier bereits vorab anhand von [ADAC Testberichten](https://www.adac.de/rund-ums-fahrzeug/tests/) oder Ähnlichem, um herauszufinden, was man eigentlich braucht. Aber es heisst ja auch nicht umsonst Ge*braucht*wagen. Doch nun weiter zur Datenanalyse.
+
+## **Datenbeschaffung**
+
+Die Suchergebnisseiten der oben erwähnten Gebrauchtwagenportale bieten eine gut strukturierte Oberfläche, um mittels *Webscraping* automatisiert die Eckdaten eines Inserats zu extrahieren. Dies funktioniert (Stand Februar 2021) bei mir nur auf der Webseite von *autoscout24.de*. Generell sind die Suchergebnisse auf den beiden Webseiten sehr ähnlich und insbesondere Händler schalten ihre Inserate meist auf beiden Portalen.
+
+Unten findet sich eine Funktion, mit welcher ich die relevanten Inseratsinformationen von einer Seite der Suchergebnisse gewinne. Ich extrahiere den `preis`, den Inseratstitel, welcher aus zwei Elementen (`titel1`, `titel2`) besteht, die Laufleistung (`km`), das Datum der Erstzulassung (`ez`), die Anzahl der bisherigen Fahrzeughalter (`halter`), die Motorleistung (`ps`) und den Standort des Gebrauchtwagens (`ort`). Jedes Element wird dabei so aufbereitet, dass es für datenanalytische Zwecke sinnvoll verwendet werden kann. Die Funktion gibt zum Schluss einen *Data Frame* mit 8 Spalten zurück, der in der Regeln 20 Zeilen lang ist. Eine Suchseite auf autoscout24.de umfasst nämlich genau 20 Inserate. 
+
+```{r daten_beschaffen1, echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+library(tidyverse)
+library(rvest)
+
+scraper_autoscout24 <- function(page){
+  
+  preis <- page %>%
+    html_nodes(".sc-font-xl") %>%
+    html_text() %>%
+    str_match_all("€ *.*") %>%
+    unlist() %>%
+    str_remove_all("\\.|,-|€") %>%
+    as.numeric() %>%
+    `length<-` (20) %>%
+    as_tibble_col("preis")
+  
+  titel1 <- page %>%
+    html_nodes("#cldt-ot-summary .sc-font-bold") %>%
+    html_text() %>%
+    `length<-` (20) %>%
+    as_tibble_col("titel1")
+  
+  titel2 <- page %>%
+    html_nodes(".cldt-summary-version") %>%
+    html_text() %>%
+    `length<-` (20) %>%
+    as_tibble_col("titel2") %>%
+    mutate(id = 1:20)
+  
+  km <- page %>%
+    html_nodes("li:nth-child(1)") %>%
+    html_text() %>%
+    str_match_all("[0-9].+ km") %>%
+    unlist() %>%
+    str_remove_all("\\.| km") %>%
+    as.numeric() %>%
+    `length<-` (20) %>%
+    as_tibble_col("km")
+  
+  ez <- page %>%
+    html_nodes("li:nth-child(2)") %>%
+    html_text() %>%
+    str_match_all(".*[0-9]/[0-9]*|.*Erstzulassung") %>%
+    unlist() %>%
+    str_remove_all("-/- \\(Erstzulassung") %>%
+    `length<-` (20) %>%
+    as_tibble_col("ez") %>%
+    separate(col = ez, into = c("monat", "jahr"), sep = "/", remove = FALSE)
+  
+  halter <- page %>%
+    html_nodes("li:nth-child(5)") %>%
+    html_text() %>% 
+    str_match_all(".*Fahrzeughalter") %>%
+    unlist() %>%
+    str_remove_all(" Fahrzeughalter|-/- \\(Fahrzeughalter") %>%
+    as.numeric() %>%
+    `length<-` (20) %>%
+    as_tibble_col("halter")
+  
+  ps <- page %>%
+    html_nodes("li:nth-child(3)") %>%
+    html_text() %>% 
+    str_match_all(".[0-9]* PS") %>%
+    unlist() %>%
+    str_remove_all(" PS|\\(") %>%
+    as.numeric() %>%
+    `length<-` (20) %>%
+    as_tibble_col("ps")
+  
+  ort <- page %>%
+    html_nodes(".cldf-summary-seller-contact-zip-city") %>%
+    html_text() %>%
+    `length<-` (20) %>%
+    as_tibble_col("ort") %>%
+    separate(col = ort, into = c("plz", "stadt"), sep = " ", remove = FALSE)
+  
+  scraped_data <- tibble(
+    titel1, titel2, 
+    preis, km, ez, 
+    halter, ps, ort
+  )
+  
+  return(scraped_data)
+  
+}
+```
+
+Nun habe ich die Qual der Wahl und muss meine Suche für ein bestimmtes Auto spezifizieren. Wir haben uns vorab für einen Opel Adam entschieden und für meine Auswertung verwende ich die folgenden Spezifikationen:
+
+* Erstzulassung zwischen Anfang 2013 und Ende 2018
+* keine Beschränkung der Laufleistung (km)
+* ab 90 PS (Benziner) 
+* maximal 2 Fahrzeughalter 
+* scheckheftgepflegt 
+* keine Privatangebote
+
+Am 09.02.2021 wurden dabei 439 Inserate gefunden. Die Webseite autoscout24.de begrenzt die Anzahl abrufbarer Suchseiten automatisch auf 20 (= 400 Inserate). D.h. wenn mehr Inserate gefunden werden, kann man diese sich weder manuell anzeigen lassen noch automatisiert abrufen. Dies kann umgangen werden, indem man die Angebote nach ihrem Preis filtert. D.h. wenn ich die Suchergebnisse aufsteigend nach dem Preis sortiere und die ersten 400 Inserate extrahiere, kann ich nach dem letzten Inserat auf Seite 20 (Inserat 400) den Preis als Mindestpreis für die nächste Suche festlegen und erhalte so die verbleibenden Inserate.
+
+Technisch muss man zunächst eine leere Liste (`pages`) erstellen, in welcher für jede Seite der Suchergebnisse der Webseiteninhalt, ausgelesen mit der Funktion `read_html()`, gespeichert wird. Die for-Schleife läuft dann von Seite 1 bis maximal Seite 20. Der Link der Webseite wird am URL-Bestandteil `page=` geteilt. Danach verwende ich die Funktion `map_dfr()` aus dem R-Paket `purrr` und wende die oben codierte Funktion auf jedes Listenelement von `pages` an. Fertig ist ein Datensatz mit Gebrauchtwageninseraten!
+
+```{r daten_beschaffen2, echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# Seiten
+pages <- list()
+
+# Suchseiten 1:X
+for (i in 1:20) {
+  
+  url <- paste0("https://www.autoscout24.de/lst/opel/adam?sort=price&desc=0&custtype=D&prevownersid=2&eq=49&fuel=B&ustate=N%2CU&size=20&page="
+                ,i,
+                "&powerfrom=66&powertype=hp&cy=D&fregto=2018&fregfrom=2013&atype=C&fc=25&qry=&") 
+  pages[[i]] <- read_html(url)
+}
+
+# Mappen und NA entfernen
+inserate <- map_dfr(.x = pages, .f = ~scraper_autoscout24(page = .x)) %>%
+  filter(ez != "") 
+```
+
+Die Daten sehen so aus:
+
+<br>
+
+```{r daten_roh, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(inserate[1:30,]) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+## **Datenaufbereitung**
+
+Die Daten sind zwar durch die Scraping-Funktion schon relativ sauber, allerdings möchte ich noch einige zusätzliche Merkmale für die folgende Analyse erstellen. Zunächst nutze ich das Merkmal `ez` (Datum der Erstzulassung), um das Alter des Gebrauchtwagens in Tagen/Monaten/Jahren zu berechnen. Hierzu verwende ich die Funktionen `today()` und `mdy()` aus dem R-Paket `lubridate`. Vom Opel Adam gibt es (leider) eine Vielzahl von Ausstattungsvarianten, die sich in unterschiedlichster Form auf den Preis niederschlagen könnten. Um dies in der Analyse berücksichtigen zu können, erstelle ich das Merkmal `linie`, welches durch Textabgleich mit `titel2` erstellt wird. Hierbei suche ich den Inseratstitel nach den Ausstattungsvarianten ab (Slam, Jam, Glam, usw.). Bei einigen Inseraten lässt der Titel keine eindeutige Zuweisung einer Ausstattungsvariante zu, sodass ich eine Restkategorie (`"8 Sonstige"`) erstellen musste.
+
+```{r daten_aufbereiten1, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+library(lubridate)
+
+cars <- inserate %>%
+  mutate(alter_d = today() - mdy(ez),
+         alter_m = round(as.numeric(alter_d)/30, digits = 0),
+         alter_y = round(as.numeric(alter_d)/365, digits = 1),
+         titel2 = tolower(titel2),
+         linie = case_when(
+           str_detect(titel2, "jam") == TRUE ~ "1 Jam",
+           str_detect(titel2, "slam") == TRUE ~ "2 Slam",
+           str_detect(titel2, "glam") == TRUE ~ "3 Glam",
+           str_detect(titel2, "rocks|open air") == TRUE ~ "4 Rocks",
+           str_detect(titel2, "unlimited") == TRUE ~ "5 Unlimited",
+           str_detect(titel2, "s 1.4|1.4 turbo s") == TRUE & ps == 150 ~ "6 Adam S",
+           str_detect(titel2, "s") == TRUE & ps == 150 ~ "6 Adam S",
+           str_detect(titel2, "120") == TRUE ~ "7 120 Jahre",
+           TRUE ~ "8 Sonstige"))
+```
+
+Die Standortangabe des Gebrauchtwagens (PLZ und Stadt) nutze ich, um das Inserat einem Bundesland zuzuordnen. Dafür verwende ich einen Schlüssel aus dem Internet und verknüpfe die beiden Dateien.
+
+```{r daten_aufbereiten2, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+plz_data<- readr::read_delim("data/plz_zuordnung.csv", delim = ";",
+                              locale = locale(encoding = "latin1")) %>%
+  mutate(plz = ifelse(nchar(plz) == 4, paste0("0", plz),plz))
+
+cars <- left_join(cars, plz_data, by = "plz")
+```
+
+Die Daten sehen nun so aus und sind bereit für die Auswertung.
+
+<br>
+
+```{r daten_aufbereitet, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(cars[1:30,]) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+## **Datenanalyse**
+
+Im Folgenden zeige ich einige Eckwerte des Datensatzes. Über die Hälfte der Inserate stammen aus dem Jahr 2017 und 2018. Immerhin ein Viertel stammt aus den Jahren 2015 und 2016. Für die Jahre 2013 und 2014 ist die Datenlage eher dürftig - hier gibt es insgesamt nur 33 Inserate.
+
+```{r bar1, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+cars %>%
+  group_by(jahr) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n) * 100) %>%
+  mutate(ypos = cumsum(freq)- 0.5*freq ) %>%
+  ggplot(data = .,
+      aes(x= "", y = freq, fill = forcats::fct_rev(jahr))) +
+  geom_col(width = 1)  + 
+  coord_polar(theta = "y", start = 0) +
+  geom_text(aes(y = ypos, label = jahr), color = "white", size = 4, angle = 65) +
+  theme_void() +
+  theme(legend.position="none")
+```
+
+*****
+
+Im Balkendiagramm unten sieht man, dass bei den Inserate mit einer Erstzulassung in den Jahren 2013 und 2014 nicht alle Motorvarianten des Opel Adam vorliegen. In den folgenden Jahren sind die Anteile relativ ausgeglichen, wodurch ich mich bei der späteren Analyse wohl auf diese 4 Jahre beschränken muss.
+
+```{r bar2, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+ggplot(data = cars,
+      aes(x= factor(jahr), fill=factor(ps))) +
+  geom_bar(position = "fill", color = "black") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = "Jahr der Erstzulassung", 
+       y = "Anteil in %",
+       fill = "Leistung (PS)")
+```
+
+*****
+
+Auch bei den Ausstattungslinien gibt es für die Erstzulassungen in 2013 und 2014 nicht alle Varianten. In den folgenden Jahren ist das Verhältnis wieder einigermaßen ausgeglichen, wobei gemessen an der Anzahl verfügbarer Inserate, die absoluten Fallzahlen pro Kategorie relativ niedrig sein werden.
+
+```{r bar3, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+ggplot(data = cars,
+      aes(x= factor(jahr), fill=factor(linie))) +
+  geom_bar(position = "fill", color = "black") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = "Jahr der Erstzulassung", 
+       y = "Anteil in %",
+       fill = "Ausstattungslinie")
+```
+
+*****
+
+Die Boxplots zeigen die Verteilung des Verkaufspreises nach dem Jahr der Erstzulassung und der Leistung der Inserate. Der Opel Adam mit 150 PS weist ab EZ 2015 den höchsten Median-Preis auf. Bei der Variante mit 116 PS Variante liegt der Median Preis für EZ in 2018 und 2017 über den beiden Modellen mit dem kleineren Motor. Für Modelle mit EZ 2016 ist der Median-Preis zur 101 PS Variante nahezu identisch. Die Motorausführungen mit 90 PS und 101 PS unterscheiden sich preislich nur für Inserate mit EZ 2016.
+
+```{r boxplot1, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+ggplot(data = cars,
+       aes(x = factor(jahr), y = preis, fill = factor(ps))) +
+  geom_boxplot() +
+  scale_y_continuous(breaks = seq(2500,20000,2500),
+                     labels = scales::number_format()) +
+  labs(x = "Jahr der Erstzulassung", 
+       y = "Preis in Euro", 
+       fill = "Leistung (PS)")
+```
+
+*****
+
+Hinsichtlich der Ausstattungsvarianten gibt es ebenfalls preisliche Unterschiede. Allerdings muss berücksichtigt werden, dass manche Ausstattungslinien wie der *Adam S* stellvertretend für die Motorvariante mit 150 PS stehen und nicht für die anderen Motorvarianten verfügbar sind. Die Linie *120 Jahre* scheint es laut den Daten nur für die Motorisierung mit 101 PS und 116 PS zu geben.
+
+```{r boxplot2, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+ggplot(data = cars,
+       aes(x=factor(linie), y =preis)) +
+  geom_boxplot() +
+  coord_flip() +
+  labs(x = "Ausstattungslinie", y = "Preis in €")
+```
+
+Berücksichtigt man die Motorisierung, sind die preislichen Unterschiede zwischen den Ausstattungslinien deutlich geringer.
+
+```{r boxplot3, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+ggplot(data = cars,
+       aes(x=factor(linie), y =preis)) +
+  geom_boxplot() +
+  coord_flip() +
+  facet_grid(.~ps) +
+  scale_y_continuous(breaks = c(7500, 15000)) +
+  labs(x = "Ausstattungslinie", y = "Preis in €")
+```
+
+*****
+
+In der nächsten Grafik ist der Zusammenhang zwischen dem Verkaufspreis und der Laufleistung in Kilometern dargstellt. Die 150 PS und 116 PS Motorvarianten weisen in den ersten 25.000 Kilometern den stärksten Wertverfall auf. Die 101 PS Motorvariante ist in diesem Intervall wertstabiler, wobei nach 25.000 Kilometern der Preis stärker sinkt.
+
+```{r scatterplot1, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+ggplot(data = cars,
+       aes(x=km, y =preis, col = factor(ps))) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "loess",se = FALSE) +
+  scale_x_continuous(breaks = seq(0,175000,25000),labels = scales::number_format()) +
+  scale_y_continuous(breaks = seq(2500,20000,2500),labels = scales::number_format()) +
+  labs(x = "Laufleistung in Kilometer",
+       y = "Preis in €",
+       col = "Leistung (PS")
+```
+
+*****
+
+Da die Laufleistung der Fahrzeuge deutlich rechtsschief verteilt ist, erstelle ich die Grafik erneut mit der logarithmierten Laufleistung und entferne aus Gründen der Übersichtlickeit zwei Inserate mit einer Laufleistung von unter 1000 Kilometern. In dieser Darstellung wirkt sich jeder zusätzlich gefahrene Kilometer besonders negativ auf den Verkaufspreis der 150 PS und 101 PS Variante aus.
+
+```{r scatterplot2, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+cars %>%
+  filter(km > 1000) %>%
+ggplot(data = .,
+         aes(x=log(km), y =preis, col = factor(ps))) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm",se = F) +
+  scale_x_continuous(limits = c(7,12),
+                     breaks=c(7:12), 
+                     labels=c(round(exp(7:12)))) +
+  scale_y_continuous(breaks = seq(2500,20000,2500),labels = scales::number_format()) +
+  labs(x = "Log(Laufleistung in km)",
+       y = "Preis in €",
+       col = "Leistung (PS)")
+```
+
+*****
+
+Die vorherigen beiden Grafiken berücksichtigen die Laufleistung, jedoch nicht das Alter der Gebrauchtwagen. Unten ist daher der Zusammenhang von Verkaufspreis und dem Alter des Gebrauchtwagen in Monaten abgebildet. Je größer ein Punkt im Steudiagramm ist, um so höher die Laufleistung des Autos. Auch das Alter wirkt sich negativ auf den Verkaufspreis aus und man erkennt ähnliche Muster wie in der vorherigen Darstellung.
+
+```{r scatterplot3, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+ggplot(data = cars,
+         aes(x=alter_y, y =preis, col = factor(ps))) +
+  geom_point(aes(size = km), alpha = 0.5) +
+  geom_smooth(se = F) +
+  scale_x_continuous(limits = c(2, 8), breaks = c(seq(2, 8, 0.5))) +
+  scale_y_continuous(breaks = seq(2500,20000,2500),labels = scales::number_format()) +
+  labs(x = "Alter des Fahrzeugs (in Jahren)",
+       y = "Preis in €",
+       col = "Leistung (PS)", size = "Laufleistung (km)")
+```
+
+*****
+
+Num zum spannenden Teil dieses Artikels: mittels linearer Regression (OLS) möchte den Einfluss verschiedener Charakteristiken des Autos auf seinen Verkaufspreis schätzen. Bspw. um herauszufinden, welche der 4 Motorvarianten den stärksten Wertverlust mit steigendem Alter und stegender Laufleistung aufweist. Ich beschränke diese Analyse auf Modelle mit Erstzulassungen in den Jahren 2015 bis 2018.
+
+**Basis Modell**: Als Regressoren verwende ich die Laufleistung pro 10.000 gefahrene Kilometer, sowie das Jahr der Erstzulassung und die Motorvariante als Kontrollvariablen. 
+
+```{r baseline, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+model1 <- lm(preis ~  I(km/10000) + factor(jahr) + factor(ps), 
+            data = cars, subset = jahr %in% c(2015:2018))
+```
+
+```{r baseline_out, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+broom::tidy(model1)
+```
+
+Der Koeffizient von `I(km/10000)` zeigt, dass der Verkaufspreis pro 10.000 gefahrene Kilometer im Durchschnitt um 360 Euro sinkt. Die Koeffizienten der Faktorvariablen Jahr der Erstzulassung geben an, dass relativ zum Basisjahr 2015, Modelle zugelassen in 2016, 2017, 2018 im Durchschnitt einen 800, 1388, 2000 Euro höheren Verkaufspreis aufweisen (unabhängig von der Motorvariante). Der Preisunterschied der Motorvariante 101 PS im Vergleich zur Basis 90 PS liegt bei nur durchschnittlich 60 Euro. Der Preisunterschied bzgl. der 116 PS und 150 PS Variante fällt höher aus - im Durchschnitt 743 bzw. 2797 Euro.
+
+*****
+
+**Erweitertes Modell**: Nun füge ich weitere Merkmale wie die Anzahl der Fahrzeughalter, die Ausstattungslinie und den Standort des Wagen (Bundesland) als Kontrollvariablen hinzu.
+
+```{r add, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+model2 <- lm(preis ~ I(km/10000) + factor(jahr) + factor(ps) + 
+               factor(halter) + factor(linie) + factor(bundesland), 
+            data = cars, subset = jahr %in% c(2015:2018))
+```
+
+```{r add_out, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+broom::tidy(model2)
+```
+
+Der Einfluss der Laufleistung auf den Verkaufspreis hat sich nur geringfügig verändert - von 360 auf 367 Euro Wertverlust pro 10.000 gefahrene Kilometer. Der Einfluss dieser zusätzlichen Kontrollvariablen scheint also nur von geringer Bedeutung zu sein.
+
+*****
+
+**Interaktions-Modell 1**:
+
+Nicht untersucht wurde bisher, ob der Einfluss der Laufleistung auf den Verkaufspreis von der Motorvariante abhängt. Dies ist eine sog. Interkation der beiden Regressoren, Ich logarithmiere zudem nun die Laufleistung. Um die Schätzergebnisse zu veranschaulichen verwende ich einen Conditional Effects Plot (CEP).
+
+```{r model_cep1, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+model_cep1 <- lm(preis ~ log(km/10000)*factor(ps), 
+                 data = cars, subset = jahr %in% c(2015:2018))
+```
+
+```{r cep1_out, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+broom::tidy(model_cep1)
+```
+
+Unten findet man den CEP für dieses Modell.
+
+```{r cep1, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+tibble(
+  km = rep(seq(from = 20000, to = 80000, by = 5000), 4),
+  ps = factor(rep(c("90", "101","116","150"), each = 13))
+  ) %>%
+  mutate(fit = predict(model_cep1, 
+                       newdata = ., 
+                       type = "response"),
+         se = predict(model_cep1, 
+                      newdata = ., 
+                      type = "response",
+                      se = TRUE)$se.fit,
+         ll = fit - (1.96 * se),
+         ul = fit + (1.96 * se)) %>%
+  ggplot(data = ., 
+         aes(x = km, y = fit)) + 
+  geom_ribbon(aes(ymin = ll,
+                  ymax = ul, fill = ps), alpha = 0.2) + 
+  geom_line(aes(colour = ps),
+            size = 1) +
+  scale_x_continuous(limits = c(20000,80000),
+                     breaks = seq(20000,80000,10000), labels =scales::number_format()) +
+  scale_y_continuous(limits = c(8000,16000),
+                     breaks = seq(8000,16000,2000),labels = scales::number_format()) +
+  labs(x = "Laufleistung in km",
+       y = "Vorhergesagter Preis in €", 
+       fill = "Laufleistung (PS)", col = "Laufleistung (PS)")
+```
+
+Die Koeffizienten der Interaktionsterme und der CEP zeigen, dass es nur geringe, aber signifikante Unterschiede zwischen dem Einfluss der Laufleistung auf den Verkaufspreis in Abhängigkeit der Motorvariante gibt. Verdoppelt man die Laufleistung, so ist der Verkaufspreis für die 101 PS Variante höher als bei der 90 PS oder 150 PS Variante. Die 116 PS Variante liegt ebenfalls hinter der 101 PS Variante zurück, schlägt aber ebenso die 90 PS oder 150 PS Variante.
+
+*****
+
+**Interaktions-Modell 2**:
+
+Für das nächste Modell interagiere ich analog zum vorherigen Modell das Alter des PKWs in Monaten und die Motorvariante. Zusätzlich nehme ich als Regressor das quadrierte Alter auf, um zu überprüfen, ob sich der Wertverfall mit steigendem Alter des Gebrauchtwagens beschleunigt oder nicht.
+
+```{r model_cep2, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+model_cep2 <- lm(preis ~ alter_m*factor(ps) + I(alter_m^2),
+                data = cars, subset = jahr %in% c(2015:2018))
+```
+
+```{r cep2_out, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+broom::tidy(model_cep2)
+```
+
+Der Koeffizient des Alters ist negativ und der Koeffizient des quadrierten Alters ist positiv. Somit ist der Wertverfall des PKW in den ersten Jahren besonders hoch und wird mit zunehmendem Alter geringer. Dies erkennt man auch im CEP anhand den abflachenden Kurven. Für die 150 PS Variante ist der Wertverfall über das Alter hinweg erneut am höchsten - relativ zu den anderen 3 Motorvarianten.
+
+```{r cep2, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+tibble(
+  alter_m = rep(seq(from = min(cars$alter_m)+6, to = max(cars$alter_m)-24, length.out = 7), 4),
+  ps = factor(rep(c("90", "101","116","150"), each = 7))
+  ) %>%
+  mutate(fit = predict(model_cep2, 
+                       newdata = ., 
+                       type = "response"),
+         se = predict(model_cep2, 
+                      newdata = ., 
+                      type = "response",
+                      se = TRUE)$se.fit,
+         ll = fit - (1.96 * se),
+         ul = fit + (1.96 * se)) %>%
+  ggplot(data = ., 
+         aes(x = alter_m, y = fit)) + 
+  geom_ribbon(aes(ymin = ll,
+                  ymax = ul, fill = ps), alpha = 0.2) + 
+  geom_line(aes(colour = ps),
+            size = 1)  +
+  scale_y_continuous(limits = c(6000,16000),
+                     breaks = seq(6000,16000,2000),labels = scales::number_format()) +
+  labs(x = "Alter in Monaten",
+       y = "Vorhergesagter Preis in €", 
+       fill = "Laufleistung (PS)", col = "Laufleistung (PS)")
+```
+
+*****
+
+**Vorhersage:**
+
+Zum Schluss möchte ich für ein gegebenes Baujahr und Modell die zukünftige Verkaufspreisentwicklung vorhersagen. Ich habe einen Opel Adam mit 116 PS, erstmalig zugelassen im September 2017 und einer Laufleistung von aktuell 33.000 Kilometern in die engere Auswahl genommen. Ich möchte das Auto nun 4 Jahre lang halten und im Jahr etwa 14.000 Kilometer fahren. Das zukünftige Alter des Autos (in Monaten) ergibt sich somit aus dem aktuellen Alter und den 4 von mir genutzten Jahren  (*41 + 48 = 89*). Die zukünftige Laufleistung ergibt sich aus dem aktuellen Kilometerstand und den in 4 Jahren von mir gefahrenen Kilometern (*33.000 + 56.000 = 89.000*).
+
+```{r prediction}
+model_vorhersage <- lm(preis ~ alter_m + I(alter_m^2) + log(km),
+                       data = cars, subset = ps == 116)
+
+vorhersagen <- tibble(
+  alter_m = c(41, 89),
+  km = c(33000, 89000)
+  ) %>%
+  mutate(fit = predict(model_vorhersage, 
+                       newdata = ., 
+                       type = "response"),
+         se = predict(model_vorhersage, 
+                      newdata = ., 
+                      type = "response",
+                      se = TRUE)$se.fit,
+         ll = fit - (1.96 * se),
+         ul = fit + (1.96 * se))
+```
+
+Unten findet man die Ergebnisse des Modells. Der aktuelle Verkaufspreis liegt bei durchschnittlich 11.812 Euro, wobei hier die Ausstattungslinie keine Berücksichtigung findet. In 4 Jahren und 56.000 gefahrenen Kilometern würde laut dem Modell der durchschnittliche Verkaufspreis noch bei 8275 Euro liegen. Dies entspricht einem durchschnittlichen Wertverlust von rund 884 Euro pro Jahr.
+
+<br>
+
+```{r vorhersagen, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(vorhersagen) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 12) %>%
+  scroll_box(width = "100%")
+```

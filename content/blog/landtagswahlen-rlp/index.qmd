@@ -1,0 +1,528 @@
+---
+title: "Landtagswahlen Rheinland-Pfalz"
+date: 2021-03-19
+format: hugo
+slug: landtagswahlen-rlp
+categories: 
+  - R
+  - Tidy-data
+summary: "Ich bereite die Daten zur Landtagswahlen in Rheinland-Pfalz für die Jahre 2006, 2011, 2016 und 2021 auf und analysiere diese im Zeitverlauf."
+---
+
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", collapse = TRUE)
+
+# Benötigte R-Pakete
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(klippy)
+
+# ggplot Layout festlegen
+ggplot2::theme_set(ggplot2::theme_bw())
+
+# Aufbereitete Daten einlesen
+data_2006 <- readRDS(file = "data/RLP_Landtagswahl_2006.rds")
+data_2011 <- readRDS(file = "data/RLP_Landtagswahl_2011.rds")
+data_2016 <- readRDS(file = "data/RLP_Landtagswahl_2016.rds")
+data_2021 <- readRDS(file = "data/RLP_Landtagswahl_2021.rds")
+```
+
+Benötigte R-Pakete:
+
+```{r, eval = FALSE}
+library(tidyverse)
+```
+
+## **Datenbeschaffung**
+
+Wählen ist Bürgerpflicht. In den letzten Wochen habe ich mich neben den Wahlprogrammen der Parteien, die zur Landtagswahl 2021 in Rheinland-Pfalz antreten auch mit den Wahldaten selbst beschäftigt. Diese werden vom Landeswahlleiter bzw. dem Statistischen Landesamt Rheinland-Pfalz aufbereitet und veröffentlicht. Auf der Webseite des Statistischen Landesamtes stehen ab Wahljahr 2006 die Ergebnisse auch im .CSV Format zur Verfügung - bspw. [hier](https://wahlen2021.rlp.de/de/ltw/wahlen/2021/downloads/) für 2021. 
+
+Mit einem Klick auf "Alle Ergebnisse" erthält man dabei die Wahlergebnisse bis zur Tiefe von Ortsgemeinden bzw. Orts-/ und Stadtteilen. Leider sind in diesem Datenbestand sehr viele Teilergebnisse (Zwischenaggregate) enthalten und damit für eine Analyse mit statistischer Software nur bedingt geeignet. Für mich als Laien auf dem Gebiet von Wahldaten war es gar nicht so einfach herauszufinden, wie man diese vollständig entfernt. *Ziel soll es sein einen Datensatz zu erstellen, der ausschlißelich Gemeinden enthält und dennoch die Berechnung von Aggregaten zulässt.* 
+
+Zunächst muss man vor allem den *Gemeindeschlüssel Rheinland-Pfalz (GSRP)* verstehen, der jede Gebietseinheit mehr oder weniger eindeutig identifiziert. Auf der Webseite des Statistischen Landesamtes gibt es dazu [Erläuterungen](https://www.wahlen.rlp.de/de/landtagswahl/wahlen/2011/downloads/hinweise/erlaeuterungen/), ich habe aber versucht ein eigenes Schaubild anzufertigen. Dieses soll insb. zeigen, wie man mit dem Gebietsschlüssel, welche Gebiete bzw. Gebietsebenen identifizieren kann. Der Schlüssel besteht aus 10 Stellen und die ersten 3 Stellen enthalten Informationen zum Regierungsbezirk und Landkreis. Anhand der restlichen Stellen kann man weitere Gebietseinheiten ausfindig machen. Auf der linken Seite habe ich beschrieben, welche Gebietseinheiten, ich in meinem Datensatz als Variable hinterlegen möchte, um sowohl Ergebnisse auf Ebene der Gemeinden als auch auf Ebene des Landkreises erstellen zu können.
+
+<br>
+
+![Verwaltungsgliederung Rheinland-Pfalz inkl. Schlüsselsystematik. Eigene Darstellung.](/img/verwaltungsgliederung_rlp.jpg)
+
+## **Datenaufbereitung**
+
+Unten lese ich die heruntergeladene Datei für das Jahr 2011 ein und zeige einen Ausschnitt der Daten vor der Bereinigung.
+
+```{r echo = TRUE, eval = TRUE}
+data_raw <- read_delim("data/Landtagswahl_2011_Gesamtergebnis.csv", delim = ";",
+                       locale=locale(decimal_mark = ",", encoding = "latin1"),
+                       col_types = cols(Gebietsschlüssel = col_character(),
+                                        .default = col_guess()))
+```
+
+<br>
+
+```{r daten_roh, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(data_raw[1:100,]) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+In Zeile 1 des Datensatzes ist das Gesamtergebnis für Rheinland-Pfalz hinterlegt und, sofern ich alles richtig mache, müsste ich zum Schluss auf `r format(round(data_raw[1,]$Wahlberechtigte,0), big.mark = ".")` Wahlberechtigte in meinem Datensatz kommen. Mal schauen, ob das klappt!
+
+Zunächst extrahiere ich die aggregierten Ergebnisse auf Ebene der *kreisfreien Städte und Landkreise*. Dies geschieht anhand der Variable `Gebietsschlüssel`. Im Datensatz ist sowohl ein 10-stelliger als auch ein 13-stelliger Schlüssel enthalten (im Datenausschnitt oben einfach etwas nach unten scrollen). Der 13-stellige Schlüssel wird für die Ergebnisse auf Ebene der Ortsgemeinden sowie Orts-/Stadtteile benötigt, während sich die aggregierten Ergebnisse der kreisfreien Städte und Landkreise über den 10-stelligen Schlüssel am einfachsten identifizieren lassen. Theoretisch ginge das aber auch über den 13-stelligen Schlüssel.
+
+Um später den `Landkreis` den Ortsgemeinden bzw. Orts-/Stadtteilen hinzuspielen zu können, erstelle ich den Schlüssel `lk_key`, welcher die ersten 3 Stellen des Schlüssels repräsentiert und zur Verknüpfung dient. 
+
+```{r echo = TRUE, eval = TRUE}
+data_landkreise <- data_raw %>%
+  select(Gebietsschlüssel, Gebietsbezeichnung, Wahlberechtigte) %>%
+  filter(nchar(Gebietsschlüssel) == 10 &
+        substr(Gebietsschlüssel,4,10) == "0000000") %>%
+  filter(!str_detect(Gebietsbezeichnung,"Stadt")) %>%
+  mutate(lk_key = substr(Gebietsschlüssel,1,3),
+         Landkreis = Gebietsbezeichnung)
+
+data_krsfr_stadt <- data_raw %>%
+  select(Gebietsschlüssel, Gebietsbezeichnung, Wahlberechtigte) %>%
+  filter(nchar(Gebietsschlüssel) == 10 &
+        substr(Gebietsschlüssel,4,10) == "0000000") %>%
+  filter(str_detect(Gebietsbezeichnung,"Stadt")) %>%
+  mutate(Key = Gebietsschlüssel,
+         lk_key = substr(Gebietsschlüssel,1,3),
+         Landkreis = Gebietsbezeichnung)
+```
+
+Die ersten 3 Stellen des 13-stelligen `Gebietsschlüssels` dienen lediglich der Identifikation der Wahlkreise. Für die Ortsgemeinden bzw. Orts-/Stadtteile lege ich einen weiteren Datensatz an, in welchem ich die ersten 3 Stellen der Variable `Gebietsschlüssel` für die Variable `Key` entferne und im Anschluss alle Ergebnisse auf Wahlkreisebene (`Key = "0000000000"`) lösche. Aber Achtung: Teilkreisaggregate sind weiterhin enthalten und können sich unter Umständen mit Landkreisen überschneiden.
+
+```{r}
+data_mod <- data_raw %>%
+  select(Gebietsschlüssel, Gebietsbezeichnung, Wahlberechtigte) %>%
+  filter(nchar(Gebietsschlüssel) == 13) %>%
+  mutate(Key = ifelse(nchar(Gebietsschlüssel) == 13, 
+                      substr(Gebietsschlüssel,4,13),
+                      Gebietsschlüssel)) %>%
+  filter(Key != "0000000000")
+```
+
+*1. Stadtteile von kreisfreien Städten*
+
+Ausgehend von diesem Datenbestand möchte ich nun die Stadtteile der kreisfreien Städte identifizieren. Kreisfreie Städte sind nicht zwangsläufig in Stadtteile untergliedert und ich füge mit der Funktion `anti_join()` die kreisfreien Städte ohne Untergliederung dem Datenbestand separat hinzu und behandle diese als eigenständige Einheit auf Ebene der Stadtteile. Im Anschluss werden die Daten mit dem aggregierten Datenbestand der kreisfreien Städte verknüpft, um die Landkreis-Information hinzuzufügen.
+
+```{r}
+krsfr_stadt_teile <- data_mod %>%
+  filter(substr(Key,4,8) == "00000" & substr(Key,9,10) != "00") %>%
+  mutate(lk_key = substr(Key,1,3)) 
+
+krsfr_stadt_oteile <- anti_join(select(data_krsfr_stadt, -Landkreis),
+                                krsfr_stadt_teile, 
+                                by = "lk_key")
+
+krsfr_stadt <- bind_rows(krsfr_stadt_teile, krsfr_stadt_oteile)
+
+data_krsfr_stadt2 <- left_join(krsfr_stadt, 
+                               select(data_krsfr_stadt, Landkreis, lk_key),
+                               by = "lk_key") %>%
+  mutate(Verwaltungseinheit = Landkreis)
+```
+
+Unten befindet sich ein Ausschnitt der Daten.
+
+<br>
+
+```{r data_krsfr_stadt2, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(data_krsfr_stadt2[1:100,]) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+Stimmt die Zahl der Wahlberechtigten in kreisfreien Städten im Aggregat mit der Summe der Untergliederungen überein? Falls ja, dann weiter zum nächsten Schritt!
+
+```{r, echo = FALSE}
+sum(krsfr_stadt$Wahlberechtigte)
+sum(data_krsfr_stadt2$Wahlberechtigte)
+```
+
+*2. Ortsgemeinden von Verbandsgemeinden*
+
+Nun werden die Aggregate der Verbandsgemeinden erstellt. Diese können anhand der 4. und 5. sowie 6. bis 10. Stelle des Schlüssels identifiziert werden. Die 4. und 5. Stelle darf nicht `"00"` sein. Ich erstelle zudem die Variable `vg_key` um später auf Ebene der Ortsgemeinden die `Verwaltungseinheit` (= Verbandsgemeinde) hinzufügen zu können. 
+
+Hinweis: In den Daten von 2016 gibt es innerhalb einer Verbandsgemeinde zwei Teilverbände namens *Otterbach-Otterberg*, die jeweils unterschiedliche Ortsgemeinden besitzen. Allerdings haben beide Teilverbände den gleichen Gebietsschlüssel, wodurch es erforderlich wird nur einen der beiden Einträge zu behalten (Funktion `distinct()`).
+
+```{r}
+vgs <- data_mod %>%
+  filter(substr(Key,4,5) != "00" & substr(Key,6,10) == "00000") %>%
+  mutate(vg_key = substr(Key,1,5)) %>%
+  rename("Verwaltungseinheit" = Gebietsbezeichnung) %>%
+  distinct(Key, .keep_all = TRUE) # Teilverbände
+
+vgs_gemeinden <- data_mod %>%
+  filter(substr(Key,4,5) != "00" & substr(Key,6,8) != "000" & substr(Key,9,10) == "00") %>%
+  mutate(vg_key = substr(Key,1,5),
+         lk_key = substr(Key,1,3))
+```
+
+An den Datenbestand der Ortsgemeinden wird nun zuerst die Information der höheren `Verwaltungseinheit` angespielt und anschließend der `Landkreis` in dem sich die Ortsgemeinde bzw. `Verwaltungseinheit` befindet.
+
+```{r}
+data_vg <- left_join(vgs_gemeinden, 
+                     select(vgs, Verwaltungseinheit, vg_key), 
+                     by = "vg_key")
+
+data_vg <- left_join(data_vg, 
+                     select(data_landkreise, Landkreis, lk_key),
+                     by = "lk_key")
+```
+
+Unten befindet sich ein Ausschnitt der Daten.
+
+<br>
+
+```{r data_vg, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(data_vg[1:100,]) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+Stimmt die Zahl der Wahlberechtigten in Verbandsgemeinden im Aggregat mit der Zahl der Wahlberechtigten in den zugehörigen Ortsgemeinden überein? Falls ja, dann weiter zum nächsten Schritt!
+
+```{r, echo = FALSE}
+sum(vgs$Wahlberechtigte)
+sum(vgs_gemeinden$Wahlberechtigte)
+```
+
+*3. Verbandsfreie Städte/Gemeinden, kreisangehörige Städte*
+
+Es fehlen nun nur noch die verbandsfreien Gemeinden und Städte, sowie deren Orts- bzw. Stadtteile, die unten selektiert werden. Ähnlich wie bei kreisfreien Städten haben nicht alle verbandsfreien Gemeinden Orts- oder Stadtteile. Diese werden erneut über die Funktion `anti_join()` identifiziert und separat dem Datenbestand hinzugefügt. Anschließen erfolgt analog zum Vorgehen bei den Verbandsgemeinden das Hinzuspielen die Information der höheren `Verwaltungseinheit` und des `Landkreis`.
+
+```{r}
+non_vgs <- data_mod %>%
+  filter(substr(Key,4,5) == "00" & substr(Key,6,8) != "000" & substr(Key,9,10) == "00") %>%
+  mutate(non_vg_key = substr(Key,1,8),
+         lk_key = substr(Key,1,3),
+         Verwaltungseinheit = Gebietsbezeichnung)
+
+non_vgs_gemeinden <- data_mod %>%
+  filter(substr(Key,4,5) == "00" & substr(Key,6,8) != "000" & substr(Key,9,10) != "00") %>%
+  mutate(non_vg_key = substr(Key,1,8),
+         lk_key = substr(Key,1,3))
+
+non_vg_ogemeinden <- anti_join(non_vgs, non_vgs_gemeinden, by = "non_vg_key")
+
+data_non_vg <- left_join(non_vgs_gemeinden, 
+                         select(non_vgs,
+                                non_vg_key, Verwaltungseinheit), 
+                         by = "non_vg_key")
+
+data_non_vg <- bind_rows(data_non_vg, non_vg_ogemeinden)
+
+data_non_vg <- left_join(data_non_vg,  
+                         select(data_landkreise, Landkreis, lk_key),
+                         by = "lk_key")
+```
+
+Unten befindet sich ein Ausschnitt der Daten.
+
+<br>
+
+```{r data_non_vg, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(data_non_vg[1:100,]) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+Stimmt die Zahl der Wahlberechtigten in verbandsfreien Gemeinden und Städten im Aggregat mit der Zahl der Wahlberechtigten aller zugehörigen Orts- bzw. Stadtteile überein? Falls ja, können die Datenbestände nun kombiniert werden!
+
+```{r, echo = FALSE}
+sum(non_vgs$Wahlberechtigte)
+sum(data_non_vg$Wahlberechtigte)
+```
+
+*4. Zusammenfügen der Datensätze*
+
+Unten stapele ich die 3 Datensätze zu einem einzigen Datenbestand, lege eine Variable für das Wahljahr an und entferne nicht mehr benötigte Identifikatoren.
+
+```{r}
+data_wahl <- bind_rows(data_vg, data_non_vg, data_krsfr_stadt2) %>%
+  select(-vg_key, -lk_key, -non_vg_key) %>%
+  mutate(Jahr = 2011)
+```
+
+**Achtung spannend:** Stimmt die Zahl der Wahlberechtigten in meinem Datensatz auf Gemeindebene mit dem Landesergebnis in Zeile 1 aus der ursprünglichen Datei überein?
+
+```{r, echo = FALSE}
+data_wahl %>% summarise(summe = sum(Wahlberechtigte))
+```
+
+*****
+
+In meinem Datensatz sind bisher nur Informationen über die Gebietsstruktur und die Anzahl der Wahlberechtigten enthalten. Unten füge ich weitere Merkmale wie die `Wahlbeteiligung` sowie die Anzahl der `Erststimmen` und `Zweitstimmen` der Parteien hinzu. Die Stimmen der Parteien befinden sich im `Wide-Format` und werden durch die Funktion `pivot_longer()` transponiert, sodass die Partei in einer Spalte und die zugehörigen Stimmen in einer weiteren Spalte enthalten sin.
+
+```{r}
+data_allgemein <- select(data_raw, Gebietsschlüssel, Wahlberechtigte,
+                         Wähler,`ungültige Erststimmen`,`gültige Erststimmen`, 
+                         `ungültige Zweitstimmen`,`gültige Zweitstimmen`) %>%
+  mutate(Wahlbeteiligung = Wähler/Wahlberechtigte,
+         Erststimme_Quote = `gültige Erststimmen` / Wähler,
+         Zweitstimme_Quote = `gültige Zweitstimmen` / Wähler) %>%
+  select(Gebietsschlüssel, Wahlbeteiligung, Erststimme_Quote, Zweitstimme_Quote)
+
+data_erststimmen <- select(data_raw, Gebietsschlüssel, `SPD Erststimmen`:`Sonstige Erststimmen`) %>%
+  pivot_longer(cols = -c(Gebietsschlüssel),
+               names_to = "Partei",
+               names_pattern = "(.*) Erststimmen",
+               values_to = "Erststimmen") %>%
+  group_by(Gebietsschlüssel, Partei) %>%
+  summarise(Erststimmen = sum(Erststimmen, na.rm = T))
+
+data_zweitstimmen <- select(data_raw, Gebietsschlüssel, 
+                            `SPD Zweitstimmen`:`Sonstige Zweitstimmen`) %>%
+  pivot_longer(cols = -c(Gebietsschlüssel),
+               names_to = "Partei",
+               names_pattern = "(.*) Zweitstimmen",
+               values_to = "Zweitstimmen") %>%
+  group_by(Gebietsschlüssel, Partei) %>%
+  summarise(Zweitstimmen = sum(Zweitstimmen, na.rm = T))
+
+data_stimmen <- left_join(data_erststimmen, 
+                          data_zweitstimmen, 
+                          by = c("Gebietsschlüssel",
+                                 "Partei"))
+
+data_final <- left_join(data_wahl, data_allgemein, data_stimmen, 
+                        by = c("Gebietsschlüssel"))
+```
+
+Die fertigen Daten sehen so aus:
+
+<br>
+
+```{r daten_fertig, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(data_final[1:100,]) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+## **Datenanalyse**
+
+Für die Landtagswahlen im Jahr 2006, 2016 und 2021 habe ich das oben beschriebene Vorgehen wiederholt, sodass nun 4 verschiedene Zeitpunkte mit Wahlergebnissen für jede *Gemeinde* zur Verfügung stehen. Ich denke, dass sich die Ergebnisse auf der Gemeindeebene gut zwischen 2006 und 2021 vergleichen lassen, da etwaige [Gebietsreformen](https://de.wikipedia.org/wiki/Gebietsreformen_in_Rheinland-Pfalz) in diesem Zeitraum lediglich die Umstrukturierung von Verbandsgemeinden (bspw. Fusionen) zum Inhalt hatten.
+
+Nachdem ich die vier Datensätze in R eingelesen habe, füge ich diese zu einem einzigen Datensatz mit der Funktion `bind_rows()` zusammen. Jede Wahl kann über das `Jahr` identifiziert werden. Für die weitere Analyse fasse ich sehr kleine Parteien in der Sammelkategorie `Sonstige` zusammen. Zudem lege ich eine Farbpalette an, bei der jeder Partei ihre politische Farbe in einer Grafik erhält.
+
+```{r}
+data_analyse <- 
+  bind_rows(data_2006, data_2011,
+            data_2016, data_2021) %>%
+  mutate(Partei_Kategorie = ifelse(!(Partei %in% c("AfD","CDU","FDP",
+                                                   "FREIE WÄHLER", "GRÜNE", 
+                                                   "Linke", "SPD")),
+                                   "Sonstige", 
+                                   Partei))
+
+palette_partei <- c("#A6CEE3", # AfD
+                    "#000000", # CDU
+                    "#E6AB02", # FDP
+                    "#FF7F00", # FREIE WÄHLER
+                    "#33A02C", # GRÜNE
+                    "#B30000", # Linke
+                    "#6A3D9A", # SPD
+                    "#E31A1C"  # Sonstige
+                    )
+```
+
+*****
+
+Zuerst möchte ich die Verteilung der absoluten Anzahl von Zweitstimmen auf Landesebene betrachen. Unten ist die Anzahl der abgegebenen gültigen Zweitstimmen für jede Partei in jedem Wahljahr seit 2006 dargestellt. Da die Wahlergebnisse auf Gemeindeebene vorliegen, müssen diese nun aggregiert werden.
+
+```{r, message=FALSE, warning=FALSE}
+data_analyse %>%
+  group_by(Jahr, Partei_Kategorie) %>%
+  summarise(Zweitstimmen = sum(Zweitstimmen, na.rm =T)) %>%
+  ggplot(data = . ,
+         aes(x = Partei_Kategorie, 
+             y = Zweitstimmen, 
+             fill = Partei_Kategorie)) +
+  geom_bar(stat = "identity", position = "dodge", color = "white") +
+  scale_y_continuous(labels = scales::comma_format(big.mark = ".", 
+                                                   decimal.mark = ",")) +
+  scale_fill_manual(values = palette_partei) +
+  facet_grid(. ~ Jahr) +
+  labs(x = "", y = "Anzahl Zweitstimmen") + 
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 90)) 
+```
+
+Auch die relativen Zweitstimmanteile lassen sich einfach darstellen. Hier muss lediglich in der Funktion `geom_bar()` das Argument `position=` verändert und die Skalierung der y-Achse angepasst werden.
+
+````{r, message=FALSE, warning=FALSE}
+data_analyse %>%
+  group_by(Jahr, Partei_Kategorie) %>%
+  summarise(Zweitstimmen = sum(Zweitstimmen, na.rm =T)) %>%
+  ggplot(aes(x =as.factor(Jahr), 
+             y = Zweitstimmen, 
+             fill = Partei_Kategorie)) +
+  geom_bar(stat = "identity", position = "fill", color = "white") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_manual(values = palette_partei) +
+  labs(x = "", y = "Anzahl Zweitstimmen") +
+  theme(legend.position = "none") 
+```
+
+Mit der Darstellung der relativen Stimmverteilung lassen sich die Ergebnisse auf Landkreiseeben gut miteinander vergleichen. Hierzu tausche ich die Position der x- und y-Achse, damit die Landkreise besser lesbar sind.
+
+```{r, message=FALSE, warning=FALSE}
+data_analyse %>%
+  group_by(Jahr, Partei_Kategorie, Landkreis) %>%
+  summarise(Erststimmen = sum(Erststimmen, na.rm = T),
+            Zweitstimmen = sum(Zweitstimmen, na.rm =T)) %>%
+  ggplot(data = .,
+         aes(x = Landkreis, 
+             y = Zweitstimmen, 
+             fill = Partei_Kategorie)
+         ) +
+  geom_bar(stat = "identity", position = "fill", color = "white") +
+  scale_x_discrete(limits = rev(levels(factor(data_analyse$Landkreis)))) +
+  scale_y_continuous(breaks = c(0.25,0.75), labels = scales::percent) +
+  scale_fill_manual(name = "", values = palette_partei) +
+  coord_flip() +
+  facet_grid(.~ Jahr) +
+  labs(x = "", y = "Anteil Zweitstimmen") + 
+  theme(legend.position = "none")
+```
+
+*****
+
+Nun möchte ich die *Wahlbeteiligung* zwischen den Landkreisen vergleichen. Meine Ergebnisse stimmen nicht exakt mit den veröffentlichten Zahlen überein, da es zwei unterschiedliche Berechnungsmethoden für die Wahlbeteiligung gibt. [Hier](https://www.wahlen.rlp.de/de/btw/wahlen/2013/downloads/hinweise/) findet man mehr Informationen zu den einzelnen Berechnungsmethoden, die je nach Gemeinde angewandt werden. Ich berechne die Wahlbeteiligung für alle Gemeinden nach *Methode 2*, wonach die Wahlbeteiligung der Anzahl Wähler geteilt durch die Anzahl der Wahlberechtigten entspricht. Zusätzlich berechne ich auch die Wahlbeteilung für Rheinland-Pfalz insgesamt `wbeteiligung_rlp` und füge diese via `geom_hline()` in die Grafik ein.
+
+```{r, message=FALSE, warning=FALSE}
+wbeteiligung_rlp <- data_analyse %>%
+  group_by(Jahr, Landkreis) %>%
+  summarise(Wahlbeteiligung = mean(Wahlbeteiligung, na.rm = T)) %>%
+  group_by(Jahr) %>%
+  summarise(Wahlbeteiligung = mean(Wahlbeteiligung, na.rm = T)) 
+
+data_analyse %>%
+  filter(Wahlberechtigte != 0) %>%
+  group_by(Jahr, Landkreis) %>%
+  summarise(Wahlbeteiligung = mean(Wahlbeteiligung, na.rm = T)) %>%
+  ggplot(.,
+       aes(x = factor(Landkreis), 
+           y = Wahlbeteiligung)) +
+  geom_bar(stat = "identity", position = "dodge", 
+           color = "black", fill = "white") +
+  geom_hline(data = wbeteiligung_rlp, 
+             aes(yintercept = Wahlbeteiligung), 
+             color = "red", size = 1) +
+  facet_grid(. ~ Jahr) +
+  coord_flip() +
+  scale_x_discrete(limits = rev(levels(factor(data_analyse$Landkreis)))) +
+  scale_y_continuous(limits = c(0,1), 
+                     breaks= c(0.25,0.75), 
+                     labels = scales::percent) +
+  labs(x = "") 
+```
+
+Auch wenn ich kein besonders sinnvolles Ergebnis erwarte, kann ich mit diesem Datensatz ein Liniendiagramm der Wahlbeteiligung im Zeitverlauf für jede einzelne Gemeinde erstellen (jede Linie stellt eine Gemeinde dar). In der Grafik unten erkennt man, dass einige Linien erst im Jahr 2011 beginnen. Hierbei handelt es sich um Stadtteile von kreisfreien Städten wie bspw. Mainz, da es in den Rohdaten für das Wahljahr 2006 keine Aufschlüsselung der Ergebnisse nach Stadtteilen gibt. Hier muss ich auf das Herunterbrechen der Ergebnisse auf die kleinste Gebietseinheit verzichten und es liegen nur aggregierte Ergebnisse für die kreisfreien Städte vor.
+
+```{r, message=FALSE, warning=FALSE}
+data_analyse %>%
+  filter(Wahlberechtigte != 0) %>%
+  group_by(Jahr, Gebietsbezeichnung) %>%
+  slice(1) %>%
+  ggplot(data = ., 
+         aes(x = Jahr, 
+             y = Wahlbeteiligung,
+             group = Gebietsbezeichnung)) +
+  geom_line(alpha = 0.05) +
+  scale_x_continuous(limits = c(2006,2021), 
+                     breaks = c(2006,2011,2016,2021)) +
+  scale_y_continuous(limits = c(0,1), 
+                     breaks= seq(0,1,0.2), 
+                     labels = scales::percent) +
+  labs(y = "Wahlbeteiligung (Methode 2)") + 
+  theme(legend.position = "none",
+        panel.grid.minor.x = element_blank()) 
+```
+
+***
+
+Auch die Verteilung der Zweitstimmen nach Parteien kann für die Gemeinden dargestellt werden.
+
+```{r, message=FALSE, warning=FALSE}
+data_analyse %>%
+  group_by(Jahr, Landkreis, Gebietsbezeichnung, Partei_Kategorie) %>%
+  summarise(Zweitstimmen = sum(Zweitstimmen, na.rm =T)) %>%
+  mutate(rel_Zweit = Zweitstimmen / sum(Zweitstimmen)) %>%
+  ggplot(data = ., 
+         aes(x = Jahr, 
+             y = rel_Zweit, 
+             group = Gebietsbezeichnung, 
+             color = Partei_Kategorie)
+         ) +
+  geom_line(alpha = 0.05) + 
+  scale_x_continuous(limits = c(2006,2021), 
+                     breaks = c(2006,2011,2016,2021)) +
+  scale_y_continuous(limits = c(0,1), 
+                     breaks = seq(0,1,0.2), 
+                     labels = scales::percent) +
+  scale_color_manual(name = "", values = palette_partei) +
+  facet_wrap(. ~ Partei_Kategorie) +
+  labs(x="",
+       y = "Anteil Zweitstimmen") +
+  theme(legend.position = "none",
+        panel.grid.minor.x = element_blank()) 
+```
+
+Wie ändert sich das Wahlverhalten innerhalb einer Gemeinde im Zeitverlauf? Dazu muss ich zunächst ein neues Merkmal `ZweitstimmenIndex` erstellen. Als Bezugsjahr wähle ich Landtagswahl 2006 und der Index beträgt in diesem Jahr *100* für jede Gemeinde. Einzige Ausnahme bilden die Stadtteile von kreisfreien Städten, da diese für 2006 nicht verfügbar sind. Hier ist das Bezugsjahr 2011 mit einem Index von *100*.
+
+```{r, message=FALSE, warning=FALSE}
+data_indexed <- 
+  data_analyse %>%
+  group_by(Jahr, Landkreis, Gebietsbezeichnung, Partei_Kategorie) %>%
+  summarise(Erststimmen = sum(Erststimmen, na.rm =T),
+            Zweitstimmen = sum(Zweitstimmen, na.rm =T)) %>%
+  group_by(Landkreis, Gebietsbezeichnung, Partei_Kategorie) %>%
+  mutate(ZweitstimmenIndex = Zweitstimmen/Zweitstimmen[which.min(Jahr)])
+
+```
+
+In der Grafik unten verwende ich den logarithmierten `ZweitstimmenIndex`. Dies ist zwar inhaltlich wenig aussagekräftig, allerdings lassen sich besonders starke Stimmanstiege bzw. Stimmrückgänge einer Partei innerhalb einer Gemeinde besser darstellen.
+
+```{r, message=FALSE, warning=FALSE}
+data_indexed %>%  
+  filter(is.finite(ZweitstimmenIndex)) %>%
+  ggplot(data = ., 
+         aes(x = factor(Jahr), 
+             y = log(ZweitstimmenIndex), 
+             group = Gebietsbezeichnung, 
+             color = Partei_Kategorie)
+         ) +
+  geom_line(alpha = 0.05) + 
+  facet_wrap(. ~ Partei_Kategorie) +
+  scale_color_manual(name = "", 
+                     values = palette_partei) +
+  labs(x = "Jahr") +
+  theme(legend.position = "none",
+        panel.grid.minor.x = element_blank()) 
+```
+
+```{r, eval=FALSE, include=F}
+# Zusätzlicher Content
+library(plotly)
+
+x <- data_indexed %>%  
+  filter(is.finite(Zweitstimmen.Index)) 
+
+# Zuerst LK wählen und Partei, dann Plot auf Gemeindeebene
+x %>%
+  filter(Partei_Kategorie == "GRÜNE" & Landkreis == "Mainz, Kreisfreie Stadt") %>%
+  plot_ly(., x=~factor(Jahr), y = ~log(Zweitstimmen.Index),
+          text = ~Gebietsbezeichnung,
+          hoverinfo = 'text',
+          type = 'scatter',  mode="lines")
+
+```
+
