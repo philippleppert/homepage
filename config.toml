@@ -152,11 +152,11 @@ enableEmoji = true
     weight = 4
 
   # Configure footer
-  #[[menu.footer]]
-  #  name = "License"
-  #  title = "License"
-  #  url = "/license/"
-  #  weight = 1
+  [[menu.footer]]
+    name = "Legal notice"
+    title = "Legal notice"
+    url = "/legal-notice/"
+    weight = 1
 
 # see https://gohugo.io/about/hugo-and-gdpr/
 [privacy]
