@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.118.2">
+<title>Datenanalyse vor Gebrauchtwagenkauf? | Philipp Leppert</title>
+
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="My homepage">
+
+
+<meta property="og:site_name" content="Philipp Leppert">
+<meta property="og:title" content="Datenanalyse vor Gebrauchtwagenkauf? | Philipp Leppert">
+<meta property="og:description" content="My homepage" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://philippleppert.eu/blog/datenanalyse-autokauf/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="https://philippleppert.eu/blog/datenanalyse-autokauf/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://philippleppert.eu/blog/datenanalyse-autokauf/featured.png" >
+    
+    
+  <meta itemprop="name" content="Datenanalyse vor Gebrauchtwagenkauf?">
+<meta itemprop="description" content="Wie kann man vor dem Kauf eines Gebrauchtwagens den Markt analysieren?"><meta itemprop="datePublished" content="2021-02-09T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-02-09T00:00:00+00:00" />
+<meta itemprop="wordCount" content="4760"><meta itemprop="image" content="https://philippleppert.eu/blog/datenanalyse-autokauf/featured.png">
+<meta itemprop="keywords" content="" />
+  
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.6ff702015d6c26370cdcf973dec600ef738de63c1cff17a62b86c7f885c08541.css" integrity="sha256-b/cCAV1sJjcM3Plz3sYA73ON5jwc/xemK4bH&#43;IXAhUE=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.b2cad19798d2e5451244dfcd623848782a1de625dac7e4d6d6e5cb542c993994.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://philippleppert.eu/" title="Home">
+      <span class="f4 fw7">Philipp Leppert</span>
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Read my blog">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/music/" title="Listen to my music">Music</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tutorials/" title="Browse my tutorials">Tutorials</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Datenanalyse vor Gebrauchtwagenkauf?</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Philipp Leppert in <a href="https://philippleppert.eu/categories/r">R</a>  <a href="https://philippleppert.eu/categories/finanzen">Finanzen</a> </p>
+        <p class="f7 db mv0 ttu">February 9, 2021</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <script src="index_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<p>Das Internet bringt uns im Großen und Ganzen eine ganze Menge Erleichterungen. Nahezu alles kann man sich online bestellen oder, bei größeren Anschaffungen, zumindest schon mal von zu Hause aus in aller Ruhe begutachten. Da unser Auto über die Weihnachtsfeiertage zum wiederholten Male gestreikt hat, haben wir uns entschieden, dass ein neues (gebrauchtes) Auto angeschafft werden muss. Die beiden größten Internetportale für die Automobilsuche 
+<a href="https://www.autoscout24.de/" target="_blank" rel="noopener">autoscout24.de</a> und 
+<a href="https://www.mobile.de/" target="_blank" rel="noopener">mobile.de</a> haben sehr detaillierte Suchmasken, sodass man sich das gewünschte Auto ziemlich genau <em>konfigurieren</em> kann.</p>
+<p>Doch genau hier beginnt auch ein Problem. Selbst wenn man sich auf einen Hersteller und ein Modell festgelegt hat, wird die Suche aufgrund der Vielzahl von Anzeigen schnell unübersichtlich. Zwar bieten die beiden Portale auch eine <em>unabhängige</em> Preisbewertung der Inserate an, also ob das Auto relativ zu vergleichbaren Inseraten im Segment eher teuer oder günstig ist, jedoch werden dabei viele Faktoren nicht berücksicht. Auf Bagatellschäden wird in der Anzeige meistens nicht hingewiesen und die Nachfrage nach der Unfallfreiheit des PKW, sofern diese nicht explizit im Inserat bestätigt ist, ergibt häufig eine negative Antwort bei vermeintlich besonders günstigen Angeboten. Auch ist selten erkennbar, ob der PKW privat oder gewerblich genutzt wurde. Ein neuer Anbieter names 
+<a href="https://www.autohero.com/de/" target="_blank" rel="noopener">Autohero</a>, bei dem man sich den Gebrauchtwagen direkt nach Hause liefern lassen kann, ist hier transparenter und führt zumindest die Eigenschaft <em>Gewerbliche Nutzung</em> auf.</p>
+<p>Insgesamt erscheint mir als Laie der Gebrauchtwagenmarkt ziemlich schwer zu durchblicken. Für ein bestimmtes Modell eines Herstellers gibt es oft zahlreiche Ausstattungsvarianten, die einen objektiven Vergleich ziemlich erschweren. Am besten man informiert sich hier bereits vorab anhand von 
+<a href="https://www.adac.de/rund-ums-fahrzeug/tests/" target="_blank" rel="noopener">ADAC Testberichten</a> oder Ähnlichem, um herauszufinden, was man eigentlich braucht. Aber es heisst ja auch nicht umsonst Ge<em>braucht</em>wagen. Doch nun weiter zur Datenanalyse.</p>
+
+
+
+
+<h2 id="datenbeschaffung"><strong>Datenbeschaffung</strong>
+  <a href="#datenbeschaffung"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Die Suchergebnisseiten der oben erwähnten Gebrauchtwagenportale bieten eine gut strukturierte Oberfläche, um mittels <em>Webscraping</em> automatisiert die Eckdaten eines Inserats zu extrahieren. Dies funktioniert (Stand Februar 2021) bei mir nur auf der Webseite von <em>autoscout24.de</em>. Generell sind die Suchergebnisse auf den beiden Webseiten sehr ähnlich und insbesondere Händler schalten ihre Inserate meist auf beiden Portalen.</p>
+<p>Unten findet sich eine Funktion, mit welcher ich die relevanten Inseratsinformationen von einer Seite der Suchergebnisse gewinne. Ich extrahiere den <code>preis</code>, den Inseratstitel, welcher aus zwei Elementen (<code>titel1</code>, <code>titel2</code>) besteht, die Laufleistung (<code>km</code>), das Datum der Erstzulassung (<code>ez</code>), die Anzahl der bisherigen Fahrzeughalter (<code>halter</code>), die Motorleistung (<code>ps</code>) und den Standort des Gebrauchtwagens (<code>ort</code>). Jedes Element wird dabei so aufbereitet, dass es für datenanalytische Zwecke sinnvoll verwendet werden kann. Die Funktion gibt zum Schluss einen <em>Data Frame</em> mit 8 Spalten zurück, der in der Regeln 20 Zeilen lang ist. Eine Suchseite auf autoscout24.de umfasst nämlich genau 20 Inserate.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">library</span>(tidyverse)
+</span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(rvest)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>scraper_autoscout24 <span style="color:#666">&lt;-</span> <span style="color:#06287e">function</span>(page){
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  preis <span style="color:#666">&lt;-</span> page <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_nodes</span>(<span style="color:#4070a0">&#34;.sc-font-xl&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_text</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">str_match_all</span>(<span style="color:#4070a0">&#34;€ *.*&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">unlist</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">str_remove_all</span>(<span style="color:#4070a0">&#34;\\.|,-|€&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">as.numeric</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">`length&lt;-` </span>(<span style="color:#40a070">20</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">as_tibble_col</span>(<span style="color:#4070a0">&#34;preis&#34;</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  titel1 <span style="color:#666">&lt;-</span> page <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_nodes</span>(<span style="color:#4070a0">&#34;#cldt-ot-summary .sc-font-bold&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_text</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">`length&lt;-` </span>(<span style="color:#40a070">20</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">as_tibble_col</span>(<span style="color:#4070a0">&#34;titel1&#34;</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  titel2 <span style="color:#666">&lt;-</span> page <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_nodes</span>(<span style="color:#4070a0">&#34;.cldt-summary-version&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_text</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">`length&lt;-` </span>(<span style="color:#40a070">20</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">as_tibble_col</span>(<span style="color:#4070a0">&#34;titel2&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">mutate</span>(id <span style="color:#666">=</span> <span style="color:#40a070">1</span><span style="color:#666">:</span><span style="color:#40a070">20</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  km <span style="color:#666">&lt;-</span> page <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_nodes</span>(<span style="color:#4070a0">&#34;li:nth-child(1)&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_text</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">str_match_all</span>(<span style="color:#4070a0">&#34;[0-9].+ km&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">unlist</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">str_remove_all</span>(<span style="color:#4070a0">&#34;\\.| km&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">as.numeric</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">`length&lt;-` </span>(<span style="color:#40a070">20</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">as_tibble_col</span>(<span style="color:#4070a0">&#34;km&#34;</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  ez <span style="color:#666">&lt;-</span> page <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_nodes</span>(<span style="color:#4070a0">&#34;li:nth-child(2)&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_text</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">str_match_all</span>(<span style="color:#4070a0">&#34;.*[0-9]/[0-9]*|.*Erstzulassung&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">unlist</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">str_remove_all</span>(<span style="color:#4070a0">&#34;-/- \\(Erstzulassung&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">`length&lt;-` </span>(<span style="color:#40a070">20</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">as_tibble_col</span>(<span style="color:#4070a0">&#34;ez&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">separate</span>(col <span style="color:#666">=</span> ez, into <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;monat&#34;</span>, <span style="color:#4070a0">&#34;jahr&#34;</span>), sep <span style="color:#666">=</span> <span style="color:#4070a0">&#34;/&#34;</span>, remove <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  halter <span style="color:#666">&lt;-</span> page <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_nodes</span>(<span style="color:#4070a0">&#34;li:nth-child(5)&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_text</span>() <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">str_match_all</span>(<span style="color:#4070a0">&#34;.*Fahrzeughalter&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">unlist</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">str_remove_all</span>(<span style="color:#4070a0">&#34; Fahrzeughalter|-/- \\(Fahrzeughalter&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">as.numeric</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">`length&lt;-` </span>(<span style="color:#40a070">20</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">as_tibble_col</span>(<span style="color:#4070a0">&#34;halter&#34;</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  ps <span style="color:#666">&lt;-</span> page <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_nodes</span>(<span style="color:#4070a0">&#34;li:nth-child(3)&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_text</span>() <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">str_match_all</span>(<span style="color:#4070a0">&#34;.[0-9]* PS&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">unlist</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">str_remove_all</span>(<span style="color:#4070a0">&#34; PS|\\(&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">as.numeric</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">`length&lt;-` </span>(<span style="color:#40a070">20</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">as_tibble_col</span>(<span style="color:#4070a0">&#34;ps&#34;</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  ort <span style="color:#666">&lt;-</span> page <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_nodes</span>(<span style="color:#4070a0">&#34;.cldf-summary-seller-contact-zip-city&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">html_text</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">`length&lt;-` </span>(<span style="color:#40a070">20</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">as_tibble_col</span>(<span style="color:#4070a0">&#34;ort&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">separate</span>(col <span style="color:#666">=</span> ort, into <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;plz&#34;</span>, <span style="color:#4070a0">&#34;stadt&#34;</span>), sep <span style="color:#666">=</span> <span style="color:#4070a0">&#34; &#34;</span>, remove <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  scraped_data <span style="color:#666">&lt;-</span> <span style="color:#06287e">tibble</span>(
+</span></span><span style="display:flex;"><span>    titel1, titel2, 
+</span></span><span style="display:flex;"><span>    preis, km, ez, 
+</span></span><span style="display:flex;"><span>    halter, ps, ort
+</span></span><span style="display:flex;"><span>  )
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">return</span>(scraped_data)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Nun habe ich die Qual der Wahl und muss meine Suche für ein bestimmtes Auto spezifizieren. Wir haben uns vorab für einen Opel Adam entschieden und für meine Auswertung verwende ich die folgenden Spezifikationen:</p>
+<ul>
+<li>Erstzulassung zwischen Anfang 2013 und Ende 2018</li>
+<li>keine Beschränkung der Laufleistung (km)</li>
+<li>ab 90 PS (Benziner)</li>
+<li>maximal 2 Fahrzeughalter</li>
+<li>scheckheftgepflegt</li>
+<li>keine Privatangebote</li>
+</ul>
+<p>Am 09.02.2021 wurden dabei 439 Inserate gefunden. Die Webseite autoscout24.de begrenzt die Anzahl abrufbarer Suchseiten automatisch auf 20 (= 400 Inserate). D.h. wenn mehr Inserate gefunden werden, kann man diese sich weder manuell anzeigen lassen noch automatisiert abrufen. Dies kann umgangen werden, indem man die Angebote nach ihrem Preis filtert. D.h. wenn ich die Suchergebnisse aufsteigend nach dem Preis sortiere und die ersten 400 Inserate extrahiere, kann ich nach dem letzten Inserat auf Seite 20 (Inserat 400) den Preis als Mindestpreis für die nächste Suche festlegen und erhalte so die verbleibenden Inserate.</p>
+<p>Technisch muss man zunächst eine leere Liste (<code>pages</code>) erstellen, in welcher für jede Seite der Suchergebnisse der Webseiteninhalt, ausgelesen mit der Funktion <code>read_html()</code>, gespeichert wird. Die for-Schleife läuft dann von Seite 1 bis maximal Seite 20. Der Link der Webseite wird am URL-Bestandteil <code>page=</code> geteilt. Danach verwende ich die Funktion <code>map_dfr()</code> aus dem R-Paket <code>purrr</code> und wende die oben codierte Funktion auf jedes Listenelement von <code>pages</code> an. Fertig ist ein Datensatz mit Gebrauchtwageninseraten!</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Seiten</span>
+</span></span><span style="display:flex;"><span>pages <span style="color:#666">&lt;-</span> <span style="color:#06287e">list</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Suchseiten 1:X</span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">for </span>(i in <span style="color:#40a070">1</span><span style="color:#666">:</span><span style="color:#40a070">20</span>) {
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  url <span style="color:#666">&lt;-</span> <span style="color:#06287e">paste0</span>(<span style="color:#4070a0">&#34;https://www.autoscout24.de/lst/opel/adam?sort=price&amp;desc=0&amp;custtype=D&amp;prevownersid=2&amp;eq=49&amp;fuel=B&amp;ustate=N%2CU&amp;size=20&amp;page=&#34;</span>
+</span></span><span style="display:flex;"><span>                ,i,
+</span></span><span style="display:flex;"><span>                <span style="color:#4070a0">&#34;&amp;powerfrom=66&amp;powertype=hp&amp;cy=D&amp;fregto=2018&amp;fregfrom=2013&amp;atype=C&amp;fc=25&amp;qry=&amp;&#34;</span>) 
+</span></span><span style="display:flex;"><span>  pages[[i]] <span style="color:#666">&lt;-</span> <span style="color:#06287e">read_html</span>(url)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Mappen und NA entfernen</span>
+</span></span><span style="display:flex;"><span>inserate <span style="color:#666">&lt;-</span> <span style="color:#06287e">map_dfr</span>(.x <span style="color:#666">=</span> pages, .f <span style="color:#666">=</span> <span style="color:#666">~</span><span style="color:#06287e">scraper_autoscout24</span>(page <span style="color:#666">=</span> .x)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(ez <span style="color:#666">!=</span> <span style="color:#4070a0">&#34;&#34;</span>) 
+</span></span></code></pre></div><p>Die Daten sehen so aus:</p>
+<br>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">titel1</th>
+<th style="text-align:left">titel2</th>
+<th style="text-align:right">id</th>
+<th style="text-align:right">preis</th>
+<th style="text-align:right">km</th>
+<th style="text-align:left">ez</th>
+<th style="text-align:left">monat</th>
+<th style="text-align:left">jahr</th>
+<th style="text-align:right">halter</th>
+<th style="text-align:right">ps</th>
+<th style="text-align:left">ort</th>
+<th style="text-align:left">plz</th>
+<th style="text-align:left">stadt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1,4 SLAM ecoFLEX S/S Panorama</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">4900</td>
+<td style="text-align:right">150000</td>
+<td style="text-align:left">07/2013</td>
+<td style="text-align:left">07</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">71679 Asperg</td>
+<td style="text-align:left">71679</td>
+<td style="text-align:left">Asperg</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Slam ecoFlex</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">5950</td>
+<td style="text-align:right">125897</td>
+<td style="text-align:left">07/2013</td>
+<td style="text-align:left">07</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">84088 Neufahrn</td>
+<td style="text-align:left">84088</td>
+<td style="text-align:left">Neufahrn</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 Slam *101PS*TEILLEDER*SOUNDSYSTEM*1.HD*</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">5990</td>
+<td style="text-align:right">159750</td>
+<td style="text-align:left">04/2014</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2014</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">31275 Lehrte</td>
+<td style="text-align:left">31275</td>
+<td style="text-align:left">Lehrte</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 Jam*2Hd*Panorama*Garantie*SH*LH*Eu5*TOP</td>
+<td style="text-align:right">4</td>
+<td style="text-align:right">6490</td>
+<td style="text-align:right">133900</td>
+<td style="text-align:left">04/2013</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">67549 Worms</td>
+<td style="text-align:left">67549</td>
+<td style="text-align:left">Worms</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Glam~Lradhzg~Parkaut~Klimaaut.~Sihzg~Tempom</td>
+<td style="text-align:right">5</td>
+<td style="text-align:right">6699</td>
+<td style="text-align:right">101700</td>
+<td style="text-align:left">03/2014</td>
+<td style="text-align:left">03</td>
+<td style="text-align:left">2014</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">07629 Hermsdorf</td>
+<td style="text-align:left">07629</td>
+<td style="text-align:left">Hermsdorf</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">GLAM 1.4 SHZ/PANO/UNFALLFREI!</td>
+<td style="text-align:right">6</td>
+<td style="text-align:right">6890</td>
+<td style="text-align:right">86934</td>
+<td style="text-align:left">05/2013</td>
+<td style="text-align:left">05</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">99310 Arnstadt</td>
+<td style="text-align:left">99310</td>
+<td style="text-align:left">Arnstadt</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 Jam Panoramadach+Scheckheft+Sitzheizung</td>
+<td style="text-align:right">7</td>
+<td style="text-align:right">6950</td>
+<td style="text-align:right">90154</td>
+<td style="text-align:left">11/2014</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">2014</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">41063 Mönchengladbach</td>
+<td style="text-align:left">41063</td>
+<td style="text-align:left">Mönchengladbach</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Glam Panoramadach Sitzheizung PDC</td>
+<td style="text-align:right">8</td>
+<td style="text-align:right">6980</td>
+<td style="text-align:right">94900</td>
+<td style="text-align:left">06/2013</td>
+<td style="text-align:left">06</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">91522 Ansbach</td>
+<td style="text-align:left">91522</td>
+<td style="text-align:left">Ansbach</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Glam ecoFlex *Panorama/Lenkradheizung*</td>
+<td style="text-align:right">9</td>
+<td style="text-align:right">6990</td>
+<td style="text-align:right">65000</td>
+<td style="text-align:left">05/2013</td>
+<td style="text-align:left">05</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">45881 Gelsenkirchen</td>
+<td style="text-align:left">45881</td>
+<td style="text-align:left">Gelsenkirchen</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Slam ecoFlex</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">6990</td>
+<td style="text-align:right">95200</td>
+<td style="text-align:left">03/2015</td>
+<td style="text-align:left">03</td>
+<td style="text-align:left">2015</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">93104 Sünching</td>
+<td style="text-align:left">93104</td>
+<td style="text-align:left">Sünching</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Slam 1,4 ecoFlex 1.Hand *Panoramadach*</td>
+<td style="text-align:right">11</td>
+<td style="text-align:right">6999</td>
+<td style="text-align:right">96000</td>
+<td style="text-align:left">04/2013</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">55252 Mainz-Kastel</td>
+<td style="text-align:left">55252</td>
+<td style="text-align:left">Mainz-Kastel</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Slam ecoFlex Sportpaket NAVI~SHZ~KLIMA~USB</td>
+<td style="text-align:right">12</td>
+<td style="text-align:right">6999</td>
+<td style="text-align:right">91000</td>
+<td style="text-align:left">10/2013</td>
+<td style="text-align:left">10</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">70173 Stuttgart</td>
+<td style="text-align:left">70173</td>
+<td style="text-align:left">Stuttgart</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 Slam,Alu 17Zoll,Sportfahrwerk,Top Zustand</td>
+<td style="text-align:right">13</td>
+<td style="text-align:right">6999</td>
+<td style="text-align:right">73900</td>
+<td style="text-align:left">11/2013</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">94469 Deggendorf</td>
+<td style="text-align:left">94469</td>
+<td style="text-align:left">Deggendorf</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 Jam 8 fach Bereift</td>
+<td style="text-align:right">14</td>
+<td style="text-align:right">7400</td>
+<td style="text-align:right">97144</td>
+<td style="text-align:left">09/2014</td>
+<td style="text-align:left">09</td>
+<td style="text-align:left">2014</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">31234 Edemissen / Abbensen</td>
+<td style="text-align:left">31234</td>
+<td style="text-align:left">Edemissen</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 Glam</td>
+<td style="text-align:right">15</td>
+<td style="text-align:right">7500</td>
+<td style="text-align:right">51667</td>
+<td style="text-align:left">07/2013</td>
+<td style="text-align:left">07</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">01723 Wilsdruff</td>
+<td style="text-align:left">01723</td>
+<td style="text-align:left">Wilsdruff</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Jam'2.Hand'93.602KM'Klima'8-fach'</td>
+<td style="text-align:right">16</td>
+<td style="text-align:right">7500</td>
+<td style="text-align:right">93602</td>
+<td style="text-align:left">08/2013</td>
+<td style="text-align:left">08</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">45772 Marl</td>
+<td style="text-align:left">45772</td>
+<td style="text-align:left">Marl</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 Glam *Pano*Tempo*IntelliLink*PDC*Klima*</td>
+<td style="text-align:right">17</td>
+<td style="text-align:right">7560</td>
+<td style="text-align:right">48357</td>
+<td style="text-align:left">07/2015</td>
+<td style="text-align:left">07</td>
+<td style="text-align:left">2015</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">65936 Frankfurt am Main</td>
+<td style="text-align:left">65936</td>
+<td style="text-align:left">Frankfurt</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Jam</td>
+<td style="text-align:right">18</td>
+<td style="text-align:right">7690</td>
+<td style="text-align:right">51400</td>
+<td style="text-align:left">05/2013</td>
+<td style="text-align:left">05</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">42327 Wuppertal</td>
+<td style="text-align:left">42327</td>
+<td style="text-align:left">Wuppertal</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 Jam 1.Hand unfallfrei 17''LM Bluetooth AUX</td>
+<td style="text-align:right">19</td>
+<td style="text-align:right">7700</td>
+<td style="text-align:right">74000</td>
+<td style="text-align:left">04/2013</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">61350 Bad Homburg</td>
+<td style="text-align:left">61350</td>
+<td style="text-align:left">Bad</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 Jam IntelliLink/Klimaauto./SHZ/LHZ/PDC</td>
+<td style="text-align:right">20</td>
+<td style="text-align:right">7790</td>
+<td style="text-align:right">62000</td>
+<td style="text-align:left">12/2014</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">2014</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">91154 Roth</td>
+<td style="text-align:left">91154</td>
+<td style="text-align:left">Roth</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Slam ecoFlex</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">7850</td>
+<td style="text-align:right">95007</td>
+<td style="text-align:left">03/2016</td>
+<td style="text-align:left">03</td>
+<td style="text-align:left">2016</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">84088 Neufahrn</td>
+<td style="text-align:left">84088</td>
+<td style="text-align:left">Neufahrn</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Jam</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">7900</td>
+<td style="text-align:right">53000</td>
+<td style="text-align:left">04/2014</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2014</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">74743 Seckach-Großeicholzheim</td>
+<td style="text-align:left">74743</td>
+<td style="text-align:left">Seckach-Großeicholzheim</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Slam ( Schnäppchen / unbedingt lesen )</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">7950</td>
+<td style="text-align:right">47200</td>
+<td style="text-align:left">04/2015</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2015</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">90</td>
+<td style="text-align:left">26655 Westerstede</td>
+<td style="text-align:left">26655</td>
+<td style="text-align:left">Westerstede</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 Slam / DAB / SHZ / PDC / NAVI / SPORT</td>
+<td style="text-align:right">4</td>
+<td style="text-align:right">7950</td>
+<td style="text-align:right">99720</td>
+<td style="text-align:left">10/2013</td>
+<td style="text-align:left">10</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">84032 Altdorf</td>
+<td style="text-align:left">84032</td>
+<td style="text-align:left">Altdorf</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Rocks ecoFlex S +Schiebdach+Alufelgen</td>
+<td style="text-align:right">5</td>
+<td style="text-align:right">7990</td>
+<td style="text-align:right">82900</td>
+<td style="text-align:left">06/2015</td>
+<td style="text-align:left">06</td>
+<td style="text-align:left">2015</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">90</td>
+<td style="text-align:left">88499 Riedlingen</td>
+<td style="text-align:left">88499</td>
+<td style="text-align:left">Riedlingen</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 Glam Pano PDC Lenkradh. Sportsitze App</td>
+<td style="text-align:right">6</td>
+<td style="text-align:right">7990</td>
+<td style="text-align:right">61625</td>
+<td style="text-align:left">01/2014</td>
+<td style="text-align:left">01</td>
+<td style="text-align:left">2014</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">36251 Bad Hersfeld</td>
+<td style="text-align:left">36251</td>
+<td style="text-align:left">Bad</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Jam ecoFlex*Klima*Leder*PDC*SHZ*SternLED*</td>
+<td style="text-align:right">7</td>
+<td style="text-align:right">7990</td>
+<td style="text-align:right">52725</td>
+<td style="text-align:left">04/2013</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">63165 Mühlheim / Main</td>
+<td style="text-align:left">63165</td>
+<td style="text-align:left">Mühlheim</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">Jam</td>
+<td style="text-align:right">8</td>
+<td style="text-align:right">7990</td>
+<td style="text-align:right">89900</td>
+<td style="text-align:left">08/2016</td>
+<td style="text-align:left">08</td>
+<td style="text-align:left">2016</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">38302 Wolfenbüttel</td>
+<td style="text-align:left">38302</td>
+<td style="text-align:left">Wolfenbüttel</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">ADAM JAM ECOFLEX &quot;BILDHÜBSCH UND NEUWERTIG&quot;</td>
+<td style="text-align:right">9</td>
+<td style="text-align:right">7999</td>
+<td style="text-align:right">55000</td>
+<td style="text-align:left">04/2015</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2015</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">90</td>
+<td style="text-align:left">55129 Mainz</td>
+<td style="text-align:left">55129</td>
+<td style="text-align:left">Mainz</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.0 Start/Stop - Sondermodell</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">8280</td>
+<td style="text-align:right">86985</td>
+<td style="text-align:left">03/2015</td>
+<td style="text-align:left">03</td>
+<td style="text-align:left">2015</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">116</td>
+<td style="text-align:left">78315 Radolfzell-Böhringen</td>
+<td style="text-align:left">78315</td>
+<td style="text-align:left">Radolfzell-Böhringen</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+
+<h2 id="datenaufbereitung"><strong>Datenaufbereitung</strong>
+  <a href="#datenaufbereitung"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Die Daten sind zwar durch die Scraping-Funktion schon relativ sauber, allerdings möchte ich noch einige zusätzliche Merkmale für die folgende Analyse erstellen. Zunächst nutze ich das Merkmal <code>ez</code> (Datum der Erstzulassung), um das Alter des Gebrauchtwagens in Tagen/Monaten/Jahren zu berechnen. Hierzu verwende ich die Funktionen <code>today()</code> und <code>mdy()</code> aus dem R-Paket <code>lubridate</code>. Vom Opel Adam gibt es (leider) eine Vielzahl von Ausstattungsvarianten, die sich in unterschiedlichster Form auf den Preis niederschlagen könnten. Um dies in der Analyse berücksichtigen zu können, erstelle ich das Merkmal <code>linie</code>, welches durch Textabgleich mit <code>titel2</code> erstellt wird. Hierbei suche ich den Inseratstitel nach den Ausstattungsvarianten ab (Slam, Jam, Glam, usw.). Bei einigen Inseraten lässt der Titel keine eindeutige Zuweisung einer Ausstattungsvariante zu, sodass ich eine Restkategorie (<code>&quot;8 Sonstige&quot;</code>) erstellen musste.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">library</span>(lubridate)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cars <span style="color:#666">&lt;-</span> inserate <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(alter_d <span style="color:#666">=</span> <span style="color:#06287e">today</span>() <span style="color:#666">-</span> <span style="color:#06287e">mdy</span>(ez),
+</span></span><span style="display:flex;"><span>         alter_m <span style="color:#666">=</span> <span style="color:#06287e">round</span>(<span style="color:#06287e">as.numeric</span>(alter_d)<span style="color:#666">/</span><span style="color:#40a070">30</span>, digits <span style="color:#666">=</span> <span style="color:#40a070">0</span>),
+</span></span><span style="display:flex;"><span>         alter_y <span style="color:#666">=</span> <span style="color:#06287e">round</span>(<span style="color:#06287e">as.numeric</span>(alter_d)<span style="color:#666">/</span><span style="color:#40a070">365</span>, digits <span style="color:#666">=</span> <span style="color:#40a070">1</span>),
+</span></span><span style="display:flex;"><span>         titel2 <span style="color:#666">=</span> <span style="color:#06287e">tolower</span>(titel2),
+</span></span><span style="display:flex;"><span>         linie <span style="color:#666">=</span> <span style="color:#06287e">case_when</span>(
+</span></span><span style="display:flex;"><span>           <span style="color:#06287e">str_detect</span>(titel2, <span style="color:#4070a0">&#34;jam&#34;</span>) <span style="color:#666">==</span> <span style="color:#007020;font-weight:bold">TRUE</span> <span style="color:#666">~</span> <span style="color:#4070a0">&#34;1 Jam&#34;</span>,
+</span></span><span style="display:flex;"><span>           <span style="color:#06287e">str_detect</span>(titel2, <span style="color:#4070a0">&#34;slam&#34;</span>) <span style="color:#666">==</span> <span style="color:#007020;font-weight:bold">TRUE</span> <span style="color:#666">~</span> <span style="color:#4070a0">&#34;2 Slam&#34;</span>,
+</span></span><span style="display:flex;"><span>           <span style="color:#06287e">str_detect</span>(titel2, <span style="color:#4070a0">&#34;glam&#34;</span>) <span style="color:#666">==</span> <span style="color:#007020;font-weight:bold">TRUE</span> <span style="color:#666">~</span> <span style="color:#4070a0">&#34;3 Glam&#34;</span>,
+</span></span><span style="display:flex;"><span>           <span style="color:#06287e">str_detect</span>(titel2, <span style="color:#4070a0">&#34;rocks|open air&#34;</span>) <span style="color:#666">==</span> <span style="color:#007020;font-weight:bold">TRUE</span> <span style="color:#666">~</span> <span style="color:#4070a0">&#34;4 Rocks&#34;</span>,
+</span></span><span style="display:flex;"><span>           <span style="color:#06287e">str_detect</span>(titel2, <span style="color:#4070a0">&#34;unlimited&#34;</span>) <span style="color:#666">==</span> <span style="color:#007020;font-weight:bold">TRUE</span> <span style="color:#666">~</span> <span style="color:#4070a0">&#34;5 Unlimited&#34;</span>,
+</span></span><span style="display:flex;"><span>           <span style="color:#06287e">str_detect</span>(titel2, <span style="color:#4070a0">&#34;s 1.4|1.4 turbo s&#34;</span>) <span style="color:#666">==</span> <span style="color:#007020;font-weight:bold">TRUE</span> <span style="color:#666">&amp;</span> ps <span style="color:#666">==</span> <span style="color:#40a070">150</span> <span style="color:#666">~</span> <span style="color:#4070a0">&#34;6 Adam S&#34;</span>,
+</span></span><span style="display:flex;"><span>           <span style="color:#06287e">str_detect</span>(titel2, <span style="color:#4070a0">&#34;s&#34;</span>) <span style="color:#666">==</span> <span style="color:#007020;font-weight:bold">TRUE</span> <span style="color:#666">&amp;</span> ps <span style="color:#666">==</span> <span style="color:#40a070">150</span> <span style="color:#666">~</span> <span style="color:#4070a0">&#34;6 Adam S&#34;</span>,
+</span></span><span style="display:flex;"><span>           <span style="color:#06287e">str_detect</span>(titel2, <span style="color:#4070a0">&#34;120&#34;</span>) <span style="color:#666">==</span> <span style="color:#007020;font-weight:bold">TRUE</span> <span style="color:#666">~</span> <span style="color:#4070a0">&#34;7 120 Jahre&#34;</span>,
+</span></span><span style="display:flex;"><span>           <span style="color:#007020;font-weight:bold">TRUE</span> <span style="color:#666">~</span> <span style="color:#4070a0">&#34;8 Sonstige&#34;</span>))
+</span></span></code></pre></div><p>Die Standortangabe des Gebrauchtwagens (PLZ und Stadt) nutze ich, um das Inserat einem Bundesland zuzuordnen. Dafür verwende ich einen Schlüssel aus dem Internet und verknüpfe die beiden Dateien.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>plz_data<span style="color:#666">&lt;-</span> readr<span style="color:#666">::</span><span style="color:#06287e">read_delim</span>(<span style="color:#4070a0">&#34;data/plz_zuordnung.csv&#34;</span>, delim <span style="color:#666">=</span> <span style="color:#4070a0">&#34;;&#34;</span>,
+</span></span><span style="display:flex;"><span>                              locale <span style="color:#666">=</span> <span style="color:#06287e">locale</span>(encoding <span style="color:#666">=</span> <span style="color:#4070a0">&#34;latin1&#34;</span>)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(plz <span style="color:#666">=</span> <span style="color:#06287e">ifelse</span>(<span style="color:#06287e">nchar</span>(plz) <span style="color:#666">==</span> <span style="color:#40a070">4</span>, <span style="color:#06287e">paste0</span>(<span style="color:#4070a0">&#34;0&#34;</span>, plz),plz))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cars <span style="color:#666">&lt;-</span> <span style="color:#06287e">left_join</span>(cars, plz_data, by <span style="color:#666">=</span> <span style="color:#4070a0">&#34;plz&#34;</span>)
+</span></span></code></pre></div><p>Die Daten sehen nun so aus und sind bereit für die Auswertung.</p>
+<br>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">titel1</th>
+<th style="text-align:left">titel2</th>
+<th style="text-align:right">id</th>
+<th style="text-align:right">preis</th>
+<th style="text-align:right">km</th>
+<th style="text-align:left">ez</th>
+<th style="text-align:left">monat</th>
+<th style="text-align:left">jahr</th>
+<th style="text-align:right">halter</th>
+<th style="text-align:right">ps</th>
+<th style="text-align:left">ort</th>
+<th style="text-align:left">plz</th>
+<th style="text-align:left">stadt</th>
+<th style="text-align:left">alter_d</th>
+<th style="text-align:right">alter_m</th>
+<th style="text-align:right">alter_y</th>
+<th style="text-align:left">linie</th>
+<th style="text-align:left">bundesland</th>
+<th style="text-align:left">kreis</th>
+<th style="text-align:left">typ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1,4 slam ecoflex s/s panorama</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">4900</td>
+<td style="text-align:right">150000</td>
+<td style="text-align:left">07/2013</td>
+<td style="text-align:left">07</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">71679 Asperg</td>
+<td style="text-align:left">71679</td>
+<td style="text-align:left">Asperg</td>
+<td style="text-align:left">3753 days</td>
+<td style="text-align:right">125</td>
+<td style="text-align:right">10.3</td>
+<td style="text-align:left">2 Slam</td>
+<td style="text-align:left">Baden-Württemberg</td>
+<td style="text-align:left">Ludwigsburg</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">slam ecoflex</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">5950</td>
+<td style="text-align:right">125897</td>
+<td style="text-align:left">07/2013</td>
+<td style="text-align:left">07</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">84088 Neufahrn</td>
+<td style="text-align:left">84088</td>
+<td style="text-align:left">Neufahrn</td>
+<td style="text-align:left">3753 days</td>
+<td style="text-align:right">125</td>
+<td style="text-align:right">10.3</td>
+<td style="text-align:left">2 Slam</td>
+<td style="text-align:left">Bayern</td>
+<td style="text-align:left">Landshut</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 slam *101ps*teilleder*soundsystem*1.hd*</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">5990</td>
+<td style="text-align:right">159750</td>
+<td style="text-align:left">04/2014</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2014</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">31275 Lehrte</td>
+<td style="text-align:left">31275</td>
+<td style="text-align:left">Lehrte</td>
+<td style="text-align:left">3479 days</td>
+<td style="text-align:right">116</td>
+<td style="text-align:right">9.5</td>
+<td style="text-align:left">2 Slam</td>
+<td style="text-align:left">Niedersachsen</td>
+<td style="text-align:left">Hannover</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 jam*2hd*panorama*garantie*sh*lh*eu5*top</td>
+<td style="text-align:right">4</td>
+<td style="text-align:right">6490</td>
+<td style="text-align:right">133900</td>
+<td style="text-align:left">04/2013</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">67549 Worms</td>
+<td style="text-align:left">67549</td>
+<td style="text-align:left">Worms</td>
+<td style="text-align:left">3844 days</td>
+<td style="text-align:right">128</td>
+<td style="text-align:right">10.5</td>
+<td style="text-align:left">1 Jam</td>
+<td style="text-align:left">Rheinland-Pfalz</td>
+<td style="text-align:left">Worms</td>
+<td style="text-align:left">Stadt</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">glam~lradhzg~parkaut~klimaaut.~sihzg~tempom</td>
+<td style="text-align:right">5</td>
+<td style="text-align:right">6699</td>
+<td style="text-align:right">101700</td>
+<td style="text-align:left">03/2014</td>
+<td style="text-align:left">03</td>
+<td style="text-align:left">2014</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">07629 Hermsdorf</td>
+<td style="text-align:left">07629</td>
+<td style="text-align:left">Hermsdorf</td>
+<td style="text-align:left">3510 days</td>
+<td style="text-align:right">117</td>
+<td style="text-align:right">9.6</td>
+<td style="text-align:left">3 Glam</td>
+<td style="text-align:left">Thüringen</td>
+<td style="text-align:left">Saale-Holzland-Kreis</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">glam 1.4 shz/pano/unfallfrei!</td>
+<td style="text-align:right">6</td>
+<td style="text-align:right">6890</td>
+<td style="text-align:right">86934</td>
+<td style="text-align:left">05/2013</td>
+<td style="text-align:left">05</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">99310 Arnstadt</td>
+<td style="text-align:left">99310</td>
+<td style="text-align:left">Arnstadt</td>
+<td style="text-align:left">3814 days</td>
+<td style="text-align:right">127</td>
+<td style="text-align:right">10.4</td>
+<td style="text-align:left">3 Glam</td>
+<td style="text-align:left">Thüringen</td>
+<td style="text-align:left">Ilm-Kreis</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 jam panoramadach+scheckheft+sitzheizung</td>
+<td style="text-align:right">7</td>
+<td style="text-align:right">6950</td>
+<td style="text-align:right">90154</td>
+<td style="text-align:left">11/2014</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">2014</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">41063 Mönchengladbach</td>
+<td style="text-align:left">41063</td>
+<td style="text-align:left">Mönchengladbach</td>
+<td style="text-align:left">3265 days</td>
+<td style="text-align:right">109</td>
+<td style="text-align:right">8.9</td>
+<td style="text-align:left">1 Jam</td>
+<td style="text-align:left">Nordrhein-Westfalen</td>
+<td style="text-align:left">Mönchengladbach</td>
+<td style="text-align:left">Stadt</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">glam panoramadach sitzheizung pdc</td>
+<td style="text-align:right">8</td>
+<td style="text-align:right">6980</td>
+<td style="text-align:right">94900</td>
+<td style="text-align:left">06/2013</td>
+<td style="text-align:left">06</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">91522 Ansbach</td>
+<td style="text-align:left">91522</td>
+<td style="text-align:left">Ansbach</td>
+<td style="text-align:left">3783 days</td>
+<td style="text-align:right">126</td>
+<td style="text-align:right">10.4</td>
+<td style="text-align:left">3 Glam</td>
+<td style="text-align:left">Bayern</td>
+<td style="text-align:left">Ansbach</td>
+<td style="text-align:left">Stadt</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">glam ecoflex *panorama/lenkradheizung*</td>
+<td style="text-align:right">9</td>
+<td style="text-align:right">6990</td>
+<td style="text-align:right">65000</td>
+<td style="text-align:left">05/2013</td>
+<td style="text-align:left">05</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">45881 Gelsenkirchen</td>
+<td style="text-align:left">45881</td>
+<td style="text-align:left">Gelsenkirchen</td>
+<td style="text-align:left">3814 days</td>
+<td style="text-align:right">127</td>
+<td style="text-align:right">10.4</td>
+<td style="text-align:left">3 Glam</td>
+<td style="text-align:left">Nordrhein-Westfalen</td>
+<td style="text-align:left">Gelsenkirchen</td>
+<td style="text-align:left">Stadt</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">slam ecoflex</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">6990</td>
+<td style="text-align:right">95200</td>
+<td style="text-align:left">03/2015</td>
+<td style="text-align:left">03</td>
+<td style="text-align:left">2015</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">93104 Sünching</td>
+<td style="text-align:left">93104</td>
+<td style="text-align:left">Sünching</td>
+<td style="text-align:left">3145 days</td>
+<td style="text-align:right">105</td>
+<td style="text-align:right">8.6</td>
+<td style="text-align:left">2 Slam</td>
+<td style="text-align:left">Bayern</td>
+<td style="text-align:left">Regensburg</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">slam 1,4 ecoflex 1.hand *panoramadach*</td>
+<td style="text-align:right">11</td>
+<td style="text-align:right">6999</td>
+<td style="text-align:right">96000</td>
+<td style="text-align:left">04/2013</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">55252 Mainz-Kastel</td>
+<td style="text-align:left">55252</td>
+<td style="text-align:left">Mainz-Kastel</td>
+<td style="text-align:left">3844 days</td>
+<td style="text-align:right">128</td>
+<td style="text-align:right">10.5</td>
+<td style="text-align:left">2 Slam</td>
+<td style="text-align:left">Hessen</td>
+<td style="text-align:left">Wiesbaden</td>
+<td style="text-align:left">Stadt</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">slam ecoflex sportpaket navi~shz~klima~usb</td>
+<td style="text-align:right">12</td>
+<td style="text-align:right">6999</td>
+<td style="text-align:right">91000</td>
+<td style="text-align:left">10/2013</td>
+<td style="text-align:left">10</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">70173 Stuttgart</td>
+<td style="text-align:left">70173</td>
+<td style="text-align:left">Stuttgart</td>
+<td style="text-align:left">3661 days</td>
+<td style="text-align:right">122</td>
+<td style="text-align:right">10.0</td>
+<td style="text-align:left">2 Slam</td>
+<td style="text-align:left">Baden-Württemberg</td>
+<td style="text-align:left">Stuttgart</td>
+<td style="text-align:left">Stadt</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 slam,alu 17zoll,sportfahrwerk,top zustand</td>
+<td style="text-align:right">13</td>
+<td style="text-align:right">6999</td>
+<td style="text-align:right">73900</td>
+<td style="text-align:left">11/2013</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">94469 Deggendorf</td>
+<td style="text-align:left">94469</td>
+<td style="text-align:left">Deggendorf</td>
+<td style="text-align:left">3630 days</td>
+<td style="text-align:right">121</td>
+<td style="text-align:right">9.9</td>
+<td style="text-align:left">2 Slam</td>
+<td style="text-align:left">Bayern</td>
+<td style="text-align:left">Deggendorf</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 jam 8 fach bereift</td>
+<td style="text-align:right">14</td>
+<td style="text-align:right">7400</td>
+<td style="text-align:right">97144</td>
+<td style="text-align:left">09/2014</td>
+<td style="text-align:left">09</td>
+<td style="text-align:left">2014</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">31234 Edemissen / Abbensen</td>
+<td style="text-align:left">31234</td>
+<td style="text-align:left">Edemissen</td>
+<td style="text-align:left">3326 days</td>
+<td style="text-align:right">111</td>
+<td style="text-align:right">9.1</td>
+<td style="text-align:left">1 Jam</td>
+<td style="text-align:left">Niedersachsen</td>
+<td style="text-align:left">Peine</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 glam</td>
+<td style="text-align:right">15</td>
+<td style="text-align:right">7500</td>
+<td style="text-align:right">51667</td>
+<td style="text-align:left">07/2013</td>
+<td style="text-align:left">07</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">01723 Wilsdruff</td>
+<td style="text-align:left">01723</td>
+<td style="text-align:left">Wilsdruff</td>
+<td style="text-align:left">3753 days</td>
+<td style="text-align:right">125</td>
+<td style="text-align:right">10.3</td>
+<td style="text-align:left">3 Glam</td>
+<td style="text-align:left">Sachsen</td>
+<td style="text-align:left">Sächsische Schweiz-Osterzgebirge</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">jam'2.hand'93.602km'klima'8-fach'</td>
+<td style="text-align:right">16</td>
+<td style="text-align:right">7500</td>
+<td style="text-align:right">93602</td>
+<td style="text-align:left">08/2013</td>
+<td style="text-align:left">08</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">45772 Marl</td>
+<td style="text-align:left">45772</td>
+<td style="text-align:left">Marl</td>
+<td style="text-align:left">3722 days</td>
+<td style="text-align:right">124</td>
+<td style="text-align:right">10.2</td>
+<td style="text-align:left">1 Jam</td>
+<td style="text-align:left">Nordrhein-Westfalen</td>
+<td style="text-align:left">Recklinghausen</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 glam *pano*tempo*intellilink*pdc*klima*</td>
+<td style="text-align:right">17</td>
+<td style="text-align:right">7560</td>
+<td style="text-align:right">48357</td>
+<td style="text-align:left">07/2015</td>
+<td style="text-align:left">07</td>
+<td style="text-align:left">2015</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">65936 Frankfurt am Main</td>
+<td style="text-align:left">65936</td>
+<td style="text-align:left">Frankfurt</td>
+<td style="text-align:left">3023 days</td>
+<td style="text-align:right">101</td>
+<td style="text-align:right">8.3</td>
+<td style="text-align:left">3 Glam</td>
+<td style="text-align:left">Hessen</td>
+<td style="text-align:left">Frankfurt am Main</td>
+<td style="text-align:left">Stadt</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">jam</td>
+<td style="text-align:right">18</td>
+<td style="text-align:right">7690</td>
+<td style="text-align:right">51400</td>
+<td style="text-align:left">05/2013</td>
+<td style="text-align:left">05</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">42327 Wuppertal</td>
+<td style="text-align:left">42327</td>
+<td style="text-align:left">Wuppertal</td>
+<td style="text-align:left">3814 days</td>
+<td style="text-align:right">127</td>
+<td style="text-align:right">10.4</td>
+<td style="text-align:left">1 Jam</td>
+<td style="text-align:left">Nordrhein-Westfalen</td>
+<td style="text-align:left">Wuppertal</td>
+<td style="text-align:left">Stadt</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 jam 1.hand unfallfrei 17''lm bluetooth aux</td>
+<td style="text-align:right">19</td>
+<td style="text-align:right">7700</td>
+<td style="text-align:right">74000</td>
+<td style="text-align:left">04/2013</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">61350 Bad Homburg</td>
+<td style="text-align:left">61350</td>
+<td style="text-align:left">Bad</td>
+<td style="text-align:left">3844 days</td>
+<td style="text-align:right">128</td>
+<td style="text-align:right">10.5</td>
+<td style="text-align:left">1 Jam</td>
+<td style="text-align:left">Hessen</td>
+<td style="text-align:left">Hochtaunuskreis</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 jam intellilink/klimaauto./shz/lhz/pdc</td>
+<td style="text-align:right">20</td>
+<td style="text-align:right">7790</td>
+<td style="text-align:right">62000</td>
+<td style="text-align:left">12/2014</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">2014</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">91154 Roth</td>
+<td style="text-align:left">91154</td>
+<td style="text-align:left">Roth</td>
+<td style="text-align:left">3235 days</td>
+<td style="text-align:right">108</td>
+<td style="text-align:right">8.9</td>
+<td style="text-align:left">1 Jam</td>
+<td style="text-align:left">Bayern</td>
+<td style="text-align:left">Roth</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">slam ecoflex</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">7850</td>
+<td style="text-align:right">95007</td>
+<td style="text-align:left">03/2016</td>
+<td style="text-align:left">03</td>
+<td style="text-align:left">2016</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">84088 Neufahrn</td>
+<td style="text-align:left">84088</td>
+<td style="text-align:left">Neufahrn</td>
+<td style="text-align:left">2779 days</td>
+<td style="text-align:right">93</td>
+<td style="text-align:right">7.6</td>
+<td style="text-align:left">2 Slam</td>
+<td style="text-align:left">Bayern</td>
+<td style="text-align:left">Landshut</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">jam</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">7900</td>
+<td style="text-align:right">53000</td>
+<td style="text-align:left">04/2014</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2014</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">74743 Seckach-Großeicholzheim</td>
+<td style="text-align:left">74743</td>
+<td style="text-align:left">Seckach-Großeicholzheim</td>
+<td style="text-align:left">3479 days</td>
+<td style="text-align:right">116</td>
+<td style="text-align:right">9.5</td>
+<td style="text-align:left">1 Jam</td>
+<td style="text-align:left">Baden-Württemberg</td>
+<td style="text-align:left">Neckar-Odenwald-Kreis</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">slam ( schnäppchen / unbedingt lesen )</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">7950</td>
+<td style="text-align:right">47200</td>
+<td style="text-align:left">04/2015</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2015</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">90</td>
+<td style="text-align:left">26655 Westerstede</td>
+<td style="text-align:left">26655</td>
+<td style="text-align:left">Westerstede</td>
+<td style="text-align:left">3114 days</td>
+<td style="text-align:right">104</td>
+<td style="text-align:right">8.5</td>
+<td style="text-align:left">2 Slam</td>
+<td style="text-align:left">Niedersachsen</td>
+<td style="text-align:left">Ammerland</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 slam / dab / shz / pdc / navi / sport</td>
+<td style="text-align:right">4</td>
+<td style="text-align:right">7950</td>
+<td style="text-align:right">99720</td>
+<td style="text-align:left">10/2013</td>
+<td style="text-align:left">10</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">84032 Altdorf</td>
+<td style="text-align:left">84032</td>
+<td style="text-align:left">Altdorf</td>
+<td style="text-align:left">3661 days</td>
+<td style="text-align:right">122</td>
+<td style="text-align:right">10.0</td>
+<td style="text-align:left">2 Slam</td>
+<td style="text-align:left">Bayern</td>
+<td style="text-align:left">Landshut</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">rocks ecoflex s +schiebdach+alufelgen</td>
+<td style="text-align:right">5</td>
+<td style="text-align:right">7990</td>
+<td style="text-align:right">82900</td>
+<td style="text-align:left">06/2015</td>
+<td style="text-align:left">06</td>
+<td style="text-align:left">2015</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">90</td>
+<td style="text-align:left">88499 Riedlingen</td>
+<td style="text-align:left">88499</td>
+<td style="text-align:left">Riedlingen</td>
+<td style="text-align:left">3053 days</td>
+<td style="text-align:right">102</td>
+<td style="text-align:right">8.4</td>
+<td style="text-align:left">4 Rocks</td>
+<td style="text-align:left">Baden-Württemberg</td>
+<td style="text-align:left">Alb-Donau-Kreis</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.4 glam pano pdc lenkradh. sportsitze app</td>
+<td style="text-align:right">6</td>
+<td style="text-align:right">7990</td>
+<td style="text-align:right">61625</td>
+<td style="text-align:left">01/2014</td>
+<td style="text-align:left">01</td>
+<td style="text-align:left">2014</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">36251 Bad Hersfeld</td>
+<td style="text-align:left">36251</td>
+<td style="text-align:left">Bad</td>
+<td style="text-align:left">3569 days</td>
+<td style="text-align:right">119</td>
+<td style="text-align:right">9.8</td>
+<td style="text-align:left">3 Glam</td>
+<td style="text-align:left">Hessen</td>
+<td style="text-align:left">Hersfeld-Rotenburg</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">jam ecoflex*klima*leder*pdc*shz*sternled*</td>
+<td style="text-align:right">7</td>
+<td style="text-align:right">7990</td>
+<td style="text-align:right">52725</td>
+<td style="text-align:left">04/2013</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2013</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">63165 Mühlheim / Main</td>
+<td style="text-align:left">63165</td>
+<td style="text-align:left">Mühlheim</td>
+<td style="text-align:left">3844 days</td>
+<td style="text-align:right">128</td>
+<td style="text-align:right">10.5</td>
+<td style="text-align:left">1 Jam</td>
+<td style="text-align:left">Hessen</td>
+<td style="text-align:left">Offenbach</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">jam</td>
+<td style="text-align:right">8</td>
+<td style="text-align:right">7990</td>
+<td style="text-align:right">89900</td>
+<td style="text-align:left">08/2016</td>
+<td style="text-align:left">08</td>
+<td style="text-align:left">2016</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">101</td>
+<td style="text-align:left">38302 Wolfenbüttel</td>
+<td style="text-align:left">38302</td>
+<td style="text-align:left">Wolfenbüttel</td>
+<td style="text-align:left">2626 days</td>
+<td style="text-align:right">88</td>
+<td style="text-align:right">7.2</td>
+<td style="text-align:left">1 Jam</td>
+<td style="text-align:left">Niedersachsen</td>
+<td style="text-align:left">Wolfenbüttel</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">adam jam ecoflex &quot;bildhübsch und neuwertig&quot;</td>
+<td style="text-align:right">9</td>
+<td style="text-align:right">7999</td>
+<td style="text-align:right">55000</td>
+<td style="text-align:left">04/2015</td>
+<td style="text-align:left">04</td>
+<td style="text-align:left">2015</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">90</td>
+<td style="text-align:left">55129 Mainz</td>
+<td style="text-align:left">55129</td>
+<td style="text-align:left">Mainz</td>
+<td style="text-align:left">3114 days</td>
+<td style="text-align:right">104</td>
+<td style="text-align:right">8.5</td>
+<td style="text-align:left">1 Jam</td>
+<td style="text-align:left">Rheinland-Pfalz</td>
+<td style="text-align:left">Mainz</td>
+<td style="text-align:left">Stadt</td>
+</tr>
+<tr>
+<td style="text-align:left">Opel Adam</td>
+<td style="text-align:left">1.0 start/stop - sondermodell</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">8280</td>
+<td style="text-align:right">86985</td>
+<td style="text-align:left">03/2015</td>
+<td style="text-align:left">03</td>
+<td style="text-align:left">2015</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">116</td>
+<td style="text-align:left">78315 Radolfzell-Böhringen</td>
+<td style="text-align:left">78315</td>
+<td style="text-align:left">Radolfzell-Böhringen</td>
+<td style="text-align:left">3145 days</td>
+<td style="text-align:right">105</td>
+<td style="text-align:right">8.6</td>
+<td style="text-align:left">8 Sonstige</td>
+<td style="text-align:left">Baden-Württemberg</td>
+<td style="text-align:left">Konstanz</td>
+<td style="text-align:left">Kreis</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+
+<h2 id="datenanalyse"><strong>Datenanalyse</strong>
+  <a href="#datenanalyse"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Im Folgenden zeige ich einige Eckwerte des Datensatzes. Über die Hälfte der Inserate stammen aus dem Jahr 2017 und 2018. Immerhin ein Viertel stammt aus den Jahren 2015 und 2016. Für die Jahre 2013 und 2014 ist die Datenlage eher dürftig - hier gibt es insgesamt nur 33 Inserate.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cars <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(jahr) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarise</span>(n <span style="color:#666">=</span> <span style="color:#06287e">n</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(freq <span style="color:#666">=</span> n <span style="color:#666">/</span> <span style="color:#06287e">sum</span>(n) <span style="color:#666">*</span> <span style="color:#40a070">100</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(ypos <span style="color:#666">=</span> <span style="color:#06287e">cumsum</span>(freq)<span style="color:#666">-</span> <span style="color:#40a070">0.5</span><span style="color:#666">*</span>freq ) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(data <span style="color:#666">=</span> .,
+</span></span><span style="display:flex;"><span>      <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>, y <span style="color:#666">=</span> freq, fill <span style="color:#666">=</span> forcats<span style="color:#666">::</span><span style="color:#06287e">fct_rev</span>(jahr))) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_col</span>(width <span style="color:#666">=</span> <span style="color:#40a070">1</span>)  <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">coord_polar</span>(theta <span style="color:#666">=</span> <span style="color:#4070a0">&#34;y&#34;</span>, start <span style="color:#666">=</span> <span style="color:#40a070">0</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_text</span>(<span style="color:#06287e">aes</span>(y <span style="color:#666">=</span> ypos, label <span style="color:#666">=</span> jahr), color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;white&#34;</span>, size <span style="color:#666">=</span> <span style="color:#40a070">4</span>, angle <span style="color:#666">=</span> <span style="color:#40a070">65</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme_void</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme</span>(legend.position<span style="color:#666">=</span><span style="color:#4070a0">&#34;none&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/bar1-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Im Balkendiagramm unten sieht man, dass bei den Inserate mit einer Erstzulassung in den Jahren 2013 und 2014 nicht alle Motorvarianten des Opel Adam vorliegen. In den folgenden Jahren sind die Anteile relativ ausgeglichen, wodurch ich mich bei der späteren Analyse wohl auf diese 4 Jahre beschränken muss.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(data <span style="color:#666">=</span> cars,
+</span></span><span style="display:flex;"><span>      <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span> <span style="color:#06287e">factor</span>(jahr), fill<span style="color:#666">=</span><span style="color:#06287e">factor</span>(ps))) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_bar</span>(position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;fill&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(labels <span style="color:#666">=</span> scales<span style="color:#666">::</span>percent) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Jahr der Erstzulassung&#34;</span>, 
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Anteil in %&#34;</span>,
+</span></span><span style="display:flex;"><span>       fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Leistung (PS)&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/bar2-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Auch bei den Ausstattungslinien gibt es für die Erstzulassungen in 2013 und 2014 nicht alle Varianten. In den folgenden Jahren ist das Verhältnis wieder einigermaßen ausgeglichen, wobei gemessen an der Anzahl verfügbarer Inserate, die absoluten Fallzahlen pro Kategorie relativ niedrig sein werden.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(data <span style="color:#666">=</span> cars,
+</span></span><span style="display:flex;"><span>      <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span> <span style="color:#06287e">factor</span>(jahr), fill<span style="color:#666">=</span><span style="color:#06287e">factor</span>(linie))) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_bar</span>(position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;fill&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(labels <span style="color:#666">=</span> scales<span style="color:#666">::</span>percent) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Jahr der Erstzulassung&#34;</span>, 
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Anteil in %&#34;</span>,
+</span></span><span style="display:flex;"><span>       fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Ausstattungslinie&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/bar3-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Die Boxplots zeigen die Verteilung des Verkaufspreises nach dem Jahr der Erstzulassung und der Leistung der Inserate. Der Opel Adam mit 150 PS weist ab EZ 2015 den höchsten Median-Preis auf. Bei der Variante mit 116 PS Variante liegt der Median Preis für EZ in 2018 und 2017 über den beiden Modellen mit dem kleineren Motor. Für Modelle mit EZ 2016 ist der Median-Preis zur 101 PS Variante nahezu identisch. Die Motorausführungen mit 90 PS und 101 PS unterscheiden sich preislich nur für Inserate mit EZ 2016.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(data <span style="color:#666">=</span> cars,
+</span></span><span style="display:flex;"><span>       <span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> <span style="color:#06287e">factor</span>(jahr), y <span style="color:#666">=</span> preis, fill <span style="color:#666">=</span> <span style="color:#06287e">factor</span>(ps))) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_boxplot</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">2500</span>,<span style="color:#40a070">20000</span>,<span style="color:#40a070">2500</span>),
+</span></span><span style="display:flex;"><span>                     labels <span style="color:#666">=</span> scales<span style="color:#666">::</span><span style="color:#06287e">number_format</span>()) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Jahr der Erstzulassung&#34;</span>, 
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Preis in Euro&#34;</span>, 
+</span></span><span style="display:flex;"><span>       fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Leistung (PS)&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/boxplot1-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Hinsichtlich der Ausstattungsvarianten gibt es ebenfalls preisliche Unterschiede. Allerdings muss berücksichtigt werden, dass manche Ausstattungslinien wie der <em>Adam S</em> stellvertretend für die Motorvariante mit 150 PS stehen und nicht für die anderen Motorvarianten verfügbar sind. Die Linie <em>120 Jahre</em> scheint es laut den Daten nur für die Motorisierung mit 101 PS und 116 PS zu geben.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(data <span style="color:#666">=</span> cars,
+</span></span><span style="display:flex;"><span>       <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span><span style="color:#06287e">factor</span>(linie), y <span style="color:#666">=</span>preis)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_boxplot</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">coord_flip</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Ausstattungslinie&#34;</span>, y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Preis in €&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/boxplot2-1.png" data-fig-align="center" width="768" />
+<p>Berücksichtigt man die Motorisierung, sind die preislichen Unterschiede zwischen den Ausstattungslinien deutlich geringer.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(data <span style="color:#666">=</span> cars,
+</span></span><span style="display:flex;"><span>       <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span><span style="color:#06287e">factor</span>(linie), y <span style="color:#666">=</span>preis)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_boxplot</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">coord_flip</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">facet_grid</span>(.~ps) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">7500</span>, <span style="color:#40a070">15000</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Ausstattungslinie&#34;</span>, y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Preis in €&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/boxplot3-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>In der nächsten Grafik ist der Zusammenhang zwischen dem Verkaufspreis und der Laufleistung in Kilometern dargstellt. Die 150 PS und 116 PS Motorvarianten weisen in den ersten 25.000 Kilometern den stärksten Wertverfall auf. Die 101 PS Motorvariante ist in diesem Intervall wertstabiler, wobei nach 25.000 Kilometern der Preis stärker sinkt.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(data <span style="color:#666">=</span> cars,
+</span></span><span style="display:flex;"><span>       <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span>km, y <span style="color:#666">=</span>preis, col <span style="color:#666">=</span> <span style="color:#06287e">factor</span>(ps))) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_point</span>(alpha <span style="color:#666">=</span> <span style="color:#40a070">0.5</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_smooth</span>(method <span style="color:#666">=</span> <span style="color:#4070a0">&#34;loess&#34;</span>,se <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">175000</span>,<span style="color:#40a070">25000</span>),labels <span style="color:#666">=</span> scales<span style="color:#666">::</span><span style="color:#06287e">number_format</span>()) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">2500</span>,<span style="color:#40a070">20000</span>,<span style="color:#40a070">2500</span>),labels <span style="color:#666">=</span> scales<span style="color:#666">::</span><span style="color:#06287e">number_format</span>()) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Laufleistung in Kilometer&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Preis in €&#34;</span>,
+</span></span><span style="display:flex;"><span>       col <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Leistung (PS&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/scatterplot1-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Da die Laufleistung der Fahrzeuge deutlich rechtsschief verteilt ist, erstelle ich die Grafik erneut mit der logarithmierten Laufleistung und entferne aus Gründen der Übersichtlickeit zwei Inserate mit einer Laufleistung von unter 1000 Kilometern. In dieser Darstellung wirkt sich jeder zusätzlich gefahrene Kilometer besonders negativ auf den Verkaufspreis der 150 PS und 101 PS Variante aus.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cars <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(km <span style="color:#666">&gt;</span> <span style="color:#40a070">1000</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(data <span style="color:#666">=</span> .,
+</span></span><span style="display:flex;"><span>         <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span><span style="color:#06287e">log</span>(km), y <span style="color:#666">=</span>preis, col <span style="color:#666">=</span> <span style="color:#06287e">factor</span>(ps))) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_point</span>(alpha <span style="color:#666">=</span> <span style="color:#40a070">0.5</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_smooth</span>(method <span style="color:#666">=</span> <span style="color:#4070a0">&#34;lm&#34;</span>,se <span style="color:#666">=</span> F) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_continuous</span>(limits <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">7</span>,<span style="color:#40a070">12</span>),
+</span></span><span style="display:flex;"><span>                     breaks<span style="color:#666">=</span><span style="color:#06287e">c</span>(<span style="color:#40a070">7</span><span style="color:#666">:</span><span style="color:#40a070">12</span>), 
+</span></span><span style="display:flex;"><span>                     labels<span style="color:#666">=</span><span style="color:#06287e">c</span>(<span style="color:#06287e">round</span>(<span style="color:#06287e">exp</span>(<span style="color:#40a070">7</span><span style="color:#666">:</span><span style="color:#40a070">12</span>)))) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">2500</span>,<span style="color:#40a070">20000</span>,<span style="color:#40a070">2500</span>),labels <span style="color:#666">=</span> scales<span style="color:#666">::</span><span style="color:#06287e">number_format</span>()) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Log(Laufleistung in km)&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Preis in €&#34;</span>,
+</span></span><span style="display:flex;"><span>       col <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Leistung (PS)&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/scatterplot2-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Die vorherigen beiden Grafiken berücksichtigen die Laufleistung, jedoch nicht das Alter der Gebrauchtwagen. Unten ist daher der Zusammenhang von Verkaufspreis und dem Alter des Gebrauchtwagen in Monaten abgebildet. Je größer ein Punkt im Steudiagramm ist, um so höher die Laufleistung des Autos. Auch das Alter wirkt sich negativ auf den Verkaufspreis aus und man erkennt ähnliche Muster wie in der vorherigen Darstellung.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(data <span style="color:#666">=</span> cars,
+</span></span><span style="display:flex;"><span>         <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span>alter_y, y <span style="color:#666">=</span>preis, col <span style="color:#666">=</span> <span style="color:#06287e">factor</span>(ps))) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_point</span>(<span style="color:#06287e">aes</span>(size <span style="color:#666">=</span> km), alpha <span style="color:#666">=</span> <span style="color:#40a070">0.5</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_smooth</span>(se <span style="color:#666">=</span> F) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_continuous</span>(limits <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">2</span>, <span style="color:#40a070">8</span>), breaks <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#06287e">seq</span>(<span style="color:#40a070">2</span>, <span style="color:#40a070">8</span>, <span style="color:#40a070">0.5</span>))) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">2500</span>,<span style="color:#40a070">20000</span>,<span style="color:#40a070">2500</span>),labels <span style="color:#666">=</span> scales<span style="color:#666">::</span><span style="color:#06287e">number_format</span>()) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Alter des Fahrzeugs (in Jahren)&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Preis in €&#34;</span>,
+</span></span><span style="display:flex;"><span>       col <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Leistung (PS)&#34;</span>, size <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Laufleistung (km)&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/scatterplot3-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Num zum spannenden Teil dieses Artikels: mittels linearer Regression (OLS) möchte den Einfluss verschiedener Charakteristiken des Autos auf seinen Verkaufspreis schätzen. Bspw. um herauszufinden, welche der 4 Motorvarianten den stärksten Wertverlust mit steigendem Alter und stegender Laufleistung aufweist. Ich beschränke diese Analyse auf Modelle mit Erstzulassungen in den Jahren 2015 bis 2018.</p>
+<p><strong>Basis Modell</strong>: Als Regressoren verwende ich die Laufleistung pro 10.000 gefahrene Kilometer, sowie das Jahr der Erstzulassung und die Motorvariante als Kontrollvariablen.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>model1 <span style="color:#666">&lt;-</span> <span style="color:#06287e">lm</span>(preis <span style="color:#666">~</span>  <span style="color:#06287e">I</span>(km<span style="color:#666">/</span><span style="color:#40a070">10000</span>) <span style="color:#666">+</span> <span style="color:#06287e">factor</span>(jahr) <span style="color:#666">+</span> <span style="color:#06287e">factor</span>(ps), 
+</span></span><span style="display:flex;"><span>            data <span style="color:#666">=</span> cars, subset <span style="color:#666">=</span> jahr <span style="color:#666">%in%</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">2015</span><span style="color:#666">:</span><span style="color:#40a070">2018</span>))
+</span></span></code></pre></div><pre><code>## # A tibble: 8 x 5
+##   term             estimate std.error statistic   p.value
+##   &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)       10885.      277.     39.2   7.94e-139
+## 2 I(km/10000)        -360.       32.4   -11.1   4.10e- 25
+## 3 factor(jahr)2016    800.      211.      3.80  1.70e-  4
+## 4 factor(jahr)2017   1388.      194.      7.15  4.29e- 12
+## 5 factor(jahr)2018   2003.      219.      9.14  3.33e- 18
+## 6 factor(ps)101        60.1     185.      0.324 7.46e-  1
+## 7 factor(ps)116       743.      185.      4.02  7.06e-  5
+## 8 factor(ps)150      2797.      189.     14.8   7.41e- 40
+</code></pre>
+<p>Der Koeffizient von <code>I(km/10000)</code> zeigt, dass der Verkaufspreis pro 10.000 gefahrene Kilometer im Durchschnitt um 360 Euro sinkt. Die Koeffizienten der Faktorvariablen Jahr der Erstzulassung geben an, dass relativ zum Basisjahr 2015, Modelle zugelassen in 2016, 2017, 2018 im Durchschnitt einen 800, 1388, 2000 Euro höheren Verkaufspreis aufweisen (unabhängig von der Motorvariante). Der Preisunterschied der Motorvariante 101 PS im Vergleich zur Basis 90 PS liegt bei nur durchschnittlich 60 Euro. Der Preisunterschied bzgl. der 116 PS und 150 PS Variante fällt höher aus - im Durchschnitt 743 bzw. 2797 Euro.</p>
+<hr>
+<p><strong>Erweitertes Modell</strong>: Nun füge ich weitere Merkmale wie die Anzahl der Fahrzeughalter, die Ausstattungslinie und den Standort des Wagen (Bundesland) als Kontrollvariablen hinzu.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>model2 <span style="color:#666">&lt;-</span> <span style="color:#06287e">lm</span>(preis <span style="color:#666">~</span> <span style="color:#06287e">I</span>(km<span style="color:#666">/</span><span style="color:#40a070">10000</span>) <span style="color:#666">+</span> <span style="color:#06287e">factor</span>(jahr) <span style="color:#666">+</span> <span style="color:#06287e">factor</span>(ps) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>               <span style="color:#06287e">factor</span>(halter) <span style="color:#666">+</span> <span style="color:#06287e">factor</span>(linie) <span style="color:#666">+</span> <span style="color:#06287e">factor</span>(bundesland), 
+</span></span><span style="display:flex;"><span>            data <span style="color:#666">=</span> cars, subset <span style="color:#666">=</span> jahr <span style="color:#666">%in%</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">2015</span><span style="color:#666">:</span><span style="color:#40a070">2018</span>))
+</span></span></code></pre></div><pre><code>## # A tibble: 30 x 5
+##    term                estimate std.error statistic   p.value
+##    &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1 (Intercept)         10204.       284.    36.0    1.09e-123
+##  2 I(km/10000)          -367.        29.4  -12.5    3.76e- 30
+##  3 factor(jahr)2016      733.       191.     3.85   1.39e-  4
+##  4 factor(jahr)2017     1263.       176.     7.19   3.53e- 12
+##  5 factor(jahr)2018     2033.       198.    10.3    5.60e- 22
+##  6 factor(ps)101          -2.30     171.    -0.0135 9.89e-  1
+##  7 factor(ps)116         649.       166.     3.91   1.08e-  4
+##  8 factor(ps)150        2088.       274.     7.62   2.15e- 13
+##  9 factor(halter)2      -335.       106.    -3.15   1.76e-  3
+## 10 factor(linie)2 Slam  1054.       196.     5.38   1.31e-  7
+## # ... with 20 more rows
+</code></pre>
+<p>Der Einfluss der Laufleistung auf den Verkaufspreis hat sich nur geringfügig verändert - von 360 auf 367 Euro Wertverlust pro 10.000 gefahrene Kilometer. Der Einfluss dieser zusätzlichen Kontrollvariablen scheint also nur von geringer Bedeutung zu sein.</p>
+<hr>
+<p><strong>Interaktions-Modell 1</strong>:</p>
+<p>Nicht untersucht wurde bisher, ob der Einfluss der Laufleistung auf den Verkaufspreis von der Motorvariante abhängt. Dies ist eine sog. Interkation der beiden Regressoren, Ich logarithmiere zudem nun die Laufleistung. Um die Schätzergebnisse zu veranschaulichen verwende ich einen Conditional Effects Plot (CEP).</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>model_cep1 <span style="color:#666">&lt;-</span> <span style="color:#06287e">lm</span>(preis <span style="color:#666">~</span> <span style="color:#06287e">log</span>(km<span style="color:#666">/</span><span style="color:#40a070">10000</span>)<span style="color:#666">*</span><span style="color:#06287e">factor</span>(ps), 
+</span></span><span style="display:flex;"><span>                 data <span style="color:#666">=</span> cars, subset <span style="color:#666">=</span> jahr <span style="color:#666">%in%</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">2015</span><span style="color:#666">:</span><span style="color:#40a070">2018</span>))
+</span></span></code></pre></div><pre><code>## # A tibble: 8 x 5
+##   term                        estimate std.error statistic   p.value
+##   &lt;chr&gt;                          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)                  12391.       306.   40.5    3.53e-143
+## 2 log(km/10000)                -1503.       240.   -6.27   9.25e- 10
+## 3 factor(ps)101                   24.1      358.    0.0675 9.46e-  1
+## 4 factor(ps)116                  638.       355.    1.80   7.28e-  2
+## 5 factor(ps)150                 2997.       359.    8.35   1.16e- 15
+## 6 log(km/10000):factor(ps)101    251.       284.    0.884  3.77e-  1
+## 7 log(km/10000):factor(ps)116    115.       282.    0.407  6.84e-  1
+## 8 log(km/10000):factor(ps)150   -162.       274.   -0.592  5.54e-  1
+</code></pre>
+<p>Unten findet man den CEP für dieses Modell.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">tibble</span>(
+</span></span><span style="display:flex;"><span>  km <span style="color:#666">=</span> <span style="color:#06287e">rep</span>(<span style="color:#06287e">seq</span>(from <span style="color:#666">=</span> <span style="color:#40a070">20000</span>, to <span style="color:#666">=</span> <span style="color:#40a070">80000</span>, by <span style="color:#666">=</span> <span style="color:#40a070">5000</span>), <span style="color:#40a070">4</span>),
+</span></span><span style="display:flex;"><span>  ps <span style="color:#666">=</span> <span style="color:#06287e">factor</span>(<span style="color:#06287e">rep</span>(<span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;90&#34;</span>, <span style="color:#4070a0">&#34;101&#34;</span>,<span style="color:#4070a0">&#34;116&#34;</span>,<span style="color:#4070a0">&#34;150&#34;</span>), each <span style="color:#666">=</span> <span style="color:#40a070">13</span>))
+</span></span><span style="display:flex;"><span>  ) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(fit <span style="color:#666">=</span> <span style="color:#06287e">predict</span>(model_cep1, 
+</span></span><span style="display:flex;"><span>                       newdata <span style="color:#666">=</span> ., 
+</span></span><span style="display:flex;"><span>                       type <span style="color:#666">=</span> <span style="color:#4070a0">&#34;response&#34;</span>),
+</span></span><span style="display:flex;"><span>         se <span style="color:#666">=</span> <span style="color:#06287e">predict</span>(model_cep1, 
+</span></span><span style="display:flex;"><span>                      newdata <span style="color:#666">=</span> ., 
+</span></span><span style="display:flex;"><span>                      type <span style="color:#666">=</span> <span style="color:#4070a0">&#34;response&#34;</span>,
+</span></span><span style="display:flex;"><span>                      se <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>)<span style="color:#666">$</span>se.fit,
+</span></span><span style="display:flex;"><span>         ll <span style="color:#666">=</span> fit <span style="color:#666">-</span> (<span style="color:#40a070">1.96</span> <span style="color:#666">*</span> se),
+</span></span><span style="display:flex;"><span>         ul <span style="color:#666">=</span> fit <span style="color:#666">+</span> (<span style="color:#40a070">1.96</span> <span style="color:#666">*</span> se)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(data <span style="color:#666">=</span> ., 
+</span></span><span style="display:flex;"><span>         <span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> km, y <span style="color:#666">=</span> fit)) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_ribbon</span>(<span style="color:#06287e">aes</span>(ymin <span style="color:#666">=</span> ll,
+</span></span><span style="display:flex;"><span>                  ymax <span style="color:#666">=</span> ul, fill <span style="color:#666">=</span> ps), alpha <span style="color:#666">=</span> <span style="color:#40a070">0.2</span>) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>(<span style="color:#06287e">aes</span>(colour <span style="color:#666">=</span> ps),
+</span></span><span style="display:flex;"><span>            size <span style="color:#666">=</span> <span style="color:#40a070">1</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_continuous</span>(limits <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">20000</span>,<span style="color:#40a070">80000</span>),
+</span></span><span style="display:flex;"><span>                     breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">20000</span>,<span style="color:#40a070">80000</span>,<span style="color:#40a070">10000</span>), labels <span style="color:#666">=</span>scales<span style="color:#666">::</span><span style="color:#06287e">number_format</span>()) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(limits <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">8000</span>,<span style="color:#40a070">16000</span>),
+</span></span><span style="display:flex;"><span>                     breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">8000</span>,<span style="color:#40a070">16000</span>,<span style="color:#40a070">2000</span>),labels <span style="color:#666">=</span> scales<span style="color:#666">::</span><span style="color:#06287e">number_format</span>()) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Laufleistung in km&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Vorhergesagter Preis in €&#34;</span>, 
+</span></span><span style="display:flex;"><span>       fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Laufleistung (PS)&#34;</span>, col <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Laufleistung (PS)&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/cep1-1.png" data-fig-align="center" width="768" />
+<p>Die Koeffizienten der Interaktionsterme und der CEP zeigen, dass es nur geringe, aber signifikante Unterschiede zwischen dem Einfluss der Laufleistung auf den Verkaufspreis in Abhängigkeit der Motorvariante gibt. Verdoppelt man die Laufleistung, so ist der Verkaufspreis für die 101 PS Variante höher als bei der 90 PS oder 150 PS Variante. Die 116 PS Variante liegt ebenfalls hinter der 101 PS Variante zurück, schlägt aber ebenso die 90 PS oder 150 PS Variante.</p>
+<hr>
+<p><strong>Interaktions-Modell 2</strong>:</p>
+<p>Für das nächste Modell interagiere ich analog zum vorherigen Modell das Alter des PKWs in Monaten und die Motorvariante. Zusätzlich nehme ich als Regressor das quadrierte Alter auf, um zu überprüfen, ob sich der Wertverfall mit steigendem Alter des Gebrauchtwagens beschleunigt oder nicht.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>model_cep2 <span style="color:#666">&lt;-</span> <span style="color:#06287e">lm</span>(preis <span style="color:#666">~</span> alter_m<span style="color:#666">*</span><span style="color:#06287e">factor</span>(ps) <span style="color:#666">+</span> <span style="color:#06287e">I</span>(alter_m^2),
+</span></span><span style="display:flex;"><span>                data <span style="color:#666">=</span> cars, subset <span style="color:#666">=</span> jahr <span style="color:#666">%in%</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">2015</span><span style="color:#666">:</span><span style="color:#40a070">2018</span>))
+</span></span></code></pre></div><pre><code>## # A tibble: 9 x 5
+##   term                   estimate std.error statistic  p.value
+##   &lt;chr&gt;                     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)           19483.     2212.       8.81   4.00e-17
+## 2 alter_m                -141.       53.1     -2.65   8.47e- 3
+## 3 factor(ps)101          -189.     1093.      -0.173  8.63e- 1
+## 4 factor(ps)116           876.     1035.       0.846  3.98e- 1
+## 5 factor(ps)150          4769.     1103.       4.32   1.94e- 5
+## 6 I(alter_m^2)              0.368     0.319    1.15   2.51e- 1
+## 7 alter_m:factor(ps)101     3.62     14.0      0.258  7.96e- 1
+## 8 alter_m:factor(ps)116    -0.861    13.0     -0.0660 9.47e- 1
+## 9 alter_m:factor(ps)150   -26.7      13.9     -1.92   5.60e- 2
+</code></pre>
+<p>Der Koeffizient des Alters ist negativ und der Koeffizient des quadrierten Alters ist positiv. Somit ist der Wertverfall des PKW in den ersten Jahren besonders hoch und wird mit zunehmendem Alter geringer. Dies erkennt man auch im CEP anhand den abflachenden Kurven. Für die 150 PS Variante ist der Wertverfall über das Alter hinweg erneut am höchsten - relativ zu den anderen 3 Motorvarianten.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">tibble</span>(
+</span></span><span style="display:flex;"><span>  alter_m <span style="color:#666">=</span> <span style="color:#06287e">rep</span>(<span style="color:#06287e">seq</span>(from <span style="color:#666">=</span> <span style="color:#06287e">min</span>(cars<span style="color:#666">$</span>alter_m)<span style="color:#40a070">+6</span>, to <span style="color:#666">=</span> <span style="color:#06287e">max</span>(cars<span style="color:#666">$</span>alter_m)<span style="color:#40a070">-24</span>, length.out <span style="color:#666">=</span> <span style="color:#40a070">7</span>), <span style="color:#40a070">4</span>),
+</span></span><span style="display:flex;"><span>  ps <span style="color:#666">=</span> <span style="color:#06287e">factor</span>(<span style="color:#06287e">rep</span>(<span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;90&#34;</span>, <span style="color:#4070a0">&#34;101&#34;</span>,<span style="color:#4070a0">&#34;116&#34;</span>,<span style="color:#4070a0">&#34;150&#34;</span>), each <span style="color:#666">=</span> <span style="color:#40a070">7</span>))
+</span></span><span style="display:flex;"><span>  ) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(fit <span style="color:#666">=</span> <span style="color:#06287e">predict</span>(model_cep2, 
+</span></span><span style="display:flex;"><span>                       newdata <span style="color:#666">=</span> ., 
+</span></span><span style="display:flex;"><span>                       type <span style="color:#666">=</span> <span style="color:#4070a0">&#34;response&#34;</span>),
+</span></span><span style="display:flex;"><span>         se <span style="color:#666">=</span> <span style="color:#06287e">predict</span>(model_cep2, 
+</span></span><span style="display:flex;"><span>                      newdata <span style="color:#666">=</span> ., 
+</span></span><span style="display:flex;"><span>                      type <span style="color:#666">=</span> <span style="color:#4070a0">&#34;response&#34;</span>,
+</span></span><span style="display:flex;"><span>                      se <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>)<span style="color:#666">$</span>se.fit,
+</span></span><span style="display:flex;"><span>         ll <span style="color:#666">=</span> fit <span style="color:#666">-</span> (<span style="color:#40a070">1.96</span> <span style="color:#666">*</span> se),
+</span></span><span style="display:flex;"><span>         ul <span style="color:#666">=</span> fit <span style="color:#666">+</span> (<span style="color:#40a070">1.96</span> <span style="color:#666">*</span> se)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(data <span style="color:#666">=</span> ., 
+</span></span><span style="display:flex;"><span>         <span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> alter_m, y <span style="color:#666">=</span> fit)) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_ribbon</span>(<span style="color:#06287e">aes</span>(ymin <span style="color:#666">=</span> ll,
+</span></span><span style="display:flex;"><span>                  ymax <span style="color:#666">=</span> ul, fill <span style="color:#666">=</span> ps), alpha <span style="color:#666">=</span> <span style="color:#40a070">0.2</span>) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>(<span style="color:#06287e">aes</span>(colour <span style="color:#666">=</span> ps),
+</span></span><span style="display:flex;"><span>            size <span style="color:#666">=</span> <span style="color:#40a070">1</span>)  <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(limits <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">6000</span>,<span style="color:#40a070">16000</span>),
+</span></span><span style="display:flex;"><span>                     breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">6000</span>,<span style="color:#40a070">16000</span>,<span style="color:#40a070">2000</span>),labels <span style="color:#666">=</span> scales<span style="color:#666">::</span><span style="color:#06287e">number_format</span>()) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Alter in Monaten&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Vorhergesagter Preis in €&#34;</span>, 
+</span></span><span style="display:flex;"><span>       fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Laufleistung (PS)&#34;</span>, col <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Laufleistung (PS)&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/cep2-1.png" data-fig-align="center" width="768" />
+<hr>
+<p><strong>Vorhersage:</strong></p>
+<p>Zum Schluss möchte ich für ein gegebenes Baujahr und Modell die zukünftige Verkaufspreisentwicklung vorhersagen. Ich habe einen Opel Adam mit 116 PS, erstmalig zugelassen im September 2017 und einer Laufleistung von aktuell 33.000 Kilometern in die engere Auswahl genommen. Ich möchte das Auto nun 4 Jahre lang halten und im Jahr etwa 14.000 Kilometer fahren. Das zukünftige Alter des Autos (in Monaten) ergibt sich somit aus dem aktuellen Alter und den 4 von mir genutzten Jahren (<em>41 + 48 = 89</em>). Die zukünftige Laufleistung ergibt sich aus dem aktuellen Kilometerstand und den in 4 Jahren von mir gefahrenen Kilometern (<em>33.000 + 56.000 = 89.000</em>).</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>model_vorhersage <span style="color:#666">&lt;-</span> <span style="color:#06287e">lm</span>(preis <span style="color:#666">~</span> alter_m <span style="color:#666">+</span> <span style="color:#06287e">I</span>(alter_m^2) <span style="color:#666">+</span> <span style="color:#06287e">log</span>(km),
+</span></span><span style="display:flex;"><span>                       data <span style="color:#666">=</span> cars, subset <span style="color:#666">=</span> ps <span style="color:#666">==</span> <span style="color:#40a070">116</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vorhersagen <span style="color:#666">&lt;-</span> <span style="color:#06287e">tibble</span>(
+</span></span><span style="display:flex;"><span>  alter_m <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">41</span>, <span style="color:#40a070">89</span>),
+</span></span><span style="display:flex;"><span>  km <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">33000</span>, <span style="color:#40a070">89000</span>)
+</span></span><span style="display:flex;"><span>  ) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(fit <span style="color:#666">=</span> <span style="color:#06287e">predict</span>(model_vorhersage, 
+</span></span><span style="display:flex;"><span>                       newdata <span style="color:#666">=</span> ., 
+</span></span><span style="display:flex;"><span>                       type <span style="color:#666">=</span> <span style="color:#4070a0">&#34;response&#34;</span>),
+</span></span><span style="display:flex;"><span>         se <span style="color:#666">=</span> <span style="color:#06287e">predict</span>(model_vorhersage, 
+</span></span><span style="display:flex;"><span>                      newdata <span style="color:#666">=</span> ., 
+</span></span><span style="display:flex;"><span>                      type <span style="color:#666">=</span> <span style="color:#4070a0">&#34;response&#34;</span>,
+</span></span><span style="display:flex;"><span>                      se <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>)<span style="color:#666">$</span>se.fit,
+</span></span><span style="display:flex;"><span>         ll <span style="color:#666">=</span> fit <span style="color:#666">-</span> (<span style="color:#40a070">1.96</span> <span style="color:#666">*</span> se),
+</span></span><span style="display:flex;"><span>         ul <span style="color:#666">=</span> fit <span style="color:#666">+</span> (<span style="color:#40a070">1.96</span> <span style="color:#666">*</span> se))
+</span></span></code></pre></div><p>Unten findet man die Ergebnisse des Modells. Der aktuelle Verkaufspreis liegt bei durchschnittlich 11.812 Euro, wobei hier die Ausstattungslinie keine Berücksichtigung findet. In 4 Jahren und 56.000 gefahrenen Kilometern würde laut dem Modell der durchschnittliche Verkaufspreis noch bei 8275 Euro liegen. Dies entspricht einem durchschnittlichen Wertverlust von rund 884 Euro pro Jahr.</p>
+<br>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table>
+<thead>
+<tr>
+<th style="text-align:right">alter_m</th>
+<th style="text-align:right">km</th>
+<th style="text-align:right">fit</th>
+<th style="text-align:right">se</th>
+<th style="text-align:right">ll</th>
+<th style="text-align:right">ul</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">41</td>
+<td style="text-align:right">33000</td>
+<td style="text-align:right">13825.23</td>
+<td style="text-align:right">876.6929</td>
+<td style="text-align:right">12106.91</td>
+<td style="text-align:right">15543.54</td>
+</tr>
+<tr>
+<td style="text-align:right">89</td>
+<td style="text-align:right">89000</td>
+<td style="text-align:right">10391.43</td>
+<td style="text-align:right">198.1450</td>
+<td style="text-align:right">10003.06</td>
+<td style="text-align:right">10779.79</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">February 9, 2021</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">23 minute read, 4760 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="https://philippleppert.eu/categories/r">R</a>  <a href="https://philippleppert.eu/categories/finanzen">Finanzen</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://philippleppert.eu/blog/landtagswahlen-rlp/">&larr; Landtagswahlen Rheinland-Pfalz</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://philippleppert.eu/blog/schwankung-stromerzeugung/">Saisonale Schwankung bei der Stromerzeugung &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      
+<div class="post-comments pa0 pa4-l mt4">
+
+</div>
+
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2023 Philipp Leppert
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/legal-notice/" title="Legal notice">Legal notice</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

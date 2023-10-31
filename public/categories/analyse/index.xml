@@ -2,18 +2,36 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Analyse on Philipp Leppert</title>
-    <link>https://philippleppert.de/categories/analyse/</link>
+    <link>https://philippleppert.eu/categories/analyse/</link>
     <description>Recent content in Analyse on Philipp Leppert</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 18 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://philippleppert.de/categories/analyse/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://philippleppert.eu/categories/analyse/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Dynamik in der Berufsunfähigkeitsversicherung</title>
-      <link>https://philippleppert.de/blog/dynamik-bu/</link>
+      <link>https://philippleppert.eu/blog/dynamik-bu/</link>
       <pubDate>Fri, 18 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://philippleppert.de/blog/dynamik-bu/</guid>
+      <guid>https://philippleppert.eu/blog/dynamik-bu/</guid>
       <description>Welchen Einfluss hat die Dynamikanpassung auf die Entwicklung der versichreten BU-Rente?</description>
+    </item>
+    
+    <item>
+      <title>Saisonale Schwankung bei der Stromerzeugung</title>
+      <link>https://philippleppert.eu/blog/schwankung-stromerzeugung/</link>
+      <pubDate>Thu, 16 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/schwankung-stromerzeugung/</guid>
+      <description>In diesem Beitrag schaue ich mir saisonale Schwankungen in der Stromerzeuger für verschiedene Energieträger an.</description>
+    </item>
+    
+    <item>
+      <title>Stromerzeugung in Deutschland</title>
+      <link>https://philippleppert.eu/blog/stromerzeugung-deutschland/</link>
+      <pubDate>Sun, 05 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/stromerzeugung-deutschland/</guid>
+      <description>Welche Energieträger werden für die Stromerzeugung in Deutschland verwendet und wo wird dieser produziert?</description>
     </item>
     
   </channel>

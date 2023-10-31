@@ -25,7 +25,7 @@ Please note that some compositions contain audio samples of copyrighted songs an
 
 <hr>
 
-Anachronist [146 bpm]
+### Anachronist [146 bpm]
 
 <audio controls>
   <source
@@ -34,7 +34,9 @@ Anachronist [146 bpm]
   </source>
 </audio>
 
-Bending Corners [160 bpm]
+<hr>
+
+### Bending Corners [160 bpm]
 
 <audio controls>
   <source
@@ -43,7 +45,10 @@ Bending Corners [160 bpm]
   </source>
 </audio>
 
-Chasm [132 bpm], contains a sample of "Or a Wolf" by Philip Glass
+<hr>
+
+### Chasm [132 bpm]
+contains a sample of "Or a Wolf" by Philip Glass
 
 <audio controls>
   <source
@@ -52,7 +57,9 @@ Chasm [132 bpm], contains a sample of "Or a Wolf" by Philip Glass
   </source>
 </audio>
 
-Corleone [138 bpm]
+<hr>
+
+### Corleone [138 bpm]
 
 <audio controls>
   <source
@@ -61,7 +68,10 @@ Corleone [138 bpm]
   </source>
 </audio>
 
-Cosmic [150 bpm], contains a sample of "Maiden Astrea" by Shunsuke Kida 
+<hr>
+
+### Cosmic [150 bpm]
+contains a sample of "Maiden Astrea" by Shunsuke Kida 
 
 <audio controls>
   <source
@@ -70,7 +80,10 @@ Cosmic [150 bpm], contains a sample of "Maiden Astrea" by Shunsuke Kida
   </source>
 </audio>
 
-Downstream [132 bpm], contains a sample of "Tightrope" by Electric Light Orchestra
+<hr>
+
+### Downstream [132 bpm]
+contains a sample of "Tightrope" by Electric Light Orchestra
 
 <audio controls>
   <source
@@ -79,7 +92,9 @@ Downstream [132 bpm], contains a sample of "Tightrope" by Electric Light Orchest
   </source>
 </audio>
 
-First Impression [154 bpm]
+<hr>
+
+### First Impression [154 bpm]
 
 <audio controls>
   <source
@@ -88,7 +103,9 @@ First Impression [154 bpm]
   </source>
 </audio>
 
-Forlorn [136 bpm]
+<hr>
+
+### Forlorn [136 bpm]
 
 <audio controls>
   <source
@@ -97,8 +114,9 @@ Forlorn [136 bpm]
   </source>
 </audio>
 
+<hr>
 
-Juggernaut [140 bpm]
+### Juggernaut [140 bpm]
 
 <audio controls>
   <source
@@ -107,7 +125,9 @@ Juggernaut [140 bpm]
   </source>
 </audio>
 
-Monte-Carlo [131 bpm]
+<hr>
+
+### Monte-Carlo [131 bpm]
 
 <audio controls>
   <source
@@ -116,7 +136,9 @@ Monte-Carlo [131 bpm]
   </source>
 </audio>
 
-Motivation [140 bpm]
+<hr>
+
+### Motivation [140 bpm]
 
 <audio controls>
   <source
@@ -125,7 +147,9 @@ Motivation [140 bpm]
   </source>
 </audio>
 
-Night ride [140 bpm]
+<hr>
+
+### Night ride [140 bpm]
 
 <audio controls>
   <source
@@ -134,7 +158,9 @@ Night ride [140 bpm]
   </source>
 </audio>
 
-Origami [128 bpm]
+<hr>
+
+### Origami [128 bpm]
 
 <audio controls>
   <source
@@ -143,8 +169,9 @@ Origami [128 bpm]
   </source>
 </audio>
 
+<hr>
 
-Party [154 bpm]
+### Party [154 bpm]
 
 <audio controls>
   <source
@@ -153,7 +180,9 @@ Party [154 bpm]
   </source>
 </audio>
 
-Serene [146 bpm]
+<hr>
+
+### Serene [146 bpm]
 
 <audio controls>
   <source
@@ -162,7 +191,9 @@ Serene [146 bpm]
   </source>
 </audio>
 
-Swagger [152 bpm]
+<hr>
+
+### Swagger [152 bpm]
 
 <audio controls>
   <source
@@ -171,7 +202,9 @@ Swagger [152 bpm]
   </source>
 </audio>
 
-Topgun [150 bpm]
+<hr>
+
+### Topgun [150 bpm]
 
 <audio controls>
   <source
@@ -180,7 +213,9 @@ Topgun [150 bpm]
   </source>
 </audio>
 
-Welter [134 bpm]
+<hr>
+
+### Welter [134 bpm]
 
 <audio controls>
   <source
@@ -189,7 +224,9 @@ Welter [134 bpm]
   </source>
 </audio>
 
-Zodiac [144 bpm]
+<hr>
+
+### Zodiac [144 bpm]
 
 <audio controls>
   <source
@@ -197,4 +234,3 @@ Zodiac [144 bpm]
     type="audio/mp3">
   </source>
 </audio>
-

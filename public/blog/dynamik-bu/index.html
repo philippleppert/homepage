@@ -28,22 +28,22 @@
 <meta property="og:title" content="Dynamik in der Berufsunfähigkeitsversicherung | Philipp Leppert">
 <meta property="og:description" content="My homepage" />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="https://philippleppert.de/blog/dynamik-bu/" />
+<meta property="og:url" content="https://philippleppert.eu/blog/dynamik-bu/" />
 <meta property="og:locale" content="en">
 
 
 
 
     
-        <meta property="og:image" content="https://philippleppert.de/blog/dynamik-bu/featured.png" >
+        <meta property="og:image" content="https://philippleppert.eu/blog/dynamik-bu/featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="https://philippleppert.de/blog/dynamik-bu/featured.png" >
+        <meta name="twitter:image" content="https://philippleppert.eu/blog/dynamik-bu/featured.png" >
     
     
   <meta itemprop="name" content="Dynamik in der Berufsunfähigkeitsversicherung">
 <meta itemprop="description" content="Welchen Einfluss hat die Dynamikanpassung auf die Entwicklung der versichreten BU-Rente?"><meta itemprop="datePublished" content="2022-02-18T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-02-18T00:00:00+00:00" />
-<meta itemprop="wordCount" content="872"><meta itemprop="image" content="https://philippleppert.de/blog/dynamik-bu/featured.png">
+<meta itemprop="wordCount" content="872"><meta itemprop="image" content="https://philippleppert.eu/blog/dynamik-bu/featured.png">
 <meta itemprop="keywords" content="" />
   
   
@@ -52,7 +52,7 @@
   <link rel="icon" href="/img/icon.png" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.c58592178c2d9fef4fa6c608d93927a9187d53faa34b2e7c9e8c6e6cf370c83f.css" integrity="sha256-xYWSF4wtn&#43;9PpsYI2TknqRh9U/qjSy58noxubPNwyD8=" media="screen">
+  <link rel="stylesheet" href="/style.main.min.6ff702015d6c26370cdcf973dec600ef738de63c1cff17a62b86c7f885c08541.css" integrity="sha256-b/cCAV1sJjcM3Plz3sYA73ON5jwc/xemK4bH&#43;IXAhUE=" media="screen">
   
   
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -64,7 +64,7 @@
       <div class="grid-container">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://philippleppert.de/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://philippleppert.eu/" title="Home">
       <span class="f4 fw7">Philipp Leppert</span>
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -100,16 +100,16 @@
       <header class="post-header">
         <h1 class="f1 lh-solid measure-narrow mb3 fw4">Dynamik in der Berufsunfähigkeitsversicherung</h1>
         
-        <p class="f6 measure lh-copy mv1">By Philipp Leppert in <a href="https://philippleppert.de/categories/r">R</a>  <a href="https://philippleppert.de/categories/finanzen">Finanzen</a>  <a href="https://philippleppert.de/categories/analyse">Analyse</a> </p>
+        <p class="f6 measure lh-copy mv1">By Philipp Leppert in <a href="https://philippleppert.eu/categories/r">R</a>  <a href="https://philippleppert.eu/categories/finanzen">Finanzen</a>  <a href="https://philippleppert.eu/categories/analyse">Analyse</a> </p>
         <p class="f7 db mv0 ttu">February 18, 2022</p>
 
       
 
       </header>
       <section class="post-body pt5 pb4">
-        <script src="https://philippleppert.de/blog/dynamik-bu/index_files/kePrint/kePrint.js"></script>
-<script src="https://philippleppert.de/blog/dynamik-bu/index_files/kePrint/kePrint.js"></script>
-<script src="https://philippleppert.de/blog/dynamik-bu/index_files/kePrint/kePrint.js"></script>
+        <script src="https://philippleppert.eu/blog/dynamik-bu/index_files/kePrint/kePrint.js"></script>
+<script src="https://philippleppert.eu/blog/dynamik-bu/index_files/kePrint/kePrint.js"></script>
+<script src="https://philippleppert.eu/blog/dynamik-bu/index_files/kePrint/kePrint.js"></script>
 <p>Benötigte R-Pakete:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">library</span>(tidyverse)
 </span></span></code></pre></div>
@@ -267,7 +267,7 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_point</span>() <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>() <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Jahr&#34;</span>, y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Differenz der prozentualen Anpassung der BU-Rente zum Vorjahr&#34;</span>) 
-</span></span></code></pre></div><img src="https://philippleppert.de/blog/dynamik-bu/index_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" />
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/dynamik-bu/index_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" />
 <p>Wie setzt sich dieser Verlauf nun in 2023 und den folgenden Jahren bei Inanspruchnahme der Dynamikanpassung fort? Um dies zu ermitteln habe ich zwei lineare Regressionsmodelle aufgestellt. Beide Modelle erklären die Differenz der Rentenanpassung durch den Zeitverlauf (bzw. mein Alter). Im zweiten Modell verwende ich zusätzlich einen quadrierten Term, um einen nicht linearen Zusammenhang zu modellieren.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>model1 <span style="color:#666">&lt;-</span> <span style="color:#06287e">lm</span>(differenz_delta_rente <span style="color:#666">~</span> jahr, data <span style="color:#666">=</span> bu_daten)
 </span></span><span style="display:flex;"><span>model2 <span style="color:#666">&lt;-</span> <span style="color:#06287e">lm</span>(differenz_delta_rente <span style="color:#666">~</span> <span style="color:#06287e">poly</span>(jahr, degrees <span style="color:#666">=</span> <span style="color:#40a070">2</span>), data <span style="color:#666">=</span> bu_daten)
@@ -285,7 +285,7 @@
 </span></span><span style="display:flex;"><span>                     labels <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;Reale Werte&#34;</span>,<span style="color:#4070a0">&#34;Linearer Fit&#34;</span>,<span style="color:#4070a0">&#34;Quadratischer Fit&#34;</span>)
 </span></span><span style="display:flex;"><span>                     ) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Jahr&#34;</span>, y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Differenz der prozentualen Anpassung der BU-Rente zum Vorjahr&#34;</span>) 
-</span></span></code></pre></div><img src="https://philippleppert.de/blog/dynamik-bu/index_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/dynamik-bu/index_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
 <p>Man erkennt hier gut, dass das Modell mit dem quadratischen Term die tatsächlichen Werte sehr gut beschreibt. Unklar ist jedoch wie es nach 2025 weitergeht. Laut dem zweiten Modell würde die Differenz ab 2026 negativ werden, d.h. die prozentuale Anpassung würde also wieder steigen und nicht weiter abnehmen.</p>
 <p>Mit dem Modell kann ich nun die Entwicklung der monatlichen BU-Rente für die nächsten Jahre vorhersagen.</p>
 <br>
@@ -330,7 +330,7 @@
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Categories:</dt>
-    <dd class="fw5 ml0"> <a href="https://philippleppert.de/categories/r">R</a>  <a href="https://philippleppert.de/categories/finanzen">Finanzen</a>  <a href="https://philippleppert.de/categories/analyse">Analyse</a> </dd>
+    <dd class="fw5 ml0"> <a href="https://philippleppert.eu/categories/r">R</a>  <a href="https://philippleppert.eu/categories/finanzen">Finanzen</a>  <a href="https://philippleppert.eu/categories/analyse">Analyse</a> </dd>
   </dl>
   
   
@@ -349,7 +349,7 @@
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="https://philippleppert.de/blog/flurstuecke-visualisieren/">Flurstücke visualisieren &rarr;</a>
+    href="https://philippleppert.eu/blog/flurstuecke-visualisieren/">Flurstücke visualisieren &rarr;</a>
   
 </div>
 
@@ -377,6 +377,8 @@ Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xml
     </p>
     
     <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/legal-notice/" title="Legal notice">Legal notice</a>
       
     </div>
   </nav>

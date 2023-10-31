@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Philipp Leppert</title>
-    <link>https://philippleppert.de/tags/</link>
+    <link>https://philippleppert.eu/tags/</link>
     <description>Recent content in Tags on Philipp Leppert</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 21 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://philippleppert.de/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://philippleppert.eu/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>music</title>
-      <link>https://philippleppert.de/tag/music/</link>
+      <link>https://philippleppert.eu/tag/music/</link>
       <pubDate>Sat, 21 Oct 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://philippleppert.de/tag/music/</guid>
+      <guid>https://philippleppert.eu/tag/music/</guid>
       <description></description>
     </item>
     

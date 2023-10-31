@@ -25,7 +25,8 @@ Please note that some compositions contain audio samples or vocals of copyrighte
 
 <hr>
 
-Feeling Blue Digital Love (Daft Punk - Eiffel 65 Mash Up)
+### Feeling Blue Digital Love
+Daft Punk vs. Eiffel 65 Mash-Up
 
 <audio controls>
   <source
@@ -34,7 +35,10 @@ Feeling Blue Digital Love (Daft Punk - Eiffel 65 Mash Up)
   </source>
 </audio>
 
-If We're Going Nowhere, contains a sample of "Last Train Home" by Lost Prophets
+<hr>
+
+### If We're Going Nowhere
+contains a sample of "Last Train Home" by Lost Prophets
 
 <audio controls>
   <source
@@ -43,7 +47,9 @@ If We're Going Nowhere, contains a sample of "Last Train Home" by Lost Prophets
   </source>
 </audio>
 
-Mireo
+<hr>
+
+### Mireo
 
 <audio controls>
   <source
@@ -52,7 +58,10 @@ Mireo
   </source>
 </audio>
 
-Psychic Type x Soulja Boy - Turn Up Alone Mash-Up
+<hr>
+
+### Turn Up Alone
+Psychic Type vs. Soulja Boy Mash-Up
 
 <audio controls>
   <source
@@ -61,7 +70,9 @@ Psychic Type x Soulja Boy - Turn Up Alone Mash-Up
   </source>
 </audio>
 
-Random Electronic Track
+<hr>
+
+### Random Electronic Track
 
 <audio controls>
   <source

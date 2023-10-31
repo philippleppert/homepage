@@ -2,72 +2,126 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Philipp Leppert</title>
-    <link>https://philippleppert.de/</link>
+    <link>https://philippleppert.eu/</link>
     <description>Recent content on Philipp Leppert</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 21 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://philippleppert.de/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://philippleppert.eu/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Applied data analysis with R</title>
-      <link>https://philippleppert.de/tutorials/applied-data-analysis/</link>
+      <link>https://philippleppert.eu/tutorials/applied-data-analysis/</link>
       <pubDate>Sat, 21 Oct 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://philippleppert.de/tutorials/applied-data-analysis/</guid>
+      <guid>https://philippleppert.eu/tutorials/applied-data-analysis/</guid>
       <description>Tutorials for applied data analysis with R.</description>
     </item>
     
     <item>
       <title>Electronic</title>
-      <link>https://philippleppert.de/music/electronic/</link>
+      <link>https://philippleppert.eu/music/electronic/</link>
       <pubDate>Sat, 21 Oct 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://philippleppert.de/music/electronic/</guid>
+      <guid>https://philippleppert.eu/music/electronic/</guid>
       <description>A collection of my favorite compositions related to the electronic music genre.</description>
     </item>
     
     <item>
       <title>Hip-hop</title>
-      <link>https://philippleppert.de/music/hip-hop/</link>
+      <link>https://philippleppert.eu/music/hip-hop/</link>
       <pubDate>Sat, 21 Oct 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://philippleppert.de/music/hip-hop/</guid>
+      <guid>https://philippleppert.eu/music/hip-hop/</guid>
       <description>A collection of my favorite compositions related to the more traditional hip-hop music genre.</description>
     </item>
     
     <item>
       <title>Trap</title>
-      <link>https://philippleppert.de/music/trap/</link>
+      <link>https://philippleppert.eu/music/trap/</link>
       <pubDate>Sat, 21 Oct 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://philippleppert.de/music/trap/</guid>
+      <guid>https://philippleppert.eu/music/trap/</guid>
       <description>A collection of my favorite compositions related to the trap music genre.</description>
     </item>
     
     <item>
       <title>Dynamik in der Berufsunfähigkeitsversicherung</title>
-      <link>https://philippleppert.de/blog/dynamik-bu/</link>
+      <link>https://philippleppert.eu/blog/dynamik-bu/</link>
       <pubDate>Fri, 18 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://philippleppert.de/blog/dynamik-bu/</guid>
+      <guid>https://philippleppert.eu/blog/dynamik-bu/</guid>
       <description>Welchen Einfluss hat die Dynamikanpassung auf die Entwicklung der versichreten BU-Rente?</description>
     </item>
     
     <item>
       <title>Flurstücke visualisieren</title>
-      <link>https://philippleppert.de/blog/flurstuecke-visualisieren/</link>
+      <link>https://philippleppert.eu/blog/flurstuecke-visualisieren/</link>
       <pubDate>Mon, 11 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://philippleppert.de/blog/flurstuecke-visualisieren/</guid>
+      <guid>https://philippleppert.eu/blog/flurstuecke-visualisieren/</guid>
       <description>Wie kann man mit R einfach Flurstücke kartieren?</description>
     </item>
     
     <item>
-      <title>License</title>
-      <link>https://philippleppert.de/license/</link>
+      <title>Atomkraftwerke in Europa</title>
+      <link>https://philippleppert.eu/blog/atomkraft-europa/</link>
+      <pubDate>Wed, 08 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/atomkraft-europa/</guid>
+      <description>Eine datengetriebene Übersicht über die Entwicklung der Kernernergie in Europa.</description>
+    </item>
+    
+    <item>
+      <title>Spotify Streaming Verlauf</title>
+      <link>https://philippleppert.eu/blog/spotify-streamingverlauf/</link>
+      <pubDate>Fri, 11 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/spotify-streamingverlauf/</guid>
+      <description>Eine Auswertung der Streaming-Daten, die Spotify sammelt.</description>
+    </item>
+    
+    <item>
+      <title>Landtagswahlen Rheinland-Pfalz</title>
+      <link>https://philippleppert.eu/blog/landtagswahlen-rlp/</link>
+      <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/landtagswahlen-rlp/</guid>
+      <description>Ich bereite die Daten zur Landtagswahlen in Rheinland-Pfalz für die Jahre 2006, 2011, 2016 und 2021 auf und analysiere diese im Zeitverlauf.</description>
+    </item>
+    
+    <item>
+      <title>Datenanalyse vor Gebrauchtwagenkauf?</title>
+      <link>https://philippleppert.eu/blog/datenanalyse-autokauf/</link>
+      <pubDate>Tue, 09 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/datenanalyse-autokauf/</guid>
+      <description>Wie kann man vor dem Kauf eines Gebrauchtwagens den Markt analysieren?</description>
+    </item>
+    
+    <item>
+      <title>Saisonale Schwankung bei der Stromerzeugung</title>
+      <link>https://philippleppert.eu/blog/schwankung-stromerzeugung/</link>
+      <pubDate>Thu, 16 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/schwankung-stromerzeugung/</guid>
+      <description>In diesem Beitrag schaue ich mir saisonale Schwankungen in der Stromerzeuger für verschiedene Energieträger an.</description>
+    </item>
+    
+    <item>
+      <title>Stromerzeugung in Deutschland</title>
+      <link>https://philippleppert.eu/blog/stromerzeugung-deutschland/</link>
+      <pubDate>Sun, 05 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/stromerzeugung-deutschland/</guid>
+      <description>Welche Energieträger werden für die Stromerzeugung in Deutschland verwendet und wo wird dieser produziert?</description>
+    </item>
+    
+    <item>
+      <title>Legal notice</title>
+      <link>https://philippleppert.eu/legal-notice/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://philippleppert.de/license/</guid>
-      <description>My blog posts are released under a Creative Commons Attribution-ShareAlike 4.0 International License.</description>
+      <guid>https://philippleppert.eu/legal-notice/</guid>
+      <description>Angaben gem. § 5 TMGPhilipp LeppertEnggäßchen 255130 MainzHaftungsausschluss – DisclaimerHaftung für InhalteAlle Inhalte unseres Internetauftritts wurden mit größter Sorgfalt und nach bestem Gewissen erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</description>
     </item>
     
   </channel>

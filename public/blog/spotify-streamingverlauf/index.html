@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.118.2">
+<title>Spotify Streaming Verlauf | Philipp Leppert</title>
+
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="My homepage">
+
+
+<meta property="og:site_name" content="Philipp Leppert">
+<meta property="og:title" content="Spotify Streaming Verlauf | Philipp Leppert">
+<meta property="og:description" content="My homepage" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://philippleppert.eu/blog/spotify-streamingverlauf/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="https://philippleppert.eu/blog/spotify-streamingverlauf/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://philippleppert.eu/blog/spotify-streamingverlauf/featured.png" >
+    
+    
+  <meta itemprop="name" content="Spotify Streaming Verlauf">
+<meta itemprop="description" content="Eine Auswertung der Streaming-Daten, die Spotify sammelt."><meta itemprop="datePublished" content="2021-06-11T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-06-11T00:00:00+00:00" />
+<meta itemprop="wordCount" content="3261"><meta itemprop="image" content="https://philippleppert.eu/blog/spotify-streamingverlauf/featured.png">
+<meta itemprop="keywords" content="" />
+  
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.6ff702015d6c26370cdcf973dec600ef738de63c1cff17a62b86c7f885c08541.css" integrity="sha256-b/cCAV1sJjcM3Plz3sYA73ON5jwc/xemK4bH&#43;IXAhUE=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.b2cad19798d2e5451244dfcd623848782a1de625dac7e4d6d6e5cb542c993994.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://philippleppert.eu/" title="Home">
+      <span class="f4 fw7">Philipp Leppert</span>
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Read my blog">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/music/" title="Listen to my music">Music</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tutorials/" title="Browse my tutorials">Tutorials</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Spotify Streaming Verlauf</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Philipp Leppert in <a href="https://philippleppert.eu/categories/r">R</a>  <a href="https://philippleppert.eu/categories/freizeit">Freizeit</a> </p>
+        <p class="f7 db mv0 ttu">June 11, 2021</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <script src="https://philippleppert.eu/blog/spotify-streamingverlauf/index_files/kePrint/kePrint.js"></script>
+<script src="https://philippleppert.eu/blog/spotify-streamingverlauf/index_files/kePrint/kePrint.js"></script>
+<p>Benötigte R-Pakete:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">library</span>(tidyverse)
+</span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(jsonlite)
+</span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(lubridate)
+</span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(gghighlight)
+</span></span></code></pre></div>
+
+
+
+<h2 id="datenbeschaffung"><strong>Datenbeschaffung</strong>
+  <a href="#datenbeschaffung"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Vor kurzem hat meine Freundin beim Musikstreaminganbieter <em>Spotify</em> ihre Nutzerdaten beantragt und heruntergeladen. Eine Schritt-für-Schritt-Anleitung wie das funktioniert, findet man in den Account-Einstellungen unter 
+<a href="https://www.spotify.com/de/account/privacy/" target="_blank" rel="noopener">Datenschutz</a>. Laut Spotify umfasst der Downlad:</p>
+<blockquote>
+<p>[&hellip;] eine Kopie deiner Playlists, deiner Suchanfragen, deines Streaming-Verlaufs des letzten Jahres, eine Liste der in deiner Bibliothek gespeicherten Elemente, die Zahl deiner Follower, die Zahl und die Namen der anderen Nutzer*innen und Künstler*innen, denen du folgst, sowie deine Zahlungs- und Abodaten.</p>
+</blockquote>
+<p>Von Spotify bekommt man nach etwa 30 Tagen einen Link zu einer <em>.zip</em> Datei zur Verfügung gestellt, die ein Readme im PDF-Format sowie mehrere <em>.json</em> Dateien enthält. Für die meisten Spotify-Nutzer*innen ist das wahrscheinlich nicht das geläufigste Dateiformat. Die Dateien können zwar mit einem Texteditor betrachtet werden, jedoch lässt sich bspw. der <em>Streaming-Verlauf</em> aufgrund seiner Größe nicht gerade leicht erfassen.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="/img/spotify.jpg" alt="Eintrag im Streaming-Verlauf"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><em>Eintrag im Streaming-Verlauf</em></td>
+</tr>
+</tbody>
+</table>
+<p>Aus diesem Grund habe ich ein R-Skript erstellt, mit welchem die von Spotify zur Verfügung gestellten Dateien ausgewertet werden können.</p>
+
+
+
+
+<h2 id="datenaufbereitung"><strong>Datenaufbereitung</strong>
+  <a href="#datenaufbereitung"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Zunächst lese ich den Streaming-Verlauf mit der Funktion <code>fromJSON()</code> aus dem R-Paket <code>jsonlite</code> ein. Abhängig von den eigenen Hörgewohnheiten kann es eine oder mehrere Dateien für den Streaming-Verlauf geben. Nach dem Einlesen der Dateien kombiniere ich die Verläufe zu einem einzigen Datenbestand.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>streamVerlauf1 <span style="color:#666">&lt;-</span> <span style="color:#06287e">fromJSON</span>(<span style="color:#4070a0">&#34;data/StreamingHistory0.json&#34;</span>, flatten <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>)
+</span></span><span style="display:flex;"><span>streamVerlauf2 <span style="color:#666">&lt;-</span> <span style="color:#06287e">fromJSON</span>(<span style="color:#4070a0">&#34;data/StreamingHistory1.json&#34;</span>, flatten <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>)
+</span></span><span style="display:flex;"><span>streamVerlauf3 <span style="color:#666">&lt;-</span> <span style="color:#06287e">fromJSON</span>(<span style="color:#4070a0">&#34;data/StreamingHistory2.json&#34;</span>, flatten <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>streamVerlauf_spotify <span style="color:#666">&lt;-</span> <span style="color:#06287e">bind_rows</span>(streamVerlauf1,
+</span></span><span style="display:flex;"><span>                                   streamVerlauf2,
+</span></span><span style="display:flex;"><span>                                   streamVerlauf3)
+</span></span></code></pre></div><p>Unten ist ein Ausschnitt der Daten dargestellt. Jede Zeile in diesem Datensatz repräsentiert dabei einen Zeitpunkt (<code>endTime</code>) an dem ein Musiktitel (<code>trackName</code>) eines Interpreten (<code>artistName</code>) abgespielt wurde. Auch die Abspieldauer des jeweiligen Titels ist vorhanden (<code>msPlayed</code>).</p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; "><table class="table table-responsive" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> endTime </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> artistName </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> trackName </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> msPlayed </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 17:40 </td>
+   <td style="text-align:left;"> Kate Bush </td>
+   <td style="text-align:left;"> Wuthering Heights </td>
+   <td style="text-align:right;"> 269066 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 17:44 </td>
+   <td style="text-align:left;"> Kate Nash </td>
+   <td style="text-align:left;"> Mariella </td>
+   <td style="text-align:right;"> 255546 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 17:47 </td>
+   <td style="text-align:left;"> Maisie Peters </td>
+   <td style="text-align:left;"> In My Head </td>
+   <td style="text-align:right;"> 187827 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 17:51 </td>
+   <td style="text-align:left;"> Yeah Yeah Yeahs </td>
+   <td style="text-align:left;"> Heads Will Roll </td>
+   <td style="text-align:right;"> 221000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 17:54 </td>
+   <td style="text-align:left;"> SUNMI </td>
+   <td style="text-align:left;"> Siren </td>
+   <td style="text-align:right;"> 199133 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 17:58 </td>
+   <td style="text-align:left;"> Stromae </td>
+   <td style="text-align:left;"> sommeil </td>
+   <td style="text-align:right;"> 218653 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 18:03 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Ein Elefant für dich </td>
+   <td style="text-align:right;"> 282653 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 18:05 </td>
+   <td style="text-align:left;"> St. Vincent </td>
+   <td style="text-align:left;"> New York </td>
+   <td style="text-align:right;"> 123035 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 10:55 </td>
+   <td style="text-align:left;"> Lorde </td>
+   <td style="text-align:left;"> Hard Feelings/Loveless </td>
+   <td style="text-align:right;"> 367391 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 10:58 </td>
+   <td style="text-align:left;"> David Bowie </td>
+   <td style="text-align:left;"> Life on Mars? - 2015 Remaster </td>
+   <td style="text-align:right;"> 133913 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:14 </td>
+   <td style="text-align:left;"> David Bowie </td>
+   <td style="text-align:left;"> Life on Mars? - 2015 Remaster </td>
+   <td style="text-align:right;"> 235986 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:17 </td>
+   <td style="text-align:left;"> Ezra Furman </td>
+   <td style="text-align:left;"> Love You So Bad </td>
+   <td style="text-align:right;"> 219000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:21 </td>
+   <td style="text-align:left;"> Frog </td>
+   <td style="text-align:left;"> Judy Garland </td>
+   <td style="text-align:right;"> 217177 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:24 </td>
+   <td style="text-align:left;"> Wings </td>
+   <td style="text-align:left;"> Live And Let Die </td>
+   <td style="text-align:right;"> 194613 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:29 </td>
+   <td style="text-align:left;"> Chappell Roan </td>
+   <td style="text-align:left;"> Pink Pony Club </td>
+   <td style="text-align:right;"> 258034 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:32 </td>
+   <td style="text-align:left;"> Kate Bush </td>
+   <td style="text-align:left;"> Babooshka - 2018 Remaster </td>
+   <td style="text-align:right;"> 199226 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:33 </td>
+   <td style="text-align:left;"> Dominic Fike </td>
+   <td style="text-align:left;"> 10x Stronger </td>
+   <td style="text-align:right;"> 75585 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:37 </td>
+   <td style="text-align:left;"> Lorde </td>
+   <td style="text-align:left;"> Writer In The Dark </td>
+   <td style="text-align:right;"> 216610 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:40 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Fly To My Room </td>
+   <td style="text-align:right;"> 222242 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:44 </td>
+   <td style="text-align:left;"> Halsey </td>
+   <td style="text-align:left;"> I HATE EVERYBODY </td>
+   <td style="text-align:right;"> 171015 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:48 </td>
+   <td style="text-align:left;"> Kate Bush </td>
+   <td style="text-align:left;"> Wuthering Heights </td>
+   <td style="text-align:right;"> 269066 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:52 </td>
+   <td style="text-align:left;"> Kate Nash </td>
+   <td style="text-align:left;"> Mariella </td>
+   <td style="text-align:right;"> 255546 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:56 </td>
+   <td style="text-align:left;"> Maisie Peters </td>
+   <td style="text-align:left;"> In My Head </td>
+   <td style="text-align:right;"> 187827 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:59 </td>
+   <td style="text-align:left;"> Yeah Yeah Yeahs </td>
+   <td style="text-align:left;"> Heads Will Roll </td>
+   <td style="text-align:right;"> 221000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:03 </td>
+   <td style="text-align:left;"> SUNMI </td>
+   <td style="text-align:left;"> Siren </td>
+   <td style="text-align:right;"> 199133 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:06 </td>
+   <td style="text-align:left;"> Stromae </td>
+   <td style="text-align:left;"> sommeil </td>
+   <td style="text-align:right;"> 218653 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:07 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Ein Elefant für dich </td>
+   <td style="text-align:right;"> 50533 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:11 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Wenn es passiert </td>
+   <td style="text-align:right;"> 212360 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:15 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Echolot </td>
+   <td style="text-align:right;"> 271386 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:19 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Von hier an blind </td>
+   <td style="text-align:right;"> 210666 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:22 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Zuhälter </td>
+   <td style="text-align:right;"> 210306 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:27 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Ein Elefant für dich </td>
+   <td style="text-align:right;"> 282653 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:30 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Darf ich das behalten </td>
+   <td style="text-align:right;"> 198466 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:36 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Wütend genug </td>
+   <td style="text-align:right;"> 269386 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:37 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Geht auseinander </td>
+   <td style="text-align:right;"> 26645 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:40 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Gekommen um zu bleiben </td>
+   <td style="text-align:right;"> 190120 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:44 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Nur ein Wort </td>
+   <td style="text-align:right;"> 236200 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:47 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Ich werde ein Leben lang üben, dich so zu lieben, wie ich dich lieben will, wenn du gehst </td>
+   <td style="text-align:right;"> 172240 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:51 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Bist du nicht müde </td>
+   <td style="text-align:right;"> 233653 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:02 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Trivia &lt;U+8F49&gt; : Seesaw </td>
+   <td style="text-align:right;"> 246334 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:05 </td>
+   <td style="text-align:left;"> j-hope </td>
+   <td style="text-align:left;"> P.O.P (Piece Of Peace) Pt. 1 </td>
+   <td style="text-align:right;"> 181113 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:08 </td>
+   <td style="text-align:left;"> Agust D </td>
+   <td style="text-align:left;"> People </td>
+   <td style="text-align:right;"> 197000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:12 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Trivia &lt;U+627F&gt; : Love </td>
+   <td style="text-align:right;"> 225697 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:16 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> 134340 </td>
+   <td style="text-align:right;"> 230063 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:17 </td>
+   <td style="text-align:left;"> j-hope </td>
+   <td style="text-align:left;"> Blue Side (Outro) </td>
+   <td style="text-align:right;"> 90539 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:21 </td>
+   <td style="text-align:left;"> RM </td>
+   <td style="text-align:left;"> everythingoes </td>
+   <td style="text-align:right;"> 222493 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:25 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Go Go </td>
+   <td style="text-align:right;"> 235779 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:28 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Moon </td>
+   <td style="text-align:right;"> 191346 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 14:01 </td>
+   <td style="text-align:left;"> Taylor Swift </td>
+   <td style="text-align:left;"> the 1 </td>
+   <td style="text-align:right;"> 101263 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:18 </td>
+   <td style="text-align:left;"> The Ronettes </td>
+   <td style="text-align:left;"> Be My Baby </td>
+   <td style="text-align:right;"> 160906 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:22 </td>
+   <td style="text-align:left;"> Eurythmics </td>
+   <td style="text-align:left;"> Sweet Dreams (Are Made of This) - Remastered </td>
+   <td style="text-align:right;"> 216933 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:26 </td>
+   <td style="text-align:left;"> Blondie </td>
+   <td style="text-align:left;"> Heart Of Glass </td>
+   <td style="text-align:right;"> 252186 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:29 </td>
+   <td style="text-align:left;"> The Beach Boys </td>
+   <td style="text-align:left;"> God Only Knows - Remastered 1997 / Mono </td>
+   <td style="text-align:right;"> 173040 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:31 </td>
+   <td style="text-align:left;"> Bill Withers </td>
+   <td style="text-align:left;"> Ain't No Sunshine </td>
+   <td style="text-align:right;"> 125093 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:36 </td>
+   <td style="text-align:left;"> Paul Simon </td>
+   <td style="text-align:left;"> You Can Call Me Al </td>
+   <td style="text-align:right;"> 280000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:40 </td>
+   <td style="text-align:left;"> Iggy Pop </td>
+   <td style="text-align:left;"> The Passenger </td>
+   <td style="text-align:right;"> 283360 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:44 </td>
+   <td style="text-align:left;"> Earth, Wind &amp; Fire </td>
+   <td style="text-align:left;"> September </td>
+   <td style="text-align:right;"> 215093 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:48 </td>
+   <td style="text-align:left;"> Jimi Hendrix </td>
+   <td style="text-align:left;"> All Along the Watchtower </td>
+   <td style="text-align:right;"> 240800 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:51 </td>
+   <td style="text-align:left;"> Solomon Burke </td>
+   <td style="text-align:left;"> Cry to Me </td>
+   <td style="text-align:right;"> 154906 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:53 </td>
+   <td style="text-align:left;"> The Monkees </td>
+   <td style="text-align:left;"> I'm a Believer - 2006 Remaster </td>
+   <td style="text-align:right;"> 136933 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:54 </td>
+   <td style="text-align:left;"> The Monkees </td>
+   <td style="text-align:left;"> I'm a Believer - 2006 Remaster </td>
+   <td style="text-align:right;"> 30458 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:56 </td>
+   <td style="text-align:left;"> The Beach Boys </td>
+   <td style="text-align:left;"> Wouldn't It Be Nice - Stereo / Remastered </td>
+   <td style="text-align:right;"> 153205 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:59 </td>
+   <td style="text-align:left;"> Van Morrison </td>
+   <td style="text-align:left;"> Brown Eyed Girl </td>
+   <td style="text-align:right;"> 183506 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:02 </td>
+   <td style="text-align:left;"> The Mamas &amp; The Papas </td>
+   <td style="text-align:left;"> California Dreamin' - Single Version </td>
+   <td style="text-align:right;"> 162373 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:05 </td>
+   <td style="text-align:left;"> The Monkees </td>
+   <td style="text-align:left;"> Daydream Believer </td>
+   <td style="text-align:right;"> 179613 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:07 </td>
+   <td style="text-align:left;"> Little Peggy March </td>
+   <td style="text-align:left;"> I Will Follow Him </td>
+   <td style="text-align:right;"> 148160 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:11 </td>
+   <td style="text-align:left;"> Sonny &amp; Cher </td>
+   <td style="text-align:left;"> I Got You Babe </td>
+   <td style="text-align:right;"> 190080 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:14 </td>
+   <td style="text-align:left;"> Steve Miller Band </td>
+   <td style="text-align:left;"> The Joker </td>
+   <td style="text-align:right;"> 213480 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:17 </td>
+   <td style="text-align:left;"> Bruce Springsteen </td>
+   <td style="text-align:left;"> Hungry Heart </td>
+   <td style="text-align:right;"> 198973 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:20 </td>
+   <td style="text-align:left;"> Roy Orbison </td>
+   <td style="text-align:left;"> Oh, Pretty Woman </td>
+   <td style="text-align:right;"> 176840 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:23 </td>
+   <td style="text-align:left;"> The Archies </td>
+   <td style="text-align:left;"> Sugar Sugar </td>
+   <td style="text-align:right;"> 167213 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:27 </td>
+   <td style="text-align:left;"> The Who </td>
+   <td style="text-align:left;"> My Generation - Stereo Version </td>
+   <td style="text-align:right;"> 198706 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:31 </td>
+   <td style="text-align:left;"> John Cale </td>
+   <td style="text-align:left;"> Paris 1919 </td>
+   <td style="text-align:right;"> 246799 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:34 </td>
+   <td style="text-align:left;"> B.J. Thomas </td>
+   <td style="text-align:left;"> Raindrops Keep Fallin' on My Head - Rerecorded </td>
+   <td style="text-align:right;"> 178146 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:37 </td>
+   <td style="text-align:left;"> The Monkees </td>
+   <td style="text-align:left;"> Daydream Believer </td>
+   <td style="text-align:right;"> 179613 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:45 </td>
+   <td style="text-align:left;"> Don McLean </td>
+   <td style="text-align:left;"> American Pie </td>
+   <td style="text-align:right;"> 516893 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:48 </td>
+   <td style="text-align:left;"> Johnny Nash </td>
+   <td style="text-align:left;"> I Can See Clearly Now - Edit </td>
+   <td style="text-align:right;"> 164733 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:02 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Life Goes On </td>
+   <td style="text-align:right;"> 207481 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:06 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Fly To My Room </td>
+   <td style="text-align:right;"> 222242 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:10 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Blue &amp; Grey </td>
+   <td style="text-align:right;"> 254950 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:14 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Telepathy </td>
+   <td style="text-align:right;"> 202313 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:18 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Dis-ease </td>
+   <td style="text-align:right;"> 239722 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:21 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Stay </td>
+   <td style="text-align:right;"> 204800 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:24 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Dynamite </td>
+   <td style="text-align:right;"> 199053 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:36 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Life Goes On </td>
+   <td style="text-align:right;"> 207481 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:40 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Fly To My Room </td>
+   <td style="text-align:right;"> 222242 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:44 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Blue &amp; Grey </td>
+   <td style="text-align:right;"> 254950 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:47 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Telepathy </td>
+   <td style="text-align:right;"> 155572 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:47 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Telepathy </td>
+   <td style="text-align:right;"> 46756 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:51 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Stay </td>
+   <td style="text-align:right;"> 204800 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:56 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Blue &amp; Grey </td>
+   <td style="text-align:right;"> 254950 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:59 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Life Goes On </td>
+   <td style="text-align:right;"> 207481 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 06:02 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Fly To My Room </td>
+   <td style="text-align:right;"> 159413 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:20 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Fly To My Room </td>
+   <td style="text-align:right;"> 62845 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:20 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Telepathy </td>
+   <td style="text-align:right;"> 36469 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:25 </td>
+   <td style="text-align:left;"> Epik High </td>
+   <td style="text-align:left;"> Rosario </td>
+   <td style="text-align:right;"> 302323 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:30 </td>
+   <td style="text-align:left;"> Son Lux </td>
+   <td style="text-align:left;"> Easy (Switch Screens) [feat. Lorde] </td>
+   <td style="text-align:right;"> 262521 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:30 </td>
+   <td style="text-align:left;"> Ezra Furman </td>
+   <td style="text-align:left;"> Restless Year </td>
+   <td style="text-align:right;"> 37458 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:31 </td>
+   <td style="text-align:left;"> Troye Sivan </td>
+   <td style="text-align:left;"> Easy (with Kacey Musgraves feat. Mark Ronson) </td>
+   <td style="text-align:right;"> 19904 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:31 </td>
+   <td style="text-align:left;"> JACKBOYS </td>
+   <td style="text-align:left;"> GATTI </td>
+   <td style="text-align:right;"> 34534 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:34 </td>
+   <td style="text-align:left;"> Maisie Peters </td>
+   <td style="text-align:left;"> Maybe Don't (feat. JP Saxe) - HONNE Remix </td>
+   <td style="text-align:right;"> 175997 </td>
+  </tr>
+</tbody>
+</table></div>
+<p>Bevor ich mit der Auswertung beginne, müssen noch die Datums- und Zeitangaben angepasst werden. Zum einen soll die Spalte <code>endTime</code> getrennt werden, sodass ich je eine Spalte für das Datum und die Uhrzeit erhalte. Hierfür nutze ich die Funktion <code>ymd_hm()</code> aus dem R-Paket <code>lubridate</code>. Die Uhrzeit ist in den Rohdaten in der Zeitzone <em>UTC+0</em> codiert (@Spotify: das wäre eine nützliche Angabe im Readme gewesen), sodass ich noch eine Stunde für die Umwandlung in die <em>Mitteleuropäische Zeitzone (UTC+1)</em> addieren muss. Mit der Funktion <code>floor_date()</code> wird dann die Datums-/Zeitangabe auf den jeweiligen Tag gerundet. Die Abspieldauer wird zudem in Minuten umgewandelt (<code>mPlayed</code>).</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>streamVerlauf_spotify <span style="color:#666">&lt;-</span> 
+</span></span><span style="display:flex;"><span>  streamVerlauf_spotify <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">as_tibble</span>() <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(
+</span></span><span style="display:flex;"><span>    endTime_mez <span style="color:#666">=</span> <span style="color:#06287e">ymd_hm</span>(endTime) <span style="color:#666">+</span> <span style="color:#06287e">hours</span>(<span style="color:#40a070">1</span>),
+</span></span><span style="display:flex;"><span>    date <span style="color:#666">=</span> <span style="color:#06287e">as_date</span>(<span style="color:#06287e">floor_date</span>(endTime_mez, <span style="color:#4070a0">&#34;day&#34;</span>)), 
+</span></span><span style="display:flex;"><span>    mPlayed <span style="color:#666">=</span> <span style="color:#06287e">round</span>(msPlayed <span style="color:#666">/</span> (<span style="color:#40a070">1000</span><span style="color:#666">*</span><span style="color:#40a070">60</span>), digits <span style="color:#666">=</span> <span style="color:#40a070">2</span>)
+</span></span><span style="display:flex;"><span>    )
+</span></span></code></pre></div><p>Die fertig aufbereiteten Daten sehen so aus:</p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; "><table class="table table-responsive" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> endTime </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> artistName </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> trackName </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> msPlayed </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> endTime_mez </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> date </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> mPlayed </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 17:40 </td>
+   <td style="text-align:left;"> Kate Bush </td>
+   <td style="text-align:left;"> Wuthering Heights </td>
+   <td style="text-align:right;"> 269066 </td>
+   <td style="text-align:left;"> 2021-01-15 18:40:00 </td>
+   <td style="text-align:left;"> 2021-01-15 </td>
+   <td style="text-align:right;"> 4.48 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 17:44 </td>
+   <td style="text-align:left;"> Kate Nash </td>
+   <td style="text-align:left;"> Mariella </td>
+   <td style="text-align:right;"> 255546 </td>
+   <td style="text-align:left;"> 2021-01-15 18:44:00 </td>
+   <td style="text-align:left;"> 2021-01-15 </td>
+   <td style="text-align:right;"> 4.26 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 17:47 </td>
+   <td style="text-align:left;"> Maisie Peters </td>
+   <td style="text-align:left;"> In My Head </td>
+   <td style="text-align:right;"> 187827 </td>
+   <td style="text-align:left;"> 2021-01-15 18:47:00 </td>
+   <td style="text-align:left;"> 2021-01-15 </td>
+   <td style="text-align:right;"> 3.13 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 17:51 </td>
+   <td style="text-align:left;"> Yeah Yeah Yeahs </td>
+   <td style="text-align:left;"> Heads Will Roll </td>
+   <td style="text-align:right;"> 221000 </td>
+   <td style="text-align:left;"> 2021-01-15 18:51:00 </td>
+   <td style="text-align:left;"> 2021-01-15 </td>
+   <td style="text-align:right;"> 3.68 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 17:54 </td>
+   <td style="text-align:left;"> SUNMI </td>
+   <td style="text-align:left;"> Siren </td>
+   <td style="text-align:right;"> 199133 </td>
+   <td style="text-align:left;"> 2021-01-15 18:54:00 </td>
+   <td style="text-align:left;"> 2021-01-15 </td>
+   <td style="text-align:right;"> 3.32 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 17:58 </td>
+   <td style="text-align:left;"> Stromae </td>
+   <td style="text-align:left;"> sommeil </td>
+   <td style="text-align:right;"> 218653 </td>
+   <td style="text-align:left;"> 2021-01-15 18:58:00 </td>
+   <td style="text-align:left;"> 2021-01-15 </td>
+   <td style="text-align:right;"> 3.64 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 18:03 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Ein Elefant für dich </td>
+   <td style="text-align:right;"> 282653 </td>
+   <td style="text-align:left;"> 2021-01-15 19:03:00 </td>
+   <td style="text-align:left;"> 2021-01-15 </td>
+   <td style="text-align:right;"> 4.71 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-15 18:05 </td>
+   <td style="text-align:left;"> St. Vincent </td>
+   <td style="text-align:left;"> New York </td>
+   <td style="text-align:right;"> 123035 </td>
+   <td style="text-align:left;"> 2021-01-15 19:05:00 </td>
+   <td style="text-align:left;"> 2021-01-15 </td>
+   <td style="text-align:right;"> 2.05 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 10:55 </td>
+   <td style="text-align:left;"> Lorde </td>
+   <td style="text-align:left;"> Hard Feelings/Loveless </td>
+   <td style="text-align:right;"> 367391 </td>
+   <td style="text-align:left;"> 2021-01-16 11:55:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 6.12 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 10:58 </td>
+   <td style="text-align:left;"> David Bowie </td>
+   <td style="text-align:left;"> Life on Mars? - 2015 Remaster </td>
+   <td style="text-align:right;"> 133913 </td>
+   <td style="text-align:left;"> 2021-01-16 11:58:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 2.23 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:14 </td>
+   <td style="text-align:left;"> David Bowie </td>
+   <td style="text-align:left;"> Life on Mars? - 2015 Remaster </td>
+   <td style="text-align:right;"> 235986 </td>
+   <td style="text-align:left;"> 2021-01-16 12:14:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.93 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:17 </td>
+   <td style="text-align:left;"> Ezra Furman </td>
+   <td style="text-align:left;"> Love You So Bad </td>
+   <td style="text-align:right;"> 219000 </td>
+   <td style="text-align:left;"> 2021-01-16 12:17:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.65 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:21 </td>
+   <td style="text-align:left;"> Frog </td>
+   <td style="text-align:left;"> Judy Garland </td>
+   <td style="text-align:right;"> 217177 </td>
+   <td style="text-align:left;"> 2021-01-16 12:21:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.62 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:24 </td>
+   <td style="text-align:left;"> Wings </td>
+   <td style="text-align:left;"> Live And Let Die </td>
+   <td style="text-align:right;"> 194613 </td>
+   <td style="text-align:left;"> 2021-01-16 12:24:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.24 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:29 </td>
+   <td style="text-align:left;"> Chappell Roan </td>
+   <td style="text-align:left;"> Pink Pony Club </td>
+   <td style="text-align:right;"> 258034 </td>
+   <td style="text-align:left;"> 2021-01-16 12:29:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 4.30 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:32 </td>
+   <td style="text-align:left;"> Kate Bush </td>
+   <td style="text-align:left;"> Babooshka - 2018 Remaster </td>
+   <td style="text-align:right;"> 199226 </td>
+   <td style="text-align:left;"> 2021-01-16 12:32:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.32 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:33 </td>
+   <td style="text-align:left;"> Dominic Fike </td>
+   <td style="text-align:left;"> 10x Stronger </td>
+   <td style="text-align:right;"> 75585 </td>
+   <td style="text-align:left;"> 2021-01-16 12:33:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 1.26 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:37 </td>
+   <td style="text-align:left;"> Lorde </td>
+   <td style="text-align:left;"> Writer In The Dark </td>
+   <td style="text-align:right;"> 216610 </td>
+   <td style="text-align:left;"> 2021-01-16 12:37:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.61 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:40 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Fly To My Room </td>
+   <td style="text-align:right;"> 222242 </td>
+   <td style="text-align:left;"> 2021-01-16 12:40:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.70 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:44 </td>
+   <td style="text-align:left;"> Halsey </td>
+   <td style="text-align:left;"> I HATE EVERYBODY </td>
+   <td style="text-align:right;"> 171015 </td>
+   <td style="text-align:left;"> 2021-01-16 12:44:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 2.85 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:48 </td>
+   <td style="text-align:left;"> Kate Bush </td>
+   <td style="text-align:left;"> Wuthering Heights </td>
+   <td style="text-align:right;"> 269066 </td>
+   <td style="text-align:left;"> 2021-01-16 12:48:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 4.48 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:52 </td>
+   <td style="text-align:left;"> Kate Nash </td>
+   <td style="text-align:left;"> Mariella </td>
+   <td style="text-align:right;"> 255546 </td>
+   <td style="text-align:left;"> 2021-01-16 12:52:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 4.26 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:56 </td>
+   <td style="text-align:left;"> Maisie Peters </td>
+   <td style="text-align:left;"> In My Head </td>
+   <td style="text-align:right;"> 187827 </td>
+   <td style="text-align:left;"> 2021-01-16 12:56:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.13 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 11:59 </td>
+   <td style="text-align:left;"> Yeah Yeah Yeahs </td>
+   <td style="text-align:left;"> Heads Will Roll </td>
+   <td style="text-align:right;"> 221000 </td>
+   <td style="text-align:left;"> 2021-01-16 12:59:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.68 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:03 </td>
+   <td style="text-align:left;"> SUNMI </td>
+   <td style="text-align:left;"> Siren </td>
+   <td style="text-align:right;"> 199133 </td>
+   <td style="text-align:left;"> 2021-01-16 13:03:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.32 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:06 </td>
+   <td style="text-align:left;"> Stromae </td>
+   <td style="text-align:left;"> sommeil </td>
+   <td style="text-align:right;"> 218653 </td>
+   <td style="text-align:left;"> 2021-01-16 13:06:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.64 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:07 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Ein Elefant für dich </td>
+   <td style="text-align:right;"> 50533 </td>
+   <td style="text-align:left;"> 2021-01-16 13:07:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 0.84 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:11 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Wenn es passiert </td>
+   <td style="text-align:right;"> 212360 </td>
+   <td style="text-align:left;"> 2021-01-16 13:11:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.54 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:15 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Echolot </td>
+   <td style="text-align:right;"> 271386 </td>
+   <td style="text-align:left;"> 2021-01-16 13:15:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 4.52 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:19 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Von hier an blind </td>
+   <td style="text-align:right;"> 210666 </td>
+   <td style="text-align:left;"> 2021-01-16 13:19:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.51 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:22 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Zuhälter </td>
+   <td style="text-align:right;"> 210306 </td>
+   <td style="text-align:left;"> 2021-01-16 13:22:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.51 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:27 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Ein Elefant für dich </td>
+   <td style="text-align:right;"> 282653 </td>
+   <td style="text-align:left;"> 2021-01-16 13:27:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 4.71 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:30 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Darf ich das behalten </td>
+   <td style="text-align:right;"> 198466 </td>
+   <td style="text-align:left;"> 2021-01-16 13:30:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.31 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:36 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Wütend genug </td>
+   <td style="text-align:right;"> 269386 </td>
+   <td style="text-align:left;"> 2021-01-16 13:36:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 4.49 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:37 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Geht auseinander </td>
+   <td style="text-align:right;"> 26645 </td>
+   <td style="text-align:left;"> 2021-01-16 13:37:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 0.44 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:40 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Gekommen um zu bleiben </td>
+   <td style="text-align:right;"> 190120 </td>
+   <td style="text-align:left;"> 2021-01-16 13:40:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.17 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:44 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Nur ein Wort </td>
+   <td style="text-align:right;"> 236200 </td>
+   <td style="text-align:left;"> 2021-01-16 13:44:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.94 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:47 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Ich werde ein Leben lang üben, dich so zu lieben, wie ich dich lieben will, wenn du gehst </td>
+   <td style="text-align:right;"> 172240 </td>
+   <td style="text-align:left;"> 2021-01-16 13:47:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 2.87 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 12:51 </td>
+   <td style="text-align:left;"> Wir Sind Helden </td>
+   <td style="text-align:left;"> Bist du nicht müde </td>
+   <td style="text-align:right;"> 233653 </td>
+   <td style="text-align:left;"> 2021-01-16 13:51:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.89 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:02 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Trivia &lt;U+8F49&gt; : Seesaw </td>
+   <td style="text-align:right;"> 246334 </td>
+   <td style="text-align:left;"> 2021-01-16 14:02:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 4.11 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:05 </td>
+   <td style="text-align:left;"> j-hope </td>
+   <td style="text-align:left;"> P.O.P (Piece Of Peace) Pt. 1 </td>
+   <td style="text-align:right;"> 181113 </td>
+   <td style="text-align:left;"> 2021-01-16 14:05:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.02 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:08 </td>
+   <td style="text-align:left;"> Agust D </td>
+   <td style="text-align:left;"> People </td>
+   <td style="text-align:right;"> 197000 </td>
+   <td style="text-align:left;"> 2021-01-16 14:08:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.28 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:12 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Trivia &lt;U+627F&gt; : Love </td>
+   <td style="text-align:right;"> 225697 </td>
+   <td style="text-align:left;"> 2021-01-16 14:12:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.76 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:16 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> 134340 </td>
+   <td style="text-align:right;"> 230063 </td>
+   <td style="text-align:left;"> 2021-01-16 14:16:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.83 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:17 </td>
+   <td style="text-align:left;"> j-hope </td>
+   <td style="text-align:left;"> Blue Side (Outro) </td>
+   <td style="text-align:right;"> 90539 </td>
+   <td style="text-align:left;"> 2021-01-16 14:17:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 1.51 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:21 </td>
+   <td style="text-align:left;"> RM </td>
+   <td style="text-align:left;"> everythingoes </td>
+   <td style="text-align:right;"> 222493 </td>
+   <td style="text-align:left;"> 2021-01-16 14:21:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.71 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:25 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Go Go </td>
+   <td style="text-align:right;"> 235779 </td>
+   <td style="text-align:left;"> 2021-01-16 14:25:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.93 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 13:28 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Moon </td>
+   <td style="text-align:right;"> 191346 </td>
+   <td style="text-align:left;"> 2021-01-16 14:28:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 3.19 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-16 14:01 </td>
+   <td style="text-align:left;"> Taylor Swift </td>
+   <td style="text-align:left;"> the 1 </td>
+   <td style="text-align:right;"> 101263 </td>
+   <td style="text-align:left;"> 2021-01-16 15:01:00 </td>
+   <td style="text-align:left;"> 2021-01-16 </td>
+   <td style="text-align:right;"> 1.69 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:18 </td>
+   <td style="text-align:left;"> The Ronettes </td>
+   <td style="text-align:left;"> Be My Baby </td>
+   <td style="text-align:right;"> 160906 </td>
+   <td style="text-align:left;"> 2021-01-17 13:18:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 2.68 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:22 </td>
+   <td style="text-align:left;"> Eurythmics </td>
+   <td style="text-align:left;"> Sweet Dreams (Are Made of This) - Remastered </td>
+   <td style="text-align:right;"> 216933 </td>
+   <td style="text-align:left;"> 2021-01-17 13:22:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 3.62 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:26 </td>
+   <td style="text-align:left;"> Blondie </td>
+   <td style="text-align:left;"> Heart Of Glass </td>
+   <td style="text-align:right;"> 252186 </td>
+   <td style="text-align:left;"> 2021-01-17 13:26:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 4.20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:29 </td>
+   <td style="text-align:left;"> The Beach Boys </td>
+   <td style="text-align:left;"> God Only Knows - Remastered 1997 / Mono </td>
+   <td style="text-align:right;"> 173040 </td>
+   <td style="text-align:left;"> 2021-01-17 13:29:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 2.88 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:31 </td>
+   <td style="text-align:left;"> Bill Withers </td>
+   <td style="text-align:left;"> Ain't No Sunshine </td>
+   <td style="text-align:right;"> 125093 </td>
+   <td style="text-align:left;"> 2021-01-17 13:31:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 2.08 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:36 </td>
+   <td style="text-align:left;"> Paul Simon </td>
+   <td style="text-align:left;"> You Can Call Me Al </td>
+   <td style="text-align:right;"> 280000 </td>
+   <td style="text-align:left;"> 2021-01-17 13:36:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 4.67 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:40 </td>
+   <td style="text-align:left;"> Iggy Pop </td>
+   <td style="text-align:left;"> The Passenger </td>
+   <td style="text-align:right;"> 283360 </td>
+   <td style="text-align:left;"> 2021-01-17 13:40:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 4.72 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:44 </td>
+   <td style="text-align:left;"> Earth, Wind &amp; Fire </td>
+   <td style="text-align:left;"> September </td>
+   <td style="text-align:right;"> 215093 </td>
+   <td style="text-align:left;"> 2021-01-17 13:44:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 3.58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:48 </td>
+   <td style="text-align:left;"> Jimi Hendrix </td>
+   <td style="text-align:left;"> All Along the Watchtower </td>
+   <td style="text-align:right;"> 240800 </td>
+   <td style="text-align:left;"> 2021-01-17 13:48:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 4.01 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:51 </td>
+   <td style="text-align:left;"> Solomon Burke </td>
+   <td style="text-align:left;"> Cry to Me </td>
+   <td style="text-align:right;"> 154906 </td>
+   <td style="text-align:left;"> 2021-01-17 13:51:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 2.58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:53 </td>
+   <td style="text-align:left;"> The Monkees </td>
+   <td style="text-align:left;"> I'm a Believer - 2006 Remaster </td>
+   <td style="text-align:right;"> 136933 </td>
+   <td style="text-align:left;"> 2021-01-17 13:53:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 2.28 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:54 </td>
+   <td style="text-align:left;"> The Monkees </td>
+   <td style="text-align:left;"> I'm a Believer - 2006 Remaster </td>
+   <td style="text-align:right;"> 30458 </td>
+   <td style="text-align:left;"> 2021-01-17 13:54:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 0.51 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:56 </td>
+   <td style="text-align:left;"> The Beach Boys </td>
+   <td style="text-align:left;"> Wouldn't It Be Nice - Stereo / Remastered </td>
+   <td style="text-align:right;"> 153205 </td>
+   <td style="text-align:left;"> 2021-01-17 13:56:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 2.55 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 12:59 </td>
+   <td style="text-align:left;"> Van Morrison </td>
+   <td style="text-align:left;"> Brown Eyed Girl </td>
+   <td style="text-align:right;"> 183506 </td>
+   <td style="text-align:left;"> 2021-01-17 13:59:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 3.06 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:02 </td>
+   <td style="text-align:left;"> The Mamas &amp; The Papas </td>
+   <td style="text-align:left;"> California Dreamin' - Single Version </td>
+   <td style="text-align:right;"> 162373 </td>
+   <td style="text-align:left;"> 2021-01-17 14:02:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 2.71 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:05 </td>
+   <td style="text-align:left;"> The Monkees </td>
+   <td style="text-align:left;"> Daydream Believer </td>
+   <td style="text-align:right;"> 179613 </td>
+   <td style="text-align:left;"> 2021-01-17 14:05:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 2.99 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:07 </td>
+   <td style="text-align:left;"> Little Peggy March </td>
+   <td style="text-align:left;"> I Will Follow Him </td>
+   <td style="text-align:right;"> 148160 </td>
+   <td style="text-align:left;"> 2021-01-17 14:07:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 2.47 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:11 </td>
+   <td style="text-align:left;"> Sonny &amp; Cher </td>
+   <td style="text-align:left;"> I Got You Babe </td>
+   <td style="text-align:right;"> 190080 </td>
+   <td style="text-align:left;"> 2021-01-17 14:11:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 3.17 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:14 </td>
+   <td style="text-align:left;"> Steve Miller Band </td>
+   <td style="text-align:left;"> The Joker </td>
+   <td style="text-align:right;"> 213480 </td>
+   <td style="text-align:left;"> 2021-01-17 14:14:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 3.56 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:17 </td>
+   <td style="text-align:left;"> Bruce Springsteen </td>
+   <td style="text-align:left;"> Hungry Heart </td>
+   <td style="text-align:right;"> 198973 </td>
+   <td style="text-align:left;"> 2021-01-17 14:17:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 3.32 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:20 </td>
+   <td style="text-align:left;"> Roy Orbison </td>
+   <td style="text-align:left;"> Oh, Pretty Woman </td>
+   <td style="text-align:right;"> 176840 </td>
+   <td style="text-align:left;"> 2021-01-17 14:20:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 2.95 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:23 </td>
+   <td style="text-align:left;"> The Archies </td>
+   <td style="text-align:left;"> Sugar Sugar </td>
+   <td style="text-align:right;"> 167213 </td>
+   <td style="text-align:left;"> 2021-01-17 14:23:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 2.79 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:27 </td>
+   <td style="text-align:left;"> The Who </td>
+   <td style="text-align:left;"> My Generation - Stereo Version </td>
+   <td style="text-align:right;"> 198706 </td>
+   <td style="text-align:left;"> 2021-01-17 14:27:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 3.31 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:31 </td>
+   <td style="text-align:left;"> John Cale </td>
+   <td style="text-align:left;"> Paris 1919 </td>
+   <td style="text-align:right;"> 246799 </td>
+   <td style="text-align:left;"> 2021-01-17 14:31:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 4.11 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:34 </td>
+   <td style="text-align:left;"> B.J. Thomas </td>
+   <td style="text-align:left;"> Raindrops Keep Fallin' on My Head - Rerecorded </td>
+   <td style="text-align:right;"> 178146 </td>
+   <td style="text-align:left;"> 2021-01-17 14:34:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 2.97 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:37 </td>
+   <td style="text-align:left;"> The Monkees </td>
+   <td style="text-align:left;"> Daydream Believer </td>
+   <td style="text-align:right;"> 179613 </td>
+   <td style="text-align:left;"> 2021-01-17 14:37:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 2.99 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:45 </td>
+   <td style="text-align:left;"> Don McLean </td>
+   <td style="text-align:left;"> American Pie </td>
+   <td style="text-align:right;"> 516893 </td>
+   <td style="text-align:left;"> 2021-01-17 14:45:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 8.61 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-17 13:48 </td>
+   <td style="text-align:left;"> Johnny Nash </td>
+   <td style="text-align:left;"> I Can See Clearly Now - Edit </td>
+   <td style="text-align:right;"> 164733 </td>
+   <td style="text-align:left;"> 2021-01-17 14:48:00 </td>
+   <td style="text-align:left;"> 2021-01-17 </td>
+   <td style="text-align:right;"> 2.75 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:02 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Life Goes On </td>
+   <td style="text-align:right;"> 207481 </td>
+   <td style="text-align:left;"> 2021-01-18 06:02:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 3.46 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:06 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Fly To My Room </td>
+   <td style="text-align:right;"> 222242 </td>
+   <td style="text-align:left;"> 2021-01-18 06:06:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 3.70 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:10 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Blue &amp; Grey </td>
+   <td style="text-align:right;"> 254950 </td>
+   <td style="text-align:left;"> 2021-01-18 06:10:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 4.25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:14 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Telepathy </td>
+   <td style="text-align:right;"> 202313 </td>
+   <td style="text-align:left;"> 2021-01-18 06:14:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 3.37 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:18 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Dis-ease </td>
+   <td style="text-align:right;"> 239722 </td>
+   <td style="text-align:left;"> 2021-01-18 06:18:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 4.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:21 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Stay </td>
+   <td style="text-align:right;"> 204800 </td>
+   <td style="text-align:left;"> 2021-01-18 06:21:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 3.41 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:24 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Dynamite </td>
+   <td style="text-align:right;"> 199053 </td>
+   <td style="text-align:left;"> 2021-01-18 06:24:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 3.32 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:36 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Life Goes On </td>
+   <td style="text-align:right;"> 207481 </td>
+   <td style="text-align:left;"> 2021-01-18 06:36:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 3.46 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:40 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Fly To My Room </td>
+   <td style="text-align:right;"> 222242 </td>
+   <td style="text-align:left;"> 2021-01-18 06:40:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 3.70 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:44 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Blue &amp; Grey </td>
+   <td style="text-align:right;"> 254950 </td>
+   <td style="text-align:left;"> 2021-01-18 06:44:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 4.25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:47 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Telepathy </td>
+   <td style="text-align:right;"> 155572 </td>
+   <td style="text-align:left;"> 2021-01-18 06:47:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 2.59 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:47 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Telepathy </td>
+   <td style="text-align:right;"> 46756 </td>
+   <td style="text-align:left;"> 2021-01-18 06:47:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 0.78 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:51 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Stay </td>
+   <td style="text-align:right;"> 204800 </td>
+   <td style="text-align:left;"> 2021-01-18 06:51:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 3.41 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:56 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Blue &amp; Grey </td>
+   <td style="text-align:right;"> 254950 </td>
+   <td style="text-align:left;"> 2021-01-18 06:56:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 4.25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 05:59 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Life Goes On </td>
+   <td style="text-align:right;"> 207481 </td>
+   <td style="text-align:left;"> 2021-01-18 06:59:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 3.46 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 06:02 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Fly To My Room </td>
+   <td style="text-align:right;"> 159413 </td>
+   <td style="text-align:left;"> 2021-01-18 07:02:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 2.66 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:20 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Fly To My Room </td>
+   <td style="text-align:right;"> 62845 </td>
+   <td style="text-align:left;"> 2021-01-18 16:20:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 1.05 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:20 </td>
+   <td style="text-align:left;"> BTS </td>
+   <td style="text-align:left;"> Telepathy </td>
+   <td style="text-align:right;"> 36469 </td>
+   <td style="text-align:left;"> 2021-01-18 16:20:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 0.61 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:25 </td>
+   <td style="text-align:left;"> Epik High </td>
+   <td style="text-align:left;"> Rosario </td>
+   <td style="text-align:right;"> 302323 </td>
+   <td style="text-align:left;"> 2021-01-18 16:25:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 5.04 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:30 </td>
+   <td style="text-align:left;"> Son Lux </td>
+   <td style="text-align:left;"> Easy (Switch Screens) [feat. Lorde] </td>
+   <td style="text-align:right;"> 262521 </td>
+   <td style="text-align:left;"> 2021-01-18 16:30:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 4.38 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:30 </td>
+   <td style="text-align:left;"> Ezra Furman </td>
+   <td style="text-align:left;"> Restless Year </td>
+   <td style="text-align:right;"> 37458 </td>
+   <td style="text-align:left;"> 2021-01-18 16:30:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 0.62 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:31 </td>
+   <td style="text-align:left;"> Troye Sivan </td>
+   <td style="text-align:left;"> Easy (with Kacey Musgraves feat. Mark Ronson) </td>
+   <td style="text-align:right;"> 19904 </td>
+   <td style="text-align:left;"> 2021-01-18 16:31:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 0.33 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:31 </td>
+   <td style="text-align:left;"> JACKBOYS </td>
+   <td style="text-align:left;"> GATTI </td>
+   <td style="text-align:right;"> 34534 </td>
+   <td style="text-align:left;"> 2021-01-18 16:31:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 0.58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2021-01-18 15:34 </td>
+   <td style="text-align:left;"> Maisie Peters </td>
+   <td style="text-align:left;"> Maybe Don't (feat. JP Saxe) - HONNE Remix </td>
+   <td style="text-align:right;"> 175997 </td>
+   <td style="text-align:left;"> 2021-01-18 16:34:00 </td>
+   <td style="text-align:left;"> 2021-01-18 </td>
+   <td style="text-align:right;"> 2.93 </td>
+  </tr>
+</tbody>
+</table></div>
+
+
+
+
+<h2 id="datenanalyse"><strong>Datenanalyse</strong>
+  <a href="#datenanalyse"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Zuerst möchte ich mir den Streaming-Verlauf über den gesamten Zeitraum anschauen. Mittels <code>scale_fill_gradient()</code> kann man eine Farbverlaufsskala erstellen, wobei rot eine relativ hohe und gelb eine relativ niedrige Streaming-Aktivität darstellt.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>streamVerlauf_spotify <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(date) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarize</span>(hours <span style="color:#666">=</span> <span style="color:#06287e">sum</span>(mPlayed) <span style="color:#666">/</span> <span style="color:#40a070">60</span>) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">arrange</span>(date) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> date, y <span style="color:#666">=</span> hours)) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_col</span>(<span style="color:#06287e">aes</span>(fill <span style="color:#666">=</span> hours)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_fill_gradient</span>(low <span style="color:#666">=</span> <span style="color:#4070a0">&#34;yellow&#34;</span>, high <span style="color:#666">=</span> <span style="color:#4070a0">&#34;red&#34;</span>) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_date</span>(date_breaks <span style="color:#666">=</span> <span style="color:#4070a0">&#34;4 weeks&#34;</span>, date_labels <span style="color:#666">=</span> <span style="color:#4070a0">&#34;%b&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(
+</span></span><span style="display:flex;"><span>    x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>, 
+</span></span><span style="display:flex;"><span>    y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Streamingaktivität (in Stunden)&#34;</span>, 
+</span></span><span style="display:flex;"><span>    fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Stunden gestreamt&#34;</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/spotify-streamingverlauf/index_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" />
+<p>Besonders interessant finde ich den Höchstwert im Juli. Ich vermute, dass dieser auf meine Geburtstagsfeier zurückgeht, da meine Freundin an diesem Abend als Spotify-DJ engagiert war. Unten schränke ich den Auswertungszeitraum auf den Monat Juli ein und ändere die Skalierung der x-Achse, sodass die einzelnen Tage besser erkennbar sind.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>streamVerlauf_spotify <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(date <span style="color:#666">&gt;=</span> <span style="color:#4070a0">&#34;2020-07-01&#34;</span> <span style="color:#666">&amp;</span> date <span style="color:#666">&lt;=</span> <span style="color:#4070a0">&#34;2020-07-31&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(date) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarize</span>(hours <span style="color:#666">=</span> <span style="color:#06287e">sum</span>(mPlayed) <span style="color:#666">/</span> <span style="color:#40a070">60</span>) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">arrange</span>(date) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> date, y <span style="color:#666">=</span> hours)) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_col</span>(<span style="color:#06287e">aes</span>(fill <span style="color:#666">=</span> hours)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_fill_gradient</span>(low <span style="color:#666">=</span> <span style="color:#4070a0">&#34;yellow&#34;</span>, high <span style="color:#666">=</span> <span style="color:#4070a0">&#34;red&#34;</span>) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_date</span>(date_breaks <span style="color:#666">=</span> <span style="color:#4070a0">&#34;2 days&#34;</span>, date_labels <span style="color:#666">=</span> <span style="color:#4070a0">&#34;%d&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(
+</span></span><span style="display:flex;"><span>    x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Juli&#34;</span>, 
+</span></span><span style="display:flex;"><span>    y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Streamingaktivität (in Stunden)&#34;</span>, 
+</span></span><span style="display:flex;"><span>    fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Stunden gestreamt&#34;</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/spotify-streamingverlauf/index_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" />
+<p>Der 25. Juli war ein Samstag und hier fand meine Geburtstagsfeier statt - danke für die Erinnerung Spotify. Lässt sich mit den Daten auch rekonstruieren wie lange die Feier ging? Hierfür schränke ich die Daten noch enger auf den 25. Juli 16 Uhr bis zum 26. Juli 9 Uhr ein und summiere die Streaming-Aktivität für jede Stunde auf.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>streamVerlauf_spotify <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(endTime_mez <span style="color:#666">&gt;=</span> <span style="color:#4070a0">&#34;2020-07-25 15:00:00&#34;</span> <span style="color:#666">&amp;</span> 
+</span></span><span style="display:flex;"><span>         endTime_mez <span style="color:#666">&lt;=</span> <span style="color:#4070a0">&#34;2020-07-26 09:00:00&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(date, hour <span style="color:#666">=</span> <span style="color:#06287e">hour</span>(endTime_mez)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarize</span>(hours <span style="color:#666">=</span> <span style="color:#06287e">sum</span>(mPlayed) <span style="color:#666">/</span> <span style="color:#40a070">60</span>) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> hour, y <span style="color:#666">=</span> hours)) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_col</span>(fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;white&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">facet_grid</span>(. <span style="color:#666">~</span> date) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">24</span>,<span style="color:#40a070">2</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">1</span>,<span style="color:#40a070">0.5</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Uhr&#34;</span>, y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Streamingaktivität (in Stunden)&#34;</span>)
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/spotify-streamingverlauf/index_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" />
+<hr>
+<p>Meine Freundin war besonders daran interessiert zu sehen, welche Künstler*innen und Lieder sie am häufigsten auf Spotify angehört hat. Hierzu summiere ich für jeden Künstler*in (<code>artistName</code>) die gestreamten Minuten (<code>mPlayed</code>) im gesamten Zeitraum auf und werte die Top-15 aus.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>streamVerlauf_spotify <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(artistName) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarise</span>(hours <span style="color:#666">=</span> <span style="color:#06287e">sum</span>(mPlayed, na.rm <span style="color:#666">=</span> T)<span style="color:#666">/</span><span style="color:#40a070">60</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">arrange</span>(<span style="color:#06287e">desc</span>(hours)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">slice</span>(<span style="color:#40a070">1</span><span style="color:#666">:</span><span style="color:#40a070">15</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(data <span style="color:#666">=</span> .,
+</span></span><span style="display:flex;"><span>         <span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> <span style="color:#06287e">reorder</span>(artistName, hours), 
+</span></span><span style="display:flex;"><span>             y <span style="color:#666">=</span> hours)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_bar</span>(stat <span style="color:#666">=</span><span style="color:#4070a0">&#34;identity&#34;</span>, fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;white&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">coord_flip</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">110</span>,<span style="color:#40a070">10</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>, y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Streamingaktivität (in Stunden)&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme</span>(legend.position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;none&#34;</span>)
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/spotify-streamingverlauf/index_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" />
+<p>Die K-Pop Gruppe <em>BTS</em> hat es ihr besonders angetan und ihnen wurden umgerechnet über 4 Tage durchgehender Musikkonsum gewidmet. Welcher Fan bietet mehr?</p>
+<p>Als nächstes schaue ich mir die Top 15 der gestreamten Musiktitel an. Damit man als Pop-Musik-Laie die Titel dem jeweiligen Interpreten zuordnen kann, erstelle ich mit der Funktion <code>str_c()</code> eine kombinierte Spalte aus Titel-/ und Künstlername.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>streamVerlauf_spotify <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(track.artistName <span style="color:#666">=</span> <span style="color:#06287e">str_c</span>(trackName, <span style="color:#4070a0">&#34; {&#34;</span>,artistName,<span style="color:#4070a0">&#34;}&#34;</span>)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(track.artistName) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarise</span>(hours <span style="color:#666">=</span> <span style="color:#06287e">sum</span>(mPlayed, na.rm <span style="color:#666">=</span> T)<span style="color:#666">/</span><span style="color:#40a070">60</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">arrange</span>(<span style="color:#06287e">desc</span>(hours)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">slice</span>(<span style="color:#40a070">1</span><span style="color:#666">:</span><span style="color:#40a070">15</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> <span style="color:#06287e">reorder</span>(track.artistName, hours), 
+</span></span><span style="display:flex;"><span>             y <span style="color:#666">=</span> hours)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_bar</span>(stat <span style="color:#666">=</span><span style="color:#4070a0">&#34;identity&#34;</span>, fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;white&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">coord_flip</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">7</span>,<span style="color:#40a070">1</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>, y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Streamingaktivität (in Stunden)&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme</span>(legend.position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;none&#34;</span>)
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/spotify-streamingverlauf/index_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" />
+<p>Auch hier sind einige Titel der Gruppe <em>BTS</em> mit über 6 Stunden Abspielzeit im betrachteten Zeitraum an der Chartspitze vertreten.</p>
+<hr>
+<p>Wie intensiv hört man einen Interpreten im Zeitverlauf? Mit dem R-Paket <code>gghighlight</code> kann man in einem Liniendiagramm bestimmte Gruppen (<code>artistName</code>) hervorheben. Oft wechselt sich dabei ein Liebglingsinterpret mit dem anderen ab.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>streamVerlauf_spotify <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(artistName, date <span style="color:#666">=</span> <span style="color:#06287e">floor_date</span>(date, <span style="color:#4070a0">&#34;month&#34;</span>)) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarize</span>(hours <span style="color:#666">=</span> <span style="color:#06287e">sum</span>(mPlayed) <span style="color:#666">/</span> <span style="color:#40a070">60</span>) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> date, y <span style="color:#666">=</span> hours, 
+</span></span><span style="display:flex;"><span>             group <span style="color:#666">=</span> artistName, 
+</span></span><span style="display:flex;"><span>             color <span style="color:#666">=</span> artistName)) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">gghighlight</span>(artistName <span style="color:#666">%in%</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;BTS&#34;</span>,<span style="color:#4070a0">&#34;Taylor Swift&#34;</span>,
+</span></span><span style="display:flex;"><span>                                <span style="color:#4070a0">&#34;Halsey&#34;</span>, <span style="color:#4070a0">&#34;Agust D&#34;</span>,
+</span></span><span style="display:flex;"><span>                                <span style="color:#4070a0">&#34;Lorde&#34;</span>, <span style="color:#4070a0">&#34;Domoinic Fike&#34;</span>)
+</span></span><span style="display:flex;"><span>              ) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_date</span>(date_breaks <span style="color:#666">=</span> <span style="color:#4070a0">&#34;1 month&#34;</span>, date_labels <span style="color:#666">=</span> <span style="color:#4070a0">&#34;%b&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>, 
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Streamingaktivität (in Stunden)&#34;</span>)
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/spotify-streamingverlauf/index_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" />
+<hr>
+<p>Zu welchen Tageszeiten hört meine Freundin am häufigsten Musik? Auch das lässt sich mit einer geeigneten Darstellungsmethode leicht beantworten. Mit der Funktion <code>geom_tile()</code> aus dem R-Paket <code>ggplot2</code> erstelle ich Rechtecke, welche die gesamte Streamingaktivität für jede Stunde innerhalb eines Tages repräsentieren.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>streamVerlauf_spotify <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(date, hour <span style="color:#666">=</span> <span style="color:#06287e">hour</span>(endTime_mez)) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarize</span>(minutesListened <span style="color:#666">=</span> <span style="color:#06287e">sum</span>(mPlayed)) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> hour, y <span style="color:#666">=</span> date, fill <span style="color:#666">=</span> minutesListened)) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_tile</span>() <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_fill_gradient</span>(low <span style="color:#666">=</span> <span style="color:#4070a0">&#34;yellow&#34;</span>, high <span style="color:#666">=</span> <span style="color:#4070a0">&#34;red&#34;</span>) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">23</span>,<span style="color:#40a070">1</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_date</span>(date_breaks <span style="color:#666">=</span> <span style="color:#4070a0">&#34;1 month&#34;</span>, date_labels <span style="color:#666">=</span> <span style="color:#4070a0">&#34;%b %Y&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Uhr&#34;</span>, y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>, fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Minuten gestreamt&#34;</span>) 
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/spotify-streamingverlauf/index_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" />
+<p>Kopfhörer auf und ab in die Bahn! Besonders gut zu erkennen sind die täglichen Pendelzeiten zwischen Wohnung und Arbeitsstelle. Diese liegen von Juni bis Ende Oktober am Morgen meist zwischen 5 und 6 Uhr und am Nachmittag zwischen 15 und 16 Uhr. Zwischen November und April verschiebt sich die Streamingaktivität am Morgen und am Nachmittag erkennbar um eine Stunde nach vorne (in der dunklen Jahreszeit kommt man einfach etwas schwerer aus dem Bett).</p>
+<p>Interessant aber auch etwas gruselig, was sich aus den von Spotify gesammelten Nutzerdaten so alles erkennen lässt!</p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">June 11, 2021</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">16 minute read, 3261 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="https://philippleppert.eu/categories/r">R</a>  <a href="https://philippleppert.eu/categories/freizeit">Freizeit</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://philippleppert.eu/blog/atomkraft-europa/">&larr; Atomkraftwerke in Europa</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://philippleppert.eu/blog/landtagswahlen-rlp/">Landtagswahlen Rheinland-Pfalz &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      
+<div class="post-comments pa0 pa4-l mt4">
+
+</div>
+
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2023 Philipp Leppert
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/legal-notice/" title="Legal notice">Legal notice</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

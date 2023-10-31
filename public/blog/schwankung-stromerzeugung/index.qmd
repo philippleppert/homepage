@@ -1,0 +1,204 @@
+---
+title: "Saisonale Schwankung bei der Stromerzeugung"
+date: 2020-07-16
+format: hugo
+slug: schwankung-stromerzeugung
+categories: 
+  - R
+  - Analyse
+summary: "In diesem Beitrag schaue ich mir saisonale Schwankungen in der Stromerzeuger für verschiedene Energieträger an."
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", collapse = TRUE)
+
+# Benötigte R-Pakete
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(klippy)
+
+# Farbskala
+farbskala <- c("#FDBF6F","#1F78B4","#A6CEE3")
+
+# ggplot Layout festlegen
+ggplot2::theme_set(ggplot2::theme_bw())
+```
+
+In meinem letzten Beitrag hatte ich mich mit der Stromproduktion in Deutschland auseinandergesetzt - insbesondere wie viel Strom jeweils durch konventionelle bzw. alternative Energieträger erzeugt wird. Die Erkenntnisse dort bezogen sich immer auf ein gesamtes Jahr. Ich möchte nun der Frage nachgehen, wie sich die Stromproduktion innerhalb eines Jahres zusammensetzt und wie sich die Schwankung von regenarativen Energieträgern auswirkt.
+
+## **Datenbeschaffung**
+
+Die Bundesnetzagentur bietet via [SMARD](https://www.smard.de/home/46) Strommarktdaten an, die ich für den Zeitraum vom 01.01.2015 bis 31.12.2019 extrahiert habe. In den Daten liegt für jeden Tag eine Angabe zur eingepeisten Energiemenge pro Energieträger im 15 Minuten-Takt vor. Zunächst müssen die Daten wie üblich aufbereitet werden.
+
+## **Datenaufbereitung**
+
+Nachdem die Daten aus der .CSV Datei eingelesen wurden, werden fehlende Angaben, die in dieser Datei durch einen *.* gekennzeichnet sind, durch eine *0* ersetzt. Die Spalte mit der Datumsangabe wird in ein `Date Format` konvertiert
+
+```{r daten_generieren, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+library(tidyverse)
+
+# SMARD Daten: Erzeugte Energie
+raw_erzeugung <- read_delim("data/smard_stromerzeugung.csv", 
+                            delim=";",
+                            locale=locale(decimal_mark = ","))
+
+# Cleaning
+raw_erzeugung %>%
+  # Tibble
+  as_tibble() %>%
+  # . durch 0 ersetzen (NA)
+  replace(is.na(.), 0) %>%
+  # Character zu Numeric konvertieren
+  mutate_at(vars(-c("Datum","Uhrzeit")), as.numeric) %>%
+  # Datum formatieren
+  mutate(datum_format = as.Date(Datum, "%d.%m.%Y")) %>%
+  select(datum_format, everything(), -Datum) -> mod_erzeugung
+```
+
+Als nächstes werden zwei neue Merkmale erstellt, welche die einzelnen Energieträger in `Erneuerbare_Energien` bzw. `Konventionelle_Energien` einteilen. Hätte ich die fehlenden Werte im vorherigen Schritt nicht bereinigt, wäre es hier zu Problemen bei der Summenbildung gekommen. Die Datumsangabe zerlegen ich noch mit der Funktion `separate` aus dem R-Paket [dplyr](https://dplyr.tidyverse.org/) in die Merkmale `Tag`, `Monat` und `Jahr`.
+
+```{r daten_generieren2, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+mod_erzeugung %>%
+  # Summen-Kategorien bilden
+  mutate(`Erneuerbare_Energien` = `Biomasse` + 
+                                  `Wasserkraft` + 
+                                  `Wind Offshore` + `Wind Onshore` + 
+                                  `Photovoltaik` + 
+                                  `Sonstige Erneuerbare`,
+         `Konventionelle_Energien` = `Kernenergie` + 
+                                     `Braunkohle` + `Steinkohle` + 
+                                     `Erdgas`+ `Pumpspeicher` + 
+                                     `Sonstige Konventionelle`) %>%
+  # Datum trennen
+  separate(datum_format, into = c("jahr", "monat", "tag"), remove = F) -> mod_erzeugung
+```
+
+Unten befindet sich ein Auszug des Datensatzes:
+
+<br>
+
+```{r daten_wide, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(mod_erzeugung[1:30,]) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+
+Momentan befinden sich die Daten im sog. *Wide Format*, d.h. dass sich jeder Energieträger in einer eigenen Spalte befindet, in welcher der zugehörige Wert pro Zeitpunkt eingetragen ist. Für einen Großteil der Funktionen der `tidyverse` R-Paketsammlung sind Daten im *Long Format* besser geeignet. Die Energieträger werden alle in der alphanumerischen Spalte `Energie_Typ` zusammengefasst und in einer weiteren Spalte wird der jeweilige `Wert` festgehalten. Jede Zeile in diesem Datensatz identifiziert nun genau einen Energieträger zu einem bestimmten Zeitpunkt. Vorher identifzierte eine Zeile einen bestimmten Zeitpunkt und lieferte Informationen zu allen Energieträgern. Seit kurzem stehen im R-Paket [tidyr](https://tidyr.tidyverse.org/) die Funktionen `pivot_longer` und `pivot_wider` zur Verfügung, welche die Funktionen `gather` und `spread` ablösen sollen und etwas intuitiver zu bedienen sind. Statt 175.000 Zeilen ist der Datensatz num um fast 2 Millionen Zeilen *länger* geworden!
+
+```{r reshape, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+mod_erzeugung %>%
+  # Reshape ins Long Format
+  pivot_longer(-c(jahr, monat, tag, datum_format, Uhrzeit),
+               names_to = "energie_typ",
+               values_to = "wert") %>%
+  # Quartale generieren
+  mutate(
+    quartal = ifelse(monat %in% c("01","02","03"),"1",
+                     ifelse(monat %in% c("04","05","06"),"2",
+                            ifelse(monat %in% c("07","08","09"),"3",
+                                   ifelse(monat %in% c("10","11","12"),"4","0"))))
+  ) -> mod_erzeugung
+```
+
+Der Datensatz sieht nun so aus: 
+
+<br>
+
+```{r daten_long, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(mod_erzeugung[1:30,]) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+## **Datenanalyse**
+
+Zunächst erstelle ich ein Histogramm der jeweils erzeugten Mengen pro Energieträger. Alle 15-Minuten Angaben pro Energieträger wurden dabei zu einem Tagesmittelwert zusammengefasst.
+
+```{r histogramm, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+mod_erzeugung %>%
+  group_by(energie_typ, jahr, monat, tag) %>%
+  summarise(wert_durchschnitt = mean(wert, na.rm = T)) %>%
+  filter(!(energie_typ %in% c("Erneuerbare_Energien",
+                              "Konventionelle_Energien"))) %>%
+  ggplot(aes(x=wert_durchschnitt)) +
+  geom_histogram(color = "black", fill = "white") +
+  facet_wrap(. ~ energie_typ) +
+  labs(subtitle = "Zeitraum: 01.01.2015-31.12.2019",
+       x = "Realisierte Erzeugung in MWh (Tagesmittelwert)",
+       y = "Häufigkeit")
+```
+
+*****
+
+Nun werden beispielhaft für das Jahr 2019 die erzeugten Mengen pro Energieträger für jeden Monat  aufsummiert. In der Grafik unten erkennt man, dass die Wind- und Photovoltaikenergie saisonal stark schwankt. Während in den Wintermonaten nur wenig Strom durch Solarenergie erzeugt werden kann, wird dies durch einen höheren Ertrag an Windkraft kompensiert. In den Sommermonaten ist die Ausbeute an Windenergie dagegen gering, wobei dies durch die Solarenergie aufgrund mehr Sonnenstunden kompensiert wird. Die Stromerzeugung von Offshore Windananlagen ist im Verlauf eines Jahres konstanter, wenngleich auf einem nierdrigeren Niveau als die Onshore Windkraft.
+
+```{r saison_plot, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+mod_erzeugung %>%
+  group_by(energie_typ, jahr, monat) %>%
+  summarise(wert_aggregiert=sum(wert, na.rm=T)) %>%
+  ungroup() %>%
+  filter(energie_typ %in% c("Wind Onshore",
+                            "Wind Offshore",
+                            "Photovoltaik") & jahr == "2019") %>%
+  ggplot(aes(x=monat, y=wert_aggregiert, group=energie_typ)) +
+  geom_line(aes(color=energie_typ)) +
+  geom_line(aes(color=energie_typ)) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_color_manual(name = "Energieträger:",
+                      values = farbskala) +
+  labs(subtitle = "Zeitraum: 01.01.2019-31.12.2019",
+       x = "Monat",
+       y = "Eingespeiste Energiemenge [MWh]") +
+  theme(legend.position = "bottom", legend.direction = "horizontal")
+```
+
+*****
+
+Die nächste Grafik zeigt die Stromprpduktion im Zeitverlauf von 2015 bis 2019, wobei die erzeugten Mengen pro Quartal aufsummiert wurden. Im Zeitverlauf erkennt man eine Zunahme von erzeugtem Strom aus (Onshore) Windenergie und Solarenergie.
+
+```{r saison_plot2, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+mod_erzeugung %>%
+  group_by(energie_typ, jahr, quartal) %>%
+  summarise(wert_aggregiert=sum(wert, na.rm=T)) %>%
+  ungroup() %>%
+  filter(energie_typ %in% c("Wind Onshore",
+                            "Wind Offshore",
+                            "Photovoltaik")) %>%
+  ggplot(aes(x=quartal, y=wert_aggregiert, group=energie_typ)) +
+  geom_line(aes(color=energie_typ)) +
+  geom_line(aes(color=energie_typ)) +
+  facet_grid(. ~ jahr) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_color_manual(name = "Energieträger:",
+                      values = farbskala) +
+  labs(x = "Quartal",
+       y = "Eingespeiste Energiemenge [MWh]") +
+  theme(legend.position = "bottom", legend.direction = "horizontal")
+```
+
+*****
+
+Abschließend folgt ein Vergleich zwischen konventionellen und regenerativen Energieträgern. Im Sommer fällt die Stromerzeugung durch konventionelle Energieträger deutlich niedriger aus als im Winter. Zum einen dürften private Haushalte im Sommer weniger Strom aufgrund mehr Sonnenstunden verbrauchen und zum anderen dürfte die kombinierte Stromproduktion aus Wind- und Solarkfraft höher ausfallen als im Winter. Man erkennt, dass sich die jeweils erzeugten Energiemengen im Zeitverlauf annähern, wobei die Stromproduktion aus konventionellen Energieträgern ab und die Stromproduktion aus erneuerbaren Energieträgern zunimmt. 
+
+```{r vergleich_plot, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+mod_erzeugung %>%
+  group_by(energie_typ, jahr, quartal) %>%
+  summarise(wert_aggregiert=sum(wert, na.rm=T)) %>%
+  ungroup() %>%
+  filter(energie_typ %in% c("Erneuerbare_Energien",
+                            "Konventionelle_Energien")) %>%
+  ggplot(aes(x=quartal, y=wert_aggregiert, group=energie_typ)) +
+  geom_line(aes(color=energie_typ)) +
+  geom_line(aes(color=energie_typ)) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_color_manual(name = "Energieträger:",
+                     values = c("#33A02C","#E31A1C")) +
+  facet_grid(. ~ jahr) +
+  labs(x = "Quartal",
+       y = "Eingespeiste Energiemenge [MWh]") +
+  theme(legend.position="bottom", legend.direction = "horizontal") 
+```

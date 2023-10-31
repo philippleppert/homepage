@@ -2,9 +2,9 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>About me on Philipp Leppert</title>
-    <link>https://philippleppert.de/about/</link>
+    <link>https://philippleppert.eu/about/</link>
     <description>Recent content in About me on Philipp Leppert</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language><atom:link href="https://philippleppert.de/about/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language><atom:link href="https://philippleppert.eu/about/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

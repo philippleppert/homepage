@@ -2,18 +2,36 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Kartierung on Philipp Leppert</title>
-    <link>https://philippleppert.de/categories/kartierung/</link>
+    <link>https://philippleppert.eu/categories/kartierung/</link>
     <description>Recent content in Kartierung on Philipp Leppert</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 11 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://philippleppert.de/categories/kartierung/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://philippleppert.eu/categories/kartierung/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Flurstücke visualisieren</title>
-      <link>https://philippleppert.de/blog/flurstuecke-visualisieren/</link>
+      <link>https://philippleppert.eu/blog/flurstuecke-visualisieren/</link>
       <pubDate>Mon, 11 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://philippleppert.de/blog/flurstuecke-visualisieren/</guid>
+      <guid>https://philippleppert.eu/blog/flurstuecke-visualisieren/</guid>
       <description>Wie kann man mit R einfach Flurstücke kartieren?</description>
+    </item>
+    
+    <item>
+      <title>Atomkraftwerke in Europa</title>
+      <link>https://philippleppert.eu/blog/atomkraft-europa/</link>
+      <pubDate>Wed, 08 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/atomkraft-europa/</guid>
+      <description>Eine datengetriebene Übersicht über die Entwicklung der Kernernergie in Europa.</description>
+    </item>
+    
+    <item>
+      <title>Stromerzeugung in Deutschland</title>
+      <link>https://philippleppert.eu/blog/stromerzeugung-deutschland/</link>
+      <pubDate>Sun, 05 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/stromerzeugung-deutschland/</guid>
+      <description>Welche Energieträger werden für die Stromerzeugung in Deutschland verwendet und wo wird dieser produziert?</description>
     </item>
     
   </channel>

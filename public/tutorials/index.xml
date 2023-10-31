@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Browse my tutorials on Philipp Leppert</title>
-    <link>https://philippleppert.de/tutorials/</link>
+    <link>https://philippleppert.eu/tutorials/</link>
     <description>Recent content in Browse my tutorials on Philipp Leppert</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 21 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://philippleppert.de/tutorials/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://philippleppert.eu/tutorials/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Applied data analysis with R</title>
-      <link>https://philippleppert.de/tutorials/applied-data-analysis/</link>
+      <link>https://philippleppert.eu/tutorials/applied-data-analysis/</link>
       <pubDate>Sat, 21 Oct 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://philippleppert.de/tutorials/applied-data-analysis/</guid>
+      <guid>https://philippleppert.eu/tutorials/applied-data-analysis/</guid>
       <description>Tutorials for applied data analysis with R.</description>
     </item>
     

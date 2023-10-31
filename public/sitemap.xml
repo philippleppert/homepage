@@ -2,61 +2,88 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://philippleppert.de/tutorials/applied-data-analysis/</loc>
+    <loc>https://philippleppert.eu/tutorials/applied-data-analysis/</loc>
     <lastmod>2023-10-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/tutorials/</loc>
+    <loc>https://philippleppert.eu/tutorials/</loc>
     <lastmod>2023-10-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/music/electronic/</loc>
+    <loc>https://philippleppert.eu/music/electronic/</loc>
     <lastmod>2023-10-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/music/hip-hop/</loc>
+    <loc>https://philippleppert.eu/music/hip-hop/</loc>
     <lastmod>2023-10-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/music/</loc>
+    <loc>https://philippleppert.eu/music/</loc>
     <lastmod>2023-10-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/tag/music/</loc>
+    <loc>https://philippleppert.eu/tag/music/</loc>
     <lastmod>2023-10-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/</loc>
+    <loc>https://philippleppert.eu/</loc>
     <lastmod>2023-10-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/tags/</loc>
+    <loc>https://philippleppert.eu/tags/</loc>
     <lastmod>2023-10-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/music/trap/</loc>
+    <loc>https://philippleppert.eu/music/trap/</loc>
     <lastmod>2023-10-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/categories/analyse/</loc>
+    <loc>https://philippleppert.eu/categories/analyse/</loc>
     <lastmod>2022-02-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/blog/</loc>
+    <loc>https://philippleppert.eu/blog/</loc>
     <lastmod>2022-02-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/categories/</loc>
+    <loc>https://philippleppert.eu/categories/</loc>
     <lastmod>2022-02-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/blog/dynamik-bu/</loc>
+    <loc>https://philippleppert.eu/blog/dynamik-bu/</loc>
     <lastmod>2022-02-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/categories/finanzen/</loc>
+    <loc>https://philippleppert.eu/categories/finanzen/</loc>
     <lastmod>2022-02-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/categories/r/</loc>
+    <loc>https://philippleppert.eu/categories/r/</loc>
     <lastmod>2022-02-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/blog/flurstuecke-visualisieren/</loc>
+    <loc>https://philippleppert.eu/blog/flurstuecke-visualisieren/</loc>
     <lastmod>2021-10-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/categories/kartierung/</loc>
+    <loc>https://philippleppert.eu/categories/kartierung/</loc>
     <lastmod>2021-10-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/about/</loc>
+    <loc>https://philippleppert.eu/blog/atomkraft-europa/</loc>
+    <lastmod>2021-09-08T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/license/</loc>
+    <loc>https://philippleppert.eu/categories/webscraping/</loc>
+    <lastmod>2021-09-08T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://philippleppert.de/series/</loc>
+    <loc>https://philippleppert.eu/categories/freizeit/</loc>
+    <lastmod>2021-06-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://philippleppert.eu/blog/spotify-streamingverlauf/</loc>
+    <lastmod>2021-06-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://philippleppert.eu/blog/landtagswahlen-rlp/</loc>
+    <lastmod>2021-03-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://philippleppert.eu/categories/tidy-data/</loc>
+    <lastmod>2021-03-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://philippleppert.eu/blog/datenanalyse-autokauf/</loc>
+    <lastmod>2021-02-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://philippleppert.eu/blog/schwankung-stromerzeugung/</loc>
+    <lastmod>2020-07-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://philippleppert.eu/blog/stromerzeugung-deutschland/</loc>
+    <lastmod>2020-04-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://philippleppert.eu/about/</loc>
+  </url><url>
+    <loc>https://philippleppert.eu/legal-notice/</loc>
+  </url><url>
+    <loc>https://philippleppert.eu/series/</loc>
   </url>
 </urlset>
