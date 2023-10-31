@@ -6,7 +6,7 @@ slug: spotify-streamingverlauf
 categories: 
   - R
   - Freizeit
-summary: "Eine Auswertung der Streaming-Daten, die Spotify sammelt."
+summary: "Ich bereite die gesammelten Streaming-Daten des Spotify-Accounts meiner Freundin auf und werte diese unter verschiedenen Gesichtspunkten aus."
 ---
 
 
@@ -38,15 +38,15 @@ library(gghighlight)
 
 ## **Datenbeschaffung**
 
-Vor kurzem hat meine Freundin beim Musikstreaminganbieter *Spotify* ihre Nutzerdaten beantragt und heruntergeladen. Eine Schritt-für-Schritt-Anleitung wie das funktioniert, findet man in seinen Account-Einstellungen unter [Datenschutz](https://www.spotify.com/de/account/privacy/). Laut Spotify umfasst der Downlad:
+Vor kurzem hat meine Freundin beim Musikstreaminganbieter *Spotify* ihre Nutzerdaten beantragt und heruntergeladen. Eine Schritt-für-Schritt-Anleitung wie das funktioniert, findet man in den Account-Einstellungen unter [Datenschutz](https://www.spotify.com/de/account/privacy/). Laut Spotify umfasst der Downlad:
 
->"[...] eine Kopie deiner Playlists, deiner Suchanfragen, deines Streaming-Verlaufs des letzten Jahres, eine Liste der in deiner Bibliothek gespeicherten Elemente, die Zahl deiner Follower, die Zahl und die Namen der anderen Nutzer\*innen und Künstler\*innen, denen du folgst, sowie deine Zahlungs- und Abodaten."
+> [...] eine Kopie deiner Playlists, deiner Suchanfragen, deines Streaming-Verlaufs des letzten Jahres, eine Liste der in deiner Bibliothek gespeicherten Elemente, die Zahl deiner Follower, die Zahl und die Namen der anderen Nutzer\*innen und Künstler\*innen, denen du folgst, sowie deine Zahlungs- und Abodaten.
 
-Von Spotify bekommt man nach etwa 30 Tagen einen Link zu einer *.zip* Datei zur Verfügung gestellt, die ein Readme-PDF sowie mehrere *.json* Dateien enthält. Für die meisten Spotify-Nutzer\*innen ist das wahrscheinlich nicht das geläufigste Dateiformat. Die Dateien können zwar mit einem Texteditor betrachtet werden, jedoch lässt sich bspw. der *Streaming-Verlauf* aufgrund seiner Größe nicht gerade leicht erfassen.
+Von Spotify bekommt man nach etwa 30 Tagen einen Link zu einer *.zip* Datei zur Verfügung gestellt, die ein Readme im PDF-Format sowie mehrere *.json* Dateien enthält. Für die meisten Spotify-Nutzer\*innen ist das wahrscheinlich nicht das geläufigste Dateiformat. Die Dateien können zwar mit einem Texteditor betrachtet werden, jedoch lässt sich bspw. der *Streaming-Verlauf* aufgrund seiner Größe nicht gerade leicht erfassen.
 
-<br>
-
-![*Eintrag im Streaming-Verlauf*.](/img/spotify.jpg)
+| ![Eintrag im Streaming-Verlauf](/img/spotify.jpg) |
+|:--:| 
+| *Eintrag im Streaming-Verlauf* |
 
 Aus diesem Grund habe ich ein R-Skript erstellt, mit welchem die von Spotify zur Verfügung gestellten Dateien ausgewertet werden können.
 
@@ -64,41 +64,42 @@ streamVerlauf_spotify <- bind_rows(streamVerlauf1,
                                    streamVerlauf3)
 ```
 
-Unten ist ein Ausschnitt der Daten dargestellt, an dem man erkennt, dass jede Zeile in diesem Datensatz einen Zeitpunkt (`endTime`) repräsentiert an dem ein Musiktitel (`trackName`) eines Interpreten (`artistName`) abgespielt wurde. Auch die Abspieldauer des jeweiligen Titels vorhanden (`msPlayed`).
-
-<br>
+Unten ist ein Ausschnitt der Daten dargestellt. Jede Zeile in diesem Datensatz repräsentiert dabei einen Zeitpunkt (`endTime`) an dem ein Musiktitel (`trackName`) eines Interpreten (`artistName`) abgespielt wurde. Auch die Abspieldauer des jeweiligen Titels ist vorhanden (`msPlayed`).
 
 ```{r, echo = FALSE}
 streamVerlauf_spotify %>%
   slice(15000:15100) %>%
   kable() %>%
-  kable_styling(bootstrap_options = c("responsive"),
-                full_width = T, font_size = 10) %>%
+  kable_styling(
+    bootstrap_options = c("responsive"),
+    full_width = T, font_size = 10
+    ) %>%
   scroll_box(width = "100%", height = "300px")
 ```
 
-Bevor ich mit der Auswertung beginne, möchte ich noch die Datums- und Zeitangaben anpassen. Zum einen sollen die Spalte `endTime` getrennt werden, sodass ich je eine Spalte für das Datum und die Uhrzeit erhalte. Hierfür nutze ich die Funktion `ymd_hm()` aus dem R-Paket `lubridate`. Die Uhrzeit ist in den Rohdaten in der Zeitzone *UTC+0* codiert (@Spotify: das wäre eine nützliche Angabe im Readme gewesen), sodass ich noch eine Stunde für die Umwandlung in die *Mitteleuropäische Zeitzone (UTC+1)* addieren muss. Mit der Funktion `floor_date()` wird dann die Datums-/Zeitangabe auf den jeweiligen Tag gerundet. Die Abspieldauer wird zudem in Minuten umgewandelt (`mPlayed`).
+Bevor ich mit der Auswertung beginne, müssen noch die Datums- und Zeitangaben angepasst werden. Zum einen soll die Spalte `endTime` getrennt werden, sodass ich je eine Spalte für das Datum und die Uhrzeit erhalte. Hierfür nutze ich die Funktion `ymd_hm()` aus dem R-Paket `lubridate`. Die Uhrzeit ist in den Rohdaten in der Zeitzone *UTC+0* codiert (@Spotify: das wäre eine nützliche Angabe im Readme gewesen), sodass ich noch eine Stunde für die Umwandlung in die *Mitteleuropäische Zeitzone (UTC+1)* addieren muss. Mit der Funktion `floor_date()` wird dann die Datums-/Zeitangabe auf den jeweiligen Tag gerundet. Die Abspieldauer wird zudem in Minuten umgewandelt (`mPlayed`).
 
 ```{r}
 streamVerlauf_spotify <- 
   streamVerlauf_spotify %>% 
   as_tibble() %>% 
-  mutate(endTime_mez = ymd_hm(endTime) + hours(1),
-         date = as_date(floor_date(endTime_mez, "day")), 
-         mPlayed = round(msPlayed / (1000*60), digits = 2))
-
+  mutate(
+    endTime_mez = ymd_hm(endTime) + hours(1),
+    date = as_date(floor_date(endTime_mez, "day")), 
+    mPlayed = round(msPlayed / (1000*60), digits = 2)
+    )
 ```
 
 Die fertig aufbereiteten Daten sehen so aus:
-
-<br>
 
 ```{r, echo = FALSE}
 streamVerlauf_spotify %>%
   slice(15000:15100) %>%
   kable() %>%
-  kable_styling(bootstrap_options = c("responsive"),
-                full_width = T, font_size = 10) %>%
+  kable_styling(
+    bootstrap_options = c("responsive"),
+    full_width = T, font_size = 10
+    ) %>%
   scroll_box(width = "100%", height = "300px")
 ```
 
@@ -113,7 +114,7 @@ streamVerlauf_spotify <-
 
 ## **Datenanalyse**
 
-Zuerst möchte ich mir den Streaming-Verlauf über den gesamten Zeitraum anschauen. Mittels `scale_fill_gradient()` kann man eine Farbskala erstellen, wobei rot eine relativ hohe und gelb eine relativ niedrige Streaming-Aktivität darstellt. 
+Zuerst möchte ich mir den Streaming-Verlauf über den gesamten Zeitraum anschauen. Mittels `scale_fill_gradient()` kann man eine Farbverlaufsskala erstellen, wobei rot eine relativ hohe und gelb eine relativ niedrige Streaming-Aktivität darstellt. 
 
 ```{r}
 streamVerlauf_spotify %>% 
@@ -124,10 +125,14 @@ streamVerlauf_spotify %>%
   geom_col(aes(fill = hours)) +
   scale_fill_gradient(low = "yellow", high = "red") + 
   scale_x_date(date_breaks = "4 weeks", date_labels = "%b") +
-  labs(x = "", y = "Streamingaktivität (in Stunden)", fill = "Stunden gestreamt")
+  labs(
+    x = "", 
+    y = "Streamingaktivität (in Stunden)", 
+    fill = "Stunden gestreamt"
+    )
 ```
 
-Besonders interessant finde ich den Höchstwert im Juli. Ich vermute, dass dieser auf meine Geburtstagsfeier zurückgeht, da meine Freundin an diesem Abend als Spotify-DJ engagiert war. Unten schränke ich den Auswertungszeitraum auf den Monat Juli ein und ändere die Skalierung der x-Achse, sodass die einzelnen Tage erkennbar sind.
+Besonders interessant finde ich den Höchstwert im Juli. Ich vermute, dass dieser auf meine Geburtstagsfeier zurückgeht, da meine Freundin an diesem Abend als Spotify-DJ engagiert war. Unten schränke ich den Auswertungszeitraum auf den Monat Juli ein und ändere die Skalierung der x-Achse, sodass die einzelnen Tage besser erkennbar sind.
 
 ```{r}
 streamVerlauf_spotify %>% 
@@ -139,10 +144,14 @@ streamVerlauf_spotify %>%
   geom_col(aes(fill = hours)) +
   scale_fill_gradient(low = "yellow", high = "red") + 
   scale_x_date(date_breaks = "2 days", date_labels = "%d") +
-  labs(x = "Juli", y = "Streamingaktivität (in Stunden)", fill = "Stunden gestreamt")
+  labs(
+    x = "Juli", 
+    y = "Streamingaktivität (in Stunden)", 
+    fill = "Stunden gestreamt"
+    )
 ```
 
-Der 25. Juli war ein Samstag und hier fand meine Geburtstagsfeier statt - danke für die Erinnerung Spotify. Lässt sich mit den Daten auch rekonstruieren wie lange die Feier ging? Hierfür schränke ich die Daten weiter auf den 25. Juli 16 Uhr bis zum 26. Juli 9 Uhr ein und summiere die Streaming-Aktivität für jede Stunde.
+Der 25. Juli war ein Samstag und hier fand meine Geburtstagsfeier statt - danke für die Erinnerung Spotify. Lässt sich mit den Daten auch rekonstruieren wie lange die Feier ging? Hierfür schränke ich die Daten noch enger auf den 25. Juli 16 Uhr bis zum 26. Juli 9 Uhr ein und summiere die Streaming-Aktivität für jede Stunde auf.
 
 ```{r}
 streamVerlauf_spotify %>% 
@@ -160,7 +169,7 @@ streamVerlauf_spotify %>%
 
 ***
 
-Meine Freundin war besonders daran interessiert zu sehen, welche Künstler\*innen und Lieder sie am häufigsten auf Spotify angehört hat. Hierzu summiere ich für jeden Künstler\*in (`artistName`) die gestreamten Minuten (`mPlayed`) im gesamten Zeitraum auf und werte unten die Top-15 aus. 
+Meine Freundin war besonders daran interessiert zu sehen, welche Künstler\*innen und Lieder sie am häufigsten auf Spotify angehört hat. Hierzu summiere ich für jeden Künstler\*in (`artistName`) die gestreamten Minuten (`mPlayed`) im gesamten Zeitraum auf und werte die Top-15 aus. 
 
 ```{r}
 streamVerlauf_spotify %>%
@@ -176,12 +185,11 @@ streamVerlauf_spotify %>%
   scale_y_continuous(breaks = seq(0,110,10)) +
   labs(x = "", y = "Streamingaktivität (in Stunden)") +
   theme(legend.position = "none")
-
 ```
 
 Die K-Pop Gruppe *BTS* hat es ihr besonders angetan und ihnen wurden umgerechnet über 4 Tage durchgehender Musikkonsum gewidmet. Welcher Fan bietet mehr? 
 
-Als nächstes schaue ich mir die Top 15 der gestreamten Musiktitel an. Damit man als Laie die Titel dem jeweiligen Interpreten zuordnen kann, erstelle ich mit der Funktion `str_c()` eine kombinierte Spalte aus Titel-/ und Künstlername.
+Als nächstes schaue ich mir die Top 15 der gestreamten Musiktitel an. Damit man als Pop-Musik-Laie die Titel dem jeweiligen Interpreten zuordnen kann, erstelle ich mit der Funktion `str_c()` eine kombinierte Spalte aus Titel-/ und Künstlername.
 
 ```{r}
 streamVerlauf_spotify %>%
@@ -225,7 +233,7 @@ streamVerlauf_spotify %>%
 
 ***
 
-Zu welchen Tageszeiten hört meine Freundin am häufigsten Musik? Auch das lässt sich mit einer geeigneten Darstellungsmethode leicht beantworten. Mit der Funktion `geom_tile()` aus dem R-Paket `ggplot2` erstelle ich Rechtecke, welche die gesamte Streamingaktivität für jede Stunde eines Tags repräsentieren. 
+Zu welchen Tageszeiten hört meine Freundin am häufigsten Musik? Auch das lässt sich mit einer geeigneten Darstellungsmethode leicht beantworten. Mit der Funktion `geom_tile()` aus dem R-Paket `ggplot2` erstelle ich Rechtecke, welche die gesamte Streamingaktivität für jede Stunde innerhalb eines Tages repräsentieren. 
 
 ```{r}
 streamVerlauf_spotify %>% 
@@ -235,10 +243,10 @@ streamVerlauf_spotify %>%
   geom_tile() + 
   scale_fill_gradient(low = "yellow", high = "red") + 
   scale_x_continuous(breaks = seq(0,23,1)) +
-  scale_y_date(date_breaks = "1 month", date_labels = "%b") +
+  scale_y_date(date_breaks = "1 month", date_labels = "%b %Y") +
   labs(x = "Uhr", y = "", fill = "Minuten gestreamt") 
 ```
 
-Kopfhörer auf und ab in die Bahn. Besonders gut zu erkennen sind die täglichen Pendelzeiten zwischen Wohnung und Arbeitsstelle. Diese liegen von Juni bis Ende Oktober am Morgen meist zwischen 5 und 6 Uhr und am Nachmittag zwischen 15 und 16 Uhr. Zwischen November und April verschiebt sich die Streamingaktivität am Morgen und am Nachmittag erkennbar um eine Stunde nach vorne (in der dunklen Jahreszeit kommt man einfach etwas schwerer aus dem Bett). 
+Kopfhörer auf und ab in die Bahn! Besonders gut zu erkennen sind die täglichen Pendelzeiten zwischen Wohnung und Arbeitsstelle. Diese liegen von Juni bis Ende Oktober am Morgen meist zwischen 5 und 6 Uhr und am Nachmittag zwischen 15 und 16 Uhr. Zwischen November und April verschiebt sich die Streamingaktivität am Morgen und am Nachmittag erkennbar um eine Stunde nach vorne (in der dunklen Jahreszeit kommt man einfach etwas schwerer aus dem Bett). 
 
-Interessant aber auch etwas gruselig, was sich aus dem Spotify-Nutzerverhalten so alles erkennen lässt!
+Interessant aber auch etwas gruselig, was sich aus den von Spotify gesammelten Nutzerdaten so alles erkennen lässt!

@@ -14,7 +14,7 @@ intro: |
 
   I was born in Thuringia und currently live in Mainz with my wife.
 
-  This website is built with [blogdown](https://github.com/rstudio/blogdown) and [Hugo](https://gohugo.io/), and deployed using [Netlify](https://www.netlify.com/). My illustrated portrait was drawn by [Liza Donnely](https://twitter.com/lizadonnelly).
+  This website is built with [blogdown](https://github.com/rstudio/blogdown) and [Hugo](https://gohugo.io/), and deployed using [Netlify](https://www.netlify.com/). My illustrated portrait was drawn by cartoonist [Liza Donnely](https://lizadonnelly.com/).
   
   If you liked some of the contents on this website feel free to drop me an [e-mail](mailto:philipp-leppert@posteo.de).
 

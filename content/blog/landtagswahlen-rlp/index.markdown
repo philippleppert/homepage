@@ -36,7 +36,9 @@ Zunächst muss man vor allem den *Gemeindeschlüssel Rheinland-Pfalz (GSRP)* ver
 
 <br>
 
-![Verwaltungsgliederung Rheinland-Pfalz inkl. Schlüsselsystematik. Eigene Darstellung.](/img/verwaltungsgliederung_rlp.jpg)
+| ![Verwaltungsgliederung Rheinland-Pfalz inkl. Schlüsselsystematik. Eigene Darstellung](/img/verwaltungsgliederung_rlp.jpg) |
+|:--:| 
+| *Verwaltungsgliederung Rheinland-Pfalz inkl. Schlüsselsystematik. Eigene Darstellung.* |
 
 ## **Datenaufbereitung**
 

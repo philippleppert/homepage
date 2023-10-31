@@ -26,27 +26,21 @@ Mit einem Klick auf "Alle Ergebnisse" erthält man dabei die Wahlergebnisse bis 
 
 Zunächst muss man vor allem den *Gemeindeschlüssel Rheinland-Pfalz (GSRP)* verstehen, der jede Gebietseinheit mehr oder weniger eindeutig identifiziert. Auf der Webseite des Statistischen Landesamtes gibt es dazu [Erläuterungen](https://www.wahlen.rlp.de/de/landtagswahl/wahlen/2011/downloads/hinweise/erlaeuterungen/), ich habe aber versucht ein eigenes Schaubild anzufertigen. Dieses soll insb. zeigen, wie man mit dem Gebietsschlüssel, welche Gebiete bzw. Gebietsebenen identifizieren kann. Der Schlüssel besteht aus 10 Stellen und die ersten 3 Stellen enthalten Informationen zum Regierungsbezirk und Landkreis. Anhand der restlichen Stellen kann man weitere Gebietseinheiten ausfindig machen. Auf der linken Seite habe ich beschrieben, welche Gebietseinheiten, ich in meinem Datensatz als Variable hinterlegen möchte, um sowohl Ergebnisse auf Ebene der Gemeinden als auch auf Ebene des Landkreises erstellen zu können.
 
-<br>
-
-![Verwaltungsgliederung Rheinland-Pfalz inkl. Schlüsselsystematik. Eigene Darstellung.](../../..\img/verwaltungsgliederung_rlp.jpg)
+| ![Verwaltungsgliederung Rheinland-Pfalz inkl. Schlüsselsystematik. Eigene Darstellung](../../..\img/verwaltungsgliederung_rlp.jpg) |
+|:----------------------------------------------------------------------:|
+|                       *Verwaltungsgliederung Rheinland-Pfalz inkl. Schlüsselsystematik. Eigene Darstellung.*                       |
 
 ## **Datenaufbereitung**
 
 Unten lese ich die heruntergeladene Datei für das Jahr 2011 ein und zeige einen Ausschnitt der Daten vor der Bereinigung.
 
-``` r
-data_raw <- read_delim("data/Landtagswahl_2011_Gesamtergebnis.csv", delim = ";",
-                       locale=locale(decimal_mark = ",", encoding = "latin1"),
-                       col_types = cols(Gebietsschlüssel = col_character(),
-                                        .default = col_guess()))
-## New names:
-## * `` -> ...31
-## * `` -> ...32
-## * `` -> ...33
-## * `` -> ...34
-## * `` -> ...35
-## * ...
-```
+    ## New names:
+    ## * `` -> ...31
+    ## * `` -> ...32
+    ## * `` -> ...33
+    ## * `` -> ...34
+    ## * `` -> ...35
+    ## * ...
 
 <br>
 
