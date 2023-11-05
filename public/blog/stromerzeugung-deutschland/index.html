@@ -43,7 +43,7 @@
   <meta itemprop="name" content="Stromerzeugung in Deutschland">
 <meta itemprop="description" content="Welche Energieträger werden für die Stromerzeugung in Deutschland verwendet und wo wird dieser produziert?"><meta itemprop="datePublished" content="2020-04-05T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2020-04-05T00:00:00+00:00" />
-<meta itemprop="wordCount" content="2691"><meta itemprop="image" content="https://philippleppert.eu/blog/stromerzeugung-deutschland/featured.png">
+<meta itemprop="wordCount" content="2690"><meta itemprop="image" content="https://philippleppert.eu/blog/stromerzeugung-deutschland/featured.png">
 <meta itemprop="keywords" content="" />
   
   
@@ -107,9 +107,10 @@
 
       </header>
       <section class="post-body pt5 pb4">
-        <script src="index_files/libs/kePrint-0.0.1/kePrint.js"></script>
+        <script src="https://philippleppert.eu/blog/stromerzeugung-deutschland/index_files/kePrint/kePrint.js"></script>
+<script src="https://philippleppert.eu/blog/stromerzeugung-deutschland/index_files/kePrint/kePrint.js"></script>
 <p>Kürzlich hat mich die ZDF-Serie 
-<a href="https://de.wikipedia.org/wiki/Unterleuten_%E2%80%93_Das_zerrissene_Dorf" target="_blank" rel="noopener">Unterleuten - Das zerrissene Dorf</a> wieder einmal mit den gesellschaftlichen Hürden beim Ausbau von erneuerbaren Energien konfrontiert. Meine Generation findet erneuerbare Energien ja zumeist ganz toll. Keine CO<sub>2</sub>-Emissionen, neue Arbeitsplätze und eine Möglichkeit, die Klimaziele doch noch irgendwie zu wuppen. In <em>Unterleuten</em> sind mir einige Parallelen zu meiner südthüringischen Heimat aufgefallen. Hier gab es im letzten Jahr Proteste gegen ein Windvorranggebiet, welches den Bau von 20-30 Windkraftanlagen vorsieht. Weil es bisher kaum Windräder in der Region gibt, ist die Debatte entsprechend emotional aufgeladen. Ich hatte mich schon oft gefragt, warum das eigentlich so ist. Südthüringen ist dünn besiedelt und ziemlich strukturschwach. Ausreichend Platz für Windräder wäre wohl vorhanden.</p>
+<a href="https://de.wikipedia.org/wiki/Unterleuten_%E2%80%93_Das_zerrissene_Dorf" target="_blank" rel="noopener">Unterleuten - Das zerrissene Dorf</a> wieder einmal mit den gesellschaftlichen Hürden beim Ausbau von erneuerbaren Energien konfrontiert. Meine Generation findet erneuerbare Energien ja zumeist ganz toll. Keine CO~2~-Emissionen, neue Arbeitsplätze und eine Möglichkeit, die Klimaziele doch noch irgendwie zu wuppen. In <em>Unterleuten</em> sind mir einige Parallelen zu meiner südthüringischen Heimat aufgefallen. Hier gab es im letzten Jahr Proteste gegen ein Windvorranggebiet, welches den Bau von 20-30 Windkraftanlagen vorsieht. Weil es bisher kaum Windräder in der Region gibt, ist die Debatte entsprechend emotional aufgeladen. Ich hatte mich schon oft gefragt, warum das eigentlich so ist. Südthüringen ist dünn besiedelt und ziemlich strukturschwach. Ausreichend Platz für Windräder wäre wohl vorhanden.</p>
 <p>Der Widerstand organisiert sich in einer Bürgerinitiative, welche sich mit der Aussage <em>&ldquo;Wir sind für den Schutz unserer Wildtiere und einmaligen Natur und gegen die Industrialisierung des Waldes&rdquo;</em> positioniert. Frage: Wird der Wald nicht schon seit Hunderten von Jahren industrialisiert und wurde bzw. wird nicht auch für den Braunkohletagebau Wald gerodet (siehe jüngst die Protestaktionen im Hambacher Forst)? Gut, Letzteres passiert ja irgendwo drüben in NRW und nicht vor der eigenen Haustür. Und damit komme ich schon zu den Kernfragen dieses Artikels:</p>
 <ul>
 <li>Wo und wie wird Strom in Deutschland produziert?</li>
@@ -127,7 +128,7 @@
     </svg></a>
 </h2>
 <p>Die Bundesnetzagentur (BNetzA) erfasst wesentliche Daten einzelner Kraftwerke in jährlich durchgeführten Monitoringerhebungen und stellt diese auf ihrer Website in einer 
-<a href="https://www.bundesnetzagentur.de/DE/Sachgebiete/ElektrizitaetundGas/Unternehmen_Institutionen/Versorgungssicherheit/Erzeugungskapazitaeten/Kraftwerksliste/kraftwerksliste-node.html" target="_blank" rel="noopener">Kraftwerksliste</a> zur Verfügung. Auf den ersten Blick findet man hier nur Daten für das Jahr 2020. Via Google konnte ich auch die Kraftwerkslisten für die vorherigen Jahre bis einschließlich 2017 finden. Möglicherweise gibt es bei anderen Behörden und/oder Verbänden weiterführende Daten &ndash; für den Anfang soll diese Datengrundlage aber ausreichen. Die Kraftwerkslisten stehen im .XLSX Format zur Verfügung und haben einen Bearbeitungsstand zwischen Februar und April des jeweiligen Jahres. Zunächst konvertiere ich die einzelnen Listen ins .CSV Format und entferne uninteressante Spalten. Eine Zeile im Datensatz repräsentiert ein Kraftwerk bzw. einen Kraftwerksblock. So stehen u.a. Informationen über den Standort, den primär verwendeten Energieträger, die Netto-Nennleistung und den Betriebsstatus des Kraftwerks zur Verfügung.</p>
+<a href="https://www.bundesnetzagentur.de/DE/Sachgebiete/ElektrizitaetundGas/Unternehmen_Institutionen/Versorgungssicherheit/Erzeugungskapazitaeten/Kraftwerksliste/kraftwerksliste-node.html" target="_blank" rel="noopener">Kraftwerksliste</a> zur Verfügung. Auf den ersten Blick findet man hier nur Daten für das Jahr 2020. Via Google konnte ich auch die Kraftwerkslisten für die vorherigen Jahre bis einschließlich 2017 finden. Möglicherweise gibt es bei anderen Behörden und/oder Verbänden weiterführende Daten – für den Anfang soll diese Datengrundlage aber ausreichen. Die Kraftwerkslisten stehen im .XLSX Format zur Verfügung und haben einen Bearbeitungsstand zwischen Februar und April des jeweiligen Jahres. Zunächst konvertiere ich die einzelnen Listen ins .CSV Format und entferne uninteressante Spalten. Eine Zeile im Datensatz repräsentiert ein Kraftwerk bzw. einen Kraftwerksblock. So stehen u.a. Informationen über den Standort, den primär verwendeten Energieträger, die Netto-Nennleistung und den Betriebsstatus des Kraftwerks zur Verfügung.</p>
 
 
 
@@ -154,194 +155,192 @@
 </span></span><span style="display:flex;"><span>                            )
 </span></span></code></pre></div><p>Auszug aus dem Datensatz:</p>
 <br>
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Kraftwerksnummer</th>
-<th style="text-align:left">Unternehmen</th>
-<th style="text-align:left">Kraftwerksname</th>
-<th style="text-align:left">PLZ</th>
-<th style="text-align:left">Ort</th>
-<th style="text-align:left">Strasse_Hausnummer</th>
-<th style="text-align:left">Bundesland</th>
-<th style="text-align:left">Blockname</th>
-<th style="text-align:left">Aufnahme_Stromerzeugung</th>
-<th style="text-align:left">Kraftwerksstatus</th>
-<th style="text-align:left">Energieträger</th>
-<th style="text-align:left">Vergütungsfähig_EEG</th>
-<th style="text-align:left">Wärmeauskopplung</th>
-<th style="text-align:right">Netto_Nennleistung</th>
-<th style="text-align:left">Stromnetzbetreiber</th>
-<th style="text-align:right">Jahr</th>
-<th style="text-align:left">Klasse</th>
-<th style="text-align:left">Typ</th>
-</tr>
-</thead>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class="table table-responsive" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Kraftwerksnummer </th>
+   <th style="text-align:left;"> Unternehmen </th>
+   <th style="text-align:left;"> Kraftwerksname </th>
+   <th style="text-align:left;"> PLZ </th>
+   <th style="text-align:left;"> Ort </th>
+   <th style="text-align:left;"> Strasse_Hausnummer </th>
+   <th style="text-align:left;"> Bundesland </th>
+   <th style="text-align:left;"> Blockname </th>
+   <th style="text-align:left;"> Aufnahme_Stromerzeugung </th>
+   <th style="text-align:left;"> Kraftwerksstatus </th>
+   <th style="text-align:left;"> Energieträger </th>
+   <th style="text-align:left;"> Vergütungsfähig_EEG </th>
+   <th style="text-align:left;"> Wärmeauskopplung </th>
+   <th style="text-align:right;"> Netto_Nennleistung </th>
+   <th style="text-align:left;"> Stromnetzbetreiber </th>
+   <th style="text-align:right;"> Jahr </th>
+   <th style="text-align:left;"> Klasse </th>
+   <th style="text-align:left;"> Typ </th>
+  </tr>
+ </thead>
 <tbody>
-<tr>
-<td style="text-align:left">BNA1011</td>
-<td style="text-align:left">Breeze Three Energy GmbH &amp; Co. KG</td>
-<td style="text-align:left">Windpark Waldhausen</td>
-<td style="text-align:left">73433</td>
-<td style="text-align:left">Aalen</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">Baden-Württemberg</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">2006</td>
-<td style="text-align:left">in Betrieb</td>
-<td style="text-align:left">Windenergie (Onshore-Anlage)</td>
-<td style="text-align:left">Ja</td>
-<td style="text-align:left">Nein</td>
-<td style="text-align:right">14.0</td>
-<td style="text-align:left">Netzgesellschaft Ostwürttemberg DonauRies GmbH</td>
-<td style="text-align:right">2017</td>
-<td style="text-align:left">Windenergie</td>
-<td style="text-align:left">Erneuerbar</td>
-</tr>
-<tr>
-<td style="text-align:left">BNA0029</td>
-<td style="text-align:left">ESK Solarenergie GmbH &amp; Co. KG</td>
-<td style="text-align:left">Solarpark Petzenbach</td>
-<td style="text-align:left">94424</td>
-<td style="text-align:left">Arnstorf</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">Bayern</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">2010</td>
-<td style="text-align:left">in Betrieb</td>
-<td style="text-align:left">Solare Strahlungsenergie</td>
-<td style="text-align:left">Ja</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">10.0</td>
-<td style="text-align:left">Bayernwerk AG</td>
-<td style="text-align:right">2017</td>
-<td style="text-align:left">Solarenergie</td>
-<td style="text-align:left">Erneuerbar</td>
-</tr>
-<tr>
-<td style="text-align:left">BNA0194</td>
-<td style="text-align:left">Kraftwerk Dessau GmbH</td>
-<td style="text-align:left">Kraftwerk Dessau</td>
-<td style="text-align:left">06842</td>
-<td style="text-align:left">Dessau-Roßlau</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">Sachsen-Anhalt</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">1996</td>
-<td style="text-align:left">in Betrieb</td>
-<td style="text-align:left">Braunkohle</td>
-<td style="text-align:left">Nein</td>
-<td style="text-align:left">ja</td>
-<td style="text-align:right">49.0</td>
-<td style="text-align:left">Dessauer Stromversorgung GmbH</td>
-<td style="text-align:right">2017</td>
-<td style="text-align:left">Braun-/Steinkohle</td>
-<td style="text-align:left">Konventionell</td>
-</tr>
-<tr>
-<td style="text-align:left">BNA1353</td>
-<td style="text-align:left">LHI Solar Georgsdorf GmbH &amp; Co. KG</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">49828</td>
-<td style="text-align:left">Georgsdorf</td>
-<td style="text-align:left">Georgsdorf 14/10; 1/41; 1/39; 2/7; 1/42; 11/4; 11/5; u.a.</td>
-<td style="text-align:left">Niedersachsen</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">2011</td>
-<td style="text-align:left">in Betrieb</td>
-<td style="text-align:left">Solare Strahlungsenergie</td>
-<td style="text-align:left">Ja</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">24.7</td>
-<td style="text-align:left">Westnetz GmbH</td>
-<td style="text-align:right">2017</td>
-<td style="text-align:left">Solarenergie</td>
-<td style="text-align:left">Erneuerbar</td>
-</tr>
-<tr>
-<td style="text-align:left">BNA0405b</td>
-<td style="text-align:left">Windpark GmbH &amp; Co. Hamburg KG</td>
-<td style="text-align:left">Windpark Hamburg</td>
-<td style="text-align:left">21129</td>
-<td style="text-align:left">Hamburg</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">Hamburg</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">2009</td>
-<td style="text-align:left">in Betrieb</td>
-<td style="text-align:left">Windenergie (Onshore-Anlage)</td>
-<td style="text-align:left">Ja</td>
-<td style="text-align:left">nein</td>
-<td style="text-align:right">12.0</td>
-<td style="text-align:left">Stromnetz Hamburg GmbH</td>
-<td style="text-align:right">2017</td>
-<td style="text-align:left">Windenergie</td>
-<td style="text-align:left">Erneuerbar</td>
-</tr>
-<tr>
-<td style="text-align:left">BNA1289</td>
-<td style="text-align:left">AMK - Abfallentsorgungsgesellschaft des Märkischen Kreises mbH</td>
-<td style="text-align:left">AMK - Abfallentsorgungsgesellschaft des Märkischen Kreises mbH</td>
-<td style="text-align:left">58636</td>
-<td style="text-align:left">Iserlohn</td>
-<td style="text-align:left">Giesestraße 10</td>
-<td style="text-align:left">Nordrhein-Westfalen</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">1981</td>
-<td style="text-align:left">in Betrieb</td>
-<td style="text-align:left">Abfall</td>
-<td style="text-align:left">Nein</td>
-<td style="text-align:left">Ja</td>
-<td style="text-align:right">12.6</td>
-<td style="text-align:left">Stadtwerke Iserlohn GmbH</td>
-<td style="text-align:right">2017</td>
-<td style="text-align:left">Sonstige Konventionelle</td>
-<td style="text-align:left">Konventionell</td>
-</tr>
-<tr>
-<td style="text-align:left">BNA0555</td>
-<td style="text-align:left">KOGEP vierzehn GmbH &amp; Co. Solar 1411 KG</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">06366</td>
-<td style="text-align:left">Köthen</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">Sachsen-Anhalt</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">2010</td>
-<td style="text-align:left">in Betrieb</td>
-<td style="text-align:left">Solare Strahlungsenergie</td>
-<td style="text-align:left">Ja</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">11.7</td>
-<td style="text-align:left">Mitteldeutsche Netzgesellschaft Strom mbH</td>
-<td style="text-align:right">2017</td>
-<td style="text-align:left">Solarenergie</td>
-<td style="text-align:left">Erneuerbar</td>
-</tr>
-<tr>
-<td style="text-align:left">BNA0775</td>
-<td style="text-align:left">EEV BioEnergie GmbH &amp; Co. KG</td>
-<td style="text-align:left">Biomasse-HKW</td>
-<td style="text-align:left">26871</td>
-<td style="text-align:left">Papenburg</td>
-<td style="text-align:left">Am Nordhafen 5</td>
-<td style="text-align:left">Niedersachsen</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">2003</td>
-<td style="text-align:left">in Betrieb</td>
-<td style="text-align:left">Biomasse</td>
-<td style="text-align:left">Ja</td>
-<td style="text-align:left">Nein</td>
-<td style="text-align:right">20.0</td>
-<td style="text-align:left">EWE NETZ GmbH</td>
-<td style="text-align:right">2017</td>
-<td style="text-align:left">Biomasse</td>
-<td style="text-align:left">Erneuerbar</td>
-</tr>
+  <tr>
+   <td style="text-align:left;"> BNA1011 </td>
+   <td style="text-align:left;"> Breeze Three Energy GmbH &amp; Co. KG </td>
+   <td style="text-align:left;"> Windpark Waldhausen </td>
+   <td style="text-align:left;"> 73433 </td>
+   <td style="text-align:left;"> Aalen </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> Baden-Württemberg </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 2006 </td>
+   <td style="text-align:left;"> in Betrieb </td>
+   <td style="text-align:left;"> Windenergie (Onshore-Anlage) </td>
+   <td style="text-align:left;"> Ja </td>
+   <td style="text-align:left;"> Nein </td>
+   <td style="text-align:right;"> 14.0 </td>
+   <td style="text-align:left;"> Netzgesellschaft Ostwürttemberg DonauRies GmbH </td>
+   <td style="text-align:right;"> 2017 </td>
+   <td style="text-align:left;"> Windenergie </td>
+   <td style="text-align:left;"> Erneuerbar </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BNA0029 </td>
+   <td style="text-align:left;"> ESK Solarenergie GmbH &amp; Co. KG </td>
+   <td style="text-align:left;"> Solarpark Petzenbach </td>
+   <td style="text-align:left;"> 94424 </td>
+   <td style="text-align:left;"> Arnstorf </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> Bayern </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 2010 </td>
+   <td style="text-align:left;"> in Betrieb </td>
+   <td style="text-align:left;"> Solare Strahlungsenergie </td>
+   <td style="text-align:left;"> Ja </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 10.0 </td>
+   <td style="text-align:left;"> Bayernwerk AG </td>
+   <td style="text-align:right;"> 2017 </td>
+   <td style="text-align:left;"> Solarenergie </td>
+   <td style="text-align:left;"> Erneuerbar </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BNA0194 </td>
+   <td style="text-align:left;"> Kraftwerk Dessau GmbH </td>
+   <td style="text-align:left;"> Kraftwerk Dessau </td>
+   <td style="text-align:left;"> 06842 </td>
+   <td style="text-align:left;"> Dessau-Roßlau </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> Sachsen-Anhalt </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 1996 </td>
+   <td style="text-align:left;"> in Betrieb </td>
+   <td style="text-align:left;"> Braunkohle </td>
+   <td style="text-align:left;"> Nein </td>
+   <td style="text-align:left;"> ja </td>
+   <td style="text-align:right;"> 49.0 </td>
+   <td style="text-align:left;"> Dessauer Stromversorgung GmbH </td>
+   <td style="text-align:right;"> 2017 </td>
+   <td style="text-align:left;"> Braun-/Steinkohle </td>
+   <td style="text-align:left;"> Konventionell </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BNA1353 </td>
+   <td style="text-align:left;"> LHI Solar Georgsdorf GmbH &amp; Co. KG </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 49828 </td>
+   <td style="text-align:left;"> Georgsdorf </td>
+   <td style="text-align:left;"> Georgsdorf 14/10; 1/41; 1/39; 2/7; 1/42; 11/4; 11/5; u.a. </td>
+   <td style="text-align:left;"> Niedersachsen </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 2011 </td>
+   <td style="text-align:left;"> in Betrieb </td>
+   <td style="text-align:left;"> Solare Strahlungsenergie </td>
+   <td style="text-align:left;"> Ja </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 24.7 </td>
+   <td style="text-align:left;"> Westnetz GmbH </td>
+   <td style="text-align:right;"> 2017 </td>
+   <td style="text-align:left;"> Solarenergie </td>
+   <td style="text-align:left;"> Erneuerbar </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BNA0405b </td>
+   <td style="text-align:left;"> Windpark GmbH &amp; Co. Hamburg KG </td>
+   <td style="text-align:left;"> Windpark Hamburg </td>
+   <td style="text-align:left;"> 21129 </td>
+   <td style="text-align:left;"> Hamburg </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> Hamburg </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 2009 </td>
+   <td style="text-align:left;"> in Betrieb </td>
+   <td style="text-align:left;"> Windenergie (Onshore-Anlage) </td>
+   <td style="text-align:left;"> Ja </td>
+   <td style="text-align:left;"> nein </td>
+   <td style="text-align:right;"> 12.0 </td>
+   <td style="text-align:left;"> Stromnetz Hamburg GmbH </td>
+   <td style="text-align:right;"> 2017 </td>
+   <td style="text-align:left;"> Windenergie </td>
+   <td style="text-align:left;"> Erneuerbar </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BNA1289 </td>
+   <td style="text-align:left;"> AMK - Abfallentsorgungsgesellschaft des Märkischen Kreises mbH </td>
+   <td style="text-align:left;"> AMK - Abfallentsorgungsgesellschaft des Märkischen Kreises mbH </td>
+   <td style="text-align:left;"> 58636 </td>
+   <td style="text-align:left;"> Iserlohn </td>
+   <td style="text-align:left;"> Giesestraße 10 </td>
+   <td style="text-align:left;"> Nordrhein-Westfalen </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 1981 </td>
+   <td style="text-align:left;"> in Betrieb </td>
+   <td style="text-align:left;"> Abfall </td>
+   <td style="text-align:left;"> Nein </td>
+   <td style="text-align:left;"> Ja </td>
+   <td style="text-align:right;"> 12.6 </td>
+   <td style="text-align:left;"> Stadtwerke Iserlohn GmbH </td>
+   <td style="text-align:right;"> 2017 </td>
+   <td style="text-align:left;"> Sonstige Konventionelle </td>
+   <td style="text-align:left;"> Konventionell </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BNA0555 </td>
+   <td style="text-align:left;"> KOGEP vierzehn GmbH &amp; Co. Solar 1411 KG </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 06366 </td>
+   <td style="text-align:left;"> Köthen </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> Sachsen-Anhalt </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 2010 </td>
+   <td style="text-align:left;"> in Betrieb </td>
+   <td style="text-align:left;"> Solare Strahlungsenergie </td>
+   <td style="text-align:left;"> Ja </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 11.7 </td>
+   <td style="text-align:left;"> Mitteldeutsche Netzgesellschaft Strom mbH </td>
+   <td style="text-align:right;"> 2017 </td>
+   <td style="text-align:left;"> Solarenergie </td>
+   <td style="text-align:left;"> Erneuerbar </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BNA0775 </td>
+   <td style="text-align:left;"> EEV BioEnergie GmbH &amp; Co. KG </td>
+   <td style="text-align:left;"> Biomasse-HKW </td>
+   <td style="text-align:left;"> 26871 </td>
+   <td style="text-align:left;"> Papenburg </td>
+   <td style="text-align:left;"> Am Nordhafen 5 </td>
+   <td style="text-align:left;"> Niedersachsen </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 2003 </td>
+   <td style="text-align:left;"> in Betrieb </td>
+   <td style="text-align:left;"> Biomasse </td>
+   <td style="text-align:left;"> Ja </td>
+   <td style="text-align:left;"> Nein </td>
+   <td style="text-align:right;"> 20.0 </td>
+   <td style="text-align:left;"> EWE NETZ GmbH </td>
+   <td style="text-align:right;"> 2017 </td>
+   <td style="text-align:left;"> Biomasse </td>
+   <td style="text-align:left;"> Erneuerbar </td>
+  </tr>
 </tbody>
-</table>
-</div>
+</table></div>
 <br>
 <p>Für die weiteren Analysen halte ich mich an die Auswertungsmethodik der BNetzA. Ich berücksichtige anhand des Merkmals Kraftwerkstatus für das jeweilige Jahr alle Kraftwerke, die nicht endgültig stillgelegt wurden. Nach kurzer Recherche im Internet bin ich bspw. darauf gestoßen, dass mit (zusätzlichen) konventionellen Energieträgern Strom in das Netz eingespeist wird, wenn es zu Schwankungen bei erneuerbaren Energieträgern kommt. Die BNetzA bezeichnet diese als <em>Kraftwerke außerhalb des Strommarktes</em>.</p>
 <p>Im Jahr 2019 tauchen beim Merkmal Bundesland fehlende Werte auf, während in den restlichen Jahren hier die Kategorie <code>ohne Zuordnung</code> verwendet wurde. <code>NA</code> Werte werden daher mit der Funktion <code>mutate()</code> umgeschlüsselt.</p>
@@ -357,7 +356,7 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#60a0b0;font-style:italic"># 2019: NA in &#34;ohne Zuordnung&#34; umcodieren</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(Bundesland <span style="color:#666">=</span> <span style="color:#06287e">ifelse</span>(<span style="color:#06287e">is.na</span>(Bundesland), <span style="color:#4070a0">&#34;ohne Zuordnung&#34;</span>, Bundesland)) <span style="color:#666">-&gt;</span> strom_df
 </span></span></code></pre></div><p>Das Merkmal <code>Energieträger</code> ist mit 20 verschiedenen Ausprägungen sehr detailliert untergliedert und ich möchte einige Energieträger in einem neuen Merkmal <code>Klasse</code> zusammenfassen. Hierfür ist die Funktion <code>case_when()</code> aus dem R-Paket 
-<a href="https://dplyr.tidyverse.org/" target="_blank" rel="noopener">dplyr</a> sehr gut geeignet. Das Merkmal <code>Klasse</code> enthält nun u.a. die Ausprägungen <code>Sonstige Konventionelle</code> bzw. <code>Sonstige Erneuerbare</code>, bei welchen ich mich an der BNetzA orientiert habe. Lediglich den Energieträger <code>Abfall</code> rechne ich vollständig der Kategorie <code>Sonstige Konventionelle</code> zu, während die BNetzA diesen aufteilt. Leider gibt es auch beim Merkmal <code>Energieträger</code> in einem Jahr zwei <code>NA</code> Werte, welche ich nach einer Inspektion der Daten zu <code>Sonstige Konventionelle</code> zähle. Das Merkmal <code>Klasse</code> hat nun nur noch 10 Ausprägungen, was die folgenden Auswertungen erleichtern soll. Ausgehend vom Merkmal <code>Klasse</code> habe ich zusätzlich das Merkmal <code>Typ</code> generiert, welches jede Klasse in <code>Konventionell</code> oder <code>Erneuerbar</code> einteilt.</p>
+<a href="https://dplyr.tidyverse.org/" target="_blank" rel="noopener">dplyr</a> sehr gut geeignet. Das Merkmal <code>Klasse</code> enthält nun u.a. die Ausprägungen <code>Sonstige Konventionelle</code> bzw. <code>Sonstige Erneuerbare</code>, bei welchen ich mich an der BNetzA orientiert habe. Lediglich den Energieträger <code>Abfall</code> rechne ich vollständig der Kategorie <code>Sonstige Konventionelle</code>  zu, während die BNetzA diesen aufteilt. Leider gibt es auch beim Merkmal <code>Energieträger</code> in einem Jahr zwei <code>NA</code> Werte, welche ich nach einer Inspektion der Daten zu <code>Sonstige Konventionelle</code> zähle. Das Merkmal <code>Klasse</code> hat nun nur noch 10 Ausprägungen, was die folgenden Auswertungen erleichtern soll. Ausgehend vom Merkmal <code>Klasse</code> habe ich zusätzlich das Merkmal <code>Typ</code> generiert, welches jede Klasse in <code>Konventionell</code> oder <code>Erneuerbar</code> einteilt.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>strom_df <span style="color:#666">%&gt;%</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(
 </span></span><span style="display:flex;"><span>    <span style="color:#60a0b0;font-style:italic"># Neue Klassifizierung der Energieträger (10 statt 20 Ausprägungen)</span>
@@ -402,86 +401,84 @@
 </span></span><span style="display:flex;"><span>  ) <span style="color:#666">-&gt;</span> strom_df
 </span></span></code></pre></div><p>Es ist immer eine gute Idee, die Zuordnungen mit <code>table()</code> inkl. dem Argument <code>useNA = &quot;always&quot;</code> zu überprüfen. Tauchen <code>NA</code> auf, deutet dies auf ein Problem bei der Zuordnung mit <code>case_when()</code> hin.</p>
 <br>
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
-<table>
-<thead>
-<tr>
-<th style="text-align:left"></th>
-<th style="text-align:right">Erneuerbar</th>
-<th style="text-align:right">Konventionell</th>
-<th style="text-align:right">NA</th>
-</tr>
-</thead>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class="table table-responsive" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> Erneuerbar </th>
+   <th style="text-align:right;"> Konventionell </th>
+   <th style="text-align:right;"> NA </th>
+  </tr>
+ </thead>
 <tbody>
-<tr>
-<td style="text-align:left">Biomasse</td>
-<td style="text-align:right">305</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">0</td>
-</tr>
-<tr>
-<td style="text-align:left">Braun-/Steinkohle</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">594</td>
-<td style="text-align:right">0</td>
-</tr>
-<tr>
-<td style="text-align:left">Erdgas</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">1103</td>
-<td style="text-align:right">0</td>
-</tr>
-<tr>
-<td style="text-align:left">Kernenergie</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">28</td>
-<td style="text-align:right">0</td>
-</tr>
-<tr>
-<td style="text-align:left">Pumpspeicher</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">269</td>
-<td style="text-align:right">0</td>
-</tr>
-<tr>
-<td style="text-align:left">Solarenergie</td>
-<td style="text-align:right">640</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">0</td>
-</tr>
-<tr>
-<td style="text-align:left">Sonstige Erneuerbare</td>
-<td style="text-align:right">272</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">0</td>
-</tr>
-<tr>
-<td style="text-align:left">Sonstige Konventionelle</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">724</td>
-<td style="text-align:right">0</td>
-</tr>
-<tr>
-<td style="text-align:left">Wasserkraft</td>
-<td style="text-align:right">456</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">0</td>
-</tr>
-<tr>
-<td style="text-align:left">Windenergie</td>
-<td style="text-align:right">3488</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">0</td>
-</tr>
-<tr>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">0</td>
-</tr>
+  <tr>
+   <td style="text-align:left;"> Biomasse </td>
+   <td style="text-align:right;"> 305 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Braun-/Steinkohle </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 594 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Erdgas </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1103 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Kernenergie </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 28 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Pumpspeicher </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 269 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Solarenergie </td>
+   <td style="text-align:right;"> 640 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sonstige Erneuerbare </td>
+   <td style="text-align:right;"> 272 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sonstige Konventionelle </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 724 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Wasserkraft </td>
+   <td style="text-align:right;"> 456 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Windenergie </td>
+   <td style="text-align:right;"> 3488 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
 </tbody>
-</table>
-</div>
+</table></div>
 
 
 
@@ -518,7 +515,7 @@
 </span></span><span style="display:flex;"><span>         y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Netto-Nennleistung in Gigawatt&#34;</span>) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#06287e">theme</span>(legend.position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;bottom&#34;</span>) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#06287e">guides</span>(fill <span style="color:#666">=</span> <span style="color:#06287e">guide_legend</span>(nrow <span style="color:#666">=</span> <span style="color:#40a070">2</span>))
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/plot1-1.png" data-fig-align="center" width="768" />
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/stromerzeugung-deutschland/index_files/figure-html/plot1-1.png" width="768" style="display: block; margin: auto;" />
 <p>Viele Informationen komprimiert in einem einzigen Balkendiagramm - puh! Man erkennt, dass vor allem die Windenergie von 2017 bis 2020 ausgebaut wurde, während Braun- und Steinkohle einen Rückgang aufweisen. Von 2019 zu 2020 ist der Ausbau der Windkraft allerdings etwas langsamer verlaufen als in den Vorjahren. Von 2019 zu 2020 kann zudem die Solarenergie einen relativ hohen Zuwachs verzeichnen. Seit 2018 wird durch erneuerbare Energieträger <strong>mehr</strong> Strom produziert als durch konventionelle Energieträger. In 2020 befinden sich dennoch Steinkohlekraftwerke mit einer Gesamtleistung von 2,3 Gigawatt am Netz, welche gesetzlich an der Stillegung gehindert wurden.</p>
 <p><strong>Netto-Nennleistung pro Energieträger regionalisieren</strong></p>
 <p>Als nächstes wird die Netto-Nennleistung regional ausgewertet. Ich konzentriere mich dabei auf Kraftwerke, zu denen eine Standortangabe auf dem deutschen Festland vorhanden ist. Ausgeschlossen werden damit Kraftwerke in Dänemark, Luxemburg, Österreich, Schweiz sowie Offshore-Anlagen in der Nordsee. Diese Kraftwerke haben 2020 nur einen Anteil von etwa 7 % an der gesamten Netto-Nennleistung aller Kraftwerke, sodass man weiterhin ein realtiv vollständiges Bild der Stromproduktion erhält. Erneut wird die <code>Netto-Nennleistung</code> aller Kraftwerke pro <code>Jahr</code> und <code>Energieträger</code> und nun auch nach <code>Bundesland</code> aggregiert. Das <code>Bundesland</code> wird anstatt <code>Typ</code> an der X-Achse abgebildet und die Achsen werden via <code>coord_flip()</code> vertauscht. Dies hat den Vorteil, dass nun jedes Bundesland nur einmal auf der Y-Achse auftaucht und die invertierten Balken einen besseren Vergleich zwischen den Bundesländern ermöglichen.</p>
@@ -552,7 +549,7 @@
 </span></span><span style="display:flex;"><span>         y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Netto-Nennleistung in Gigawatt&#34;</span>) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#06287e">theme</span>(legend.position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;bottom&#34;</span>) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#06287e">guides</span>(fill <span style="color:#666">=</span> <span style="color:#06287e">guide_legend</span>(nrow <span style="color:#666">=</span> <span style="color:#40a070">4</span>)) 
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/plot2-1.png" data-fig-align="center" width="768" />
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/stromerzeugung-deutschland/index_files/figure-html/plot2-1.png" width="768" style="display: block; margin: auto;" />
 <p>Nordrhein-Westfalen ist Deutschlands Spitzenreiter bei der Stromproduktion! Braun- und Steinkohle sowie Erdgas sind hier die dominanten Energieträger. Dabei produziert NRW fast genau so viel Strom wie alle neuen Bundesländer zusammen. Interessant finde ich, dass in Bayern die Solarenergie einen sehr hohen Anteil an der Stromerzeugung aufweist. Dies könnte möglicherweise auf viele private Haushalte und landwirtschaftliche Betriebe zurückzuführen sein, die Solarstrom in das Netz einspeisen. Niedersachsen ist der Vorreiter bei der Windenergie, dicht gefolgt von Brandenburg und Schleswig-Holstein. Auch Thüringen hat gemessen an ihrer eigenen Stromproduktion einen hohen Anteil bei der Wind- und Solarenergie. Rheinland-Pfalz hat allerdings einen mehr als doppelt so hohen Anteil bei der Windenergie bei nur geringfügig höherer Gesamtfläche als Thüringen. Doch auch Bayern liegt beim Thema Windkraft trotz seiner großen Fläche auf einem abgeschlagenen Platz. Aber von hier kamen ja kürzlich erst Forderungen nach strengeren Abstandsregelungen.</p>
 <p><strong>Kraftwerksstandorte kartieren</strong></p>
 <p>In den Daten befinden sich genaue Angaben zum Standort der Kraftwerke. Ich will daher die 
@@ -583,8 +580,9 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">distinct</span>(adressen, .keep_all <span style="color:#666">=</span> T) <span style="color:#666">-&gt;</span> karte_df
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Basiskarte Deutschland</span>
-</span></span><span style="display:flex;"><span>Get_Map_Country <span style="color:#666">&lt;-</span> <span style="color:#06287e">get_map</span>(location <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Germany&#34;</span>, zoom <span style="color:#666">=</span> <span style="color:#40a070">6</span>, maptype <span style="color:#666">=</span> <span style="color:#4070a0">&#34;toner-background&#34;</span>, 
-</span></span><span style="display:flex;"><span>                           filename <span style="color:#666">=</span> <span style="color:#4070a0">&#34;ggmapTemp&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;bw&#34;</span>, source <span style="color:#666">=</span> <span style="color:#4070a0">&#34;stamen&#34;</span>)
+</span></span><span style="display:flex;"><span>Get_Map_Country <span style="color:#666">&lt;-</span> <span style="color:#06287e">get_map</span>(location <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Germany&#34;</span>, zoom <span style="color:#666">=</span> <span style="color:#40a070">6</span>, 
+</span></span><span style="display:flex;"><span>                           maptype <span style="color:#666">=</span><span style="color:#4070a0">&#34;stamen_toner_background&#34;</span>, 
+</span></span><span style="display:flex;"><span>                           filename <span style="color:#666">=</span> <span style="color:#4070a0">&#34;ggmapTemp&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;bw&#34;</span>, source <span style="color:#666">=</span> <span style="color:#4070a0">&#34;stadia&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>karte_deutschland <span style="color:#666">&lt;-</span> <span style="color:#06287e">ggmap</span>(ggmap <span style="color:#666">=</span> Get_Map_Country)
 </span></span><span style="display:flex;"><span>
@@ -600,7 +598,7 @@
 </span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Breitengrad&#34;</span>) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme</span>(legend.position<span style="color:#666">=</span><span style="color:#4070a0">&#34;bottom&#34;</span>) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">guides</span>(colour <span style="color:#666">=</span> <span style="color:#06287e">guide_legend</span>(nrow <span style="color:#666">=</span> <span style="color:#40a070">4</span>))
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/map1-1.png" data-fig-align="center" width="576" />
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/stromerzeugung-deutschland/index_files/figure-html/map1-1.png" width="576" style="display: block; margin: auto;" />
 <p>Man erkennt eine hohe Dichte von Windkraftanlagen im Norden von Deutschland sowie eine Konzentration von Kohle- und Erdgaskraftwerken im Ruhrgebiet. Auch Wasserkraftwerke an Donau, Lech, Isar und Inn sowie entlang der Mosel sind gut zu sehen. Bayern hatte einen hohen Anteil der Solarenergie aufgewiesen, obwohl ich anhand der Karte nicht sonderlich viele Solarparks erkennen kann. Die These, dass diese erzeugte Strommenge von privaten Haushalten und landwirtschaftlichen Betrieben stammt, könnte also stimmen, da nur geringfügig eingespeiste Mengen aus erneuerbaren Energien in der Kraftwerksliste nicht mit einem genauen Standort erfasst werden. Was ist so in Südthüringen los? Ziemlich viel Platz bis auf ein Paar Erdgaskraftwerke und zwei Pumpspeicher. Im Norden Thüringens sind jedoch schon einige Windräder in Betrieb.</p>
 <p><strong>Kraftwerksstandorte animieren</strong></p>
 <p>Mit dem R-Paket 
@@ -624,7 +622,7 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Animation starten (Achtung: relativ lange Ladezeit)</span>
 </span></span><span style="display:flex;"><span><span style="color:#06287e">animate</span>(karte_animation, nframes <span style="color:#666">=</span> <span style="color:#40a070">100</span>, fps <span style="color:#666">=</span> <span style="color:#40a070">3</span>)
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/animate_map-1.gif" data-fig-align="center" />
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/stromerzeugung-deutschland/index_files/figure-html/animate_map-1.gif" style="display: block; margin: auto;" />
 
         
         <details closed class="f6 fw7 input-reset">
@@ -634,7 +632,7 @@
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Length:</dt>
-    <dd class="fw5 ml0">13 minute read, 2691 words</dd>
+    <dd class="fw5 ml0">13 minute read, 2690 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">

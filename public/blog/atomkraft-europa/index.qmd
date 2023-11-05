@@ -382,7 +382,8 @@ data_long_eu %>%
 Mit einer animierten Karte möchte ich diese Informationen für ganz Europa darstellen. Mit der Funktion `shadow_mark()` aus dem R-Paket `ggmaps` kann man steuern, dass Punkte, die ein mal auf einer Karte hinterlegt wurden, auch im Zeitverlauf auf der Karte verbleiben. So bleibt der Status eines Reaktors so lange gültig bis ein anderer Status eintritt. Da es am Standort eines Atomkraftwerks meist mehrere Reaktoren gibt, ist diese Darstellung nicht vollständig präzise, da die Reaktoren nicht unbedingt zur selben Zeit gebaut oder in Betrieb genommen werden. So kann ein zweiter (dritter, vierter, ...) Reaktor an einem Standort den Status des ersten Reaktors überscheiben.
 
 ```{r}
-Get_Map_Country <- get_map(location = "Europe", zoom = 4, maptype = "stamen_toner_background", 
+Get_Map_Country <- get_map(location = "Europe", zoom = 4, 
+                           maptype = "stamen_toner_background", 
                            filename = "ggmapTemp", color = "bw", source = "stadia")
 
 karte_europa <- ggmap(ggmap = Get_Map_Country)

@@ -26,6 +26,7 @@ theme_set(theme_bw())
 
 # API Key registrieren
 register_google(key = gmaps_api_key)
+register_stadiamaps(stadia_api_key)
 
 # Fertige Daten einlesen
 strom_df <- readRDS("data/strom_df.rds")
@@ -256,8 +257,9 @@ strom_df %>%
   distinct(adressen, .keep_all = T) -> karte_df
 
 # Basiskarte Deutschland
-Get_Map_Country <- get_map(location = "Germany", zoom = 6, maptype = "toner-background", 
-                           filename = "ggmapTemp", color = "bw", source = "stamen")
+Get_Map_Country <- get_map(location = "Germany", zoom = 6, 
+                           maptype ="stamen_toner_background", 
+                           filename = "ggmapTemp", color = "bw", source = "stadia")
 
 karte_deutschland <- ggmap(ggmap = Get_Map_Country)
 

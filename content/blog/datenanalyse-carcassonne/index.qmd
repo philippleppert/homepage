@@ -30,7 +30,7 @@ theme_set(theme_bw())
 
 Carcassonne ist ein Brettspiel für 2-4 Spieler bei dem abwechselnd zufällig gezogene Plättchen an das bestehende Spielfeld angelegt werden. Um Punkte zu sammeln, müssen die Spieler auf dem aktuell ausgelegten Plättchen eines ihrer sog. Meeple platzieren und so eine Burg, Straße, Kloster oder Wiese für sich zu beanspruchen. Von einem Spieler beanspruchte Gebiete können allerdings von einem Mitspieler durch geschicktes Anlegen und Platzieren der Meeple streitig gemacht werden. 
 
-| ![Eine Partie Carcassonne](/img/carcassonne.jpg) |
+| ![Eine Partie Carcassonne. Eigene Aufnahme.](/img/carcassonne.jpg) |
 |:--:| 
 | *Eine Partie Carcassonne. Eigene Aufnahme.* |
 

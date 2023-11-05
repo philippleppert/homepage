@@ -49,5 +49,41 @@
   },
   "content/blog/mietspiegel-immoscout/index.qmd": {
     "index.md": "46bf210f"
+  },
+  "public/blog/atomkraft-europa/index.qmd": {
+    "index.md": "5fe172b4"
+  },
+  "public/blog/bier-belgien/index.qmd": {
+    "index.md": "35d8b592"
+  },
+  "public/blog/datenanalyse-autokauf/index.qmd": {
+    "index.md": "05a47f69"
+  },
+  "public/blog/datenanalyse-carcassonne/index.qmd": {
+    "index.md": "2b6a64e8"
+  },
+  "public/blog/datenanalyse-etfs/index.qmd": {
+    "index.md": "8c49fe17"
+  },
+  "public/blog/datenanalyse-versicherung/index.qmd": {
+    "index.md": "f03a67d3"
+  },
+  "public/blog/dwd-niederschlagsdaten/index.qmd": {
+    "index.md": "a3e79bf7"
+  },
+  "public/blog/landtagswahlen-rlp/index.qmd": {
+    "index.md": "4966e1db"
+  },
+  "public/blog/mietspiegel-immoscout/index.qmd": {
+    "index.md": "b45a9b80"
+  },
+  "public/blog/schottland-wetter/index.qmd": {
+    "index.md": "420b8c85"
+  },
+  "public/blog/schwankung-stromerzeugung/index.qmd": {
+    "index.md": "42bd4f97"
+  },
+  "public/blog/spotify-streamingverlauf/index.qmd": {
+    "index.md": "42f3842f"
   }
 }

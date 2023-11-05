@@ -107,12 +107,13 @@
 
       </header>
       <section class="post-body pt5 pb4">
-        <script src="index_files/libs/kePrint-0.0.1/kePrint.js"></script>
+        <script src="https://philippleppert.eu/blog/datenanalyse-carcassonne/index_files/kePrint/kePrint.js"></script>
+<script src="https://philippleppert.eu/blog/datenanalyse-carcassonne/index_files/kePrint/kePrint.js"></script>
 <p>Carcassonne ist ein Brettspiel für 2-4 Spieler bei dem abwechselnd zufällig gezogene Plättchen an das bestehende Spielfeld angelegt werden. Um Punkte zu sammeln, müssen die Spieler auf dem aktuell ausgelegten Plättchen eines ihrer sog. Meeple platzieren und so eine Burg, Straße, Kloster oder Wiese für sich zu beanspruchen. Von einem Spieler beanspruchte Gebiete können allerdings von einem Mitspieler durch geschicktes Anlegen und Platzieren der Meeple streitig gemacht werden.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:center"><img src="../../..%5Cimg/carcassonne.jpg" alt="Eine Partie Carcassonne"></th>
+<th style="text-align:center"><img src="/img/carcassonne.jpg" alt="Eine Partie Carcassonne. Eigene Aufnahme."></th>
 </tr>
 </thead>
 <tbody>
@@ -143,7 +144,7 @@
     </svg></a>
 </h2>
 <p>Zunächst einige Eckwerte des Carcassonne-Datensatzes: Philipp erzielte im Durchschnitt etwa 7 Punkte mehr als Claudia und errang auch gleichzeitig das höchste Gesamtergebnis mit 143 Punkten (juhu). Claudia hingehen erzielte den niedrigsten Punktestand mit 58 Punkten (sorry). Die höchste Punktedifferenz in einem Spiel betrug 68 Punkte. Insgesamt gewann Philipp 80 Runden und musste sich 42 Mal geschlagen geben. Zwei Runden endeten mit einem Unentschieden.</p>
-<pre><code>##  Punkte_Philipp  Punkte_Claudia     Differenz    
+<pre tabindex="0"><code>##  Punkte_Philipp  Punkte_Claudia     Differenz    
 ##  Min.   : 69.0   Min.   : 58.00   Min.   : 0.00  
 ##  1st Qu.: 92.0   1st Qu.: 88.00   1st Qu.: 6.00  
 ##  Median :105.0   Median : 98.00   Median :14.00  
@@ -153,8 +154,7 @@
 ## 
 ##       Claudia       Philipp Unentschieden 
 ##            42            80             2
-</code></pre>
-<hr>
+</code></pre><hr>
 <p>Die folgende Grafik zeigt den Puntkeunterschied über alle gespielten Runden. Der gleitende Durchschnitt über 10 Runden ist in Orange dargestellt. Mal gingen die Spiele recht knapp aus, mal ging ein Spieler als deutlicher Sieger hervor. Im Mittel bewegt sich die Differenz der Punktstände um 19 Zähler.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(carcassonne, <span style="color:#06287e">aes</span>(Runde, Differenz)) <span style="color:#666">+</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>() <span style="color:#666">+</span> 
@@ -163,7 +163,7 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_color_discrete</span>(name<span style="color:#666">=</span><span style="color:#4070a0">&#34;Gleitender Durchschnitt&#34;</span>, lab<span style="color:#666">=</span><span style="color:#4070a0">&#34;über 10 Runden&#34;</span>) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(y<span style="color:#666">=</span><span style="color:#4070a0">&#34;Punktedifferenz&#34;</span>) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#06287e">seq</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">130</span>,<span style="color:#40a070">10</span>)))
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/plot1-1.png" data-fig-align="center" width="768" />
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/datenanalyse-carcassonne/index_files/figure-html/plot1-1.png" width="672" style="display: block; margin: auto;" />
 <hr>
 <p>Betrachtet man den Gesamtpunktestand jedes Spielers in der nächsten Darstellung im Zeitverlauf, so kann Philipp bis zur 60. Partie sein Ergebnis im Durchschnitt verbessern. Danach ist dieser Trend allerdings wieder rückläufig und der Endpuntkestand verschlechtert sich. Auch bei Claudia ist dieser anfängliche Trend zu erkennen.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>carcassonne <span style="color:#666">%&gt;%</span>
@@ -173,7 +173,7 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_smooth</span>(se <span style="color:#666">=</span> F) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_color_discrete</span>(lab<span style="color:#666">=</span><span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;Claudia&#34;</span>,<span style="color:#4070a0">&#34;Philipp&#34;</span>)) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#06287e">seq</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">130</span>,<span style="color:#40a070">10</span>)))
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/plot2-1.png" data-fig-align="center" width="768" />
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/datenanalyse-carcassonne/index_files/figure-html/plot2-1.png" width="672" style="display: block; margin: auto;" />
 <hr>
 <p>Erhält ein Spieler einen Vorteil, wenn er das Spiel eröffnen darf? Dazu verwende ich ein lineares Regressionsmodell in dem jeweils Philipps bzw. Claudias Endpunktestand als abhängige Variable definiert wird. Der Startspieler-Vorteil wird als binäre Variable in das Modell eingefügt und als weitere Kontrollvariable wird der Punktestand des gegnerischen Spielers verwendet. Die beiden Modelle sehen so aus:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Modell Philipp</span>
@@ -183,79 +183,75 @@
 </span></span><span style="display:flex;"><span>lm_c <span style="color:#666">&lt;-</span> <span style="color:#06287e">lm</span>(Punkte_Claudia <span style="color:#666">~</span> <span style="color:#06287e">factor</span>(Startspieler) <span style="color:#666">+</span> Punkte_Philipp, data <span style="color:#666">=</span> carcassonne)
 </span></span></code></pre></div><p>Die Ergebnisse der beiden Modelle sind unten abgebildet. Eröffnet Philipp das Spiel hat dies einen positiven, aber nicht signifikanten Einfluss auf seinen Endpunktestand. Der Endpunktestand von Claudia ist dagegen um 7 Punkte signifikant niedriger, wenn Philipp das Spiel eröffnet. Womöglich leidet hier die Moral, wenn sich Philipp beim Auftakt die erste Burg sichern kann.</p>
 <p>Modell Philipp:</p>
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
-<table>
-<thead>
-<tr>
-<th style="text-align:left">term</th>
-<th style="text-align:right">estimate</th>
-<th style="text-align:right">std.error</th>
-<th style="text-align:right">statistic</th>
-<th style="text-align:right">p.value</th>
-</tr>
-</thead>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class="table table-responsive" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> estimate </th>
+   <th style="text-align:right;"> std.error </th>
+   <th style="text-align:right;"> statistic </th>
+   <th style="text-align:right;"> p.value </th>
+  </tr>
+ </thead>
 <tbody>
-<tr>
-<td style="text-align:left">(Intercept)</td>
-<td style="text-align:right">101.80</td>
-<td style="text-align:right">11.02</td>
-<td style="text-align:right">9.24</td>
-<td style="text-align:right">0.00</td>
-</tr>
-<tr>
-<td style="text-align:left">factor(Startspieler)Philipp</td>
-<td style="text-align:right">3.02</td>
-<td style="text-align:right">3.13</td>
-<td style="text-align:right">0.96</td>
-<td style="text-align:right">0.34</td>
-</tr>
-<tr>
-<td style="text-align:left">Punkte_Claudia</td>
-<td style="text-align:right">0.02</td>
-<td style="text-align:right">0.11</td>
-<td style="text-align:right">0.20</td>
-<td style="text-align:right">0.84</td>
-</tr>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 101.80 </td>
+   <td style="text-align:right;"> 11.02 </td>
+   <td style="text-align:right;"> 9.24 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> factor(Startspieler)Philipp </td>
+   <td style="text-align:right;"> 3.02 </td>
+   <td style="text-align:right;"> 3.13 </td>
+   <td style="text-align:right;"> 0.96 </td>
+   <td style="text-align:right;"> 0.34 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Punkte_Claudia </td>
+   <td style="text-align:right;"> 0.02 </td>
+   <td style="text-align:right;"> 0.11 </td>
+   <td style="text-align:right;"> 0.20 </td>
+   <td style="text-align:right;"> 0.84 </td>
+  </tr>
 </tbody>
-</table>
-</div>
+</table></div>
 <p>Modell Claudia:</p>
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
-<table>
-<thead>
-<tr>
-<th style="text-align:left">term</th>
-<th style="text-align:right">estimate</th>
-<th style="text-align:right">std.error</th>
-<th style="text-align:right">statistic</th>
-<th style="text-align:right">p.value</th>
-</tr>
-</thead>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class="table table-responsive" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> estimate </th>
+   <th style="text-align:right;"> std.error </th>
+   <th style="text-align:right;"> statistic </th>
+   <th style="text-align:right;"> p.value </th>
+  </tr>
+ </thead>
 <tbody>
-<tr>
-<td style="text-align:left">(Intercept)</td>
-<td style="text-align:right">99.78</td>
-<td style="text-align:right">8.26</td>
-<td style="text-align:right">12.08</td>
-<td style="text-align:right">0.00</td>
-</tr>
-<tr>
-<td style="text-align:left">factor(Startspieler)Philipp</td>
-<td style="text-align:right">-7.00</td>
-<td style="text-align:right">2.60</td>
-<td style="text-align:right">-2.69</td>
-<td style="text-align:right">0.01</td>
-</tr>
-<tr>
-<td style="text-align:left">Punkte_Philipp</td>
-<td style="text-align:right">0.02</td>
-<td style="text-align:right">0.08</td>
-<td style="text-align:right">0.20</td>
-<td style="text-align:right">0.84</td>
-</tr>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 99.78 </td>
+   <td style="text-align:right;"> 8.26 </td>
+   <td style="text-align:right;"> 12.08 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> factor(Startspieler)Philipp </td>
+   <td style="text-align:right;"> -7.00 </td>
+   <td style="text-align:right;"> 2.60 </td>
+   <td style="text-align:right;"> -2.69 </td>
+   <td style="text-align:right;"> 0.01 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Punkte_Philipp </td>
+   <td style="text-align:right;"> 0.02 </td>
+   <td style="text-align:right;"> 0.08 </td>
+   <td style="text-align:right;"> 0.20 </td>
+   <td style="text-align:right;"> 0.84 </td>
+  </tr>
 </tbody>
-</table>
-</div>
+</table></div>
 
         
         <details closed class="f6 fw7 input-reset">

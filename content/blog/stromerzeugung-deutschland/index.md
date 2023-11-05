@@ -260,8 +260,9 @@ strom_df %>%
   distinct(adressen, .keep_all = T) -> karte_df
 
 # Basiskarte Deutschland
-Get_Map_Country <- get_map(location = "Germany", zoom = 6, maptype = "toner-background", 
-                           filename = "ggmapTemp", color = "bw", source = "stamen")
+Get_Map_Country <- get_map(location = "Germany", zoom = 6, 
+                           maptype ="stamen_toner_background", 
+                           filename = "ggmapTemp", color = "bw", source = "stadia")
 
 karte_deutschland <- ggmap(ggmap = Get_Map_Country)
 

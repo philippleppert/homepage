@@ -107,7 +107,9 @@
 
       </header>
       <section class="post-body pt5 pb4">
-        <script src="index_files/libs/kePrint-0.0.1/kePrint.js"></script>
+        <script src="https://philippleppert.eu/blog/atomkraft-europa/index_files/kePrint/kePrint.js"></script>
+<script src="https://philippleppert.eu/blog/atomkraft-europa/index_files/kePrint/kePrint.js"></script>
+<script src="https://philippleppert.eu/blog/atomkraft-europa/index_files/kePrint/kePrint.js"></script>
 <p>Benötigte R-Pakete:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">library</span>(tidyverse)
 </span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(ggmap)
@@ -220,932 +222,930 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(<span style="color:#666">-</span><span style="color:#06287e">c</span>(StatusId, ReactorTypeId, Id)) 
 </span></span></code></pre></div><p>Die Daten sehen so aus:</p>
 <br>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Name</th>
-<th style="text-align:right">Latitude</th>
-<th style="text-align:right">Longitude</th>
-<th style="text-align:left">CountryCode</th>
-<th style="text-align:left">ReactorModel</th>
-<th style="text-align:left">ConstructionStartAt</th>
-<th style="text-align:left">OperationalFrom</th>
-<th style="text-align:left">OperationalTo</th>
-<th style="text-align:right">Capacity</th>
-<th style="text-align:left">Source</th>
-<th style="text-align:left">LastUpdatedAt</th>
-<th style="text-align:right">IAEAId</th>
-<th style="text-align:left">StatusType</th>
-<th style="text-align:left">ReactorType</th>
-<th style="text-align:left">Description</th>
-<th style="text-align:left">CountryName</th>
-</tr>
-</thead>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; "><table class="table table-responsive" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> Name </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Latitude </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Longitude </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> CountryCode </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> ReactorModel </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> ConstructionStartAt </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> OperationalFrom </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> OperationalTo </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Capacity </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> Source </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> LastUpdatedAt </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> IAEAId </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> StatusType </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> ReactorType </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> Description </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> CountryName </th>
+  </tr>
+ </thead>
 <tbody>
-<tr>
-<td style="text-align:left">Ågesta</td>
-<td style="text-align:right">59.20600</td>
-<td style="text-align:right">18.08290</td>
-<td style="text-align:left">SE</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">1957-12-01</td>
-<td style="text-align:left">1964-05-01</td>
-<td style="text-align:left">1974-06-02</td>
-<td style="text-align:right">9</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-05-24 01:51:37</td>
-<td style="text-align:right">528</td>
-<td style="text-align:left">Shutdown</td>
-<td style="text-align:left">PHWR</td>
-<td style="text-align:left">Pressurized Heavy Water Reactor</td>
-<td style="text-align:left">Sweden</td>
-</tr>
-<tr>
-<td style="text-align:left">Akademik Lomonosov-1</td>
-<td style="text-align:right">69.70958</td>
-<td style="text-align:right">170.30625</td>
-<td style="text-align:left">RU</td>
-<td style="text-align:left">KLT-40S 'Floating'</td>
-<td style="text-align:left">2007-04-15</td>
-<td style="text-align:left">2020-05-22</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">30</td>
-<td style="text-align:left">WNA/IAEA/Google Maps</td>
-<td style="text-align:left">2021-05-31 00:00:00</td>
-<td style="text-align:right">895</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Russia</td>
-</tr>
-<tr>
-<td style="text-align:left">Akademik Lomonosov-2</td>
-<td style="text-align:right">69.70958</td>
-<td style="text-align:right">170.30625</td>
-<td style="text-align:left">RU</td>
-<td style="text-align:left">KLT-40S 'Floating'</td>
-<td style="text-align:left">2007-04-15</td>
-<td style="text-align:left">2020-05-22</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">30</td>
-<td style="text-align:left">WNA/IAEA/Google Maps</td>
-<td style="text-align:left">2021-05-31 00:00:00</td>
-<td style="text-align:right">896</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Russia</td>
-</tr>
-<tr>
-<td style="text-align:left">Akhvaz-1</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">IR</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">WNA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">Planned</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">Iran</td>
-</tr>
-<tr>
-<td style="text-align:left">Akhvaz-2</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">IR</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">WNA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">Planned</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">Iran</td>
-</tr>
-<tr>
-<td style="text-align:left">Akkuyu-1</td>
-<td style="text-align:right">36.14444</td>
-<td style="text-align:right">33.54111</td>
-<td style="text-align:left">TR</td>
-<td style="text-align:left">VVER V-509</td>
-<td style="text-align:left">2018-04-03</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">1114</td>
-<td style="text-align:left">WNA/Wikipedia/IAEA</td>
-<td style="text-align:left">2018-06-30 22:21:08</td>
-<td style="text-align:right">553</td>
-<td style="text-align:left">Under Construction</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Turkey</td>
-</tr>
-<tr>
-<td style="text-align:left">Akkuyu-2</td>
-<td style="text-align:right">36.14444</td>
-<td style="text-align:right">33.54111</td>
-<td style="text-align:left">TR</td>
-<td style="text-align:left">VVER V-509</td>
-<td style="text-align:left">2020-04-08</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">1114</td>
-<td style="text-align:left">Wikipedia/IAEA</td>
-<td style="text-align:left">2020-08-30 22:39:56</td>
-<td style="text-align:right">1080</td>
-<td style="text-align:left">Under Construction</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Turkey</td>
-</tr>
-<tr>
-<td style="text-align:left">Akkuyu-3</td>
-<td style="text-align:right">36.14444</td>
-<td style="text-align:right">33.54111</td>
-<td style="text-align:left">TR</td>
-<td style="text-align:left">VVER V-509</td>
-<td style="text-align:left">2021-03-10</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">1114</td>
-<td style="text-align:left">Wikipedia/IAEA</td>
-<td style="text-align:left">2021-04-19 23:47:37</td>
-<td style="text-align:right">1081</td>
-<td style="text-align:left">Under Construction</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Turkey</td>
-</tr>
-<tr>
-<td style="text-align:left">Akkuyu-4</td>
-<td style="text-align:right">36.14444</td>
-<td style="text-align:right">33.54111</td>
-<td style="text-align:left">TR</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">Wikipedia</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">Planned</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Turkey</td>
-</tr>
-<tr>
-<td style="text-align:left">Aktau (Shevchenko)</td>
-<td style="text-align:right">43.60700</td>
-<td style="text-align:right">51.28300</td>
-<td style="text-align:left">KZ</td>
-<td style="text-align:left">BN-350</td>
-<td style="text-align:left">1964-10-01</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">1999-04-22</td>
-<td style="text-align:right">52</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2021-04-19 23:47:37</td>
-<td style="text-align:right">414</td>
-<td style="text-align:left">Shutdown</td>
-<td style="text-align:left">FBR</td>
-<td style="text-align:left">Fast Breeder Reactor</td>
-<td style="text-align:left">Kazakhstan</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.69800</td>
-<td style="text-align:left">ES</td>
-<td style="text-align:left">WH 3LP</td>
-<td style="text-align:left">1973-07-03</td>
-<td style="text-align:left">1983-09-01</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">900</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2017-02-10 21:56:15</td>
-<td style="text-align:right">153</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Spain</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-2</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.69800</td>
-<td style="text-align:left">ES</td>
-<td style="text-align:left">WH 3LP</td>
-<td style="text-align:left">1973-07-03</td>
-<td style="text-align:left">1984-07-01</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">900</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2019-06-02 17:17:55</td>
-<td style="text-align:right">154</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Spain</td>
-</tr>
-<tr>
-<td style="text-align:left">Angra-1</td>
-<td style="text-align:right">-23.00800</td>
-<td style="text-align:right">-44.45700</td>
-<td style="text-align:left">BR</td>
-<td style="text-align:left">WH 2LP</td>
-<td style="text-align:left">1971-05-01</td>
-<td style="text-align:left">1985-01-01</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">609</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2021-02-14 01:47:53</td>
-<td style="text-align:right">24</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Brazil</td>
-</tr>
-<tr>
-<td style="text-align:left">Angra-2</td>
-<td style="text-align:right">-23.00800</td>
-<td style="text-align:right">-44.45700</td>
-<td style="text-align:left">BR</td>
-<td style="text-align:left">PRE KONVOI</td>
-<td style="text-align:left">1976-01-01</td>
-<td style="text-align:left">2001-02-01</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">1245</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-05-24 01:50:19</td>
-<td style="text-align:right">25</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Brazil</td>
-</tr>
-<tr>
-<td style="text-align:left">Angra-3</td>
-<td style="text-align:right">-23.01000</td>
-<td style="text-align:right">-44.47000</td>
-<td style="text-align:left">BR</td>
-<td style="text-align:left">PRE KONVOI</td>
-<td style="text-align:left">2010-06-01</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">1340</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2018-06-30 22:21:29</td>
-<td style="text-align:right">26</td>
-<td style="text-align:left">Under Construction</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Brazil</td>
-</tr>
-<tr>
-<td style="text-align:left">APS-1 Obninsk</td>
-<td style="text-align:right">55.08400</td>
-<td style="text-align:right">36.57000</td>
-<td style="text-align:left">RU</td>
-<td style="text-align:left">AM-1</td>
-<td style="text-align:left">1951-01-01</td>
-<td style="text-align:left">1954-12-01</td>
-<td style="text-align:left">2002-04-29</td>
-<td style="text-align:right">5</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-05-24 01:51:32</td>
-<td style="text-align:right">447</td>
-<td style="text-align:left">Shutdown</td>
-<td style="text-align:left">LWGR</td>
-<td style="text-align:left">Light Water Graphite Reactor</td>
-<td style="text-align:left">Russia</td>
-</tr>
-<tr>
-<td style="text-align:left">Arkansas Nuclear One-1 (ANO-1)</td>
-<td style="text-align:right">35.31000</td>
-<td style="text-align:right">-93.23000</td>
-<td style="text-align:left">US</td>
-<td style="text-align:left">B&amp;W LLP (DRYAMB)</td>
-<td style="text-align:left">1968-10-01</td>
-<td style="text-align:left">1974-12-19</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">850</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2017-02-10 21:58:30</td>
-<td style="text-align:right">652</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">United States</td>
-</tr>
-<tr>
-<td style="text-align:left">Arkansas Nuclear One-2 (ANO-2)</td>
-<td style="text-align:right">35.31000</td>
-<td style="text-align:right">-93.22900</td>
-<td style="text-align:left">US</td>
-<td style="text-align:left">CE 2LP (DRYAMB)</td>
-<td style="text-align:left">1968-12-06</td>
-<td style="text-align:left">1980-03-26</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">912</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2017-02-10 21:58:53</td>
-<td style="text-align:right">689</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">United States</td>
-</tr>
-<tr>
-<td style="text-align:left">Armenian-1</td>
-<td style="text-align:right">40.18200</td>
-<td style="text-align:right">44.14700</td>
-<td style="text-align:left">AM</td>
-<td style="text-align:left">VVER V-270</td>
-<td style="text-align:left">1969-07-01</td>
-<td style="text-align:left">1977-10-06</td>
-<td style="text-align:left">1989-02-25</td>
-<td style="text-align:right">376</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2021-06-07 00:00:00</td>
-<td style="text-align:right">1</td>
-<td style="text-align:left">Shutdown</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Armenia</td>
-</tr>
-<tr>
-<td style="text-align:left">Armenian-2</td>
-<td style="text-align:right">40.18200</td>
-<td style="text-align:right">44.14700</td>
-<td style="text-align:left">AM</td>
-<td style="text-align:left">VVER V-270</td>
-<td style="text-align:left">1975-07-01</td>
-<td style="text-align:left">1980-05-03</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">375</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2021-06-28 21:12:17</td>
-<td style="text-align:right">2</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Armenia</td>
-</tr>
-<tr>
-<td style="text-align:left">Armenian-3</td>
-<td style="text-align:right">40.18080</td>
-<td style="text-align:right">44.14720</td>
-<td style="text-align:left">AM</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">WNA</td>
-<td style="text-align:left">2021-06-07 00:00:00</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">Planned</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Armenia</td>
-</tr>
-<tr>
-<td style="text-align:left">Asco-1</td>
-<td style="text-align:right">41.20200</td>
-<td style="text-align:right">0.57100</td>
-<td style="text-align:left">ES</td>
-<td style="text-align:left">WH 3LP</td>
-<td style="text-align:left">1974-05-16</td>
-<td style="text-align:left">1984-12-10</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">995</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2021-01-05 23:19:47</td>
-<td style="text-align:right">155</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Spain</td>
-</tr>
-<tr>
-<td style="text-align:left">Asco-2</td>
-<td style="text-align:right">41.20200</td>
-<td style="text-align:right">0.57100</td>
-<td style="text-align:left">ES</td>
-<td style="text-align:left">WH 3LP</td>
-<td style="text-align:left">1975-03-07</td>
-<td style="text-align:left">1986-03-31</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">997</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2021-04-19 23:47:37</td>
-<td style="text-align:right">156</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Spain</td>
-</tr>
-<tr>
-<td style="text-align:left">Atucha-1</td>
-<td style="text-align:right">-33.96700</td>
-<td style="text-align:right">-59.20900</td>
-<td style="text-align:left">AR</td>
-<td style="text-align:left">PHWR KWU</td>
-<td style="text-align:left">1968-06-01</td>
-<td style="text-align:left">1974-06-24</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">340</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2021-02-14 01:47:53</td>
-<td style="text-align:right">3</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PHWR</td>
-<td style="text-align:left">Pressurized Heavy Water Reactor</td>
-<td style="text-align:left">Argentina</td>
-</tr>
-<tr>
-<td style="text-align:left">Atucha-2</td>
-<td style="text-align:right">-33.96700</td>
-<td style="text-align:right">-59.20900</td>
-<td style="text-align:left">AR</td>
-<td style="text-align:left">PHWR KWU</td>
-<td style="text-align:left">1981-07-14</td>
-<td style="text-align:left">2016-05-26</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">692</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2017-09-25 00:19:13</td>
-<td style="text-align:right">5</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PHWR</td>
-<td style="text-align:left">Pressurized Heavy Water Reactor</td>
-<td style="text-align:left">Argentina</td>
-</tr>
-<tr>
-<td style="text-align:left">Balakovo-1</td>
-<td style="text-align:right">52.09200</td>
-<td style="text-align:right">47.95200</td>
-<td style="text-align:left">RU</td>
-<td style="text-align:left">VVER V-320</td>
-<td style="text-align:left">1980-12-01</td>
-<td style="text-align:left">1986-05-23</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">950</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-05-24 01:51:36</td>
-<td style="text-align:right">524</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Russia</td>
-</tr>
-<tr>
-<td style="text-align:left">Balakovo-2</td>
-<td style="text-align:right">52.09200</td>
-<td style="text-align:right">47.95200</td>
-<td style="text-align:left">RU</td>
-<td style="text-align:left">VVER V-320</td>
-<td style="text-align:left">1981-08-01</td>
-<td style="text-align:left">1988-01-18</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">950</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-05-24 01:51:36</td>
-<td style="text-align:right">525</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Russia</td>
-</tr>
-<tr>
-<td style="text-align:left">Balakovo-3</td>
-<td style="text-align:right">52.09200</td>
-<td style="text-align:right">47.95200</td>
-<td style="text-align:left">RU</td>
-<td style="text-align:left">VVER V-320</td>
-<td style="text-align:left">1982-11-01</td>
-<td style="text-align:left">1989-04-08</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">950</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-05-24 01:51:36</td>
-<td style="text-align:right">526</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Russia</td>
-</tr>
-<tr>
-<td style="text-align:left">Balakovo-4</td>
-<td style="text-align:right">52.09200</td>
-<td style="text-align:right">47.95200</td>
-<td style="text-align:left">RU</td>
-<td style="text-align:left">VVER V-320</td>
-<td style="text-align:left">1984-04-01</td>
-<td style="text-align:left">1993-12-22</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">950</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-05-24 01:51:36</td>
-<td style="text-align:right">527</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Russia</td>
-</tr>
-<tr>
-<td style="text-align:left">Baltic-1</td>
-<td style="text-align:right">54.93900</td>
-<td style="text-align:right">22.16200</td>
-<td style="text-align:left">RU</td>
-<td style="text-align:left">VVER V-491</td>
-<td style="text-align:left">2012-02-22</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">1109</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-05-24 01:51:57</td>
-<td style="text-align:right">968</td>
-<td style="text-align:left">Under Construction</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Russia</td>
-</tr>
-<tr>
-<td style="text-align:left">Barakah-1 (Braka)</td>
-<td style="text-align:right">23.95275</td>
-<td style="text-align:right">52.19330</td>
-<td style="text-align:left">AE</td>
-<td style="text-align:left">APR-1400</td>
-<td style="text-align:left">2012-07-19</td>
-<td style="text-align:left">2021-04-01</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">1345</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2021-05-30 14:38:32</td>
-<td style="text-align:right">1050</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">United Arab Emirates</td>
-</tr>
-<tr>
-<td style="text-align:left">Barakah-2 (Braka)</td>
-<td style="text-align:right">23.95275</td>
-<td style="text-align:right">52.19330</td>
-<td style="text-align:left">AE</td>
-<td style="text-align:left">APR-1400</td>
-<td style="text-align:left">2013-04-16</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">1345</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-12-27 15:05:52</td>
-<td style="text-align:right">1051</td>
-<td style="text-align:left">Under Construction</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">United Arab Emirates</td>
-</tr>
-<tr>
-<td style="text-align:left">Barakah-3 (Braka)</td>
-<td style="text-align:right">23.95275</td>
-<td style="text-align:right">52.20330</td>
-<td style="text-align:left">AE</td>
-<td style="text-align:left">APR-1400</td>
-<td style="text-align:left">2014-09-24</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">1345</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-05-24 01:51:58</td>
-<td style="text-align:right">1052</td>
-<td style="text-align:left">Under Construction</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">United Arab Emirates</td>
-</tr>
-<tr>
-<td style="text-align:left">Chutka-1</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">IN</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">WNA</td>
-<td style="text-align:left">2021-06-07 00:00:00</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">Planned</td>
-<td style="text-align:left">PHWR</td>
-<td style="text-align:left">Pressurized Heavy Water Reactor</td>
-<td style="text-align:left">India</td>
-</tr>
-<tr>
-<td style="text-align:left">Chutka-2</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">IN</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">WNA</td>
-<td style="text-align:left">2021-06-07 00:00:00</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">Planned</td>
-<td style="text-align:left">PHWR</td>
-<td style="text-align:left">Pressurized Heavy Water Reactor</td>
-<td style="text-align:left">India</td>
-</tr>
-<tr>
-<td style="text-align:left">Barseback-1</td>
-<td style="text-align:right">55.74500</td>
-<td style="text-align:right">12.92600</td>
-<td style="text-align:left">SE</td>
-<td style="text-align:left">AA-II</td>
-<td style="text-align:left">1971-02-01</td>
-<td style="text-align:left">1975-07-01</td>
-<td style="text-align:left">1999-11-30</td>
-<td style="text-align:right">570</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2018-03-10 12:52:00</td>
-<td style="text-align:right">538</td>
-<td style="text-align:left">Shutdown</td>
-<td style="text-align:left">BWR</td>
-<td style="text-align:left">Boiling Water Reactor</td>
-<td style="text-align:left">Sweden</td>
-</tr>
-<tr>
-<td style="text-align:left">Barseback-2</td>
-<td style="text-align:right">55.74500</td>
-<td style="text-align:right">12.92600</td>
-<td style="text-align:left">SE</td>
-<td style="text-align:left">AA-II</td>
-<td style="text-align:left">1973-01-01</td>
-<td style="text-align:left">1977-07-01</td>
-<td style="text-align:left">2005-05-31</td>
-<td style="text-align:right">570</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2018-03-10 12:52:02</td>
-<td style="text-align:right">540</td>
-<td style="text-align:left">Shutdown</td>
-<td style="text-align:left">BWR</td>
-<td style="text-align:left">Boiling Water Reactor</td>
-<td style="text-align:left">Sweden</td>
-</tr>
-<tr>
-<td style="text-align:left">Beaver Valley-1</td>
-<td style="text-align:right">40.62400</td>
-<td style="text-align:right">-80.43200</td>
-<td style="text-align:left">US</td>
-<td style="text-align:left">WH 3LP (DRYSUB)</td>
-<td style="text-align:left">1970-06-26</td>
-<td style="text-align:left">1976-10-01</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">835</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2017-02-10 21:58:44</td>
-<td style="text-align:right">669</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">United States</td>
-</tr>
-<tr>
-<td style="text-align:left">Beaver Valley-2</td>
-<td style="text-align:right">40.62400</td>
-<td style="text-align:right">-80.43200</td>
-<td style="text-align:left">US</td>
-<td style="text-align:left">WH 3LP (DRYSUB)</td>
-<td style="text-align:left">1974-05-03</td>
-<td style="text-align:left">1987-11-17</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">836</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2017-02-10 21:58:59</td>
-<td style="text-align:right">712</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">United States</td>
-</tr>
-<tr>
-<td style="text-align:left">Belarusian-1</td>
-<td style="text-align:right">54.76667</td>
-<td style="text-align:right">26.11667</td>
-<td style="text-align:left">BY</td>
-<td style="text-align:left">VVER V-491</td>
-<td style="text-align:left">2013-11-08</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">1110</td>
-<td style="text-align:left">IAEA</td>
-<td style="text-align:left">2021-01-05 23:19:47</td>
-<td style="text-align:right">1056</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Belarus</td>
-</tr>
-<tr>
-<td style="text-align:left">Belarusian-2</td>
-<td style="text-align:right">54.76667</td>
-<td style="text-align:right">26.11667</td>
-<td style="text-align:left">BY</td>
-<td style="text-align:left">VVER V-491</td>
-<td style="text-align:left">2014-04-27</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">1110</td>
-<td style="text-align:left">IAEA</td>
-<td style="text-align:left">2018-03-10 12:54:39</td>
-<td style="text-align:right">1061</td>
-<td style="text-align:left">Under Construction</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Belarus</td>
-</tr>
-<tr>
-<td style="text-align:left">Belene-1</td>
-<td style="text-align:right">43.62453</td>
-<td style="text-align:right">25.18675</td>
-<td style="text-align:left">BG</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">1987-01-01</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">953</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2021-02-13 22:57:00</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">Cancelled Construction</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Bulgaria</td>
-</tr>
-<tr>
-<td style="text-align:left">Belene-2</td>
-<td style="text-align:right">43.62453</td>
-<td style="text-align:right">25.18650</td>
-<td style="text-align:left">BG</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">1987-03-31</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">953</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2021-02-13 22:57:00</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">Cancelled Construction</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">Bulgaria</td>
-</tr>
-<tr>
-<td style="text-align:left">Belleville-1</td>
-<td style="text-align:right">47.51100</td>
-<td style="text-align:right">2.87100</td>
-<td style="text-align:left">FR</td>
-<td style="text-align:left">P4 REP 1300</td>
-<td style="text-align:left">1980-05-01</td>
-<td style="text-align:left">1988-06-01</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">1310</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-05-24 01:51:02</td>
-<td style="text-align:right">211</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">France</td>
-</tr>
-<tr>
-<td style="text-align:left">Belleville-2</td>
-<td style="text-align:right">47.51100</td>
-<td style="text-align:right">2.87100</td>
-<td style="text-align:left">FR</td>
-<td style="text-align:left">P4 REP 1300</td>
-<td style="text-align:left">1980-08-01</td>
-<td style="text-align:left">1989-01-01</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">1310</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-05-24 01:51:02</td>
-<td style="text-align:right">212</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">PWR</td>
-<td style="text-align:left">Pressurized Water Reactor</td>
-<td style="text-align:left">France</td>
-</tr>
-<tr>
-<td style="text-align:left">Beloyarsk-1</td>
-<td style="text-align:right">56.84200</td>
-<td style="text-align:right">61.32100</td>
-<td style="text-align:left">RU</td>
-<td style="text-align:left">AMB-100</td>
-<td style="text-align:left">1958-06-01</td>
-<td style="text-align:left">1964-04-26</td>
-<td style="text-align:left">1983-01-01</td>
-<td style="text-align:right">102</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-05-24 01:51:34</td>
-<td style="text-align:right">488</td>
-<td style="text-align:left">Shutdown</td>
-<td style="text-align:left">LWGR</td>
-<td style="text-align:left">Light Water Graphite Reactor</td>
-<td style="text-align:left">Russia</td>
-</tr>
-<tr>
-<td style="text-align:left">Beloyarsk-2</td>
-<td style="text-align:right">56.84200</td>
-<td style="text-align:right">61.32100</td>
-<td style="text-align:left">RU</td>
-<td style="text-align:left">AMB-200</td>
-<td style="text-align:left">1962-01-01</td>
-<td style="text-align:left">1969-12-01</td>
-<td style="text-align:left">1990-01-01</td>
-<td style="text-align:right">146</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-05-24 01:51:35</td>
-<td style="text-align:right">503</td>
-<td style="text-align:left">Shutdown</td>
-<td style="text-align:left">LWGR</td>
-<td style="text-align:left">Light Water Graphite Reactor</td>
-<td style="text-align:left">Russia</td>
-</tr>
-<tr>
-<td style="text-align:left">Beloyarsk-3</td>
-<td style="text-align:right">56.84200</td>
-<td style="text-align:right">61.32100</td>
-<td style="text-align:left">RU</td>
-<td style="text-align:left">BN-600</td>
-<td style="text-align:left">1969-01-01</td>
-<td style="text-align:left">1981-11-01</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">560</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2015-05-24 01:51:34</td>
-<td style="text-align:right">484</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">FBR</td>
-<td style="text-align:left">Fast Breeder Reactor</td>
-<td style="text-align:left">Russia</td>
-</tr>
-<tr>
-<td style="text-align:left">Beloyarsk-4</td>
-<td style="text-align:right">56.84200</td>
-<td style="text-align:right">61.32100</td>
-<td style="text-align:left">RU</td>
-<td style="text-align:left">BN-800</td>
-<td style="text-align:left">2006-07-18</td>
-<td style="text-align:left">2016-10-31</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">820</td>
-<td style="text-align:left">WNA/IAEA</td>
-<td style="text-align:left">2017-09-25 00:19:53</td>
-<td style="text-align:right">451</td>
-<td style="text-align:left">Operational</td>
-<td style="text-align:left">FBR</td>
-<td style="text-align:left">Fast Breeder Reactor</td>
-<td style="text-align:left">Russia</td>
-</tr>
-<tr>
-<td style="text-align:left">Beloyarsk-5</td>
-<td style="text-align:right">56.84200</td>
-<td style="text-align:right">61.32100</td>
-<td style="text-align:left">RU</td>
-<td style="text-align:left">BN-1200</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">WNA/Wikipedia</td>
-<td style="text-align:left">NA</td>
-<td style="text-align:right">NA</td>
-<td style="text-align:left">Planned</td>
-<td style="text-align:left">FBR</td>
-<td style="text-align:left">Fast Breeder Reactor</td>
-<td style="text-align:left">Russia</td>
-</tr>
+  <tr>
+   <td style="text-align:left;"> Ågesta </td>
+   <td style="text-align:right;"> 59.20600 </td>
+   <td style="text-align:right;"> 18.08290 </td>
+   <td style="text-align:left;"> SE </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 1957-12-01 </td>
+   <td style="text-align:left;"> 1964-05-01 </td>
+   <td style="text-align:left;"> 1974-06-02 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-05-24 01:51:37 </td>
+   <td style="text-align:right;"> 528 </td>
+   <td style="text-align:left;"> Shutdown </td>
+   <td style="text-align:left;"> PHWR </td>
+   <td style="text-align:left;"> Pressurized Heavy Water Reactor </td>
+   <td style="text-align:left;"> Sweden </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akademik Lomonosov-1 </td>
+   <td style="text-align:right;"> 69.70958 </td>
+   <td style="text-align:right;"> 170.30625 </td>
+   <td style="text-align:left;"> RU </td>
+   <td style="text-align:left;"> KLT-40S 'Floating' </td>
+   <td style="text-align:left;"> 2007-04-15 </td>
+   <td style="text-align:left;"> 2020-05-22 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:left;"> WNA/IAEA/Google Maps </td>
+   <td style="text-align:left;"> 2021-05-31 00:00:00 </td>
+   <td style="text-align:right;"> 895 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Russia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akademik Lomonosov-2 </td>
+   <td style="text-align:right;"> 69.70958 </td>
+   <td style="text-align:right;"> 170.30625 </td>
+   <td style="text-align:left;"> RU </td>
+   <td style="text-align:left;"> KLT-40S 'Floating' </td>
+   <td style="text-align:left;"> 2007-04-15 </td>
+   <td style="text-align:left;"> 2020-05-22 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:left;"> WNA/IAEA/Google Maps </td>
+   <td style="text-align:left;"> 2021-05-31 00:00:00 </td>
+   <td style="text-align:right;"> 896 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Russia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akhvaz-1 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> IR </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> WNA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> Planned </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> Iran </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akhvaz-2 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> IR </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> WNA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> Planned </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> Iran </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akkuyu-1 </td>
+   <td style="text-align:right;"> 36.14444 </td>
+   <td style="text-align:right;"> 33.54111 </td>
+   <td style="text-align:left;"> TR </td>
+   <td style="text-align:left;"> VVER V-509 </td>
+   <td style="text-align:left;"> 2018-04-03 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1114 </td>
+   <td style="text-align:left;"> WNA/Wikipedia/IAEA </td>
+   <td style="text-align:left;"> 2018-06-30 22:21:08 </td>
+   <td style="text-align:right;"> 553 </td>
+   <td style="text-align:left;"> Under Construction </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Turkey </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akkuyu-2 </td>
+   <td style="text-align:right;"> 36.14444 </td>
+   <td style="text-align:right;"> 33.54111 </td>
+   <td style="text-align:left;"> TR </td>
+   <td style="text-align:left;"> VVER V-509 </td>
+   <td style="text-align:left;"> 2020-04-08 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1114 </td>
+   <td style="text-align:left;"> Wikipedia/IAEA </td>
+   <td style="text-align:left;"> 2020-08-30 22:39:56 </td>
+   <td style="text-align:right;"> 1080 </td>
+   <td style="text-align:left;"> Under Construction </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Turkey </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akkuyu-3 </td>
+   <td style="text-align:right;"> 36.14444 </td>
+   <td style="text-align:right;"> 33.54111 </td>
+   <td style="text-align:left;"> TR </td>
+   <td style="text-align:left;"> VVER V-509 </td>
+   <td style="text-align:left;"> 2021-03-10 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1114 </td>
+   <td style="text-align:left;"> Wikipedia/IAEA </td>
+   <td style="text-align:left;"> 2021-04-19 23:47:37 </td>
+   <td style="text-align:right;"> 1081 </td>
+   <td style="text-align:left;"> Under Construction </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Turkey </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akkuyu-4 </td>
+   <td style="text-align:right;"> 36.14444 </td>
+   <td style="text-align:right;"> 33.54111 </td>
+   <td style="text-align:left;"> TR </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> Wikipedia </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> Planned </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Turkey </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aktau (Shevchenko) </td>
+   <td style="text-align:right;"> 43.60700 </td>
+   <td style="text-align:right;"> 51.28300 </td>
+   <td style="text-align:left;"> KZ </td>
+   <td style="text-align:left;"> BN-350 </td>
+   <td style="text-align:left;"> 1964-10-01 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 1999-04-22 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2021-04-19 23:47:37 </td>
+   <td style="text-align:right;"> 414 </td>
+   <td style="text-align:left;"> Shutdown </td>
+   <td style="text-align:left;"> FBR </td>
+   <td style="text-align:left;"> Fast Breeder Reactor </td>
+   <td style="text-align:left;"> Kazakhstan </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.69800 </td>
+   <td style="text-align:left;"> ES </td>
+   <td style="text-align:left;"> WH 3LP </td>
+   <td style="text-align:left;"> 1973-07-03 </td>
+   <td style="text-align:left;"> 1983-09-01 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2017-02-10 21:56:15 </td>
+   <td style="text-align:right;"> 153 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Spain </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-2 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.69800 </td>
+   <td style="text-align:left;"> ES </td>
+   <td style="text-align:left;"> WH 3LP </td>
+   <td style="text-align:left;"> 1973-07-03 </td>
+   <td style="text-align:left;"> 1984-07-01 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2019-06-02 17:17:55 </td>
+   <td style="text-align:right;"> 154 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Spain </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Angra-1 </td>
+   <td style="text-align:right;"> -23.00800 </td>
+   <td style="text-align:right;"> -44.45700 </td>
+   <td style="text-align:left;"> BR </td>
+   <td style="text-align:left;"> WH 2LP </td>
+   <td style="text-align:left;"> 1971-05-01 </td>
+   <td style="text-align:left;"> 1985-01-01 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 609 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2021-02-14 01:47:53 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Brazil </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Angra-2 </td>
+   <td style="text-align:right;"> -23.00800 </td>
+   <td style="text-align:right;"> -44.45700 </td>
+   <td style="text-align:left;"> BR </td>
+   <td style="text-align:left;"> PRE KONVOI </td>
+   <td style="text-align:left;"> 1976-01-01 </td>
+   <td style="text-align:left;"> 2001-02-01 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1245 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-05-24 01:50:19 </td>
+   <td style="text-align:right;"> 25 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Brazil </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Angra-3 </td>
+   <td style="text-align:right;"> -23.01000 </td>
+   <td style="text-align:right;"> -44.47000 </td>
+   <td style="text-align:left;"> BR </td>
+   <td style="text-align:left;"> PRE KONVOI </td>
+   <td style="text-align:left;"> 2010-06-01 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1340 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2018-06-30 22:21:29 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:left;"> Under Construction </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Brazil </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> APS-1 Obninsk </td>
+   <td style="text-align:right;"> 55.08400 </td>
+   <td style="text-align:right;"> 36.57000 </td>
+   <td style="text-align:left;"> RU </td>
+   <td style="text-align:left;"> AM-1 </td>
+   <td style="text-align:left;"> 1951-01-01 </td>
+   <td style="text-align:left;"> 1954-12-01 </td>
+   <td style="text-align:left;"> 2002-04-29 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-05-24 01:51:32 </td>
+   <td style="text-align:right;"> 447 </td>
+   <td style="text-align:left;"> Shutdown </td>
+   <td style="text-align:left;"> LWGR </td>
+   <td style="text-align:left;"> Light Water Graphite Reactor </td>
+   <td style="text-align:left;"> Russia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Arkansas Nuclear One-1 (ANO-1) </td>
+   <td style="text-align:right;"> 35.31000 </td>
+   <td style="text-align:right;"> -93.23000 </td>
+   <td style="text-align:left;"> US </td>
+   <td style="text-align:left;"> B&amp;W LLP (DRYAMB) </td>
+   <td style="text-align:left;"> 1968-10-01 </td>
+   <td style="text-align:left;"> 1974-12-19 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 850 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2017-02-10 21:58:30 </td>
+   <td style="text-align:right;"> 652 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> United States </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Arkansas Nuclear One-2 (ANO-2) </td>
+   <td style="text-align:right;"> 35.31000 </td>
+   <td style="text-align:right;"> -93.22900 </td>
+   <td style="text-align:left;"> US </td>
+   <td style="text-align:left;"> CE 2LP (DRYAMB) </td>
+   <td style="text-align:left;"> 1968-12-06 </td>
+   <td style="text-align:left;"> 1980-03-26 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 912 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2017-02-10 21:58:53 </td>
+   <td style="text-align:right;"> 689 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> United States </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Armenian-1 </td>
+   <td style="text-align:right;"> 40.18200 </td>
+   <td style="text-align:right;"> 44.14700 </td>
+   <td style="text-align:left;"> AM </td>
+   <td style="text-align:left;"> VVER V-270 </td>
+   <td style="text-align:left;"> 1969-07-01 </td>
+   <td style="text-align:left;"> 1977-10-06 </td>
+   <td style="text-align:left;"> 1989-02-25 </td>
+   <td style="text-align:right;"> 376 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2021-06-07 00:00:00 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> Shutdown </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Armenia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Armenian-2 </td>
+   <td style="text-align:right;"> 40.18200 </td>
+   <td style="text-align:right;"> 44.14700 </td>
+   <td style="text-align:left;"> AM </td>
+   <td style="text-align:left;"> VVER V-270 </td>
+   <td style="text-align:left;"> 1975-07-01 </td>
+   <td style="text-align:left;"> 1980-05-03 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 375 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2021-06-28 21:12:17 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Armenia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Armenian-3 </td>
+   <td style="text-align:right;"> 40.18080 </td>
+   <td style="text-align:right;"> 44.14720 </td>
+   <td style="text-align:left;"> AM </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> WNA </td>
+   <td style="text-align:left;"> 2021-06-07 00:00:00 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> Planned </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Armenia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Asco-1 </td>
+   <td style="text-align:right;"> 41.20200 </td>
+   <td style="text-align:right;"> 0.57100 </td>
+   <td style="text-align:left;"> ES </td>
+   <td style="text-align:left;"> WH 3LP </td>
+   <td style="text-align:left;"> 1974-05-16 </td>
+   <td style="text-align:left;"> 1984-12-10 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 995 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2021-01-05 23:19:47 </td>
+   <td style="text-align:right;"> 155 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Spain </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Asco-2 </td>
+   <td style="text-align:right;"> 41.20200 </td>
+   <td style="text-align:right;"> 0.57100 </td>
+   <td style="text-align:left;"> ES </td>
+   <td style="text-align:left;"> WH 3LP </td>
+   <td style="text-align:left;"> 1975-03-07 </td>
+   <td style="text-align:left;"> 1986-03-31 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 997 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2021-04-19 23:47:37 </td>
+   <td style="text-align:right;"> 156 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Spain </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Atucha-1 </td>
+   <td style="text-align:right;"> -33.96700 </td>
+   <td style="text-align:right;"> -59.20900 </td>
+   <td style="text-align:left;"> AR </td>
+   <td style="text-align:left;"> PHWR KWU </td>
+   <td style="text-align:left;"> 1968-06-01 </td>
+   <td style="text-align:left;"> 1974-06-24 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 340 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2021-02-14 01:47:53 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PHWR </td>
+   <td style="text-align:left;"> Pressurized Heavy Water Reactor </td>
+   <td style="text-align:left;"> Argentina </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Atucha-2 </td>
+   <td style="text-align:right;"> -33.96700 </td>
+   <td style="text-align:right;"> -59.20900 </td>
+   <td style="text-align:left;"> AR </td>
+   <td style="text-align:left;"> PHWR KWU </td>
+   <td style="text-align:left;"> 1981-07-14 </td>
+   <td style="text-align:left;"> 2016-05-26 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 692 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2017-09-25 00:19:13 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PHWR </td>
+   <td style="text-align:left;"> Pressurized Heavy Water Reactor </td>
+   <td style="text-align:left;"> Argentina </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Balakovo-1 </td>
+   <td style="text-align:right;"> 52.09200 </td>
+   <td style="text-align:right;"> 47.95200 </td>
+   <td style="text-align:left;"> RU </td>
+   <td style="text-align:left;"> VVER V-320 </td>
+   <td style="text-align:left;"> 1980-12-01 </td>
+   <td style="text-align:left;"> 1986-05-23 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 950 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-05-24 01:51:36 </td>
+   <td style="text-align:right;"> 524 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Russia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Balakovo-2 </td>
+   <td style="text-align:right;"> 52.09200 </td>
+   <td style="text-align:right;"> 47.95200 </td>
+   <td style="text-align:left;"> RU </td>
+   <td style="text-align:left;"> VVER V-320 </td>
+   <td style="text-align:left;"> 1981-08-01 </td>
+   <td style="text-align:left;"> 1988-01-18 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 950 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-05-24 01:51:36 </td>
+   <td style="text-align:right;"> 525 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Russia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Balakovo-3 </td>
+   <td style="text-align:right;"> 52.09200 </td>
+   <td style="text-align:right;"> 47.95200 </td>
+   <td style="text-align:left;"> RU </td>
+   <td style="text-align:left;"> VVER V-320 </td>
+   <td style="text-align:left;"> 1982-11-01 </td>
+   <td style="text-align:left;"> 1989-04-08 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 950 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-05-24 01:51:36 </td>
+   <td style="text-align:right;"> 526 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Russia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Balakovo-4 </td>
+   <td style="text-align:right;"> 52.09200 </td>
+   <td style="text-align:right;"> 47.95200 </td>
+   <td style="text-align:left;"> RU </td>
+   <td style="text-align:left;"> VVER V-320 </td>
+   <td style="text-align:left;"> 1984-04-01 </td>
+   <td style="text-align:left;"> 1993-12-22 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 950 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-05-24 01:51:36 </td>
+   <td style="text-align:right;"> 527 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Russia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Baltic-1 </td>
+   <td style="text-align:right;"> 54.93900 </td>
+   <td style="text-align:right;"> 22.16200 </td>
+   <td style="text-align:left;"> RU </td>
+   <td style="text-align:left;"> VVER V-491 </td>
+   <td style="text-align:left;"> 2012-02-22 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1109 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-05-24 01:51:57 </td>
+   <td style="text-align:right;"> 968 </td>
+   <td style="text-align:left;"> Under Construction </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Russia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Barakah-1 (Braka) </td>
+   <td style="text-align:right;"> 23.95275 </td>
+   <td style="text-align:right;"> 52.19330 </td>
+   <td style="text-align:left;"> AE </td>
+   <td style="text-align:left;"> APR-1400 </td>
+   <td style="text-align:left;"> 2012-07-19 </td>
+   <td style="text-align:left;"> 2021-04-01 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1345 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2021-05-30 14:38:32 </td>
+   <td style="text-align:right;"> 1050 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> United Arab Emirates </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Barakah-2 (Braka) </td>
+   <td style="text-align:right;"> 23.95275 </td>
+   <td style="text-align:right;"> 52.19330 </td>
+   <td style="text-align:left;"> AE </td>
+   <td style="text-align:left;"> APR-1400 </td>
+   <td style="text-align:left;"> 2013-04-16 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1345 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-12-27 15:05:52 </td>
+   <td style="text-align:right;"> 1051 </td>
+   <td style="text-align:left;"> Under Construction </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> United Arab Emirates </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Barakah-3 (Braka) </td>
+   <td style="text-align:right;"> 23.95275 </td>
+   <td style="text-align:right;"> 52.20330 </td>
+   <td style="text-align:left;"> AE </td>
+   <td style="text-align:left;"> APR-1400 </td>
+   <td style="text-align:left;"> 2014-09-24 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1345 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-05-24 01:51:58 </td>
+   <td style="text-align:right;"> 1052 </td>
+   <td style="text-align:left;"> Under Construction </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> United Arab Emirates </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Chutka-1 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> IN </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> WNA </td>
+   <td style="text-align:left;"> 2021-06-07 00:00:00 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> Planned </td>
+   <td style="text-align:left;"> PHWR </td>
+   <td style="text-align:left;"> Pressurized Heavy Water Reactor </td>
+   <td style="text-align:left;"> India </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Chutka-2 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> IN </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> WNA </td>
+   <td style="text-align:left;"> 2021-06-07 00:00:00 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> Planned </td>
+   <td style="text-align:left;"> PHWR </td>
+   <td style="text-align:left;"> Pressurized Heavy Water Reactor </td>
+   <td style="text-align:left;"> India </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Barseback-1 </td>
+   <td style="text-align:right;"> 55.74500 </td>
+   <td style="text-align:right;"> 12.92600 </td>
+   <td style="text-align:left;"> SE </td>
+   <td style="text-align:left;"> AA-II </td>
+   <td style="text-align:left;"> 1971-02-01 </td>
+   <td style="text-align:left;"> 1975-07-01 </td>
+   <td style="text-align:left;"> 1999-11-30 </td>
+   <td style="text-align:right;"> 570 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2018-03-10 12:52:00 </td>
+   <td style="text-align:right;"> 538 </td>
+   <td style="text-align:left;"> Shutdown </td>
+   <td style="text-align:left;"> BWR </td>
+   <td style="text-align:left;"> Boiling Water Reactor </td>
+   <td style="text-align:left;"> Sweden </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Barseback-2 </td>
+   <td style="text-align:right;"> 55.74500 </td>
+   <td style="text-align:right;"> 12.92600 </td>
+   <td style="text-align:left;"> SE </td>
+   <td style="text-align:left;"> AA-II </td>
+   <td style="text-align:left;"> 1973-01-01 </td>
+   <td style="text-align:left;"> 1977-07-01 </td>
+   <td style="text-align:left;"> 2005-05-31 </td>
+   <td style="text-align:right;"> 570 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2018-03-10 12:52:02 </td>
+   <td style="text-align:right;"> 540 </td>
+   <td style="text-align:left;"> Shutdown </td>
+   <td style="text-align:left;"> BWR </td>
+   <td style="text-align:left;"> Boiling Water Reactor </td>
+   <td style="text-align:left;"> Sweden </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Beaver Valley-1 </td>
+   <td style="text-align:right;"> 40.62400 </td>
+   <td style="text-align:right;"> -80.43200 </td>
+   <td style="text-align:left;"> US </td>
+   <td style="text-align:left;"> WH 3LP (DRYSUB) </td>
+   <td style="text-align:left;"> 1970-06-26 </td>
+   <td style="text-align:left;"> 1976-10-01 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 835 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2017-02-10 21:58:44 </td>
+   <td style="text-align:right;"> 669 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> United States </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Beaver Valley-2 </td>
+   <td style="text-align:right;"> 40.62400 </td>
+   <td style="text-align:right;"> -80.43200 </td>
+   <td style="text-align:left;"> US </td>
+   <td style="text-align:left;"> WH 3LP (DRYSUB) </td>
+   <td style="text-align:left;"> 1974-05-03 </td>
+   <td style="text-align:left;"> 1987-11-17 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 836 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2017-02-10 21:58:59 </td>
+   <td style="text-align:right;"> 712 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> United States </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Belarusian-1 </td>
+   <td style="text-align:right;"> 54.76667 </td>
+   <td style="text-align:right;"> 26.11667 </td>
+   <td style="text-align:left;"> BY </td>
+   <td style="text-align:left;"> VVER V-491 </td>
+   <td style="text-align:left;"> 2013-11-08 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1110 </td>
+   <td style="text-align:left;"> IAEA </td>
+   <td style="text-align:left;"> 2021-01-05 23:19:47 </td>
+   <td style="text-align:right;"> 1056 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Belarus </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Belarusian-2 </td>
+   <td style="text-align:right;"> 54.76667 </td>
+   <td style="text-align:right;"> 26.11667 </td>
+   <td style="text-align:left;"> BY </td>
+   <td style="text-align:left;"> VVER V-491 </td>
+   <td style="text-align:left;"> 2014-04-27 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1110 </td>
+   <td style="text-align:left;"> IAEA </td>
+   <td style="text-align:left;"> 2018-03-10 12:54:39 </td>
+   <td style="text-align:right;"> 1061 </td>
+   <td style="text-align:left;"> Under Construction </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Belarus </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Belene-1 </td>
+   <td style="text-align:right;"> 43.62453 </td>
+   <td style="text-align:right;"> 25.18675 </td>
+   <td style="text-align:left;"> BG </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 1987-01-01 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 953 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2021-02-13 22:57:00 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> Cancelled Construction </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Bulgaria </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Belene-2 </td>
+   <td style="text-align:right;"> 43.62453 </td>
+   <td style="text-align:right;"> 25.18650 </td>
+   <td style="text-align:left;"> BG </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 1987-03-31 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 953 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2021-02-13 22:57:00 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> Cancelled Construction </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> Bulgaria </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Belleville-1 </td>
+   <td style="text-align:right;"> 47.51100 </td>
+   <td style="text-align:right;"> 2.87100 </td>
+   <td style="text-align:left;"> FR </td>
+   <td style="text-align:left;"> P4 REP 1300 </td>
+   <td style="text-align:left;"> 1980-05-01 </td>
+   <td style="text-align:left;"> 1988-06-01 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1310 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-05-24 01:51:02 </td>
+   <td style="text-align:right;"> 211 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> France </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Belleville-2 </td>
+   <td style="text-align:right;"> 47.51100 </td>
+   <td style="text-align:right;"> 2.87100 </td>
+   <td style="text-align:left;"> FR </td>
+   <td style="text-align:left;"> P4 REP 1300 </td>
+   <td style="text-align:left;"> 1980-08-01 </td>
+   <td style="text-align:left;"> 1989-01-01 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1310 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-05-24 01:51:02 </td>
+   <td style="text-align:right;"> 212 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> PWR </td>
+   <td style="text-align:left;"> Pressurized Water Reactor </td>
+   <td style="text-align:left;"> France </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Beloyarsk-1 </td>
+   <td style="text-align:right;"> 56.84200 </td>
+   <td style="text-align:right;"> 61.32100 </td>
+   <td style="text-align:left;"> RU </td>
+   <td style="text-align:left;"> AMB-100 </td>
+   <td style="text-align:left;"> 1958-06-01 </td>
+   <td style="text-align:left;"> 1964-04-26 </td>
+   <td style="text-align:left;"> 1983-01-01 </td>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-05-24 01:51:34 </td>
+   <td style="text-align:right;"> 488 </td>
+   <td style="text-align:left;"> Shutdown </td>
+   <td style="text-align:left;"> LWGR </td>
+   <td style="text-align:left;"> Light Water Graphite Reactor </td>
+   <td style="text-align:left;"> Russia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Beloyarsk-2 </td>
+   <td style="text-align:right;"> 56.84200 </td>
+   <td style="text-align:right;"> 61.32100 </td>
+   <td style="text-align:left;"> RU </td>
+   <td style="text-align:left;"> AMB-200 </td>
+   <td style="text-align:left;"> 1962-01-01 </td>
+   <td style="text-align:left;"> 1969-12-01 </td>
+   <td style="text-align:left;"> 1990-01-01 </td>
+   <td style="text-align:right;"> 146 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-05-24 01:51:35 </td>
+   <td style="text-align:right;"> 503 </td>
+   <td style="text-align:left;"> Shutdown </td>
+   <td style="text-align:left;"> LWGR </td>
+   <td style="text-align:left;"> Light Water Graphite Reactor </td>
+   <td style="text-align:left;"> Russia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Beloyarsk-3 </td>
+   <td style="text-align:right;"> 56.84200 </td>
+   <td style="text-align:right;"> 61.32100 </td>
+   <td style="text-align:left;"> RU </td>
+   <td style="text-align:left;"> BN-600 </td>
+   <td style="text-align:left;"> 1969-01-01 </td>
+   <td style="text-align:left;"> 1981-11-01 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 560 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2015-05-24 01:51:34 </td>
+   <td style="text-align:right;"> 484 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> FBR </td>
+   <td style="text-align:left;"> Fast Breeder Reactor </td>
+   <td style="text-align:left;"> Russia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Beloyarsk-4 </td>
+   <td style="text-align:right;"> 56.84200 </td>
+   <td style="text-align:right;"> 61.32100 </td>
+   <td style="text-align:left;"> RU </td>
+   <td style="text-align:left;"> BN-800 </td>
+   <td style="text-align:left;"> 2006-07-18 </td>
+   <td style="text-align:left;"> 2016-10-31 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 820 </td>
+   <td style="text-align:left;"> WNA/IAEA </td>
+   <td style="text-align:left;"> 2017-09-25 00:19:53 </td>
+   <td style="text-align:right;"> 451 </td>
+   <td style="text-align:left;"> Operational </td>
+   <td style="text-align:left;"> FBR </td>
+   <td style="text-align:left;"> Fast Breeder Reactor </td>
+   <td style="text-align:left;"> Russia </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Beloyarsk-5 </td>
+   <td style="text-align:right;"> 56.84200 </td>
+   <td style="text-align:right;"> 61.32100 </td>
+   <td style="text-align:left;"> RU </td>
+   <td style="text-align:left;"> BN-1200 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> WNA/Wikipedia </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> Planned </td>
+   <td style="text-align:left;"> FBR </td>
+   <td style="text-align:left;"> Fast Breeder Reactor </td>
+   <td style="text-align:left;"> Russia </td>
+  </tr>
 </tbody>
-</table>
-</div>
+</table></div>
 <p>In diesem Datensatz existieren die Spalten <code>ConstructionStartAt</code>, <code>OperationalFrom</code> und <code>OperationalTo</code>, welche den Zeitpunkt markieren an dem der Bau, der Betrieb und die Stilllegung des Reaktors stattfand. Später möchte ich eine animierte Karte erstellen, bei der sich diese fixen Datumsangaben wie eine Zeitreihe verhalten - d.h. ab dem Zeitpunkt an dem der Bau beginnt, befindet sich das AKW solange im Bau bis sich der Status ändert (bspw. wenn ein Reaktor in Betrieb gesetzt wird). Hierfür transformiere ich den Datensatz und fasse das Ereignis, das jede Spalte repräsentiert, in der Spalte (<code>TimeEvent</code>) zusammen und hinterlege das jeweilige Datum in der Spalte (<code>Date</code>). Ist ein Ereignis für einen Reaktor noch nicht eingetreten so wird es entfernt.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_long <span style="color:#666">&lt;-</span>
 </span></span><span style="display:flex;"><span>  data_wide <span style="color:#666">%&gt;%</span>
@@ -1161,320 +1161,318 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(<span style="color:#666">!</span><span style="color:#06287e">is.na</span>(Date))
 </span></span></code></pre></div><p>Die transformierten Daten (ausgewählte Spalten) sehen so aus:</p>
 <br>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Name</th>
-<th style="text-align:left">TimeEvent</th>
-<th style="text-align:left">Date</th>
-<th style="text-align:left">TimeEvent_Animation</th>
-</tr>
-</thead>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; "><table class="table table-responsive" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> Name </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> TimeEvent </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> Date </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> TimeEvent_Animation </th>
+  </tr>
+ </thead>
 <tbody>
-<tr>
-<td style="text-align:left">Ågesta</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1957-12-01</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Ågesta</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1964-05-01</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Ågesta</td>
-<td style="text-align:left">OperationalTo</td>
-<td style="text-align:left">1974-06-02</td>
-<td style="text-align:left">decommissioned</td>
-</tr>
-<tr>
-<td style="text-align:left">Akademik Lomonosov-1</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">2007-04-15</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Akademik Lomonosov-1</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">2020-05-22</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Akademik Lomonosov-2</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">2007-04-15</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Akademik Lomonosov-2</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">2020-05-22</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Akkuyu-1</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">2018-04-03</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Akkuyu-2</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">2020-04-08</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Akkuyu-3</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">2021-03-10</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Aktau (Shevchenko)</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1964-10-01</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Aktau (Shevchenko)</td>
-<td style="text-align:left">OperationalTo</td>
-<td style="text-align:left">1999-04-22</td>
-<td style="text-align:left">decommissioned</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1973-07-03</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1983-09-01</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-2</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1973-07-03</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-2</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1984-07-01</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Angra-1</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1971-05-01</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Angra-1</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1985-01-01</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Angra-2</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1976-01-01</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Angra-2</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">2001-02-01</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Angra-3</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">2010-06-01</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">APS-1 Obninsk</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1951-01-01</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">APS-1 Obninsk</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1954-12-01</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">APS-1 Obninsk</td>
-<td style="text-align:left">OperationalTo</td>
-<td style="text-align:left">2002-04-29</td>
-<td style="text-align:left">decommissioned</td>
-</tr>
-<tr>
-<td style="text-align:left">Arkansas Nuclear One-1 (ANO-1)</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1968-10-01</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Arkansas Nuclear One-1 (ANO-1)</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1974-12-19</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Arkansas Nuclear One-2 (ANO-2)</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1968-12-06</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Arkansas Nuclear One-2 (ANO-2)</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1980-03-26</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Armenian-1</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1969-07-01</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Armenian-1</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1977-10-06</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Armenian-1</td>
-<td style="text-align:left">OperationalTo</td>
-<td style="text-align:left">1989-02-25</td>
-<td style="text-align:left">decommissioned</td>
-</tr>
-<tr>
-<td style="text-align:left">Armenian-2</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1975-07-01</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Armenian-2</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1980-05-03</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Asco-1</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1974-05-16</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Asco-1</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1984-12-10</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Asco-2</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1975-03-07</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Asco-2</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1986-03-31</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Atucha-1</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1968-06-01</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Atucha-1</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1974-06-24</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Atucha-2</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1981-07-14</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Atucha-2</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">2016-05-26</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Balakovo-1</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1980-12-01</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Balakovo-1</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1986-05-23</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Balakovo-2</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1981-08-01</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Balakovo-2</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1988-01-18</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Balakovo-3</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1982-11-01</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Balakovo-3</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1989-04-08</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Balakovo-4</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">1984-04-01</td>
-<td style="text-align:left">under construction</td>
-</tr>
-<tr>
-<td style="text-align:left">Balakovo-4</td>
-<td style="text-align:left">OperationalFrom</td>
-<td style="text-align:left">1993-12-22</td>
-<td style="text-align:left">active</td>
-</tr>
-<tr>
-<td style="text-align:left">Baltic-1</td>
-<td style="text-align:left">ConstructionStartAt</td>
-<td style="text-align:left">2012-02-22</td>
-<td style="text-align:left">under construction</td>
-</tr>
+  <tr>
+   <td style="text-align:left;"> Ågesta </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1957-12-01 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ågesta </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1964-05-01 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ågesta </td>
+   <td style="text-align:left;"> OperationalTo </td>
+   <td style="text-align:left;"> 1974-06-02 </td>
+   <td style="text-align:left;"> decommissioned </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akademik Lomonosov-1 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 2007-04-15 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akademik Lomonosov-1 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 2020-05-22 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akademik Lomonosov-2 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 2007-04-15 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akademik Lomonosov-2 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 2020-05-22 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akkuyu-1 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 2018-04-03 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akkuyu-2 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 2020-04-08 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akkuyu-3 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 2021-03-10 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aktau (Shevchenko) </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1964-10-01 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aktau (Shevchenko) </td>
+   <td style="text-align:left;"> OperationalTo </td>
+   <td style="text-align:left;"> 1999-04-22 </td>
+   <td style="text-align:left;"> decommissioned </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1973-07-03 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1983-09-01 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-2 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1973-07-03 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-2 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1984-07-01 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Angra-1 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1971-05-01 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Angra-1 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1985-01-01 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Angra-2 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1976-01-01 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Angra-2 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 2001-02-01 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Angra-3 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 2010-06-01 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> APS-1 Obninsk </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1951-01-01 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> APS-1 Obninsk </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1954-12-01 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> APS-1 Obninsk </td>
+   <td style="text-align:left;"> OperationalTo </td>
+   <td style="text-align:left;"> 2002-04-29 </td>
+   <td style="text-align:left;"> decommissioned </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Arkansas Nuclear One-1 (ANO-1) </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1968-10-01 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Arkansas Nuclear One-1 (ANO-1) </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1974-12-19 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Arkansas Nuclear One-2 (ANO-2) </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1968-12-06 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Arkansas Nuclear One-2 (ANO-2) </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1980-03-26 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Armenian-1 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1969-07-01 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Armenian-1 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1977-10-06 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Armenian-1 </td>
+   <td style="text-align:left;"> OperationalTo </td>
+   <td style="text-align:left;"> 1989-02-25 </td>
+   <td style="text-align:left;"> decommissioned </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Armenian-2 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1975-07-01 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Armenian-2 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1980-05-03 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Asco-1 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1974-05-16 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Asco-1 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1984-12-10 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Asco-2 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1975-03-07 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Asco-2 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1986-03-31 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Atucha-1 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1968-06-01 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Atucha-1 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1974-06-24 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Atucha-2 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1981-07-14 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Atucha-2 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 2016-05-26 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Balakovo-1 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1980-12-01 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Balakovo-1 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1986-05-23 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Balakovo-2 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1981-08-01 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Balakovo-2 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1988-01-18 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Balakovo-3 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1982-11-01 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Balakovo-3 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1989-04-08 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Balakovo-4 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 1984-04-01 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Balakovo-4 </td>
+   <td style="text-align:left;"> OperationalFrom </td>
+   <td style="text-align:left;"> 1993-12-22 </td>
+   <td style="text-align:left;"> active </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Baltic-1 </td>
+   <td style="text-align:left;"> ConstructionStartAt </td>
+   <td style="text-align:left;"> 2012-02-22 </td>
+   <td style="text-align:left;"> under construction </td>
+  </tr>
 </tbody>
-</table>
-</div>
+</table></div>
 <p>Zum Schluss erweitere ich noch die Grunddaten um die eingespeiste Energiemenge. Zunächst erstelle ich einen Vektor mit den relevanten Reaktor-IDs. Diese werden jeweils an die URL der PRIS-Datenbank angehangen, sodass der jeweilige Reaktor aufgerufen wird. Anschließend fasse ich alle extrahierten Daten im Tibble <code>operatingHistory</code> zusammen.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># relevante Reaktoren (IEAD ID)</span>
 </span></span><span style="display:flex;"><span>reactor_ids <span style="color:#666">&lt;-</span> 
@@ -1503,422 +1501,420 @@
 </span></span><span style="display:flex;"><span>  data_wide <span style="color:#666">%&gt;%</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">left_join</span>(operatingHistory, by <span style="color:#666">=</span> <span style="color:#4070a0">&#34;IAEAId&#34;</span>)
 </span></span></code></pre></div><br>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Name</th>
-<th style="text-align:right">Latitude</th>
-<th style="text-align:right">Longitude</th>
-<th style="text-align:right">Capacity</th>
-<th style="text-align:right">year</th>
-<th style="text-align:right">electricity</th>
-</tr>
-</thead>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; "><table class="table table-responsive" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> Name </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Latitude </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Longitude </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Capacity </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> year </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> electricity </th>
+  </tr>
+ </thead>
 <tbody>
-<tr>
-<td style="text-align:left">Ågesta</td>
-<td style="text-align:right">59.20600</td>
-<td style="text-align:right">18.0829</td>
-<td style="text-align:right">9</td>
-<td style="text-align:right">1971</td>
-<td style="text-align:right">30.00</td>
-</tr>
-<tr>
-<td style="text-align:left">Ågesta</td>
-<td style="text-align:right">59.20600</td>
-<td style="text-align:right">18.0829</td>
-<td style="text-align:right">9</td>
-<td style="text-align:right">1972</td>
-<td style="text-align:right">49.00</td>
-</tr>
-<tr>
-<td style="text-align:left">Ågesta</td>
-<td style="text-align:right">59.20600</td>
-<td style="text-align:right">18.0829</td>
-<td style="text-align:right">9</td>
-<td style="text-align:right">1973</td>
-<td style="text-align:right">43.50</td>
-</tr>
-<tr>
-<td style="text-align:left">Ågesta</td>
-<td style="text-align:right">59.20600</td>
-<td style="text-align:right">18.0829</td>
-<td style="text-align:right">9</td>
-<td style="text-align:right">1974</td>
-<td style="text-align:right">18.10</td>
-</tr>
-<tr>
-<td style="text-align:left">Akademik Lomonosov-1</td>
-<td style="text-align:right">69.70958</td>
-<td style="text-align:right">170.3063</td>
-<td style="text-align:right">30</td>
-<td style="text-align:right">2019</td>
-<td style="text-align:right">0.68</td>
-</tr>
-<tr>
-<td style="text-align:left">Akademik Lomonosov-1</td>
-<td style="text-align:right">69.70958</td>
-<td style="text-align:right">170.3063</td>
-<td style="text-align:right">30</td>
-<td style="text-align:right">2020</td>
-<td style="text-align:right">64.93</td>
-</tr>
-<tr>
-<td style="text-align:left">Akademik Lomonosov-2</td>
-<td style="text-align:right">69.70958</td>
-<td style="text-align:right">170.3063</td>
-<td style="text-align:right">30</td>
-<td style="text-align:right">2019</td>
-<td style="text-align:right">2.12</td>
-</tr>
-<tr>
-<td style="text-align:left">Akademik Lomonosov-2</td>
-<td style="text-align:right">69.70958</td>
-<td style="text-align:right">170.3063</td>
-<td style="text-align:right">30</td>
-<td style="text-align:right">2020</td>
-<td style="text-align:right">51.44</td>
-</tr>
-<tr>
-<td style="text-align:left">Aktau (Shevchenko)</td>
-<td style="text-align:right">43.60700</td>
-<td style="text-align:right">51.2830</td>
-<td style="text-align:right">52</td>
-<td style="text-align:right">1992</td>
-<td style="text-align:right">463.94</td>
-</tr>
-<tr>
-<td style="text-align:left">Aktau (Shevchenko)</td>
-<td style="text-align:right">43.60700</td>
-<td style="text-align:right">51.2830</td>
-<td style="text-align:right">52</td>
-<td style="text-align:right">1993</td>
-<td style="text-align:right">444.11</td>
-</tr>
-<tr>
-<td style="text-align:left">Aktau (Shevchenko)</td>
-<td style="text-align:right">43.60700</td>
-<td style="text-align:right">51.2830</td>
-<td style="text-align:right">52</td>
-<td style="text-align:right">1994</td>
-<td style="text-align:right">378.07</td>
-</tr>
-<tr>
-<td style="text-align:left">Aktau (Shevchenko)</td>
-<td style="text-align:right">43.60700</td>
-<td style="text-align:right">51.2830</td>
-<td style="text-align:right">52</td>
-<td style="text-align:right">1995</td>
-<td style="text-align:right">83.19</td>
-</tr>
-<tr>
-<td style="text-align:left">Aktau (Shevchenko)</td>
-<td style="text-align:right">43.60700</td>
-<td style="text-align:right">51.2830</td>
-<td style="text-align:right">52</td>
-<td style="text-align:right">1996</td>
-<td style="text-align:right">89.58</td>
-</tr>
-<tr>
-<td style="text-align:left">Aktau (Shevchenko)</td>
-<td style="text-align:right">43.60700</td>
-<td style="text-align:right">51.2830</td>
-<td style="text-align:right">52</td>
-<td style="text-align:right">1997</td>
-<td style="text-align:right">302.75</td>
-</tr>
-<tr>
-<td style="text-align:left">Aktau (Shevchenko)</td>
-<td style="text-align:right">43.60700</td>
-<td style="text-align:right">51.2830</td>
-<td style="text-align:right">52</td>
-<td style="text-align:right">1998</td>
-<td style="text-align:right">91.16</td>
-</tr>
-<tr>
-<td style="text-align:left">Aktau (Shevchenko)</td>
-<td style="text-align:right">43.60700</td>
-<td style="text-align:right">51.2830</td>
-<td style="text-align:right">52</td>
-<td style="text-align:right">1999</td>
-<td style="text-align:right">0.00</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1981</td>
-<td style="text-align:right">1888.90</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1982</td>
-<td style="text-align:right">2322.60</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1983</td>
-<td style="text-align:right">3713.90</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1984</td>
-<td style="text-align:right">4820.50</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1985</td>
-<td style="text-align:right">4825.17</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1986</td>
-<td style="text-align:right">5425.02</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1987</td>
-<td style="text-align:right">7193.69</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1988</td>
-<td style="text-align:right">5879.59</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1989</td>
-<td style="text-align:right">6562.18</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1990</td>
-<td style="text-align:right">6460.66</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1991</td>
-<td style="text-align:right">7481.71</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1992</td>
-<td style="text-align:right">6379.06</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1993</td>
-<td style="text-align:right">6530.85</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1994</td>
-<td style="text-align:right">7448.60</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1995</td>
-<td style="text-align:right">6588.46</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1996</td>
-<td style="text-align:right">5904.30</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1997</td>
-<td style="text-align:right">6642.83</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1998</td>
-<td style="text-align:right">8032.46</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">1999</td>
-<td style="text-align:right">6988.63</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2000</td>
-<td style="text-align:right">7471.57</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2001</td>
-<td style="text-align:right">8151.39</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2002</td>
-<td style="text-align:right">7427.99</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2003</td>
-<td style="text-align:right">7499.11</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2004</td>
-<td style="text-align:right">8185.69</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2005</td>
-<td style="text-align:right">7519.43</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2006</td>
-<td style="text-align:right">7152.42</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2007</td>
-<td style="text-align:right">8189.80</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2008</td>
-<td style="text-align:right">7190.76</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2009</td>
-<td style="text-align:right">6880.10</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2010</td>
-<td style="text-align:right">7884.25</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2011</td>
-<td style="text-align:right">7519.49</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2012</td>
-<td style="text-align:right">7346.07</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2013</td>
-<td style="text-align:right">7695.84</td>
-</tr>
-<tr>
-<td style="text-align:left">Almaraz-1</td>
-<td style="text-align:right">39.80700</td>
-<td style="text-align:right">-5.6980</td>
-<td style="text-align:right">900</td>
-<td style="text-align:right">2014</td>
-<td style="text-align:right">7252.45</td>
-</tr>
+  <tr>
+   <td style="text-align:left;"> Ågesta </td>
+   <td style="text-align:right;"> 59.20600 </td>
+   <td style="text-align:right;"> 18.0829 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 1971 </td>
+   <td style="text-align:right;"> 30.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ågesta </td>
+   <td style="text-align:right;"> 59.20600 </td>
+   <td style="text-align:right;"> 18.0829 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 1972 </td>
+   <td style="text-align:right;"> 49.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ågesta </td>
+   <td style="text-align:right;"> 59.20600 </td>
+   <td style="text-align:right;"> 18.0829 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 1973 </td>
+   <td style="text-align:right;"> 43.50 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ågesta </td>
+   <td style="text-align:right;"> 59.20600 </td>
+   <td style="text-align:right;"> 18.0829 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 1974 </td>
+   <td style="text-align:right;"> 18.10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akademik Lomonosov-1 </td>
+   <td style="text-align:right;"> 69.70958 </td>
+   <td style="text-align:right;"> 170.3063 </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> 2019 </td>
+   <td style="text-align:right;"> 0.68 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akademik Lomonosov-1 </td>
+   <td style="text-align:right;"> 69.70958 </td>
+   <td style="text-align:right;"> 170.3063 </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> 2020 </td>
+   <td style="text-align:right;"> 64.93 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akademik Lomonosov-2 </td>
+   <td style="text-align:right;"> 69.70958 </td>
+   <td style="text-align:right;"> 170.3063 </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> 2019 </td>
+   <td style="text-align:right;"> 2.12 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Akademik Lomonosov-2 </td>
+   <td style="text-align:right;"> 69.70958 </td>
+   <td style="text-align:right;"> 170.3063 </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> 2020 </td>
+   <td style="text-align:right;"> 51.44 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aktau (Shevchenko) </td>
+   <td style="text-align:right;"> 43.60700 </td>
+   <td style="text-align:right;"> 51.2830 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 1992 </td>
+   <td style="text-align:right;"> 463.94 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aktau (Shevchenko) </td>
+   <td style="text-align:right;"> 43.60700 </td>
+   <td style="text-align:right;"> 51.2830 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 1993 </td>
+   <td style="text-align:right;"> 444.11 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aktau (Shevchenko) </td>
+   <td style="text-align:right;"> 43.60700 </td>
+   <td style="text-align:right;"> 51.2830 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 1994 </td>
+   <td style="text-align:right;"> 378.07 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aktau (Shevchenko) </td>
+   <td style="text-align:right;"> 43.60700 </td>
+   <td style="text-align:right;"> 51.2830 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 1995 </td>
+   <td style="text-align:right;"> 83.19 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aktau (Shevchenko) </td>
+   <td style="text-align:right;"> 43.60700 </td>
+   <td style="text-align:right;"> 51.2830 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 1996 </td>
+   <td style="text-align:right;"> 89.58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aktau (Shevchenko) </td>
+   <td style="text-align:right;"> 43.60700 </td>
+   <td style="text-align:right;"> 51.2830 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 1997 </td>
+   <td style="text-align:right;"> 302.75 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aktau (Shevchenko) </td>
+   <td style="text-align:right;"> 43.60700 </td>
+   <td style="text-align:right;"> 51.2830 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 1998 </td>
+   <td style="text-align:right;"> 91.16 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aktau (Shevchenko) </td>
+   <td style="text-align:right;"> 43.60700 </td>
+   <td style="text-align:right;"> 51.2830 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 1999 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1981 </td>
+   <td style="text-align:right;"> 1888.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1982 </td>
+   <td style="text-align:right;"> 2322.60 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1983 </td>
+   <td style="text-align:right;"> 3713.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1984 </td>
+   <td style="text-align:right;"> 4820.50 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1985 </td>
+   <td style="text-align:right;"> 4825.17 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1986 </td>
+   <td style="text-align:right;"> 5425.02 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1987 </td>
+   <td style="text-align:right;"> 7193.69 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1988 </td>
+   <td style="text-align:right;"> 5879.59 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1989 </td>
+   <td style="text-align:right;"> 6562.18 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1990 </td>
+   <td style="text-align:right;"> 6460.66 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1991 </td>
+   <td style="text-align:right;"> 7481.71 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1992 </td>
+   <td style="text-align:right;"> 6379.06 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1993 </td>
+   <td style="text-align:right;"> 6530.85 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1994 </td>
+   <td style="text-align:right;"> 7448.60 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1995 </td>
+   <td style="text-align:right;"> 6588.46 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1996 </td>
+   <td style="text-align:right;"> 5904.30 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1997 </td>
+   <td style="text-align:right;"> 6642.83 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1998 </td>
+   <td style="text-align:right;"> 8032.46 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 1999 </td>
+   <td style="text-align:right;"> 6988.63 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2000 </td>
+   <td style="text-align:right;"> 7471.57 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2001 </td>
+   <td style="text-align:right;"> 8151.39 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2002 </td>
+   <td style="text-align:right;"> 7427.99 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2003 </td>
+   <td style="text-align:right;"> 7499.11 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2004 </td>
+   <td style="text-align:right;"> 8185.69 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2005 </td>
+   <td style="text-align:right;"> 7519.43 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2006 </td>
+   <td style="text-align:right;"> 7152.42 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2007 </td>
+   <td style="text-align:right;"> 8189.80 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2008 </td>
+   <td style="text-align:right;"> 7190.76 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2009 </td>
+   <td style="text-align:right;"> 6880.10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2010 </td>
+   <td style="text-align:right;"> 7884.25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2011 </td>
+   <td style="text-align:right;"> 7519.49 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2012 </td>
+   <td style="text-align:right;"> 7346.07 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:right;"> 7695.84 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Almaraz-1 </td>
+   <td style="text-align:right;"> 39.80700 </td>
+   <td style="text-align:right;"> -5.6980 </td>
+   <td style="text-align:right;"> 900 </td>
+   <td style="text-align:right;"> 2014 </td>
+   <td style="text-align:right;"> 7252.45 </td>
+  </tr>
 </tbody>
-</table>
-</div>
+</table></div>
 <p>Für die Datenanalyse möchte ich ausschließlich Reaktoren berücksichtigen, die sich in Europa befinden und reduziere die Datensätze auf die relevanten Länder.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_wide_eu <span style="color:#666">&lt;-</span>
 </span></span><span style="display:flex;"><span>  data_wide <span style="color:#666">%&gt;%</span>
@@ -1983,7 +1979,7 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_fill_manual</span>(values <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;grey&#34;</span>, <span style="color:#4070a0">&#34;#3399FF&#34;</span>,<span style="color:#4070a0">&#34;#FFCC00&#34;</span>,<span style="color:#4070a0">&#34;#00CC00&#34;</span>,<span style="color:#4070a0">&#34;#CC0000&#34;</span>)) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme_void</span>()
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.png" data-fig-align="center" width="768" />
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/atomkraft-europa/index_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" />
 <hr>
 <p>Für jedes europäische Land ist die geplante bzw. realisierte Leistung aller Reaktoren nachfolgend dargestellt. Besonders in Deutschland wurden bereits viele Reaktoren vom Netz genommen, während sich in Frankreich der Großteil der Reaktoren noch im Betrieb befindet.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_wide_eu <span style="color:#666">%&gt;%</span>
@@ -2001,7 +1997,7 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">70</span>,<span style="color:#40a070">10</span>)) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_fill_manual</span>(values <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;grey&#34;</span>, <span style="color:#4070a0">&#34;#3399FF&#34;</span>,<span style="color:#4070a0">&#34;#FFCC00&#34;</span>,<span style="color:#4070a0">&#34;#00CC00&#34;</span>,<span style="color:#4070a0">&#34;#CC0000&#34;</span>)) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>, y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Total capacity (gigawatt)&#34;</span>, fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>)
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-13-1.png" data-fig-align="center" width="768" />
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/atomkraft-europa/index_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" />
 <hr>
 <p>Als Nächstes betrachte ich die ins Netz eingespeiste Energiemenge der europäischen Atommeiler. Auf der x-Achse habe ich die Reaktorunfälle von Tschernobyl im Jahr 1986 und Fukushima im Jahr 2011 in rot hervorgehoben. Nur Italien ist im Anchschluss an Tschernobyl vollständig aus der Kernergie ausgestiegen. Bei den anderen europäischen Ländern ist kein Rückgang der Nutzung der Atomkraft zu erkennen - in Frankreich ist diese sogar deutlich gestiegen. In Deutschland ist ein starker Rückgang der eingespeisten Energiemenge nach dem Reaktorunglück von Fukushima zu erkennen.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_oH_eu <span style="color:#666">%&gt;%</span>
@@ -2016,7 +2012,7 @@
 </span></span><span style="display:flex;"><span>                     breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">1960</span>,<span style="color:#40a070">2020</span>,<span style="color:#40a070">10</span>)) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>, y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Electricity supplied (TW/h)&#34;</span>) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme</span>(axis.text.x <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(angle <span style="color:#666">=</span> <span style="color:#40a070">90</span>))
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png" data-fig-align="center" width="768" />
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/atomkraft-europa/index_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" />
 <hr>
 <p>Zum Schluss möchte ich mir einen Überblick verschaffen, wie sich der Ausbau der Kernergie in Europa im Zeitverlauf verändert hat. Dazu nutze ich den Datensatz <code>datal_long_eu</code>, in welchem ich die Reaktordaten so transfomiert hatte, dass sich der Zeitpunkt des Baus, der Inbetriebesetzung oder der Stilllegung wie eine Zeitreihe verhält. Unten ist dargestellt bei wie vielen Reaktoren in einem Jahr mit dem Bau begonnen wurde bzw. wie viele Reaktoren in Betrieb gesetzt oder stillgelegt wurden. Zwischen 1970 und 1990 wurden die meisten Reaktoren gebaut bzw. in Betrieb genommen. Ab 1990 wurden zunehmend Reaktoren stillgelegt.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_long_eu <span style="color:#666">%&gt;%</span>
@@ -2026,7 +2022,7 @@
 </span></span><span style="display:flex;"><span>                     breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">1950</span>,<span style="color:#40a070">2022</span>,<span style="color:#40a070">10</span>)) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_fill_manual</span>(name <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>, values <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;#00CC00&#34;</span>,<span style="color:#4070a0">&#34;#CC0000&#34;</span>,<span style="color:#4070a0">&#34;#FFCC00&#34;</span>)) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>, y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Number of reactors&#34;</span>)
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png" data-fig-align="center" width="768" />
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/atomkraft-europa/index_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" />
 <hr>
 <p>Unten habe ich für Deutschland die Entwicklung der Atomreaktoren mit einer Leistung von mindestens 300 Megawatt auf einem Zeitstrahl dargestellt. Dafür nutze ich die Funktion <code>geom_segment()</code> mit der eine gerade Linie zwischen zwei Punkten gezeichnet werden kann. Das Ende des jeweiligen Ereignisses auf dem Zeitstrahl begrenze ich mithilfe der Funktion <code>lead()</code> auf das nächstfolgende Ereignis. Aktuell sind in Deutschland noch 7 Reaktoren am Netz. Besonders interessant finde ich das Kernkraftwerk Mülheim-Kärlich, welches nach seiner Inbetriebnahme nur etwa 1 Jahr am Netz war. Auch die nach dem Reaktorunglück von Fukushima (2011) stillgelegten Reaktoren können dieser Darstellung entnommen werden.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_long_eu <span style="color:#666">%&gt;%</span>
@@ -2044,10 +2040,11 @@
 </span></span><span style="display:flex;"><span>                     breaks <span style="color:#666">=</span> <span style="color:#06287e">seq</span>(<span style="color:#40a070">1965</span>,<span style="color:#40a070">2020</span>,<span style="color:#40a070">5</span>)) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>, y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>) <span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme</span>(axis.text.x <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(angle <span style="color:#666">=</span> <span style="color:#40a070">90</span>))
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png" data-fig-align="center" width="768" />
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/atomkraft-europa/index_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" />
 <hr>
 <p>Mit einer animierten Karte möchte ich diese Informationen für ganz Europa darstellen. Mit der Funktion <code>shadow_mark()</code> aus dem R-Paket <code>ggmaps</code> kann man steuern, dass Punkte, die ein mal auf einer Karte hinterlegt wurden, auch im Zeitverlauf auf der Karte verbleiben. So bleibt der Status eines Reaktors so lange gültig bis ein anderer Status eintritt. Da es am Standort eines Atomkraftwerks meist mehrere Reaktoren gibt, ist diese Darstellung nicht vollständig präzise, da die Reaktoren nicht unbedingt zur selben Zeit gebaut oder in Betrieb genommen werden. So kann ein zweiter (dritter, vierter, &hellip;) Reaktor an einem Standort den Status des ersten Reaktors überscheiben.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>Get_Map_Country <span style="color:#666">&lt;-</span> <span style="color:#06287e">get_map</span>(location <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Europe&#34;</span>, zoom <span style="color:#666">=</span> <span style="color:#40a070">4</span>, maptype <span style="color:#666">=</span> <span style="color:#4070a0">&#34;stamen_toner_background&#34;</span>, 
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>Get_Map_Country <span style="color:#666">&lt;-</span> <span style="color:#06287e">get_map</span>(location <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Europe&#34;</span>, zoom <span style="color:#666">=</span> <span style="color:#40a070">4</span>, 
+</span></span><span style="display:flex;"><span>                           maptype <span style="color:#666">=</span> <span style="color:#4070a0">&#34;stamen_toner_background&#34;</span>, 
 </span></span><span style="display:flex;"><span>                           filename <span style="color:#666">=</span> <span style="color:#4070a0">&#34;ggmapTemp&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;bw&#34;</span>, source <span style="color:#666">=</span> <span style="color:#4070a0">&#34;stadia&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>karte_europa <span style="color:#666">&lt;-</span> <span style="color:#06287e">ggmap</span>(ggmap <span style="color:#666">=</span> Get_Map_Country)
@@ -2070,7 +2067,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#06287e">animate</span>(karte_animation, nframes <span style="color:#666">=</span> <span style="color:#40a070">100</span>, fps <span style="color:#666">=</span> <span style="color:#40a070">2</span>,
 </span></span><span style="display:flex;"><span>        width <span style="color:#666">=</span> <span style="color:#40a070">800</span>,
 </span></span><span style="display:flex;"><span>        height <span style="color:#666">=</span> <span style="color:#40a070">600</span>)
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.gif" data-fig-align="center" />
+</span></span></code></pre></div><img src="https://philippleppert.eu/blog/atomkraft-europa/index_files/figure-html/unnamed-chunk-17-1.gif" style="display: block; margin: auto;" />
 
         
         <details closed class="f6 fw7 input-reset">
