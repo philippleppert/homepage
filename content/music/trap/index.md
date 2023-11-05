@@ -27,7 +27,7 @@ Please note that some compositions contain audio samples of copyrighted songs an
 
 ### Anachronist [146 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Anachronist [146 bpm].mp3"
     type="audio/mp3">
@@ -38,7 +38,7 @@ Please note that some compositions contain audio samples of copyrighted songs an
 
 ### Bending Corners [160 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Bending Corners [160 bpm].mp3"
     type="audio/mp3">
@@ -50,7 +50,7 @@ Please note that some compositions contain audio samples of copyrighted songs an
 ### Chasm [132 bpm]
 contains a sample of "Or a Wolf" by Philip Glass
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Chasm [132 bpm].mp3"
     type="audio/mp3">
@@ -61,7 +61,7 @@ contains a sample of "Or a Wolf" by Philip Glass
 
 ### Corleone [138 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Corleone [138 bpm].mp3"
     type="audio/mp3">
@@ -73,7 +73,7 @@ contains a sample of "Or a Wolf" by Philip Glass
 ### Cosmic [150 bpm]
 contains a sample of "Maiden Astrea" by Shunsuke Kida 
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Cosmic [150 bpm].mp3"
     type="audio/mp3">
@@ -85,7 +85,7 @@ contains a sample of "Maiden Astrea" by Shunsuke Kida
 ### Downstream [132 bpm]
 contains a sample of "Tightrope" by Electric Light Orchestra
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Downstream [132 bpm].mp3"
     type="audio/mp3">
@@ -96,7 +96,7 @@ contains a sample of "Tightrope" by Electric Light Orchestra
 
 ### First Impression [154 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/First Impression [154 bpm].mp3"
     type="audio/mp3">
@@ -107,7 +107,7 @@ contains a sample of "Tightrope" by Electric Light Orchestra
 
 ### Forlorn [136 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Forlorn [136 bpm].mp3"
     type="audio/mp3">
@@ -118,7 +118,7 @@ contains a sample of "Tightrope" by Electric Light Orchestra
 
 ### Juggernaut [140 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Juggernaut [140 bpm].mp3"
     type="audio/mp3">
@@ -129,7 +129,7 @@ contains a sample of "Tightrope" by Electric Light Orchestra
 
 ### Monte-Carlo [131 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Monte-Carlo [131 bpm].mp3"
     type="audio/mp3">
@@ -140,7 +140,7 @@ contains a sample of "Tightrope" by Electric Light Orchestra
 
 ### Motivation [140 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Motivation [140 bpm].mp3"
     type="audio/mp3">
@@ -151,7 +151,7 @@ contains a sample of "Tightrope" by Electric Light Orchestra
 
 ### Night ride [140 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Night ride [140 bpm].mp3"
     type="audio/mp3">
@@ -162,7 +162,7 @@ contains a sample of "Tightrope" by Electric Light Orchestra
 
 ### Origami [128 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Origami [128 bpm].mp3"
     type="audio/mp3">
@@ -173,7 +173,7 @@ contains a sample of "Tightrope" by Electric Light Orchestra
 
 ### Party [154 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Party [154 bpm].mp3"
     type="audio/mp3">
@@ -184,7 +184,7 @@ contains a sample of "Tightrope" by Electric Light Orchestra
 
 ### Serene [146 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Serene [146 bpm].mp3"
     type="audio/mp3">
@@ -195,7 +195,7 @@ contains a sample of "Tightrope" by Electric Light Orchestra
 
 ### Swagger [152 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Swagger [152 bpm].mp3"
     type="audio/mp3">
@@ -206,7 +206,7 @@ contains a sample of "Tightrope" by Electric Light Orchestra
 
 ### Topgun [150 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Topgun [150 bpm].mp3"
     type="audio/mp3">
@@ -217,7 +217,7 @@ contains a sample of "Tightrope" by Electric Light Orchestra
 
 ### Welter [134 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Welter [134 bpm].mp3"
     type="audio/mp3">
@@ -228,7 +228,7 @@ contains a sample of "Tightrope" by Electric Light Orchestra
 
 ### Zodiac [144 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/trap/Zodiac [144 bpm].mp3"
     type="audio/mp3">

@@ -28,7 +28,7 @@ Please note that some compositions contain audio samples of copyrighted songs an
 ### Down Under [83 bpm]
 contains a sample of "I Need My Girl" by The National
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/hip-hop/Down Under [83 bpm].mp3"
     type="audio/mp3">
@@ -39,7 +39,7 @@ contains a sample of "I Need My Girl" by The National
 
 ### Fog [86 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/hip-hop/Fog [86 bpm].mp3"
     type="audio/mp3">
@@ -51,7 +51,7 @@ contains a sample of "I Need My Girl" by The National
 ### Momentum [87 bpm]
 contains a sample of "The Force Theme" by John Williams
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/hip-hop/Momentum [87 bpm].mp3"
     type="audio/mp3">
@@ -62,7 +62,7 @@ contains a sample of "The Force Theme" by John Williams
 
 ### Pleased to meet you [91 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/hip-hop/Pleased to meet you [91 bpm].mp3"
     type="audio/mp3">
@@ -74,7 +74,7 @@ contains a sample of "The Force Theme" by John Williams
 ### Prezident - Menschenpyramiden (Remix)
 contains a sample of "Ame De Décembre" by Dark Sanctuary
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/hip-hop/Prezident - Menschenpyramiden (Remix).mp3"
     type="audio/mp3">
@@ -85,7 +85,7 @@ contains a sample of "Ame De Décembre" by Dark Sanctuary
 
 ### Short stories [86 bpm]
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/hip-hop/Short stories [86 bpm].mp3"
     type="audio/mp3">
@@ -96,7 +96,7 @@ contains a sample of "Ame De Décembre" by Dark Sanctuary
 
 ### Alphaville x Prinz Pi - Forever Young In Happiness
 
-<audio controls>
+<audio controls controlsList="nodownload">
   <source
     src="/media/hip-hop/Alphaville x Prinz Pi - Forever Young In Happiness.mp3"
     type="audio/mp3">
