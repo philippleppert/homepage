@@ -1,0 +1,36 @@
+Versicherer;Tarif;Gruppe;Zahnersatz;Grenze_Jahr_1;Grenze_Jahr_2;Grenze_Jahr_3;Grenze_Jahr_4;Grenze_Jahr_5;Wartezeit;Schmerzausschaltung;Kieferorthopädie;Veneers
+inter Versicherungsgruppe;INT_Z90;Zahnersatz;90%;750;1500;3000;;;;;ja;nein
+inter Versicherungsgruppe;INT_Z80;Zahnersatz;80%;750;1500;3000;;;;;ja;nein
+inter Versicherungsgruppe;INT_ZPro;Zahnbehandlung, Prophylaxe;;750;1500;3000;;;;ja;;
+inter Versicherungsgruppe;INT_Z90_Zpro;Zahnersatz, Zahnbehandlung, Prophylaxe;90%;750;1500;3000;;;;ja;ja;nein
+inter Versicherungsgruppe;INT_Z80_Zpro;Zahnersatz, Zahnbehandlung, Prophylaxe;80%;;;;;;;;;
+die Bayerische;BAY_Zahn_Prestige;Zahnersatz, Zahnbehandlung, Prophylaxe;100%;1250;2500;3750;5000;;keine;ja;ja;ja
+die Bayerische;BAY_Zahn_Komfort;Zahnersatz, Zahnbehandlung, Prophylaxe;90%;1250;2500;3750;5000;;6 Monate;ja;ja;ja
+die Bayerische;BAY_Zahn_Smart;Zahnersatz, Zahnbehandlung, Prophylaxe;80%;1250;2500;3750;5000;;6 Monate;nein;nein;ja
+DKV;DKV_KDTP100;Zahnersatz, Zahnbehandlung;100%;600;1200;1800;;;8 Monate;ja;;ja
+DKV;DKV_KDT85;Zahnersatz, Zahnbehandlung;85%;500;1000;1500;;;8 Monate;nein;;ja
+DKV;DKV_KDBE;Zahnbehandlung, Prophylaxe;;;;;;;8 Monate;;ja;
+DKV;DKV_KDTP100_KDBE;Zahnersatz, Zahnbehandlung, Prophylaxe;100%;600;1200;1800;;;;ja;ja;ja
+DKV;DKV_KDTP85_KDBE;Zahnersatz, Zahnbehandlung, Prophylaxe;85%;;;;;;;;;
+Hallesche;HAL_dentZE.100;Zahnersatz;100%;1000;2000;3000;4000;5000;keine;ja;;nein
+Hallesche;HAL_dentZE.90;Zahnersatz;90%;1000;2000;3000;4000;5000;keine;ja;;nein
+Hallesche;HAL_dentZB.100;Zahnbehandlung;;500;1000;1500;2000;2500;keine;ja;ja;
+Hallesche;HAL_dentPRO.80;Prophylaxe;;;;;;;keine;;;
+Hallesche;HAL_dentZE.100_dentZB.100_dentPRO80;Zahnersatz, Zahnbehandlung, Prophylaxe;100%;;;;;;;;;
+Hallesche;HAL_dentZE.100_dentZB.100;Zahnersatz, Zahnbehandlung;100%;;;;;;;;;
+Hallesche;HAL_dentZE.90_dentZB.100_dentPRO80;Zahnersatz, Zahnbehandlung, Prophylaxe;90%;;;;;;;;;
+Hallesche;HAL_dentZE.90_dentZB.100;Zahnersatz, Zahnbehandlung;90%;;;;;;;;;
+ARAG;ARA_Dent100;Zahnersatz, Zahnbehandlung, Prophylaxe;100%;1500;3000;4500;6000;7500;keine;ja;ja;nein
+ARAG;ARA_Dent90P;Zahnersatz, Zahnbehandlung, Prophylaxe;90%;1000;2000;3000;4000;5000;keine;ja;nur bei Unfall;nein
+ARAG;ARA_Dent90;Zahnersatz, Zahnbehandlung, Prophylaxe;90%;1000;2000;3000;4000;5000;keine;nein;nur bei Unfall;nein
+ARAG;ARA_Dent70;Zahnersatz, Zahnbehandlung, Prophylaxe;70%;500;1000;1500;2000;2500;keine;nein;nein;nein
+Allianz;ALL_DentalBest;Zahnersatz, Zahnbehandlung, Prophylaxe;100%;900;1800;2700;3600;;8 Monate;ja;ja;ja
+Allianz;ALL_DentalPlus;Zahnersatz, Zahnbehandlung, Prophylaxe;90%;800;1600;2400;3200;;8 Monate;ja;ja;ja
+DFV;DFV_Exklusiv;Zahnersatz, Zahnbehandlung, Prophylaxe;100%;1000;2000;3000;4000;;keine;ja;ja;nein
+DFV;DFV_Premium;Zahnersatz, Zahnbehandlung, Prophylaxe;90%;750;1500;2250;3000;;keine;ja;ja;nein
+Gothaer;GTH_MediZ_Premium;Zahnersatz;100%;750;750;1500;2250;;keine;nein;ja;ja
+Gothaer;GTH_MediZ_Plus;Zahnersatz;90%;;;;;;keine;nein;nein;nein
+Gothaer;GTH_Medi_Prophy;Zahnbehandlung, Prophylaxe;;;;;;;keine;nein;;
+Gothaer;GTH_MediZ_Premium_Medi_Prophy;Zahnersatz, Zahnbehandlung, Prophylaxe;100%;;;;;;;;;
+Gothaer;GTH_MediZ_Plus_Medi_Prophy;Zahnersatz, Zahnbehandlung, Prophylaxe;90%;;;;;;;;;
+UKV;UKV_Zahnprivat_Premium;Zahnersatz, Zahnbehandlung, Prophylaxe;90%;1000;3000;6000;9000;;keine;ja;ja;ja

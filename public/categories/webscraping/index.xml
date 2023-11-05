@@ -16,5 +16,32 @@
       <description>Eine datengetriebene Übersicht über die Entwicklung der Kernernergie in Europa.</description>
     </item>
     
+    <item>
+      <title>Belgische Biere</title>
+      <link>https://philippleppert.eu/blog/bier-belgien/</link>
+      <pubDate>Thu, 01 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/bier-belgien/</guid>
+      <description>Eine Auswertung zur belgischen Bierlandschaft.</description>
+    </item>
+    
+    <item>
+      <title>ETFs im Datencheck</title>
+      <link>https://philippleppert.eu/blog/datenanalyse-etfs/</link>
+      <pubDate>Sat, 23 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/datenanalyse-etfs/</guid>
+      <description>Eine grafische und interaktive Auswertung von ETFs im Jahr 2017.</description>
+    </item>
+    
+    <item>
+      <title>Mietspiegel erstellen mit immobilienscout24</title>
+      <link>https://philippleppert.eu/blog/mietspiegel-immoscout/</link>
+      <pubDate>Mon, 19 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/mietspiegel-immoscout/</guid>
+      <description>Kann man mit extrahierten Daten von Immobilienscout-24 eine Übersicht über die Angebotsmieten einer Stadt erstellen?</description>
+    </item>
+    
   </channel>
 </rss>

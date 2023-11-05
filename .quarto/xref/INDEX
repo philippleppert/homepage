@@ -28,5 +28,26 @@
   },
   "content/blog/spotify-streamingverlauf/index.qmd": {
     "index.md": "e325430d"
+  },
+  "content/blog/dwd-niederschlagsdaten/index.qmd": {
+    "index.md": "8e1e8d30"
+  },
+  "content/blog/schottland-wetter/index.qmd": {
+    "index.md": "7ca458de"
+  },
+  "content/blog/bier-belgien/index.qmd": {
+    "index.md": "e48bbcb8"
+  },
+  "content/blog/datenanalyse-carcassonne/index.qmd": {
+    "index.md": "d167b68a"
+  },
+  "content/blog/datenanalyse-etfs/index.qmd": {
+    "index.md": "26d5d3aa"
+  },
+  "content/blog/datenanalyse-versicherung/index.qmd": {
+    "index.md": "8769eea6"
+  },
+  "content/blog/mietspiegel-immoscout/index.qmd": {
+    "index.md": "46bf210f"
   }
 }

@@ -1,0 +1,269 @@
+---
+title: "Mietspiegel erstellen mit immobilienscout24"
+date: 2017-06-19
+format: hugo
+slug: mietspiegel-immoscout
+categories: 
+  - R
+  - Kartierung
+  - Webscraping
+summary: "Kann man mit extrahierten Daten von Immobilienscout-24 eine Übersicht über die Angebotsmieten einer Stadt erstellen?"
+---
+
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", collapse = TRUE)
+
+# Benötigte R-Pakete
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(rvest)
+library(xml2)
+library(RJSONIO)
+library(ggmap)
+
+# ggplot Layout festlegen
+theme_set(theme_bw())
+
+# API Key registrieren
+register_google(key = gmaps_api_key)
+register_stadiamaps(stadia_api_key)
+
+# Daten einlesen
+daten_wi <- read_delim("data/immoscout_wiesbaden_18062017.csv", 
+                       delim = ";",
+                       locale=locale(decimal_mark = ",", encoding = "latin1"),
+                       na = c("", "NA","#NV")
+                       )
+
+daten_mz <- read_delim("data/immoscout_mainz_18062017.csv", 
+                       delim = ";",
+                       locale=locale(decimal_mark = ",", encoding = "latin1"),
+                       na = c("", "NA","#NV"))
+
+# Preiskategorie sortieren
+daten_wi <- mutate(daten_wi, pricecat = 
+                     fct_relevel(pricecat,
+                                 "6 bis 8 Euro pro Quadratmeter",
+                                 "8 bis 10 Euro pro Quadratmeter",
+                                 "10 bis 12 Euro pro Quadratmeter",
+                                 "12 bis 15 Euro pro Quadratmeter",
+                                 "15 bis 20 Euro pro Quadratmeter",
+                                 "mehr als 20 Euro pro Quadratmeter"
+                                 )
+                   )
+
+daten_mz <- mutate(daten_mz, pricecat = 
+                     fct_relevel(pricecat,
+                                 "6 bis 8 Euro pro Quadratmeter",
+                                 "8 bis 10 Euro pro Quadratmeter",
+                                 "10 bis 12 Euro pro Quadratmeter",
+                                 "12 bis 15 Euro pro Quadratmeter",
+                                 "15 bis 20 Euro pro Quadratmeter",
+                                 "mehr als 20 Euro pro Quadratmeter"
+                                 )
+                   )
+```
+
+Angebotsmieten spiegeln die gegenwärtige Mietpreissituation auf dem Wohnungsmarkt wider und können, je nach Region, von den Bestandsmieten deutlich abweichen. Befindet man sich gerade auf der Suche nach einer Wohnung, wird man schnell ein Gefühl dafür bekommen, in welchem Stadtteil Wohnraum teuer oder günstig zu haben ist. Bereits vor der Wohnungssuche kann man sich über die Mietsituation in einer Stadt oder Region mit öffentlich zugänglichen Informationen wie dem [Immobilienmarktbericht](https://www.bbsr.bund.de/SiteGlobals/Forms/Suche/VeroeffentlichungsSuche_Formular.html?nn=2547954){target="_blank"} auseinandersetzen, welcher vom Bundesinstitut für Bau-, Stadt- und Raumforschung erstellt wird. Auch Unternehmen wie die [IdN Immodaten GmbH](https://www.immodaten.net/) bieten ein umfangreiches Datenangebot zum Immobilienmarkt an und werten dabei *26 Quellen auf Inserate von Tageszeitungen und Online-Börsen nach ihren einzelnen Bestandteilen aus* (Stand Juni 2017), wobei hier die Nutzung kostenpflichtig ist.
+
+Mit statistischer Software und dem Internet kann man sich auch selbst ein Bild der aktuellen Mietpreise verschaffen! Benötigt wird dazu RStudio, ein Internetbrowser und eine Webseite mit Wohnungsinseraten wie bspw. [immobilienscout24](https://www.immobilienscout24.de/). Mit dem [CSS Selector Gadget](http://selectorgadget.com) - ein Point-and-Click-Tool zum Identifizieren von sog. *HTML-Nodes* - und dem R-Paket `rvest` können Inhalte von Webseiten extrahiert und verarbeitet werden.
+
+*Hinweis*: Da die Struktur einer Webseite im Zeitverlauf selten statisch ist, kann die fehlerfreie Funktion des Codes nur durch kontinuierliche Pflege gewährleistet werden. Außerdem kann der Betreiber der Webseite das (automatisierte) Extrahieren von Inhalten ausschließen. Nähere Informationen dazu findet man gewöhnlich in der Datei *robots.txt* der jeweiligen Webseite.
+
+## **Datenbeschaffung**
+ 
+Die Webseite immobilienscout24 bietet eine Suchleiste, mit welcher bspw. innerhalb einer Stadt oder einer Postleitzahl Wohnungsinserate gefunden werden können. Auf einer Ergebnisseite befinden sich dann mehrere Inserate mit den wichtigsten Informationen zur Wohnung (Preis, Größe, ...). Um eine Seite der Suchergebnisse anzusteuern, muss zunächst die `stadt` und das zugehörige `bundesland` definiert werden. Weiterhin ist es ratsam die Seitenanzahl der Suchergebnisse zu prüfen und festzulegen, damit das Extrahieren der Inserate nicht ins Leere läuft. 
+
+``` {r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE} 
+stadt <- "Wiesbaden" 
+
+bundesland <- "Hessen"
+
+seiten <- 20 
+```
+
+Als Nächstes werden die für die Suche relevanten URLs aus den vorherigen Eingaben generiert. Auch legt man Objekte fest, in denen die extrahierten Inhalte gespeichert werden sollen. Der gesamte Inhalt einer Seite der Suchergebnisse wird in der Liste `seite` gespeichert. Ich möchte später aus den Anzeigen Informationen über `titel`, `lage`, `miete` und `groesse` der Wohnung gewinnen und lege für jedes Merkmal eine leere Liste an.
+
+``` {r eval=FALSE} 
+# URL Vektor
+url <- rep(0, seiten)
+
+# Stamm Adresse
+stamm <- "https://www.immobilienscout24.de/"
+
+# Suchergebnisse Seite 1
+url[1] <- paste0(stamm,"Suche/S-2/Wohnung-Miete/", bundesland, "/",stadt) 
+
+# Suchergebnisse Seite 2 bis Seite 20
+for (x in 2:seiten){
+  url[x] <- paste0(stamm,"Suche/S-2/P-", x, "/Wohnung-Miete/", bundesland, "/",stadt)
+}
+
+# URL-Inhalt extrahieren und in Liste speichern 
+seite <- list()
+for (j in 1:seiten){
+  seite[[j]] <- xml2::read_html(url[j])
+}
+
+# Zu extrahierende Merkmale festlegen
+titel <- list()
+lage <- list()
+miete <- list()
+groesse <- list()
+```
+
+Nun folgt eine Schleife, welche pro Durchlauf eine Seite der Suchergebnisse extrahiert. Ich habe vorher mit dem CSS Selector Gadget alle relevanten *HTML-Nodes* identifiziert, die ich nun gezielt ansteuere. Bspw. versteckt sich hinter der *Node* `.data-ng-non-bindable` der Titel des Wohnungsinserates.
+
+``` {r eval=FALSE} 
+for (i in 1:seiten) {
+  
+  # Titel des Inserats
+  titel[[i]] <- seite[[i]] %>%
+  html_nodes(".data-ng-non-bindable") %>%
+  html_text()
+  
+  titel[[i]] <- gsub("NEU","", titel[[i]])
+  
+  # Adresse
+  lage[[i]] <- seite[[i]] %>%
+    html_nodes(".link-underline") %>%
+    html_text()
+  
+  lage[[i]] <- gsub("\n","", lage[[i]])
+  lage[[i]] <- trimws(lage[[i]])
+  lage[[i]] <- lage[[i]][-c(1,2,3)]
+  
+  # Kaltmiete
+  miete[[i]] <- seite[[i]] %>%
+    html_nodes(".result-list-entry__primary-criterion:nth-child(1) .font-line-xs") %>%
+    html_text() %>%
+    strtrim(100)
+  
+  miete[[i]] <- gsub("\n","", miete[[i]])
+  miete[[i]] <- trimws(miete[[i]])
+  miete[[i]] <- gsub("€","", miete[[i]])
+  miete[[i]] <- gsub("\\.","", miete[[i]])
+  miete[[i]] <- gsub("\\,",".", miete[[i]])
+  miete[[i]] <- as.numeric(miete[[i]])
+  
+  # Groesse
+  groesse[[i]] <- seite[[i]] %>%
+    html_nodes(".result-list-entry__primary-criterion:nth-child(2) .font-line-xs") %>%
+    html_text() %>%
+    strtrim(100)
+  
+  groesse[[i]] <- gsub("\n"," ", groesse[[i]])
+  groesse[[i]] <- trimws(groesse[[i]])
+  groesse[[i]] <- gsub("([0-9]+).*","\\1",groesse[[i]])
+  groesse[[i]] <- as.numeric(groesse[[i]])
+}
+```
+
+## **Datenaufbereitung**
+
+Die Listen werden nun in Vektoren umgewandelt und dann in einem *Data Frame* zusammengefasst. Aus den Merkmalen `groesse` und `miete` bilde ich den Quotienten `preis_qm` und entferne, sofern vorhanden, fehlende Angaben. Anschließend erstelle ich das Merkmal `price_cat`, welches für jedes Inserat eine Preiskategorie angibt.
+
+``` {r eval=FALSE} 
+# Listen in Vektoren umwandeln
+titel <-unlist(titel)
+lage <- unlist(lage)
+miete <- unlist(miete)
+groesse <- unlist(groesse)
+
+# Neues Merkmal
+preis_qm <- miete/groesse
+
+# Data Frame erstellen
+daten <- data.frame(titel, lage, miete, groesse, preis_qm)
+
+# Fehlende Werte entfernen
+daten <- subset(daten, (!is.na(daten$preis_qm)))
+
+# Preiskategorie
+daten$pricecat[daten$preis_qm>=6  & daten$preis_qm < 8]  = 1
+daten$pricecat[daten$preis_qm>=8  & daten$preis_qm < 10] = 2
+daten$pricecat[daten$preis_qm>=10 & daten$preis_qm < 12] = 3
+daten$pricecat[daten$preis_qm>=12 & daten$preis_qm < 15] = 4
+daten$pricecat[daten$preis_qm>=15 & daten$preis_qm < 20] = 5
+daten$pricecat[daten$preis_qm>=20] = 6
+
+daten$pricecat <- factor(daten$pricecat, 
+                         levels=c("1","2", "3","4","5","6"), 
+                         labels=c("6 bis 8 Euro pro Quadratmeter",
+                                  "8 bis 10 Euro pro Quadratmeter", 
+                                  "10 bis 12 Euro pro Quadratmeter",
+                                  "12 bis 15 Euro pro Quadratmeter",
+                                  "15 bis 20 Euro pro Quadratmeter",
+                                  "mehr als 20 Euro pro Quadratmeter"))
+```
+
+## **Datenanalyse**
+
+Am 18.06.2017 konnte ich für Wiesbaden 400 Inserate extrahieren. Unten ist ein Auszug aus diesem Datensatz dargestellt.
+
+``` {r blick_wi, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(daten_wi[1:20, c(1:5)]) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = F, font_size = 10) %>%
+  scroll_box(width = "100%", height="300px")
+```
+
+Für Mainz habe ich 332 Inserate erhalten.
+
+``` {r blick_mz, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(daten_mz[1:20, c(1:5)]) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = F, font_size = 10) %>%
+  scroll_box(width = "100%", height="300px")
+```
+
+Mit dem R Paket `ggmap` werde ich nun die Mietpreise visualisieren. Zunächst mussten die Adressen der Inserate mit der Geocoding API von Google georeferenziert werden. Zum Teil enthalten die Inserate nur ungenaue Adressangaben, wie den Stadtteil mit der zugehörigen Postleitzahl. An allen Punkten, die die API lediglich mit der Postleitzahl assoziiert, entsteht so eine zu hohe Konzentration von Angeboten. 
+
+Für die grafische Darstellung verwende ich die Funktion `stat_bin2d()` aus dem R-Paket `ggplot2`, welche Beobachtungen innerhalb von Rechtecken zusammenfasst und eine Hitzekarte erstellt. Eine Konzentration von Inseraten mit niedriger bzw. hoher Kaltmiete wird durch die Farbe Gelb bzw. Rot dargestellt. 
+
+Unten befindet sich eine Karte mit den Kaltmieten der Angebote innerhalb Wiesbadens. Besonders im Norden von Wiesbaden (Nordost, Sonnenberg) sowie im Süden (Künstlerviertel, Südost) ist Wohnraum relativ teuer. In zentraler Lage (Mitte, Westend) sind die Wohnungen hingegen durchschnittlich etwas günstiger.
+
+``` {r karte1_wi, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+# Karte von Wiesbaden
+karte_wi = qmap("Wiesbaden", zoom = 12, color = "bw",
+                source = "stadia", maptype = "stamen_toner_background",
+                darken = c(.3, "#BBBBBB"))
+
+# Heatmap
+karte_wi + 
+  stat_bin2d(
+    aes(x = long, y = lati, fill = as.factor(pricecat)),
+    size = 1, bins = 20, alpha = 0.4, data = daten_wi
+    ) +
+  scale_fill_brewer(type = "seq", palette = "YlOrRd") +
+  labs(caption = paste0(
+    dim(daten_wi)[1],
+    " extrahierte Inserate; Quelle: immobilienscout24.de")
+    ) + 
+  guides(fill = guide_legend(title="Kaltmiete"))
+```
+
+*****
+
+Es folgt die gleiche Darstellung für Mainz. Hier ist das Mietniveau in der Innenstadt (Neu- und Altstadt) besonders hoch. In den Randbezirken ist es dagegen im Durchschnit etwas günstiger.
+
+``` {r karte1_mz, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+# Karte von Mainz
+karte_mz = qmap("Mainz", zoom = 12, color = "bw",
+                source = "stadia", maptype = "stamen_toner_background",
+                darken = c(.3, "#BBBBBB"))
+
+# Heatmap
+karte_mz + 
+  stat_bin2d(
+    aes(x = long, y = lati, fill = as.factor(pricecat)),
+    size = 1, bins = 20, alpha = 0.4, data = daten_mz) +
+  scale_fill_brewer(type = "seq", palette = "YlOrRd") +
+  labs(caption = paste0(
+    dim(daten_mz)[1],
+    " extrahierte Inserate; Quelle: immobilienscout24.de")
+    ) + 
+  guides(fill = guide_legend(title="Kaltmiete"))
+```

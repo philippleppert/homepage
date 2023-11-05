@@ -1,0 +1,260 @@
+---
+title: "Datenanalyse vor Versicherungsabschluss?"
+date: 2018-03-17
+format: hugo
+slug: datenanalyse-versicherung
+categories: 
+  - R
+  - Finanzen
+  - Analyse
+summary: "Am Beispiel einer Zahnzsatzversicherung möchte ich überprüfen, ob es sich lohnt die Konditionen verschiedener Versicherungsanbieter grafisch gegenüberzustellen."
+---
+
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", collapse = TRUE)
+
+# Benötigte R-Pakete
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+# 1. Allgemeine Tarifinformationen
+Tarife <- read_delim("data/zzv_tarife.csv", 
+                     delim=";", locale=locale(decimal_mark = ",", encoding = "latin1"))
+
+# %-Zahnersatz zu Faktor konvertieren
+Tarife$Zahnersatz <- as.factor(Tarife$Zahnersatz)
+
+# 2. Beitragsentwicklung der Tarife zwischen 20. und 70. Lebensjahr
+Beitrag.Wide <- read_delim("data/zzv_beitraege.csv",
+                           delim=";", locale=locale(decimal_mark = ","))
+
+# ggplot Layout festlegen
+theme_set(theme_bw())
+```
+
+Letztes Jahr hatte ich in einer Ausgabe der [Stiftung Warentest](https://www.test.de/) einen Artikel über *Zahnzusatzversicherungen* gelesen. Überzeugt von der Notwendigkeit dieser Versicherung, wollte ich mich mit einigen der im Test als gut befundenen Tarifen etwas genauer auseinandersetzen. Die Suche nach Details zu den einzelnen Tarifen gestaltete sich allerdings ziemlich aufwendig. Besonders gut versteckt sind dabei oft, die nach dem Alter des Versicherungsnehmers gestaffelten Beitragstabellen. Auch auf Wikipedia findet sich zu Zahnzusatzversicherungen folgender Eintrag:
+
+> Auf dem deutschen Versicherungsmarkt gibt es über 300 unterschiedliche Zahnzusatzversicherungstarife. 
+> Die Ausgestaltung der Tarifdetails ist von Versicherer zu Versicherer so unterschiedlich, dass Vergleiche der Tarifgestaltungen für den Laien, aber auch für den Versicherungsmakler höchst schwierig sind.
+
+Klare Worte von denen ich mich erst einmal nicht entmutigen lassen wollte! Bevor ich mit den Ausführungen zu meiner Analyse beginne, möchte ich darauf hinweisen, dass man die Entscheidung für oder gegen eine bestimmte Verischerung in erster Linie nach den eigenen Bedürfnissen ausrichten sollte. So kann bspw. nicht *nur* der monatliche Versicherungsbeitrag als Kriterium entscheident sein, wenn der Tarif dann eine bestimmte Komponente ausschließt, die für einen selbst besonders relevant ist. Andererseits unterscheidet sich die Leistung mancher Tarife auf den ersten Blick so wenig voneinander, dass auch die Kostenseite nicht vernachlässigt werden sollte. Ein anfänglich günstiger Tarif, besonders wenn man ihn in jungen Jahren abschließt, kann nach einigen Jahren bereits ziemlich teuer werden. Andere Tarife sind wiederum von Anfang an etwas teurer und steigen im Alter nur noch moderat an. Wie unterscheiden sich nun die Tarife im Preis für verschiedene Laufzeiten, bei sonst gleicher oder ähnlicher Leistung, voneinander?
+
+## **Datenbeschaffung**
+
+Ich habe zunächst die Tarifdetails verschiedener Anbieter im Internet recherhiert und die gefunden Informationen in eine Excel-Tabelle transferiert. Ein Tabellenblatt enthält dabei Allgemeines zum Tarif sowie das jeweilige Leistungsspektrum und ein weiteres Tabellenblatt die gestaffelten Beiträge nach Alter des Versicherungsnehmers pro Tarif. 
+
+## **Datenaufbereitung**
+
+Meine recherhierten Informationen habe ich dann in zwei separaten .CSV Dateien gespeichert und in RStudio eingelesen. Unten finden sich allgemeine Informationen und das Leistungsspektrum der  Versicherungstarife. Zudem habe ich versucht die Tarife anhand ihrer Leistung zu gruppieren (`Gruppe`). Weiterhin finden sich auch Informationen zu Sonderleistungen (`Veneers`) und bis zu welcher Kostenhöhe die Behandlung erstattungsfähig ist (`Grenze_Jahr_`). 
+
+```{r allgemeine_infos, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(Tarife) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+*****
+
+In der zweiten .CSV Datei habe ich die Beitragsentwicklung aller Tarife zwischen dem 20. und 70. Lebensjahr eingetragen.
+
+```{r daten_wide, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(Beitrag.Wide) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+Die Beiträge befinden sich im *Wide-Format* - also jede Spalte enthält einen Tarif mit dem Beitragssatz zum jeweiligen Alter der Versicherungsnehmerin. Für die weitere Analyse wandle ich den Datensatz ins *Long-Format* um. Weiterhin generiere ich eine Spalte für den jährlich fälligen Beitrag und ergänze den Datensatz mit den Beiträgen um einige allgemeine Tarifinformationen.
+
+```{r reshape, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+# Reshapen der Beitrage Wide to Long
+Beitrag.Long <- gather(Beitrag.Wide, -Alter, 
+                              key = "Tarif", 
+                              value = "Beitrag")
+
+# Jahresbeitrag generieren
+Beitrag.Long <- Beitrag.Long %>%
+  mutate(Beitrag_Jahr = Beitrag*12) 
+
+# Allgemeine Tarifmerkmale anspielen
+Tarife.Beitrag <- Tarife %>%
+  select(Versicherer, Tarif, Gruppe, Zahnersatz) %>%
+  left_join(Beitrag.Long, by="Tarif") %>%
+  as_tibble()
+```
+
+Die Daten sehen nun so aus: 
+
+```{r daten_long, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(Tarife.Beitrag[1:100,]) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+*****
+
+Besonders relevant ist die Entwicklung der Beiträge im Zeitverlauf. Dafür wird der durchschnittliche Beitrag über eine gegebene Laufzeit berechnet. Man benötigt für diese Rechnung das Alter des Versicherungsnehmers bei Abschluss der Versicherung und eine maximale Altersgrenze - also ab wann die Versicherung ausläuft. Einige Tarife legen hier selbst eine Grenze fest. Ich nehme an, dass ich nach meinem 65. Geburtstag die Versicherung auflöse.
+
+```{r mean_beitrag_laufzeit, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+# Eingaben
+alter_eintritt <- 27 # Eintrittsalter
+alter_grenze <- 65 # Austrittsalter
+
+# Berechnung: durchschnittlicher Monatlicher Beitrag über Versicherungszeitraum
+Vers.Dauer.Mittel <- list()
+for (i in alter_eintritt+1:alter_grenze){
+  alter_austritt <- i
+  Vers.Dauer.Mittel[[i]] <- Beitrag.Long %>%
+    filter(Alter >= alter_eintritt & Alter <= alter_austritt) %>%
+    group_by(Tarif) %>%
+    summarise(Beitrag_Durchschnitt = round(mean(Beitrag), digits=2)) %>%
+    mutate(Laufzeit = alter_austritt - alter_eintritt) 
+}
+
+# Liste zu Data Frame konvertieren
+Vers.Dauer.Mittel <- bind_rows(Vers.Dauer.Mittel)
+
+# Allgemeine Tarifmerkmale anspielen
+Vers.Dauer.Mittel <- Tarife %>%
+  select(Versicherer, Tarif, Gruppe, Zahnersatz) %>%
+  left_join(Vers.Dauer.Mittel, by="Tarif")
+```
+
+Als nächstes wird die gleiche Herangehensweise zur Ermittlung des kumulativen Beitrags über die Laufzeit verwendet - also wie hoch die Gesamtsumme der gezahlten Versicherungsbeiträge für eine bestimmte Laufzeit ist.
+
+```{r kumulativ_beitrag_laufzeit, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+# Eingaben
+alter_eintritt <- 27
+alter_grenze <- 65
+
+# Berechnung: Kumulativer Jahresbeitrag über Versicherungszeitraum
+Vers.Dauer.Kumulativ <- list()
+for (i in 28:alter_grenze){
+  alter_austritt <- i
+  Vers.Dauer.Kumulativ[[i]] <- Beitrag.Long %>%
+    filter(Alter >= alter_eintritt & Alter <= alter_austritt) %>%
+    group_by(Tarif) %>%
+    summarise(Beitrag_Gesamt = sum(Beitrag_Jahr)) %>%
+    mutate(Laufzeit = alter_austritt - alter_eintritt) 
+}
+
+# Liste zu Data Frame konvertieren
+Vers.Dauer.Kumulativ <- bind_rows(Vers.Dauer.Kumulativ)
+
+# Allgemeine Tarifmerkmale anspielen
+Vers.Dauer.Kumulativ <- Tarife %>%
+  select(Versicherer, Tarif, Gruppe, Zahnersatz) %>%
+  left_join(Vers.Dauer.Kumulativ, by="Tarif")
+```
+
+## **Datenanalyse**
+
+Unten findet man eine Übersicht wie viele Tarife sich in den von mir erstellten Leistungsgruppen befinden.
+
+```{r tabelle, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(table(Tarife$Gruppe, dnn = c("Leistungsgruppe"))) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10)
+```
+
+Ich werde mich zunächst auf Tarife beschränken, welche ausschließlich den Zahnersatz abdecken, da dies von der Stiftung Warentest als wichtigste Leistung angesehen wird. Es gibt auch Premium-Tarife, welche einen zusätzlichen Leistungsumfang wie Prophylaxe und Zahn- oder Wurzelbehandlung beinhalten. Diese sind aufgrund des Leistungsumfangs dann teurer. Da der Zahnersatz die größte potentielle Kostenposition darstellt, will ich nur diese versichern. Im ersten Plot unten ist eine Gegenüberstellung bzgl. der Beitragsentwicklung laut Angabe in der Tabelle des Versicherers dargestellt. Mit zunehmendem Lebensalter steigen die Beiträge an. Bei allen Tarifen geschieht dies stufenweise, sodass die Beiträge einige Jahre konstant sind, bevor sie sprunghaft ansteigen.
+
+```{r tarif_plot, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+Tarife.Beitrag %>%
+  mutate(Zahnersatz = fct_relevel(Zahnersatz,
+                                  "70%","80%","85%","90%","100%")) %>%
+  filter(Gruppe == "Zahnersatz") %>% 
+  ggplot(aes(x = Alter, y = Beitrag, color = Tarif)) +
+  geom_line() +
+  facet_grid(. ~ Zahnersatz) +
+  scale_y_continuous(breaks = c(0,10,20,30,40,50), limits = c(0,50)) +
+  labs(x = "Alter des Versicherungsnehmers",
+       y = "Monatlicher Beitragssatz in €") +
+  theme(legend.position = "bottom", legend.direction = "horizontal")
+```
+
+*****
+
+In der nächsten Darstellung sieht man die durchschnittliche Beitragslast über die Laufzeit. Bei den Tarifen mit 100%-Kostenerstattung erkennt man, dass der `dentZE.100` Tarif der Halleschen Versicherung bis zu einer Laufzeit von knapp 23 Jahren günstiger ist als der `MediZ-Premium` Tarif der Gothaer Versicherung. Über diese Laufzeit hinaus ist jedoch der Tarif der Halleschen Versicherung teurer. Bei den Tarifen mit 90%-Kostenerstattung ist der Tarif MediZ-Plus der Gothaer Versicherung am günstigsten.
+
+```{r mittel_plot, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+Vers.Dauer.Mittel %>%
+  mutate(Zahnersatz = fct_relevel(Zahnersatz,
+                                  "70%","80%","85%","90%","100%")) %>%
+  filter(Gruppe == "Zahnersatz") %>% 
+  ggplot(aes(x=Laufzeit, y=Beitrag_Durchschnitt, color=Tarif)) + 
+  geom_line() +
+  facet_grid(. ~ Zahnersatz) +
+  scale_x_continuous(breaks = c(1,5,10,15,20,25,30,35,40), limits = c(1,40)) +
+  scale_y_continuous(breaks = c(0,5,10,15,20,25,30), limits = c(1,30)) +
+  labs(x = "Versicherungszeitraum",
+       y = "Durchschnittlicher Monatsbeitrag in €") +
+  theme(legend.position = "bottom", legend.direction = "horizontal")
+```
+
+*****
+
+Unten sieht man die kumulative Beitragslast, die anfallen würde, wenn man über die jeweilige Laufzeit versichert ist. Hier kann man sich orientieren, welche Kosten die Versicherung für eine bestimmte Laufzeit verursacht. Die Tarife mit 100%-Kostenerstattung verschlingen bspw. nach 12 Jahren Versicherungszeit gut 2.500 €.
+
+```{r kumulativ_plot, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+Vers.Dauer.Kumulativ %>%
+  mutate(Zahnersatz = fct_relevel(Zahnersatz,
+                                  "70%","80%","85%","90%","100%")) %>%
+  filter(Gruppe == "Zahnersatz") %>%
+  ggplot(aes(x=Laufzeit, y=Beitrag_Gesamt, color=Tarif)) + 
+  geom_line() +
+  facet_grid(. ~ Zahnersatz) +
+  scale_x_continuous(breaks = c(1,5,10,15,20,25,30,35,40), limits = c(1,40)) +
+  scale_y_continuous(breaks = c(500,2500,5000,7500,10000,12500), 
+                     limits = c(1,14000), 
+                     labels = scales::dollar_format(big.mark = ".", decimal.mark = ",",
+                                                    suffix = "€", prefix = "")) +
+  labs(x = "Versicherungszeitraum",
+       y = "Kumulativer Jahresbeitrag in €") +
+  theme(legend.position = "bottom", legend.direction = "horizontal")
+```
+
+*****
+
+Nun folgt ein Vergleich der reinen Zahnersatz-Tarife mit dem Premium-Segment. Ich habe dafür innerhalb der jeweiligen Leistungsgruppe den Mittelwert aller Tarife mit der gleichen prozentualen Kostenerstattung gebildet. Man erkennt, dass man für Prophylaxe und Zahnbehandlung zwischen 10 € und 15 € mehr im Monat zahlen muss. Ob sich dies lohnt, hängt bspw. davon ab, ob die eigene Krankenversicherung schon Prophylaxe-Leistungen übernimmt. Die Versicherung von Zahnbehandlung kann bspw. sinnvoll sein, wenn aufgrund von Vorerkrankungen mit häufigen Eingriffen an den Zähnen zu rechnen ist.
+
+```{r vergleich, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+Tarife.Beitrag %>%
+  mutate(Zahnersatz = fct_relevel(Zahnersatz,
+                                  "70%","80%","85%","90%","100%")) %>%
+  filter(Gruppe %in% c("Zahnersatz, Zahnbehandlung, Prophylaxe","Zahnersatz")) %>% 
+  group_by(Alter, Gruppe, Zahnersatz) %>%
+  summarise(mean_beitrag = mean(Beitrag, na.rm=T)) %>%
+  ggplot(aes(x = Alter, y = mean_beitrag, color = Gruppe)) +
+  geom_line() +
+  facet_grid(. ~ Zahnersatz) +
+  scale_y_continuous(breaks = c(0,10,20,30,40,50,60,70), limits = c(0,70)) +
+  labs(x = "Alter des Versicherungsnehmers",
+       y = "Monatlicher Beitragssatz in €",
+       color = "Leistungsgruppe") +
+  theme(legend.position = "bottom", legend.direction = "horizontal")
+```
+
+**** 
+
+Unten findet man die durchschnittliche Beitragslast getrennt nach den von mir erstellten Leistungsgruppen.
+
+```{r scatter, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+Tarife.Beitrag %>%
+  group_by(Alter, Gruppe) %>%
+  summarise(mean_Beitrag = mean(Beitrag)) %>%
+  ggplot(aes(x = Alter, y = mean_Beitrag, color = Gruppe)) +
+  geom_point() +
+  labs(x = "Alter des Versicherungsnehmers",
+       y = "Durchschnittlicher Beitragssatz in € nach Tarifgruppe",
+       color = "Leistungsgruppe") +
+  theme(legend.position = "bottom", legend.direction = "horizontal")
+```
+
+*****
+
+Die Bundesanstalt für Finanzdienstleistungsaufsicht (BaFin) veröffentlicht jährlich eine [Beschwerdestatistik](https://www.bafin.de/DE/PublikationenDaten/Statistiken/Beschwerde/beschwerdestatistik_node.html) von Versicherungsunternehmen unterteilt nach der jeweiligen Versicherungsart. Diese beinhaltet die absolute Anzahl an eingegangen Beschwerden sowie die Anzahl der versicherten Personen. So kann man sich zusätzlich ein Bild über den Versicherungsdienstleister verschaffen, indem man bspw. die Anzahl Beschwerden pro 100.000 Versicherten berechnet und vergleicht.

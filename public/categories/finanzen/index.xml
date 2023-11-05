@@ -25,5 +25,23 @@
       <description>Wie kann man vor dem Kauf eines Gebrauchtwagens den Markt analysieren?</description>
     </item>
     
+    <item>
+      <title>Datenanalyse vor Versicherungsabschluss?</title>
+      <link>https://philippleppert.eu/blog/datenanalyse-versicherung/</link>
+      <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/datenanalyse-versicherung/</guid>
+      <description>Am Beispiel einer Zahnzsatzversicherung möchte ich überprüfen, ob es sich lohnt die Konditionen verschiedener Versicherungsanbieter grafisch gegenüberzustellen.</description>
+    </item>
+    
+    <item>
+      <title>ETFs im Datencheck</title>
+      <link>https://philippleppert.eu/blog/datenanalyse-etfs/</link>
+      <pubDate>Sat, 23 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/datenanalyse-etfs/</guid>
+      <description>Eine grafische und interaktive Auswertung von ETFs im Jahr 2017.</description>
+    </item>
+    
   </channel>
 </rss>

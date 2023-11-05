@@ -1,0 +1,171 @@
+---
+title: "Wetter in Schottland"
+date: "2019-04-27"
+format: hugo
+slug: schottland-wetter
+categories: 
+  - R
+  - Freizeit
+  - Analyse
+summary: "Bald steht unsere Rundreise durch Schottland an: auf welches Wetter können wir uns anhand zurückliegender Wetterdaten einstellen?"
+---
+
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", collapse = TRUE)
+
+# Benötigte R-Pakete
+library(tidyverse)
+library(ggmap)
+library(ggrepel)
+library(knitr)
+library(kableExtra)
+
+# API Key registrieren
+register_google(key = gmaps_api_key)
+register_stadiamaps(stadia_api_key)
+
+# ggplot Layout festlegen
+theme_set(theme_bw())
+```
+
+Im Juni steht meine lang ersehnte Rucksackreise nach Schottland an; höchste Zeit sich etwas genauer mit dem dortigen Wetter auseinanderzusetzen. Einschlägige Tourismus-Webseiten verraten mir: *Scotland is famous for having four seasons in one day!* - die Regenkleidung muss also eingepackt werden. Auf meine Wintermütze würde ich dagegen schon gerne verzichten - es ist ja schließlich Sommer?!
+
+## **Datenbeschaffung**
+
+Auf der Webseite des nationalen meteorologischen Dienstes des Vereinigten Königreichs habe ich [historische Wetterdaten](https://www.metoffice.gov.uk/research/climate/maps-and-data/historic-station-data) ausfindig machen können. Ich habe dabei nur Stationen berücksichtigt, die sich in Schottland befinden. 
+
+## **Datenaufbereitung**
+
+Pro Wetterstation gibt es eine *.txt* Datei mit historischen Daten. Diese werden mit der Funktion `read_table()` aus dem R-Paket `readr` eingelesen. Fehlende Werte identifziere ich mit dem Arumgent `na =`. Mit dem Argument `col_types =` können die Formate der Spalten vorab festgelegt werden. Da alle Dateien den gleichen Aufbau bzgl. der Spalten haben, verwende ich die Funktion `map_dfr()` aus dem R-Paket `purrr` um alle Dateien *in einem Rutsch* einzulesen. Damit die Daten unterscheidbar bleiben, erstelle ich einen Identifikator für jede Wetterstation.
+
+```{r daten_einlesen, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+data_weather <-
+  map_dfr(
+    c("dunstaffnage", "wickairport", 
+      "nairn", "lerwick","braemar"),
+    ~ read_table(paste0("data/",., "data.txt"), 
+                 na = "---", col_types = "iiddid"), 
+    .id = "source") %>%
+  mutate(station = case_when(
+    source == "1" ~ "Dunstaffnage",
+    source == "2" ~ "Wick Airport",
+    source == "3" ~ "Nairn",
+    source == "4" ~ "Lerwick",
+    source == "5" ~ "Braemar",
+  )) %>%
+  select(-c(source, af))
+```
+
+Der Datensatz enthält Angaben zum Datum der Aufzeichnung (Jahr und Monat), der durchschnittlichen Tiefst- und Höchsttemperatur sowie eine Angabe zur durchschnittlichen Niederschlagsmenge. Die verfügbaren Zeiträume der Wetterangaben unterscheiden sich von Station zu Station. Für die Wetterstation `Wick Airport` liegen bspw. Daten zurück bis 1914 vor. Damit dieser Umstand im Datensatz und bei der Analyse besser ersichtlich ist, verwende ich die Funktion `complete()` aus dem R-Paket `tidyr`, um nicht vorliegende Wetterangaben einer Station mit `NA` Werten zu füllen und so die verfügbaren Zeitangaben über alle Stationen hinweg zu harmonisieren.
+
+```{r na_fill, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+data_weather <- complete(data_weather, station, nesting(yyyy, mm))
+```
+
+Unten findet man einen Ausschnitt des Datensatzes.
+
+```{r einblick, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(filter(data_weather, station == "Wick Airport")) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = T, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+## **Datenanalyse**
+
+Bevor ich mit der Auswertung der Daten beginne, erstelle ich eine Karte mit den Standorten der Wetterstationen.
+
+```{r stationen_karte, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+# Koordinaten der Stationen
+stations <- tibble(
+  station = unique(data_weather$station),
+  longitude = c(-3.396, -5.439, -1.183, -3.821,-3.088),
+  latitude = c(57.006, 56.451, 60.139, 57.593, 58.454)
+)
+
+# Basiskarte Schottland
+Get_Map_Country <- get_map(location = "Scotland", zoom = 5, maptype = "stamen_toner_background", 
+                           filename = "ggmapTemp", color = "bw", source = "stadia")
+
+karte_schottland <- ggmap(ggmap = Get_Map_Country)
+
+
+# Standorte einzeichnen
+karte_schottland + 
+  geom_point(data=stations, aes(x =longitude, y=latitude), 
+             shape = 19 ,size = 2, color = "red") +
+  labs(title = "Standorte der Wetterstationen", 
+       x = "Längengrad", 
+       y = "Breitengrad") + 
+  geom_label_repel(data = stations, 
+                   aes(x = longitude, y = latitude, label = station), 
+                 fill = "white", box.padding = unit(.4, "lines"), 
+                 label.padding = unit(.15, "lines"))
+```
+
+*****
+
+Da wir uns im Juni in Schottland aufhalten, interessiert mich zunächst besonders das Wetter in diesem Monat. Zunächst schaue ich mir die Wetterdaten ab dem Jahr 2000 bis heute an. Auf Shetland (Lerwick) ist es ziemlich frisch im Juni - hier lohnt es sich wohl einen dickeren Pullover einzupacken!
+
+```{r plot1, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+data_weather %>%
+  filter(mm == 6 & yyyy > 2000) %>%
+  ggplot(data = ., aes(x = yyyy)) +
+  geom_line(aes(y=tmax, color="tmax")) +
+  geom_line(aes(y=tmin, color="tmin")) +
+  scale_x_continuous(breaks = c(2000,2005,2010,2015,2020), limits = c(2000,2020)) +
+  scale_color_manual(values=c("#8b0000", "#00008b"), labels=c("Max","Min")) + 
+  facet_grid(. ~ station) +
+  labs(y = "Durchschnittliche Temperatur",
+       x = "",
+       color = "",
+       title = "Juni Temperaturen: 2000-2019") +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+*****
+
+Zur Sicherheit erstelle ich die Grafik erneut und verwende nun alle verfügbaren Zeiträume für den Monat Juni. Mit der Funktion `geom_smooth()` kann man eine Trendlinie einzeichnen. Nun ist es sicher - mit mehr als 20 Grad im Juni brauche ich in Schottland nicht rechnen. Die kurze Hose bleibt also zu Hause!
+
+```{r plot2, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+data_weather %>%
+  filter(mm == 6) %>%
+  ggplot(data = ., aes(x = yyyy)) +
+  geom_line(aes(y=tmax, color="tmax")) +
+  geom_line(aes(y=tmin, color="tmin")) +
+  geom_smooth(aes(y=tmax, color="tmax"), se = F) +
+  geom_smooth(aes(y=tmin, color="tmin"), se = F) +
+  scale_x_continuous(breaks = c(1910,1932,1954,1976,1998,2020), limits = c(1910,2020)) +
+  scale_color_manual(values=c("#8b0000", "#00008b"), labels=c("Max","Min")) + 
+  facet_grid(. ~ station) +
+  labs(y = "Durchschnittliche Temperatur",
+       x = "",
+       color = "",
+       title = "Juni Temperaturen: 1914-2019") +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+*****
+
+Nun betrachte ich die durchschnittliche Niederschlagsmenge im Juni über den gesamten verfügbaren Zeitraum. Für jede Station berechne ich dabei auch den durchschnittlichen Niederschlagswert über alle verfügbaren Jahre und zeichne diesen als horizontale Linie in die Darstellung ein. Besonders an der schottischen Westküste gibt es im Juni viel Regen.  
+
+```{r plot3, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+means <- 
+  data_weather %>%
+  filter(mm == 6) %>%
+  group_by(station) %>%
+  summarise(mean_rain = mean(rain, na.rm = T))
+
+data_weather %>%
+  filter(mm == 6) %>%
+  ggplot(data = ., aes(x = yyyy, y = rain)) +
+  geom_bar(stat="identity",fill = "#00468b") +
+  geom_hline(data = means, aes(yintercept = mean_rain)) +
+  facet_grid(. ~ station) +
+  scale_x_continuous(breaks = c(1910,1932,1954,1976,1998,2020), limits = c(1910,2020)) +
+  labs(x = "",
+       y = "Durchschnittliche Niederschlagsmenge in mm",
+       title = "Juni Niederschläge: 1914-2019") +
+  theme(axis.text.x = element_text(angle = 90))
+```

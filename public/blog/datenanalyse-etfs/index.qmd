@@ -1,0 +1,215 @@
+---
+title: "ETFs im Datencheck"
+date: 2017-09-23
+format: hugo
+slug: datenanalyse-etfs
+categories: 
+  - R
+  - Finanzen
+  - Webscraping
+summary: "Eine grafische und interaktive Auswertung von ETFs im Jahr 2017."
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", collapse = TRUE)
+
+# Benötigte R-Pakete
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(plotly)
+library(klippy)
+
+# ggplot Layout festlegen
+theme_set(theme_bw())
+
+# Daten einlesen
+etf_data <- readRDS("data/ing_etf_daten.rds")
+```
+
+In Zeiten von Niedrigzinspolitik werden [börsengehandelte Fonds](https://de.wikipedia.org/wiki/B%C3%B6rsengehandelter_Fonds) (ETFs) schon länger als Anlagemöglichkeit für die Sparerin vorgeschlagen. Am Markt gibt es mittlerweile eine hohe Anzahl Fonds mit verschiedensten Anlageausrichtungen und Marktabdeckungen. Auch von [Finanzratgebern](https://www.finanztip.de/indexfonds-etf/) werden ETFs gegenüber aktiv gemanagten Fonds und Aktien dem Kleinanleger empfohlen - besonders aufgrund der niedrigen laufenden Kosten. Wie so oft gibt es gegenüber diesem Finanzinstrument allerdings auch begründete [Vorbehalte](https://www.zeit.de/2017/38/etfs-indexfonds-aktien-finanzmarkt-banken-geldanlage).
+
+Wie gestaltet sich aktuell der Markt für ETFs? Welche Anbieter sind besonders dominant? Und wie unterscheidet sich die Performance von ETFs, wenn nur noch ein Algorithmus über die Anlagestrategie entscheidet?
+
+## **Datenbeschaffung**
+
+Zunächst habe ich mir einen Überblick über die aktuell angebotenen ETFs verschafft. Die Deutsche Börse bietet über den Handelsplatz [XETRA](https://www.xetra.com/xetra-en/instruments/instruments) hierzu eine Excel-Tabelle an (Stand: September 2017). Ich habe aus diesem Dokument alle ETFs entnommen und in ein separates .CSV Dokument kopiert, die Spaltennamen leicht verändert und dann in RStudio eingelesen. Die `ISIN` ist der zentrale Identifikator für jeden ETF. XETRA bietet allerdings nur allgemeine Informationen über die ETFs, wie bspw. den Anbieter (`Family`), die Total Expense Ratio (`TER`) oder die Assests under Management (`AuM`). Nach einiger Recherche bin ich auf die Webseite der Direktbank ING-DiBa gestoßen, welche eine umfangreiche [Analyseplattform](https://wertpapiere.ing.de/Investieren/Fonds/Analyse/IE0008470928) für ETFs anbietet. Für jede `ISIN` der XETRA-Liste habe ich dann mit dem R-Paket `rvest` von dieser Webseite Finanzkennzahlen wie Rendite, den maximalen Verlust und die Sharpe Ratio für unterschiedliche Zeiträume extrahiert. 
+
+## **Datenaufbereitung**
+
+Die beiden Datenbestände werden dann anhand der `ISIN` miteinander verknüpft. Anschließend bereinige ich noch die Ausprägungen des Merkmals `Use of Profits`.
+
+```{r aufbereitung, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+library(tidyverse)
+
+etf_data <-
+  etf_data %>%
+  mutate(Use.Of.Profits = ifelse(
+    Use.Of.Profits == "Distribution",
+    "Distributing",
+    Use.Of.Profits)
+    )  
+```
+
+Es gibt insgesamt 1.164 ETFs in meinem Datensatz. Unten befindet sich ein Ausschnitt der Daten.
+
+```{r datensatz, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+kable(etf_data[1:50,], row.names = FALSE) %>%
+  kable_styling(bootstrap_options = c("responsive"),
+                full_width = F, font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+## **Datenanalyse**
+
+Zuerst möchte ich wissen, welche Anbieter es am Markt gibt und wie hoch das verwaltete Vermögen innerhalb der ETFs ist. Ebenso berechne ich den Anteil eines ETF am gesamten verwalteten Vermögen aller in meinem Datensatz vorhandenen ETFs. Hat eine Fonds-Familie einen Anteil von weniger als 1%, so habe ich diese in der Kategorie `Other` zusammengefasst. An der Y-Achse findet man den Namen der Fonds-Familie und an der X-Achse den Anteil des verwalteten Fondsvermögens am gesamten verwalteten Vermögen aller ETFs. Die Anzahl der ETF-Produkte pro Fonds-Familie ist in eckigen Klammern links neben den Balken dargestellt. Das absolute verwaltete Vermögen der Fonds-Familie ist in Milliarden Euro in Klammern rechts neben den Balken dargestellt. Die Fonds-Familie *iShares* von BlackRock dominiert das ETF-Angebot mit einem Marktanteil von über 50%. Deutlich abgeschlagen dahinter folgen dann *db X-trackers* (Deutsche Bank) sowie ETFs von *Lyxor* und *Amundi*.
+
+```{r anbieter, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+etf_data %>%
+  group_by(Family) %>%
+  summarise(count = n(), AuM.Family = round(sum(AuM))) %>%
+  mutate(AuM.Total = sum(AuM.Family), 
+         AuM.Family.Share = round(AuM.Family/AuM.Total, digits = 2),
+         Family = ifelse(AuM.Family.Share < 0.01, "Other", Family)) %>% 
+  group_by(Family) %>% 
+  summarise(count = sum(count), 
+            AuM.Family = round(sum(AuM.Family)), 
+            AuM.Total=max(AuM.Total),
+            AuM.Family.Share = sum(AuM.Family.Share)) %>%
+  ggplot(data = .,) + 
+  aes(x = reorder(Family, AuM.Family), y = AuM.Family.Share) + 
+  geom_bar(fill="white", color = "black", stat = "identity", position = "dodge") +
+  geom_text(aes(label=paste0("[",count,"]")), y=-0.02, size=2.5) +
+  geom_text(aes(label=paste0("(",
+                             format(round(AuM.Family/1000000000, digits = 0)),
+                             " Mrd. €)")), hjust=-.3, size=3.5) +
+  coord_flip() +
+  scale_y_continuous(breaks = c(0,0.10,0.20,0.30,0.40,0.50,0.60,0.70,0.80), 
+                     limits = c(-0.02,0.8), labels = scales::percent) +
+  labs(x = "",
+       y = "AuM Anteil der Fonds-Familie")
+```
+
+*****
+
+Nun wird die Rendite der ETFs über verschiedene Anlagezeiträume und zwischen den Replikationsmethoden verglichen. An der Y-Achse findet man das Merkmal `Replication.Method` und an der X-Achse die `Rendite` in %. Die Boxplots sind nach den Anlagezeiträumen von 1, 3, 5 und 10 Jahren gruppiert. ETFs mit der Replikationsmethode `Full Replication` weisen, abgesehen vom Anlagezeitraum von 10 Jahren, die höchste durchschnittliche Rendite auf.
+
+```{r mean_return_replication, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+etf_data %>%
+  select(Replication.Method, starts_with("Return")) %>%
+  gather(value = "value", key="variable", -Replication.Method) %>%
+  mutate(variable = fct_relevel(variable, 
+                                 "Return.1Y", "Return.3Y",
+                                 "Return.5Y", "Return.10Y")) %>%
+  ggplot(data = .) +
+  aes(x = Replication.Method, y = value, color = Replication.Method) + 
+  geom_boxplot() +
+  coord_flip() +
+  facet_grid(. ~ variable) +
+  scale_y_continuous(breaks = c(0,5,10,15,20,25), limits = c(0,25)) +
+  labs(color="Replication Method", y = "Rendite in %", x = "") +
+  scale_color_discrete(guide = F) 
+```
+
+*****
+
+Für die nächste Darstellung habe ich besonders kleine ETFs mit einem verwalteten Vermögen von weniger als 500.000 € sowie einem Orderbuchumsatz von weniger als 100.000 € ausgeschlossen. An der X-Achse findet sich der Orderbuchumsatz und an der Y-Achse das verwaltete Vermögen der Fonds. Die beiden Merkmale sind positiv korreliert. Zusätzlich habe ich nun den Scatterplot nach den Merkmalen `Replication.Method` und `Use of Profits`gruppiert. Die Anzahl der ETFs pro Kombination aus Replikationsmethode und Ertragsverwendung ist in jedem Panel angegeben. Bei der swap-basierten Replikationsmethode dominierem ETFs mit thesaurierender Ertragsverwendung. Thesaurierend bedeutet, dass Erträge direkt wieder in die Fonds-Anlage fließen und nicht an den Anleger ausgeschüttet werden. Bei voll-replizierten und optimierten ETFs dominiert hingegen die ausschüttende Ertragsverwendung.
+
+```{r replication_vs_uop, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+nobs <- etf_data %>%
+  filter(AuM >= 500000 & Order.Book.Turnover >= 100000)  %>%
+  group_by(Replication.Method, Use.Of.Profits) %>%
+  dplyr::summarise(count = n())
+
+etf_data %>%
+  filter(AuM >= 500000 & Order.Book.Turnover >= 100000)  %>%
+    ggplot(., aes(x=Order.Book.Turnover, y=AuM)) +
+      geom_point(alpha=0.6) + 
+      geom_text(data=nobs, aes(x=100000000, y= 1000000000000, label=count), inherit.aes = F) +
+      scale_x_continuous(trans = "log",breaks = c(1000,1000000,1000000000,1000000000000), 
+                         limits = c(1000,1000000000000),
+                         labels = c("1 TSD","1 MIL", "1 MRD", "1 BIL")) +
+      scale_y_continuous(trans = "log",breaks = c(1000000,1000000000,1000000000000), 
+                         limits = c(1000000,1000000000000),
+                         labels = c("1 MIL", "1 MRD", "1 BIL")) +
+      facet_grid(Use.Of.Profits~Replication.Method) +
+      labs(x = "Orderbuchumsatz",
+           y = "Verwaltetes Vermögen")
+```  
+
+*****
+
+Die Total Expense Ratio (TER) ist eine Maßzahl für die gesamten laufenden Kosten des Fonds. Bei ETFs sind diese im Gegensatz zu aktiv gemanagten Fonds besonders niedrig. Nichtsdestotrotz möchte ich die TER der ETFs miteinander vergleichen. Analog zur vorherigen Darstellung werden auch hier besonders kleine ETFs ausgeschlossen. Ich berechne die durchschnittliche TER für alle ETFs getrennt nach der Replikationsmethode und Ertragsverwendung. Swap-basierte ETFs sind im Vergleich zu den beiden anderen Replikationsmethoden geringfügig teurer. Hinsichtlich der Ertragsverwendung gibt es deutliche Unterschiede bei optimierten und swap-basierten ETFs.
+
+```{r ter, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+etf_data %>%
+  group_by(Use.Of.Profits, Replication.Method) %>%
+  summarise(mean.TER = mean(TER, na.rm = T) * 100) %>%
+  ggplot(aes(x = Replication.Method, y = mean.TER, col = Use.Of.Profits)) +
+  geom_bar(fill = "white",
+           stat = "identity",
+           position = position_dodge(width = 0.5)) +
+  labs(y = "TER in %",
+       x = "")
+```
+
+*****
+
+Gibt es einen Zusammenhang zwischen den laufenden Kosten eines ETFs und seiner Performance? Ich verwende dafür die Mittelwerte der Fondsrenditen für die verfügbaren Anlagehorizonte. Obwohl zwischen einer TER von 0,1% und 0,3% ein leichter Aufwärtstrend in der Performance zu erkennen ist, zeigt der Scatterplot keinen eindeutigen Zusammenhang zwischen Kosten und Performance. Beim Anlagezeitraum von 10 Jahren ist der Zusammenhang sogar schwach negativ, wobei hier nur wenige Datenpunkte vorliegen. Teuer muss also nicht unbedingt gut sein.
+
+
+```{r ter_return, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+etf_data %>%
+  select(TER, starts_with("Return")) %>%
+  gather(value = "value", key="variable", -TER) %>%
+  mutate(variable = fct_relevel(variable, 
+                                 "Return.1Y", "Return.3Y",
+                                 "Return.5Y", "Return.10Y")) %>%
+  ggplot(data = .) +
+  aes(x = TER*100, y = value) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "loess") +
+  facet_wrap(.~variable) +
+  scale_x_continuous(breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9),
+                     limits = c(0,0.9)) +
+  scale_y_continuous(limits = c(-60,80), breaks = c(-60,-40,-20,0,20,40,60,80)) +
+  labs(x = "TER in %",
+       y = "Durchschnittliche Rendite in %")
+```
+
+*****
+
+Weiterhin führe ich einen Perfomancevergleich zwischen den ETF-Anbietern durch und erstelle Boxplots für den Anlagezeitrum von einem Jahr.
+
+```{r return, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+etf_data %>%
+  filter(!(
+    Family %in% c("ZyFin","WisdomTree","Unicredit ETF",
+                  "Market Vectors","Franklin LibertyShares",
+                  "First Trust","Fidelity ETF","BOCI Commerzbank"
+                  ))) %>%
+  ggplot(data = .) +
+  aes(x = reorder(Family, Return.1Y, FUN = median, na.rm = T),
+      y = Return.1Y) +
+  geom_boxplot() +
+  geom_jitter(position = position_jitter(0.2),
+              alpha = 0.1,
+              col = "red") +
+  coord_flip() +
+  scale_y_continuous(limits = c(-60,80), breaks = c(-60,-40,-20,0,20,40,60,80)) +
+  labs(x = "",
+       y = "Rendite in %")
+```
+
+*****
+
+Die ETFs können mit dem R-Paket `plotly` interaktiv visualisiert werden. Welche ETFs weisen mittelfristig die höchste Rendite auf? Unten sind die Renditen für die Anlagezeiträume von 3 und 5 Jahren dargestellt. Fährt man mit der Maus über einen Punkt im Scatterplot wird der Name des ETFs sowie auch die Risikokennzahl `Sharpe Ratio` angezeigt. Je höher dieser Wert ist, desto besser war die Wertentwicklung des ETF in Bezug auf das eingegangene Risiko.
+
+```{r interactive, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+library(plotly)
+
+plot_ly(data = etf_data, x = ~Return.5Y, y = ~Return.3Y, hoverinfo = 'text',
+        text = ~paste('</br> ETF: ', Name,
+                      '</br> Sharpe Ratio 3 Jahre: ', Sharpe.Ratio.3Y,
+                      '</br> Sharpe Ratio 5 Jahre: ', Sharpe.Ratio.5Y))
+```

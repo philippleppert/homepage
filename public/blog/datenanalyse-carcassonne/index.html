@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.118.2">
+<title>Datenanalyse: Carcassonne | Philipp Leppert</title>
+
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="My homepage">
+
+
+<meta property="og:site_name" content="Philipp Leppert">
+<meta property="og:title" content="Datenanalyse: Carcassonne | Philipp Leppert">
+<meta property="og:description" content="My homepage" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://philippleppert.eu/blog/datenanalyse-carcassonne/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="https://philippleppert.eu/blog/datenanalyse-carcassonne/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://philippleppert.eu/blog/datenanalyse-carcassonne/featured.png" >
+    
+    
+  <meta itemprop="name" content="Datenanalyse: Carcassonne">
+<meta itemprop="description" content="Nach vielen gespielten Runden des Brettspiels Carcassonne soll statistisch überprüft werden, wer der bessere Spieler ist."><meta itemprop="datePublished" content="2017-12-13T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2017-12-13T00:00:00+00:00" />
+<meta itemprop="wordCount" content="588"><meta itemprop="image" content="https://philippleppert.eu/blog/datenanalyse-carcassonne/featured.png">
+<meta itemprop="keywords" content="" />
+  
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.6ff702015d6c26370cdcf973dec600ef738de63c1cff17a62b86c7f885c08541.css" integrity="sha256-b/cCAV1sJjcM3Plz3sYA73ON5jwc/xemK4bH&#43;IXAhUE=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.b2cad19798d2e5451244dfcd623848782a1de625dac7e4d6d6e5cb542c993994.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://philippleppert.eu/" title="Home">
+      <span class="f4 fw7">Philipp Leppert</span>
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Read my blog">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/music/" title="Listen to my music">Music</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tutorials/" title="Browse my tutorials">Tutorials</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Datenanalyse: Carcassonne</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Philipp Leppert in <a href="https://philippleppert.eu/categories/r">R</a>  <a href="https://philippleppert.eu/categories/freizeit">Freizeit</a> </p>
+        <p class="f7 db mv0 ttu">December 13, 2017</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <script src="index_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<p>Carcassonne ist ein Brettspiel für 2-4 Spieler bei dem abwechselnd zufällig gezogene Plättchen an das bestehende Spielfeld angelegt werden. Um Punkte zu sammeln, müssen die Spieler auf dem aktuell ausgelegten Plättchen eines ihrer sog. Meeple platzieren und so eine Burg, Straße, Kloster oder Wiese für sich zu beanspruchen. Von einem Spieler beanspruchte Gebiete können allerdings von einem Mitspieler durch geschicktes Anlegen und Platzieren der Meeple streitig gemacht werden.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="../../..%5Cimg/carcassonne.jpg" alt="Eine Partie Carcassonne"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><em>Eine Partie Carcassonne. Eigene Aufnahme.</em></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+<h2 id="datenbeschaffung"><strong>Datenbeschaffung</strong>
+  <a href="#datenbeschaffung"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Zwischen September 2016 und Oktober 2017 habe ich nach jeder Partie den Endpunktestand von mir und meiner Freundin erfasst. Im Folgenden wird also lediglich die 2-Spieler Variante betrachtet, deren Dynamik sich recht deutlich vom Spiel mit 3, 4 oder 5 Personen unterscheidet. Es wurden insgesamt 124 Runden aufgezeichnet. Gleichzeitig wurde auch für jede Spielrunde festgehalten, wer das Spiel eröffnet hat und die Differenz der Endpunktestände berechnet.</p>
+
+
+
+
+<h2 id="datenanalyse"><strong>Datenanalyse</strong>
+  <a href="#datenanalyse"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Zunächst einige Eckwerte des Carcassonne-Datensatzes: Philipp erzielte im Durchschnitt etwa 7 Punkte mehr als Claudia und errang auch gleichzeitig das höchste Gesamtergebnis mit 143 Punkten (juhu). Claudia hingehen erzielte den niedrigsten Punktestand mit 58 Punkten (sorry). Die höchste Punktedifferenz in einem Spiel betrug 68 Punkte. Insgesamt gewann Philipp 80 Runden und musste sich 42 Mal geschlagen geben. Zwei Runden endeten mit einem Unentschieden.</p>
+<pre><code>##  Punkte_Philipp  Punkte_Claudia     Differenz    
+##  Min.   : 69.0   Min.   : 58.00   Min.   : 0.00  
+##  1st Qu.: 92.0   1st Qu.: 88.00   1st Qu.: 6.00  
+##  Median :105.0   Median : 98.00   Median :14.00  
+##  Mean   :105.4   Mean   : 97.91   Mean   :18.52  
+##  3rd Qu.:118.0   3rd Qu.:108.00   3rd Qu.:27.25  
+##  Max.   :143.0   Max.   :132.00   Max.   :68.00
+## 
+##       Claudia       Philipp Unentschieden 
+##            42            80             2
+</code></pre>
+<hr>
+<p>Die folgende Grafik zeigt den Puntkeunterschied über alle gespielten Runden. Der gleitende Durchschnitt über 10 Runden ist in Orange dargestellt. Mal gingen die Spiele recht knapp aus, mal ging ein Spieler als deutlicher Sieger hervor. Im Mittel bewegt sich die Differenz der Punktstände um 19 Zähler.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(carcassonne, <span style="color:#06287e">aes</span>(Runde, Differenz)) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>() <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>(<span style="color:#06287e">aes</span>(y<span style="color:#666">=</span><span style="color:#06287e">rollmean</span>(Differenz, <span style="color:#40a070">10</span>, na.pad<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">TRUE</span>),color<span style="color:#666">=</span><span style="color:#4070a0">&#34;red&#34;</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_point</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_color_discrete</span>(name<span style="color:#666">=</span><span style="color:#4070a0">&#34;Gleitender Durchschnitt&#34;</span>, lab<span style="color:#666">=</span><span style="color:#4070a0">&#34;über 10 Runden&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(y<span style="color:#666">=</span><span style="color:#4070a0">&#34;Punktedifferenz&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#06287e">seq</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">130</span>,<span style="color:#40a070">10</span>)))
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/plot1-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Betrachtet man den Gesamtpunktestand jedes Spielers in der nächsten Darstellung im Zeitverlauf, so kann Philipp bis zur 60. Partie sein Ergebnis im Durchschnitt verbessern. Danach ist dieser Trend allerdings wieder rückläufig und der Endpuntkestand verschlechtert sich. Auch bei Claudia ist dieser anfängliche Trend zu erkennen.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>carcassonne <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">gather</span>(key<span style="color:#666">=</span><span style="color:#4070a0">&#34;Spieler&#34;</span>, Punkte, Punkte_Philipp, Punkte_Claudia) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(data<span style="color:#666">=</span>., <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span>Runde, y <span style="color:#666">=</span> Punkte, col <span style="color:#666">=</span> Spieler)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_smooth</span>(se <span style="color:#666">=</span> F) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_color_discrete</span>(lab<span style="color:#666">=</span><span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;Claudia&#34;</span>,<span style="color:#4070a0">&#34;Philipp&#34;</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#06287e">seq</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">130</span>,<span style="color:#40a070">10</span>)))
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/plot2-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Erhält ein Spieler einen Vorteil, wenn er das Spiel eröffnen darf? Dazu verwende ich ein lineares Regressionsmodell in dem jeweils Philipps bzw. Claudias Endpunktestand als abhängige Variable definiert wird. Der Startspieler-Vorteil wird als binäre Variable in das Modell eingefügt und als weitere Kontrollvariable wird der Punktestand des gegnerischen Spielers verwendet. Die beiden Modelle sehen so aus:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Modell Philipp</span>
+</span></span><span style="display:flex;"><span>lm_p <span style="color:#666">&lt;-</span> <span style="color:#06287e">lm</span>(Punkte_Philipp <span style="color:#666">~</span> <span style="color:#06287e">factor</span>(Startspieler) <span style="color:#666">+</span> Punkte_Claudia, data <span style="color:#666">=</span> carcassonne)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Modell Claudia</span>
+</span></span><span style="display:flex;"><span>lm_c <span style="color:#666">&lt;-</span> <span style="color:#06287e">lm</span>(Punkte_Claudia <span style="color:#666">~</span> <span style="color:#06287e">factor</span>(Startspieler) <span style="color:#666">+</span> Punkte_Philipp, data <span style="color:#666">=</span> carcassonne)
+</span></span></code></pre></div><p>Die Ergebnisse der beiden Modelle sind unten abgebildet. Eröffnet Philipp das Spiel hat dies einen positiven, aber nicht signifikanten Einfluss auf seinen Endpunktestand. Der Endpunktestand von Claudia ist dagegen um 7 Punkte signifikant niedriger, wenn Philipp das Spiel eröffnet. Womöglich leidet hier die Moral, wenn sich Philipp beim Auftakt die erste Burg sichern kann.</p>
+<p>Modell Philipp:</p>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">term</th>
+<th style="text-align:right">estimate</th>
+<th style="text-align:right">std.error</th>
+<th style="text-align:right">statistic</th>
+<th style="text-align:right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">(Intercept)</td>
+<td style="text-align:right">101.80</td>
+<td style="text-align:right">11.02</td>
+<td style="text-align:right">9.24</td>
+<td style="text-align:right">0.00</td>
+</tr>
+<tr>
+<td style="text-align:left">factor(Startspieler)Philipp</td>
+<td style="text-align:right">3.02</td>
+<td style="text-align:right">3.13</td>
+<td style="text-align:right">0.96</td>
+<td style="text-align:right">0.34</td>
+</tr>
+<tr>
+<td style="text-align:left">Punkte_Claudia</td>
+<td style="text-align:right">0.02</td>
+<td style="text-align:right">0.11</td>
+<td style="text-align:right">0.20</td>
+<td style="text-align:right">0.84</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Modell Claudia:</p>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">term</th>
+<th style="text-align:right">estimate</th>
+<th style="text-align:right">std.error</th>
+<th style="text-align:right">statistic</th>
+<th style="text-align:right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">(Intercept)</td>
+<td style="text-align:right">99.78</td>
+<td style="text-align:right">8.26</td>
+<td style="text-align:right">12.08</td>
+<td style="text-align:right">0.00</td>
+</tr>
+<tr>
+<td style="text-align:left">factor(Startspieler)Philipp</td>
+<td style="text-align:right">-7.00</td>
+<td style="text-align:right">2.60</td>
+<td style="text-align:right">-2.69</td>
+<td style="text-align:right">0.01</td>
+</tr>
+<tr>
+<td style="text-align:left">Punkte_Philipp</td>
+<td style="text-align:right">0.02</td>
+<td style="text-align:right">0.08</td>
+<td style="text-align:right">0.20</td>
+<td style="text-align:right">0.84</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">December 13, 2017</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">3 minute read, 588 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="https://philippleppert.eu/categories/r">R</a>  <a href="https://philippleppert.eu/categories/freizeit">Freizeit</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://philippleppert.eu/blog/datenanalyse-versicherung/">&larr; Datenanalyse vor Versicherungsabschluss?</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://philippleppert.eu/blog/datenanalyse-etfs/">ETFs im Datencheck &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      
+<div class="post-comments pa0 pa4-l mt4">
+
+</div>
+
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2023 Philipp Leppert
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/legal-notice/" title="Legal notice">Legal notice</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

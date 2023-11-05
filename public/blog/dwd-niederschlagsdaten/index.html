@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.118.2">
+<title>DWD Niederschlagsdaten aufpolieren | Philipp Leppert</title>
+
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="My homepage">
+
+
+<meta property="og:site_name" content="Philipp Leppert">
+<meta property="og:title" content="DWD Niederschlagsdaten aufpolieren | Philipp Leppert">
+<meta property="og:description" content="My homepage" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://philippleppert.eu/blog/dwd-niederschlagsdaten/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="https://philippleppert.eu/blog/dwd-niederschlagsdaten/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://philippleppert.eu/blog/dwd-niederschlagsdaten/featured.png" >
+    
+    
+  <meta itemprop="name" content="DWD Niederschlagsdaten aufpolieren">
+<meta itemprop="description" content="Eine grafische Aufbereitung von Niederschlagsdaten des Deutschen Wetterdienstes."><meta itemprop="datePublished" content="2019-09-12T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-09-12T00:00:00+00:00" />
+<meta itemprop="wordCount" content="822"><meta itemprop="image" content="https://philippleppert.eu/blog/dwd-niederschlagsdaten/featured.png">
+<meta itemprop="keywords" content="" />
+  
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.6ff702015d6c26370cdcf973dec600ef738de63c1cff17a62b86c7f885c08541.css" integrity="sha256-b/cCAV1sJjcM3Plz3sYA73ON5jwc/xemK4bH&#43;IXAhUE=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.b2cad19798d2e5451244dfcd623848782a1de625dac7e4d6d6e5cb542c993994.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://philippleppert.eu/" title="Home">
+      <span class="f4 fw7">Philipp Leppert</span>
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Read my blog">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/music/" title="Listen to my music">Music</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tutorials/" title="Browse my tutorials">Tutorials</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">DWD Niederschlagsdaten aufpolieren</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Philipp Leppert in <a href="https://philippleppert.eu/categories/r">R</a>  <a href="https://philippleppert.eu/categories/kartierung">Kartierung</a>  <a href="https://philippleppert.eu/categories/interaktiv">Interaktiv</a>  <a href="https://philippleppert.eu/categories/analyse">Analyse</a> </p>
+        <p class="f7 db mv0 ttu">September 12, 2019</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <script src="index_files/libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="index_files/libs/pymjs-1.3.2/pym.v1.js"></script>
+<script src="index_files/libs/widgetframe-binding-0.3.1/widgetframe.js"></script>
+<p>Auf der Website des Deutschen Wetterdienstes (DWD) sind jährliche Niederschlagsmengen im Zeitraum von 1981 bis 2010 abrufbar. Das Datenangebot wirkt jedoch etwas <em>trocken</em>, da die Daten lediglich in einer HTML-Tabelle zur Verfügung gestellt werden. Mit RStudio will ich diese Tabelle von der DWD-Website extrahieren und anschließend visuell ansprechend aufbereiten.</p>
+
+
+
+
+<h2 id="datenbeschaffung"><strong>Datenbeschaffung</strong>
+  <a href="#datenbeschaffung"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Die 
+<a href="https://www.dwd.de/DE/leistungen/klimadatendeutschland/mittelwerte/nieder_8110_fest_html.html;jsessionid=293831BFFB0310E74947D18B892C8858.live31094?view=nasPublication&amp;nn=16102" target="_blank" rel="noopener">Tabelle mit den Niederschlagswerten</a> enthält nach einer kurzen Überprüfung sehr ungenaue Angaben zu den Standorten der Wetterstationen, welche ich später für eine Kartierung benutzen möchte. Es gibt jedoch auch ein sog. 
+<a href="https://www.dwd.de/DE/leistungen/klimadatendeutschland/statliste/statlex_html.html?view=nasPublication&amp;nn=16102" target="_blank" rel="noopener">Stationslexikon</a>, welches genauere Standortangaben enthält. Zunächst werden beiden Tabellen mit den R-Paketen <code>rvest</code> und <code>xml2</code> extrahiert und als <em>Liste</em> gespeichert.</p>
+
+
+
+
+<h2 id="datenaufbereitung"><strong>Datenaufbereitung</strong>
+  <a href="#datenaufbereitung"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Anschließend wandle ich die <em>Liste</em> in einen <em>Data Frame</em> um und bereinige diesen. Über das Merkmal <code>Stations_ID</code> können beide Datenbestände miteinander verknüpft werden, sodass die unpräzisen Standortangaben im Datensatz mit den Niederschlagswerten ersetzt werden.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Benötigte R-Pakete</span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(tidyverse)
+</span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(rvest)
+</span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(xml2)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># DWD: Niederschlag: vieljährige Mittelwerte 1981-2010 (ungenaue Standortangaben)</span>
+</span></span><span style="display:flex;"><span>url_niederschlag <span style="color:#666">&lt;-</span> <span style="color:#4070a0">&#34;https://www.dwd.de/DE/leistungen/klimadatendeutschland/
+</span></span></span><span style="display:flex;"><span><span style="color:#4070a0">mittelwerte/nieder_8110_fest_html.html;
+</span></span></span><span style="display:flex;"><span><span style="color:#4070a0">jsessionid=293831BFFB0310E74947D18B892C8858.live31094?view=nasPublication&amp;nn=16102&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># DWD: Stationslexikon (genaue Standortangaben)</span>
+</span></span><span style="display:flex;"><span>url_stationen <span style="color:#666">&lt;-</span> <span style="color:#4070a0">&#34;https://www.dwd.de/DE/leistungen/klimadatendeutschland/
+</span></span></span><span style="display:flex;"><span><span style="color:#4070a0">statliste/statlex_html.html?view=nasPublication&amp;nn=16102&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># HTML Tabelle jeweils extrahieren</span>
+</span></span><span style="display:flex;"><span>daten_niederschlag <span style="color:#666">&lt;-</span> url_niederschlag <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  xml2<span style="color:#666">::</span><span style="color:#06287e">read_html</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  rvest<span style="color:#666">::</span><span style="color:#06287e">html_nodes</span>(xpath<span style="color:#666">=</span><span style="color:#4070a0">&#39;/html/body/font/table[2]&#39;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  rvest<span style="color:#666">::</span><span style="color:#06287e">html_table</span>(fill <span style="color:#666">=</span> T)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>daten_stationen <span style="color:#666">&lt;-</span> url_stationen <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  xml2<span style="color:#666">::</span><span style="color:#06287e">read_html</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  rvest<span style="color:#666">::</span><span style="color:#06287e">html_nodes</span>(xpath<span style="color:#666">=</span><span style="color:#4070a0">&#39;/html/body/font/table&#39;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  rvest<span style="color:#666">::</span><span style="color:#06287e">html_table</span>(fill <span style="color:#666">=</span> T)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Listen zu Data Frame konvertieren</span>
+</span></span><span style="display:flex;"><span>df.niederschlag <span style="color:#666">&lt;-</span> <span style="color:#06287e">do.call</span>(rbind.data.frame, daten_niederschlag)
+</span></span><span style="display:flex;"><span>df.stationen <span style="color:#666">&lt;-</span> <span style="color:#06287e">do.call</span>(rbind.data.frame, daten_stationen)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Stationslexikon aufbereiten</span>
+</span></span><span style="display:flex;"><span>my.names <span style="color:#666">&lt;-</span> df.stationen[1,] <span style="color:#60a0b0;font-style:italic"># erste Zeile enthält hier die Spaltennamen</span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">colnames</span>(df.stationen) <span style="color:#666">&lt;-</span> my.names <span style="color:#60a0b0;font-style:italic"># alte Spaltennamen ersetzen</span>
+</span></span><span style="display:flex;"><span>df.stationen <span style="color:#666">&lt;-</span> df.stationen[<span style="color:#40a070">-1</span>,] <span style="color:#60a0b0;font-style:italic"># erste Zeile löschen</span>
+</span></span><span style="display:flex;"><span>df.stationen <span style="color:#666">&lt;-</span> <span style="color:#06287e">select</span>(df.stationen, Stations_ID, Breite, Länge) <span style="color:#60a0b0;font-style:italic"># relevante Merkmale</span>
+</span></span><span style="display:flex;"><span>df.stationen <span style="color:#666">&lt;-</span> <span style="color:#06287e">unique</span>(df.stationen[,<span style="color:#40a070">1</span><span style="color:#666">:</span><span style="color:#40a070">3</span>]) <span style="color:#60a0b0;font-style:italic"># Duplikate entfernen</span>
+</span></span><span style="display:flex;"><span>df.stationen<span style="color:#666">$</span>Stations_ID <span style="color:#666">&lt;-</span> <span style="color:#06287e">as.numeric</span>(df.stationen<span style="color:#666">$</span>Stations_ID) <span style="color:#60a0b0;font-style:italic"># Konvertieren</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Niederschlagsdaten aufbereiten</span>
+</span></span><span style="display:flex;"><span>df.niederschlag<span style="color:#666">$</span>`Höhe ü. NN` <span style="color:#666">&lt;-</span> df.niederschlag<span style="color:#666">$</span>`Höhe ü. NN` <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">str_replace</span>(<span style="color:#4070a0">&#34;,&#34;</span>,<span style="color:#4070a0">&#34;\\.&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">as.numeric</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df.niederschlag<span style="color:#666">$</span>Jahr <span style="color:#666">&lt;-</span> df.niederschlag<span style="color:#666">$</span>Jahr <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">str_replace</span>(<span style="color:#4070a0">&#34;,&#34;</span>,<span style="color:#4070a0">&#34;\\.&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">as.numeric</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Unpräzise Standortangaben entfernen</span>
+</span></span><span style="display:flex;"><span>df.niederschlag <span style="color:#666">&lt;-</span> <span style="color:#06287e">select</span>(df.niederschlag, <span style="color:#666">-</span>Breite,<span style="color:#666">-</span>Länge)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Niederschlagsdaten mit Stationsdaten verknüpfen</span>
+</span></span><span style="display:flex;"><span>df.merged <span style="color:#666">&lt;-</span> <span style="color:#06287e">left_join</span>(df.niederschlag, df.stationen, by<span style="color:#666">=</span><span style="color:#4070a0">&#34;Stations_ID&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Breite und Länge in numerisches Format umwandeln</span>
+</span></span><span style="display:flex;"><span>df.merged<span style="color:#666">$</span>Breite <span style="color:#666">&lt;-</span> df.merged<span style="color:#666">$</span>Breite <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">str_replace</span>(<span style="color:#4070a0">&#34;°&#34;</span>,<span style="color:#4070a0">&#34;\\.&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">str_replace</span>(<span style="color:#4070a0">&#34;&#39;&#34;</span>,<span style="color:#4070a0">&#34;&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">str_replace_all</span>(<span style="color:#06287e">fixed</span>(<span style="color:#4070a0">&#34; &#34;</span>), <span style="color:#4070a0">&#34;&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">as.numeric</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df.merged<span style="color:#666">$</span>Länge <span style="color:#666">&lt;-</span> df.merged<span style="color:#666">$</span>Länge <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">str_replace</span>(<span style="color:#4070a0">&#34;°&#34;</span>,<span style="color:#4070a0">&#34;\\.&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">str_replace</span>(<span style="color:#4070a0">&#34;&#39;&#34;</span>,<span style="color:#4070a0">&#34;&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">str_replace_all</span>(<span style="color:#06287e">fixed</span>(<span style="color:#4070a0">&#34; &#34;</span>), <span style="color:#4070a0">&#34;&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">as.numeric</span>()
+</span></span></code></pre></div>
+
+
+
+<h2 id="datenanalyse"><strong>Datenanalyse</strong>
+  <a href="#datenanalyse"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Zunächst erstelle ich ein Ranking, in welchem Bundesland die meisten Wetterstationen des DWD zu finden sind. Bayern ist mit über 600 Stationen Spitzenreiter, flächenmäßig aber auch das größte Bundesland. Thüringen hat eine ziemlich hohe Dichte an Wetterstationen, gemessen an ihrer Gesamtfläche.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(df.merged, <span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> <span style="color:#06287e">fct_rev</span>(<span style="color:#06287e">fct_infreq</span>(Bundesland)))) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_bar</span>(fill<span style="color:#666">=</span><span style="color:#4070a0">&#34;white&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;black&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">coord_flip</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Anzahl Wetterstationen&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/barplot1-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Anschließend betrachte ich die Verteilung der Höhenlagen der Wetterstationen sowie die Verteilung der jährlichen Niederschlagsmengen pro Station. Einige Wetterstationen befinden sich auf über 1000m Höhe, während der Großteil sich unter 500 Höhenmetern befindet.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(df.merged, <span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> `Höhe ü. NN`)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_histogram</span>(fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;white&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>, bins <span style="color:#666">=</span> <span style="color:#40a070">60</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Höhe ü. NN in m&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Häufigkeit&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/histogram_hoehe-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Am Großteil der Wetterstationen beträgt der jährliche Niederschlag zwischen 500mm und 1000mm.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(df.merged, <span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> Jahr)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_histogram</span>(fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;white&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>, bins <span style="color:#666">=</span> <span style="color:#40a070">60</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Durchschnittlicher Niederschlag pro Jahr in mm&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Häufigkeit&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/histogram_niederschlag-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Gibt es einen Zusammenhang zwischen der Höhenlage der Wetterstation und der jährlichen Niederschlagsmenge? Ein Scatterplot kann hier erste Einblicke liefern. Tatsächlich steigt die durchschnittliche Niederschlagsmenge mit zunehmender Höhenlage der Wetterstation an.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(df.merged, <span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> `Höhe ü. NN`, y <span style="color:#666">=</span> Jahr)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_point</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_smooth</span>(method <span style="color:#666">=</span> <span style="color:#4070a0">&#34;lm&#34;</span>) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Höhe ü. NN in m&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Durchschnittlicher Niederschlag pro Jahr in mm&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/scatter-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>In welchem Bundesland fällt der meiste Niederschlag im Jahr? Zunächst bilde ich die Mittelwerte der Jahresniederschlagsmengen aller Wetterstationen pro Bundesland und vergleichen diese anschließend in einem Balkendiagramm miteinander. Die Bundesländer im Nordosten Deutschlands weisen geringere Niederschlagsmengen auf als die südlich gelegenen Bundesländer.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>df.merged <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(Bundesland) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarise</span>(mean_jahr <span style="color:#666">=</span> <span style="color:#06287e">mean</span>(Jahr)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(x<span style="color:#666">=</span><span style="color:#06287e">reorder</span>(Bundesland, mean_jahr), y<span style="color:#666">=</span>mean_jahr)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_bar</span>(stat<span style="color:#666">=</span><span style="color:#4070a0">&#34;identity&#34;</span>, fill<span style="color:#666">=</span><span style="color:#4070a0">&#34;white&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;black&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Bundesland&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Durchschnittlicher Niederschlag pro Jahr in mm&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">coord_flip</span>()
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/barplot2-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Nun werden mit den Koordinaten aus dem Stationslexikon die Standorte der Wetterstationen auf einer Karte visualisiert. Zusätzlich habe ich die Größe der Symbole an die jährliche Niederschlagsmenge gekoppelt. Man erkennt erneut, dass im Süden Deutschlands höhere Niederschlagsmengen vorhanden sind, während im Nordosten Deutschlands diese deutlich geringer ausfallen. Auch fallen einige Gebirge ins Auge wie bspw. der Harz und Thüringer Wald in Mitteldeutschland sowie der Schwarzwald, Bayrische Wald und die Alpen im Süden Deutschlands.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">library</span>(ggmap)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Get_Map_Country <span style="color:#666">&lt;-</span> <span style="color:#06287e">get_map</span>(location <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Germany&#34;</span>, zoom <span style="color:#666">=</span> <span style="color:#40a070">6</span>, maptype <span style="color:#666">=</span> <span style="color:#4070a0">&#34;stamen_toner_background&#34;</span>, 
+</span></span><span style="display:flex;"><span>                           filename <span style="color:#666">=</span> <span style="color:#4070a0">&#34;ggmapTemp&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;bw&#34;</span>, source <span style="color:#666">=</span> <span style="color:#4070a0">&#34;stadia&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>map_germany <span style="color:#666">&lt;-</span> <span style="color:#06287e">ggmap</span>(ggmap <span style="color:#666">=</span> Get_Map_Country)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>map_germany <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_point</span>(data<span style="color:#666">=</span>df.merged, 
+</span></span><span style="display:flex;"><span>             <span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> <span style="color:#06287e">as.numeric</span>(Länge), y <span style="color:#666">=</span> <span style="color:#06287e">as.numeric</span>(Breite), size<span style="color:#666">=</span>Jahr), 
+</span></span><span style="display:flex;"><span>             shape <span style="color:#666">=</span> <span style="color:#4070a0">&#34;\u2302&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#3399FF&#34;</span>, alpha<span style="color:#666">=</span><span style="color:#40a070">0.9</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_size_continuous</span>(name<span style="color:#666">=</span><span style="color:#4070a0">&#34;Niederschlagsmenge&#34;</span>) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(title <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Standorte der Wetterstationen des DWD&#34;</span>, 
+</span></span><span style="display:flex;"><span>       x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Längengrad&#34;</span>, 
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Breitengrad&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme</span>(legend.position<span style="color:#666">=</span><span style="color:#4070a0">&#34;bottom&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/karte-1.png" data-fig-align="center" width="576" />
+<hr>
+<p>Die Standorte der Wetterstationen können auch interaktiv visualisiert werden. Fährt man mit der Maus über einen Punkt auf der Karte wird sowohl der Name der Wetterstation als auch die durchschnittliche jährliche Niederschlagsmenge angezeigt.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">library</span>(maps)
+</span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(widgetframe)
+</span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(rbokeh)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plot <span style="color:#666">&lt;-</span> <span style="color:#06287e">figure</span>(width <span style="color:#666">=</span> <span style="color:#40a070">800</span>, height <span style="color:#666">=</span> <span style="color:#40a070">600</span>, padding_factor <span style="color:#666">=</span> <span style="color:#40a070">0</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ly_map</span>(<span style="color:#4070a0">&#34;world&#34;</span>, regions <span style="color:#666">=</span> <span style="color:#4070a0">&#34;germany&#34;</span>, col <span style="color:#666">=</span> <span style="color:#4070a0">&#34;gray&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ly_points</span>(Länge, Breite, data <span style="color:#666">=</span> df.merged, size <span style="color:#666">=</span> <span style="color:#40a070">5</span>,
+</span></span><span style="display:flex;"><span>            hover <span style="color:#666">=</span> <span style="color:#06287e">c</span>(`Name der Station`, Jahr))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">frameWidget</span>(plot, width<span style="color:#666">=</span><span style="color:#40a070">800</span>,height<span style="color:#666">=</span><span style="color:#40a070">600</span>)
+</span></span></code></pre></div><div id="htmlwidget-503b14859d53b3e41fb4" style="width:800px;height:600px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-503b14859d53b3e41fb4">{"x":{"url":"index.markdown_strict_files/figure-markdown_strict//widgets/widget_interaktiv.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">September 12, 2019</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">4 minute read, 822 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="https://philippleppert.eu/categories/r">R</a>  <a href="https://philippleppert.eu/categories/kartierung">Kartierung</a>  <a href="https://philippleppert.eu/categories/interaktiv">Interaktiv</a>  <a href="https://philippleppert.eu/categories/analyse">Analyse</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://philippleppert.eu/blog/stromerzeugung-deutschland/">&larr; Stromerzeugung in Deutschland</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://philippleppert.eu/blog/schottland-wetter/">Wetter in Schottland &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      
+<div class="post-comments pa0 pa4-l mt4">
+
+</div>
+
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2023 Philipp Leppert
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/legal-notice/" title="Legal notice">Legal notice</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

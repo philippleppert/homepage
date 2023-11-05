@@ -16,5 +16,23 @@
       <description>Eine Auswertung der Streaming-Daten, die Spotify sammelt.</description>
     </item>
     
+    <item>
+      <title>Wetter in Schottland</title>
+      <link>https://philippleppert.eu/blog/schottland-wetter/</link>
+      <pubDate>Sat, 27 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/schottland-wetter/</guid>
+      <description>Bald steht unsere Rundreise durch Schottland an: auf welches Wetter können wir uns anhand zurückliegender Wetterdaten einstellen?</description>
+    </item>
+    
+    <item>
+      <title>Datenanalyse: Carcassonne</title>
+      <link>https://philippleppert.eu/blog/datenanalyse-carcassonne/</link>
+      <pubDate>Wed, 13 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://philippleppert.eu/blog/datenanalyse-carcassonne/</guid>
+      <description>Nach vielen gespielten Runden des Brettspiels Carcassonne soll statistisch überprüft werden, wer der bessere Spieler ist.</description>
+    </item>
+    
   </channel>
 </rss>

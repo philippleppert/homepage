@@ -1,0 +1,3886 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.118.2">
+<title>Datenanalyse vor Versicherungsabschluss? | Philipp Leppert</title>
+
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="My homepage">
+
+
+<meta property="og:site_name" content="Philipp Leppert">
+<meta property="og:title" content="Datenanalyse vor Versicherungsabschluss? | Philipp Leppert">
+<meta property="og:description" content="My homepage" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://philippleppert.eu/blog/datenanalyse-versicherung/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="https://philippleppert.eu/blog/datenanalyse-versicherung/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://philippleppert.eu/blog/datenanalyse-versicherung/featured.png" >
+    
+    
+  <meta itemprop="name" content="Datenanalyse vor Versicherungsabschluss?">
+<meta itemprop="description" content="Am Beispiel einer Zahnzsatzversicherung möchte ich überprüfen, ob es sich lohnt die Konditionen verschiedener Versicherungsanbieter grafisch gegenüberzustellen."><meta itemprop="datePublished" content="2018-03-17T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2018-03-17T00:00:00+00:00" />
+<meta itemprop="wordCount" content="4606"><meta itemprop="image" content="https://philippleppert.eu/blog/datenanalyse-versicherung/featured.png">
+<meta itemprop="keywords" content="" />
+  
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.6ff702015d6c26370cdcf973dec600ef738de63c1cff17a62b86c7f885c08541.css" integrity="sha256-b/cCAV1sJjcM3Plz3sYA73ON5jwc/xemK4bH&#43;IXAhUE=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.b2cad19798d2e5451244dfcd623848782a1de625dac7e4d6d6e5cb542c993994.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://philippleppert.eu/" title="Home">
+      <span class="f4 fw7">Philipp Leppert</span>
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Read my blog">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/music/" title="Listen to my music">Music</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tutorials/" title="Browse my tutorials">Tutorials</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Datenanalyse vor Versicherungsabschluss?</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Philipp Leppert in <a href="https://philippleppert.eu/categories/r">R</a>  <a href="https://philippleppert.eu/categories/finanzen">Finanzen</a>  <a href="https://philippleppert.eu/categories/analyse">Analyse</a> </p>
+        <p class="f7 db mv0 ttu">March 17, 2018</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <script src="index_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<p>Letztes Jahr hatte ich in einer Ausgabe der 
+<a href="https://www.test.de/" target="_blank" rel="noopener">Stiftung Warentest</a> einen Artikel über <em>Zahnzusatzversicherungen</em> gelesen. Überzeugt von der Notwendigkeit dieser Versicherung, wollte ich mich mit einigen der im Test als gut befundenen Tarifen etwas genauer auseinandersetzen. Die Suche nach Details zu den einzelnen Tarifen gestaltete sich allerdings ziemlich aufwendig. Besonders gut versteckt sind dabei oft, die nach dem Alter des Versicherungsnehmers gestaffelten Beitragstabellen. Auch auf Wikipedia findet sich zu Zahnzusatzversicherungen folgender Eintrag:</p>
+<blockquote>
+<p>Auf dem deutschen Versicherungsmarkt gibt es über 300 unterschiedliche Zahnzusatzversicherungstarife.
+Die Ausgestaltung der Tarifdetails ist von Versicherer zu Versicherer so unterschiedlich, dass Vergleiche der Tarifgestaltungen für den Laien, aber auch für den Versicherungsmakler höchst schwierig sind.</p>
+</blockquote>
+<p>Klare Worte von denen ich mich erst einmal nicht entmutigen lassen wollte! Bevor ich mit den Ausführungen zu meiner Analyse beginne, möchte ich darauf hinweisen, dass man die Entscheidung für oder gegen eine bestimmte Verischerung in erster Linie nach den eigenen Bedürfnissen ausrichten sollte. So kann bspw. nicht <em>nur</em> der monatliche Versicherungsbeitrag als Kriterium entscheident sein, wenn der Tarif dann eine bestimmte Komponente ausschließt, die für einen selbst besonders relevant ist. Andererseits unterscheidet sich die Leistung mancher Tarife auf den ersten Blick so wenig voneinander, dass auch die Kostenseite nicht vernachlässigt werden sollte. Ein anfänglich günstiger Tarif, besonders wenn man ihn in jungen Jahren abschließt, kann nach einigen Jahren bereits ziemlich teuer werden. Andere Tarife sind wiederum von Anfang an etwas teurer und steigen im Alter nur noch moderat an. Wie unterscheiden sich nun die Tarife im Preis für verschiedene Laufzeiten, bei sonst gleicher oder ähnlicher Leistung, voneinander?</p>
+
+
+
+
+<h2 id="datenbeschaffung"><strong>Datenbeschaffung</strong>
+  <a href="#datenbeschaffung"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Ich habe zunächst die Tarifdetails verschiedener Anbieter im Internet recherhiert und die gefunden Informationen in eine Excel-Tabelle transferiert. Ein Tabellenblatt enthält dabei Allgemeines zum Tarif sowie das jeweilige Leistungsspektrum und ein weiteres Tabellenblatt die gestaffelten Beiträge nach Alter des Versicherungsnehmers pro Tarif.</p>
+
+
+
+
+<h2 id="datenaufbereitung"><strong>Datenaufbereitung</strong>
+  <a href="#datenaufbereitung"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Meine recherhierten Informationen habe ich dann in zwei separaten .CSV Dateien gespeichert und in RStudio eingelesen. Unten finden sich allgemeine Informationen und das Leistungsspektrum der Versicherungstarife. Zudem habe ich versucht die Tarife anhand ihrer Leistung zu gruppieren (<code>Gruppe</code>). Weiterhin finden sich auch Informationen zu Sonderleistungen (<code>Veneers</code>) und bis zu welcher Kostenhöhe die Behandlung erstattungsfähig ist (<code>Grenze_Jahr_</code>).</p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Versicherer</th>
+<th style="text-align:left">Tarif</th>
+<th style="text-align:left">Gruppe</th>
+<th style="text-align:left">Zahnersatz</th>
+<th style="text-align:right">Grenze_Jahr_1</th>
+<th style="text-align:right">Grenze_Jahr_2</th>
+<th style="text-align:right">Grenze_Jahr_3</th>
+<th style="text-align:right">Grenze_Jahr_4</th>
+<th style="text-align:right">Grenze_Jahr_5</th>
+<th style="text-align:left">Wartezeit</th>
+<th style="text-align:left">Schmerzausschaltung</th>
+<th style="text-align:left">Kieferorthopädie</th>
+<th style="text-align:left">Veneers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">750</td>
+<td style="text-align:right">1500</td>
+<td style="text-align:right">3000</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">nein</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">750</td>
+<td style="text-align:right">1500</td>
+<td style="text-align:right">3000</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">nein</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_ZPro</td>
+<td style="text-align:left">Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:right">750</td>
+<td style="text-align:right">1500</td>
+<td style="text-align:right">3000</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90_Zpro</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">750</td>
+<td style="text-align:right">1500</td>
+<td style="text-align:right">3000</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">nein</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80_Zpro</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+</tr>
+<tr>
+<td style="text-align:left">die Bayerische</td>
+<td style="text-align:left">BAY_Zahn_Prestige</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:right">1250</td>
+<td style="text-align:right">2500</td>
+<td style="text-align:right">3750</td>
+<td style="text-align:right">5000</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+</tr>
+<tr>
+<td style="text-align:left">die Bayerische</td>
+<td style="text-align:left">BAY_Zahn_Komfort</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">1250</td>
+<td style="text-align:right">2500</td>
+<td style="text-align:right">3750</td>
+<td style="text-align:right">5000</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">6 Monate</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+</tr>
+<tr>
+<td style="text-align:left">die Bayerische</td>
+<td style="text-align:left">BAY_Zahn_Smart</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">1250</td>
+<td style="text-align:right">2500</td>
+<td style="text-align:right">3750</td>
+<td style="text-align:right">5000</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">6 Monate</td>
+<td style="text-align:left">nein</td>
+<td style="text-align:left">nein</td>
+<td style="text-align:left">ja</td>
+</tr>
+<tr>
+<td style="text-align:left">DKV</td>
+<td style="text-align:left">DKV_KDTP100</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:right">600</td>
+<td style="text-align:right">1200</td>
+<td style="text-align:right">1800</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">8 Monate</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">ja</td>
+</tr>
+<tr>
+<td style="text-align:left">DKV</td>
+<td style="text-align:left">DKV_KDT85</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung</td>
+<td style="text-align:left">85%</td>
+<td style="text-align:right">500</td>
+<td style="text-align:right">1000</td>
+<td style="text-align:right">1500</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">8 Monate</td>
+<td style="text-align:left">nein</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">ja</td>
+</tr>
+<tr>
+<td style="text-align:left">DKV</td>
+<td style="text-align:left">DKV_KDBE</td>
+<td style="text-align:left">Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">8 Monate</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">NA</td>
+</tr>
+<tr>
+<td style="text-align:left">DKV</td>
+<td style="text-align:left">DKV_KDTP100_KDBE</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:right">600</td>
+<td style="text-align:right">1200</td>
+<td style="text-align:right">1800</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+</tr>
+<tr>
+<td style="text-align:left">DKV</td>
+<td style="text-align:left">DKV_KDTP85_KDBE</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">85%</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+</tr>
+<tr>
+<td style="text-align:left">Hallesche</td>
+<td style="text-align:left">HAL_dentZE.100</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:right">1000</td>
+<td style="text-align:right">2000</td>
+<td style="text-align:right">3000</td>
+<td style="text-align:right">4000</td>
+<td style="text-align:right">5000</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">nein</td>
+</tr>
+<tr>
+<td style="text-align:left">Hallesche</td>
+<td style="text-align:left">HAL_dentZE.90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">1000</td>
+<td style="text-align:right">2000</td>
+<td style="text-align:right">3000</td>
+<td style="text-align:right">4000</td>
+<td style="text-align:right">5000</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">nein</td>
+</tr>
+<tr>
+<td style="text-align:left">Hallesche</td>
+<td style="text-align:left">HAL_dentZB.100</td>
+<td style="text-align:left">Zahnbehandlung</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:right">500</td>
+<td style="text-align:right">1000</td>
+<td style="text-align:right">1500</td>
+<td style="text-align:right">2000</td>
+<td style="text-align:right">2500</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">NA</td>
+</tr>
+<tr>
+<td style="text-align:left">Hallesche</td>
+<td style="text-align:left">HAL_dentPRO.80</td>
+<td style="text-align:left">Prophylaxe</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+</tr>
+<tr>
+<td style="text-align:left">Hallesche</td>
+<td style="text-align:left">HAL_dentZE.100_dentZB.100_dentPRO80</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+</tr>
+<tr>
+<td style="text-align:left">Hallesche</td>
+<td style="text-align:left">HAL_dentZE.100_dentZB.100</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+</tr>
+<tr>
+<td style="text-align:left">Hallesche</td>
+<td style="text-align:left">HAL_dentZE.90_dentZB.100_dentPRO80</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+</tr>
+<tr>
+<td style="text-align:left">Hallesche</td>
+<td style="text-align:left">HAL_dentZE.90_dentZB.100</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+</tr>
+<tr>
+<td style="text-align:left">ARAG</td>
+<td style="text-align:left">ARA_Dent100</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:right">1500</td>
+<td style="text-align:right">3000</td>
+<td style="text-align:right">4500</td>
+<td style="text-align:right">6000</td>
+<td style="text-align:right">7500</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">nein</td>
+</tr>
+<tr>
+<td style="text-align:left">ARAG</td>
+<td style="text-align:left">ARA_Dent90P</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">1000</td>
+<td style="text-align:right">2000</td>
+<td style="text-align:right">3000</td>
+<td style="text-align:right">4000</td>
+<td style="text-align:right">5000</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">nur bei Unfall</td>
+<td style="text-align:left">nein</td>
+</tr>
+<tr>
+<td style="text-align:left">ARAG</td>
+<td style="text-align:left">ARA_Dent90</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">1000</td>
+<td style="text-align:right">2000</td>
+<td style="text-align:right">3000</td>
+<td style="text-align:right">4000</td>
+<td style="text-align:right">5000</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">nein</td>
+<td style="text-align:left">nur bei Unfall</td>
+<td style="text-align:left">nein</td>
+</tr>
+<tr>
+<td style="text-align:left">ARAG</td>
+<td style="text-align:left">ARA_Dent70</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">70%</td>
+<td style="text-align:right">500</td>
+<td style="text-align:right">1000</td>
+<td style="text-align:right">1500</td>
+<td style="text-align:right">2000</td>
+<td style="text-align:right">2500</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">nein</td>
+<td style="text-align:left">nein</td>
+<td style="text-align:left">nein</td>
+</tr>
+<tr>
+<td style="text-align:left">Allianz</td>
+<td style="text-align:left">ALL_DentalBest</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:right">900</td>
+<td style="text-align:right">1800</td>
+<td style="text-align:right">2700</td>
+<td style="text-align:right">3600</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">8 Monate</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+</tr>
+<tr>
+<td style="text-align:left">Allianz</td>
+<td style="text-align:left">ALL_DentalPlus</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">800</td>
+<td style="text-align:right">1600</td>
+<td style="text-align:right">2400</td>
+<td style="text-align:right">3200</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">8 Monate</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+</tr>
+<tr>
+<td style="text-align:left">DFV</td>
+<td style="text-align:left">DFV_Exklusiv</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:right">1000</td>
+<td style="text-align:right">2000</td>
+<td style="text-align:right">3000</td>
+<td style="text-align:right">4000</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">nein</td>
+</tr>
+<tr>
+<td style="text-align:left">DFV</td>
+<td style="text-align:left">DFV_Premium</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">750</td>
+<td style="text-align:right">1500</td>
+<td style="text-align:right">2250</td>
+<td style="text-align:right">3000</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">nein</td>
+</tr>
+<tr>
+<td style="text-align:left">Gothaer</td>
+<td style="text-align:left">GTH_MediZ_Premium</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:right">750</td>
+<td style="text-align:right">750</td>
+<td style="text-align:right">1500</td>
+<td style="text-align:right">2250</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">nein</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+</tr>
+<tr>
+<td style="text-align:left">Gothaer</td>
+<td style="text-align:left">GTH_MediZ_Plus</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">nein</td>
+<td style="text-align:left">nein</td>
+<td style="text-align:left">nein</td>
+</tr>
+<tr>
+<td style="text-align:left">Gothaer</td>
+<td style="text-align:left">GTH_Medi_Prophy</td>
+<td style="text-align:left">Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">nein</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+</tr>
+<tr>
+<td style="text-align:left">Gothaer</td>
+<td style="text-align:left">GTH_MediZ_Premium_Medi_Prophy</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+</tr>
+<tr>
+<td style="text-align:left">Gothaer</td>
+<td style="text-align:left">GTH_MediZ_Plus_Medi_Prophy</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+<td style="text-align:left">NA</td>
+</tr>
+<tr>
+<td style="text-align:left">UKV</td>
+<td style="text-align:left">UKV_Zahnprivat_Premium</td>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">1000</td>
+<td style="text-align:right">3000</td>
+<td style="text-align:right">6000</td>
+<td style="text-align:right">9000</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:left">keine</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+<td style="text-align:left">ja</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<p>In der zweiten .CSV Datei habe ich die Beitragsentwicklung aller Tarife zwischen dem 20. und 70. Lebensjahr eingetragen.</p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table>
+<thead>
+<tr>
+<th style="text-align:right">Alter</th>
+<th style="text-align:right">INT_Z90</th>
+<th style="text-align:right">INT_Z80</th>
+<th style="text-align:right">INT_ZPro</th>
+<th style="text-align:right">INT_Z90_Zpro</th>
+<th style="text-align:right">INT_Z80_Zpro</th>
+<th style="text-align:right">BAY_Zahn_Prestige</th>
+<th style="text-align:right">BAY_Zahn_Komfort</th>
+<th style="text-align:right">BAY_Zahn_Smart</th>
+<th style="text-align:right">DKV_KDTP100</th>
+<th style="text-align:right">DKV_KDT85</th>
+<th style="text-align:right">DKV_KDBE</th>
+<th style="text-align:right">DKV_KDTP100_KDBE</th>
+<th style="text-align:right">DKV_KDTP85_KDBE</th>
+<th style="text-align:right">HAL_dentZE.100</th>
+<th style="text-align:right">HAL_dentZE.90</th>
+<th style="text-align:right">HAL_dentZB.100</th>
+<th style="text-align:right">HAL_dentPRO.80</th>
+<th style="text-align:right">HAL_dentZE.100_dentZB.100_dentPRO80</th>
+<th style="text-align:right">HAL_dentZE.100_dentZB.100</th>
+<th style="text-align:right">HAL_dentZE.90_dentZB.100_dentPRO80</th>
+<th style="text-align:right">HAL_dentZE.90_dentZB.100</th>
+<th style="text-align:right">ARA_Dent100</th>
+<th style="text-align:right">ARA_Dent90P</th>
+<th style="text-align:right">ARA_Dent90</th>
+<th style="text-align:right">ARA_Dent70</th>
+<th style="text-align:right">ALL_DentalBest</th>
+<th style="text-align:right">ALL_DentalPlus</th>
+<th style="text-align:right">DFV_Exklusiv</th>
+<th style="text-align:right">DFV_Premium</th>
+<th style="text-align:right">GTH_MediZ_Premium</th>
+<th style="text-align:right">GTH_MediZ_Plus</th>
+<th style="text-align:right">GTH_Medi_Prophy</th>
+<th style="text-align:right">GTH_MediZ_Premium_Medi_Prophy</th>
+<th style="text-align:right">GTH_MediZ_Plus_Medi_Prophy</th>
+<th style="text-align:right">UKV_Zahnprivat_Premium</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">20</td>
+<td style="text-align:right">6.90</td>
+<td style="text-align:right">5.31</td>
+<td style="text-align:right">3.40</td>
+<td style="text-align:right">10.30</td>
+<td style="text-align:right">8.71</td>
+<td style="text-align:right">18.6</td>
+<td style="text-align:right">16.3</td>
+<td style="text-align:right">7.5</td>
+<td style="text-align:right">16.11</td>
+<td style="text-align:right">5.92</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">25.95</td>
+<td style="text-align:right">15.76</td>
+<td style="text-align:right">13.0</td>
+<td style="text-align:right">8.0</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">6.8</td>
+<td style="text-align:right">23.9</td>
+<td style="text-align:right">17.1</td>
+<td style="text-align:right">18.9</td>
+<td style="text-align:right">12.1</td>
+<td style="text-align:right">22.25</td>
+<td style="text-align:right">17.78</td>
+<td style="text-align:right">13.48</td>
+<td style="text-align:right">10.77</td>
+<td style="text-align:right">15.56</td>
+<td style="text-align:right">12.11</td>
+<td style="text-align:right">37.0</td>
+<td style="text-align:right">33.0</td>
+<td style="text-align:right">11.87</td>
+<td style="text-align:right">1.67</td>
+<td style="text-align:right">5.10</td>
+<td style="text-align:right">16.97</td>
+<td style="text-align:right">6.77</td>
+<td style="text-align:right">16.64</td>
+</tr>
+<tr>
+<td style="text-align:right">21</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">25.0</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">16.11</td>
+<td style="text-align:right">5.92</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">25.95</td>
+<td style="text-align:right">15.76</td>
+<td style="text-align:right">13.0</td>
+<td style="text-align:right">8.0</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">6.8</td>
+<td style="text-align:right">23.9</td>
+<td style="text-align:right">17.1</td>
+<td style="text-align:right">18.9</td>
+<td style="text-align:right">12.1</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">20.47</td>
+<td style="text-align:right">18.43</td>
+<td style="text-align:right">11.19</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">23.5</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">13.00</td>
+<td style="text-align:right">4.39</td>
+<td style="text-align:right">10.45</td>
+<td style="text-align:right">23.45</td>
+<td style="text-align:right">14.84</td>
+<td style="text-align:right">16.64</td>
+</tr>
+<tr>
+<td style="text-align:right">22</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">25.0</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">16.11</td>
+<td style="text-align:right">5.92</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">25.95</td>
+<td style="text-align:right">15.76</td>
+<td style="text-align:right">13.0</td>
+<td style="text-align:right">8.0</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">6.8</td>
+<td style="text-align:right">23.9</td>
+<td style="text-align:right">17.1</td>
+<td style="text-align:right">18.9</td>
+<td style="text-align:right">12.1</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">20.47</td>
+<td style="text-align:right">18.43</td>
+<td style="text-align:right">11.19</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">23.5</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">13.00</td>
+<td style="text-align:right">4.39</td>
+<td style="text-align:right">10.45</td>
+<td style="text-align:right">23.45</td>
+<td style="text-align:right">14.84</td>
+<td style="text-align:right">16.64</td>
+</tr>
+<tr>
+<td style="text-align:right">23</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">25.0</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">16.11</td>
+<td style="text-align:right">5.92</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">25.95</td>
+<td style="text-align:right">15.76</td>
+<td style="text-align:right">13.0</td>
+<td style="text-align:right">8.0</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">6.8</td>
+<td style="text-align:right">23.9</td>
+<td style="text-align:right">17.1</td>
+<td style="text-align:right">18.9</td>
+<td style="text-align:right">12.1</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">20.47</td>
+<td style="text-align:right">18.43</td>
+<td style="text-align:right">11.19</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">23.5</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">13.00</td>
+<td style="text-align:right">4.39</td>
+<td style="text-align:right">10.45</td>
+<td style="text-align:right">23.45</td>
+<td style="text-align:right">14.84</td>
+<td style="text-align:right">16.64</td>
+</tr>
+<tr>
+<td style="text-align:right">24</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">25.0</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">16.11</td>
+<td style="text-align:right">5.92</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">25.95</td>
+<td style="text-align:right">15.76</td>
+<td style="text-align:right">13.0</td>
+<td style="text-align:right">8.0</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">6.8</td>
+<td style="text-align:right">23.9</td>
+<td style="text-align:right">17.1</td>
+<td style="text-align:right">18.9</td>
+<td style="text-align:right">12.1</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">20.47</td>
+<td style="text-align:right">18.43</td>
+<td style="text-align:right">11.19</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">23.5</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">13.00</td>
+<td style="text-align:right">4.39</td>
+<td style="text-align:right">10.45</td>
+<td style="text-align:right">23.45</td>
+<td style="text-align:right">14.84</td>
+<td style="text-align:right">16.64</td>
+</tr>
+<tr>
+<td style="text-align:right">25</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">25.0</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">16.11</td>
+<td style="text-align:right">5.92</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">25.95</td>
+<td style="text-align:right">15.76</td>
+<td style="text-align:right">13.0</td>
+<td style="text-align:right">8.0</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">6.8</td>
+<td style="text-align:right">23.9</td>
+<td style="text-align:right">17.1</td>
+<td style="text-align:right">18.9</td>
+<td style="text-align:right">12.1</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">20.47</td>
+<td style="text-align:right">18.43</td>
+<td style="text-align:right">11.19</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">23.5</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">13.00</td>
+<td style="text-align:right">4.39</td>
+<td style="text-align:right">10.45</td>
+<td style="text-align:right">23.45</td>
+<td style="text-align:right">14.84</td>
+<td style="text-align:right">16.64</td>
+</tr>
+<tr>
+<td style="text-align:right">26</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">25.0</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">16.11</td>
+<td style="text-align:right">5.92</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">25.95</td>
+<td style="text-align:right">15.76</td>
+<td style="text-align:right">13.0</td>
+<td style="text-align:right">8.0</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">6.8</td>
+<td style="text-align:right">23.9</td>
+<td style="text-align:right">17.1</td>
+<td style="text-align:right">18.9</td>
+<td style="text-align:right">12.1</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">20.47</td>
+<td style="text-align:right">18.43</td>
+<td style="text-align:right">11.19</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">23.5</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">13.00</td>
+<td style="text-align:right">4.39</td>
+<td style="text-align:right">10.45</td>
+<td style="text-align:right">23.45</td>
+<td style="text-align:right">14.84</td>
+<td style="text-align:right">16.64</td>
+</tr>
+<tr>
+<td style="text-align:right">27</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">25.0</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">16.11</td>
+<td style="text-align:right">5.92</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">25.95</td>
+<td style="text-align:right">15.76</td>
+<td style="text-align:right">13.0</td>
+<td style="text-align:right">8.0</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">6.8</td>
+<td style="text-align:right">23.9</td>
+<td style="text-align:right">17.1</td>
+<td style="text-align:right">18.9</td>
+<td style="text-align:right">12.1</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">20.47</td>
+<td style="text-align:right">18.43</td>
+<td style="text-align:right">11.19</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">23.5</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">13.00</td>
+<td style="text-align:right">4.39</td>
+<td style="text-align:right">10.45</td>
+<td style="text-align:right">23.45</td>
+<td style="text-align:right">14.84</td>
+<td style="text-align:right">16.64</td>
+</tr>
+<tr>
+<td style="text-align:right">28</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">25.0</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">16.11</td>
+<td style="text-align:right">5.92</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">25.95</td>
+<td style="text-align:right">15.76</td>
+<td style="text-align:right">13.0</td>
+<td style="text-align:right">8.0</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">6.8</td>
+<td style="text-align:right">23.9</td>
+<td style="text-align:right">17.1</td>
+<td style="text-align:right">18.9</td>
+<td style="text-align:right">12.1</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">20.47</td>
+<td style="text-align:right">18.43</td>
+<td style="text-align:right">11.19</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">23.5</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">13.00</td>
+<td style="text-align:right">4.39</td>
+<td style="text-align:right">10.45</td>
+<td style="text-align:right">23.45</td>
+<td style="text-align:right">14.84</td>
+<td style="text-align:right">16.64</td>
+</tr>
+<tr>
+<td style="text-align:right">29</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">25.0</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">16.11</td>
+<td style="text-align:right">5.92</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">25.95</td>
+<td style="text-align:right">15.76</td>
+<td style="text-align:right">13.0</td>
+<td style="text-align:right">8.0</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">6.8</td>
+<td style="text-align:right">23.9</td>
+<td style="text-align:right">17.1</td>
+<td style="text-align:right">18.9</td>
+<td style="text-align:right">12.1</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">20.47</td>
+<td style="text-align:right">18.43</td>
+<td style="text-align:right">11.19</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">23.5</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">13.00</td>
+<td style="text-align:right">4.39</td>
+<td style="text-align:right">10.45</td>
+<td style="text-align:right">23.45</td>
+<td style="text-align:right">14.84</td>
+<td style="text-align:right">16.64</td>
+</tr>
+<tr>
+<td style="text-align:right">30</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">25.0</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">24.81</td>
+<td style="text-align:right">13.72</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">34.65</td>
+<td style="text-align:right">23.56</td>
+<td style="text-align:right">13.0</td>
+<td style="text-align:right">8.0</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">6.8</td>
+<td style="text-align:right">23.9</td>
+<td style="text-align:right">17.1</td>
+<td style="text-align:right">18.9</td>
+<td style="text-align:right">12.1</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">20.47</td>
+<td style="text-align:right">18.43</td>
+<td style="text-align:right">11.19</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">23.5</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">13.00</td>
+<td style="text-align:right">4.39</td>
+<td style="text-align:right">10.45</td>
+<td style="text-align:right">23.45</td>
+<td style="text-align:right">14.84</td>
+<td style="text-align:right">26.85</td>
+</tr>
+<tr>
+<td style="text-align:right">31</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">32.6</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">24.81</td>
+<td style="text-align:right">13.72</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">34.65</td>
+<td style="text-align:right">23.56</td>
+<td style="text-align:right">13.0</td>
+<td style="text-align:right">8.0</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">6.8</td>
+<td style="text-align:right">23.9</td>
+<td style="text-align:right">17.1</td>
+<td style="text-align:right">18.9</td>
+<td style="text-align:right">12.1</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">20.47</td>
+<td style="text-align:right">18.43</td>
+<td style="text-align:right">11.19</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">34.5</td>
+<td style="text-align:right">32.0</td>
+<td style="text-align:right">18.00</td>
+<td style="text-align:right">8.07</td>
+<td style="text-align:right">10.45</td>
+<td style="text-align:right">28.45</td>
+<td style="text-align:right">18.52</td>
+<td style="text-align:right">26.85</td>
+</tr>
+<tr>
+<td style="text-align:right">32</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">32.6</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">24.81</td>
+<td style="text-align:right">13.72</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">34.65</td>
+<td style="text-align:right">23.56</td>
+<td style="text-align:right">13.0</td>
+<td style="text-align:right">8.0</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">6.8</td>
+<td style="text-align:right">23.9</td>
+<td style="text-align:right">17.1</td>
+<td style="text-align:right">18.9</td>
+<td style="text-align:right">12.1</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">20.47</td>
+<td style="text-align:right">18.43</td>
+<td style="text-align:right">11.19</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">34.5</td>
+<td style="text-align:right">32.0</td>
+<td style="text-align:right">18.00</td>
+<td style="text-align:right">8.07</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">19.52</td>
+<td style="text-align:right">26.85</td>
+</tr>
+<tr>
+<td style="text-align:right">33</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">32.6</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">24.81</td>
+<td style="text-align:right">13.72</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">34.65</td>
+<td style="text-align:right">23.56</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">11.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">22.9</td>
+<td style="text-align:right">15.5</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">20.47</td>
+<td style="text-align:right">18.43</td>
+<td style="text-align:right">11.19</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">34.5</td>
+<td style="text-align:right">32.0</td>
+<td style="text-align:right">18.00</td>
+<td style="text-align:right">8.07</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">19.52</td>
+<td style="text-align:right">26.85</td>
+</tr>
+<tr>
+<td style="text-align:right">34</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">32.6</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">24.81</td>
+<td style="text-align:right">13.72</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">34.65</td>
+<td style="text-align:right">23.56</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">11.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">22.9</td>
+<td style="text-align:right">15.5</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">29.33</td>
+<td style="text-align:right">25.99</td>
+<td style="text-align:right">16.18</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">34.5</td>
+<td style="text-align:right">32.0</td>
+<td style="text-align:right">18.00</td>
+<td style="text-align:right">8.07</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">19.52</td>
+<td style="text-align:right">26.85</td>
+</tr>
+<tr>
+<td style="text-align:right">35</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">32.6</td>
+<td style="text-align:right">21.5</td>
+<td style="text-align:right">14.3</td>
+<td style="text-align:right">24.81</td>
+<td style="text-align:right">13.72</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">34.65</td>
+<td style="text-align:right">23.56</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">11.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">22.9</td>
+<td style="text-align:right">15.5</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">29.33</td>
+<td style="text-align:right">25.99</td>
+<td style="text-align:right">16.18</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">34.5</td>
+<td style="text-align:right">32.0</td>
+<td style="text-align:right">18.00</td>
+<td style="text-align:right">8.07</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">19.52</td>
+<td style="text-align:right">26.85</td>
+</tr>
+<tr>
+<td style="text-align:right">36</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">32.6</td>
+<td style="text-align:right">28.2</td>
+<td style="text-align:right">18.5</td>
+<td style="text-align:right">24.81</td>
+<td style="text-align:right">13.72</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">34.65</td>
+<td style="text-align:right">23.56</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">11.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">22.9</td>
+<td style="text-align:right">15.5</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">29.33</td>
+<td style="text-align:right">25.99</td>
+<td style="text-align:right">16.18</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">34.5</td>
+<td style="text-align:right">32.0</td>
+<td style="text-align:right">18.00</td>
+<td style="text-align:right">8.07</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">19.52</td>
+<td style="text-align:right">26.85</td>
+</tr>
+<tr>
+<td style="text-align:right">37</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">32.6</td>
+<td style="text-align:right">28.2</td>
+<td style="text-align:right">18.5</td>
+<td style="text-align:right">24.81</td>
+<td style="text-align:right">13.72</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">34.65</td>
+<td style="text-align:right">23.56</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">11.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">22.9</td>
+<td style="text-align:right">15.5</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">29.33</td>
+<td style="text-align:right">25.99</td>
+<td style="text-align:right">16.18</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">34.5</td>
+<td style="text-align:right">32.0</td>
+<td style="text-align:right">18.00</td>
+<td style="text-align:right">8.07</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">19.52</td>
+<td style="text-align:right">26.85</td>
+</tr>
+<tr>
+<td style="text-align:right">38</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">32.6</td>
+<td style="text-align:right">28.2</td>
+<td style="text-align:right">18.5</td>
+<td style="text-align:right">24.81</td>
+<td style="text-align:right">13.72</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">34.65</td>
+<td style="text-align:right">23.56</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">11.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">22.9</td>
+<td style="text-align:right">15.5</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">29.33</td>
+<td style="text-align:right">25.99</td>
+<td style="text-align:right">16.18</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">34.5</td>
+<td style="text-align:right">32.0</td>
+<td style="text-align:right">18.00</td>
+<td style="text-align:right">8.07</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">19.52</td>
+<td style="text-align:right">26.85</td>
+</tr>
+<tr>
+<td style="text-align:right">39</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">32.6</td>
+<td style="text-align:right">28.2</td>
+<td style="text-align:right">18.5</td>
+<td style="text-align:right">24.81</td>
+<td style="text-align:right">13.72</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">34.65</td>
+<td style="text-align:right">23.56</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">11.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">22.9</td>
+<td style="text-align:right">15.5</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">29.33</td>
+<td style="text-align:right">25.99</td>
+<td style="text-align:right">16.18</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">34.5</td>
+<td style="text-align:right">32.0</td>
+<td style="text-align:right">18.00</td>
+<td style="text-align:right">8.07</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">19.52</td>
+<td style="text-align:right">26.85</td>
+</tr>
+<tr>
+<td style="text-align:right">40</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">32.6</td>
+<td style="text-align:right">28.2</td>
+<td style="text-align:right">18.5</td>
+<td style="text-align:right">36.21</td>
+<td style="text-align:right">19.61</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">46.05</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">11.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">22.9</td>
+<td style="text-align:right">15.5</td>
+<td style="text-align:right">37.36</td>
+<td style="text-align:right">29.33</td>
+<td style="text-align:right">25.99</td>
+<td style="text-align:right">16.18</td>
+<td style="text-align:right">21.92</td>
+<td style="text-align:right">14.68</td>
+<td style="text-align:right">34.5</td>
+<td style="text-align:right">32.0</td>
+<td style="text-align:right">18.00</td>
+<td style="text-align:right">8.07</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">19.52</td>
+<td style="text-align:right">40.68</td>
+</tr>
+<tr>
+<td style="text-align:right">41</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">41.4</td>
+<td style="text-align:right">31.9</td>
+<td style="text-align:right">20.9</td>
+<td style="text-align:right">36.21</td>
+<td style="text-align:right">19.61</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">46.05</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">11.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">22.9</td>
+<td style="text-align:right">15.5</td>
+<td style="text-align:right">53.44</td>
+<td style="text-align:right">35.75</td>
+<td style="text-align:right">31.37</td>
+<td style="text-align:right">19.71</td>
+<td style="text-align:right">30.93</td>
+<td style="text-align:right">20.71</td>
+<td style="text-align:right">43.0</td>
+<td style="text-align:right">38.0</td>
+<td style="text-align:right">25.00</td>
+<td style="text-align:right">13.87</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">36.45</td>
+<td style="text-align:right">25.32</td>
+<td style="text-align:right">40.68</td>
+</tr>
+<tr>
+<td style="text-align:right">42</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">41.4</td>
+<td style="text-align:right">31.9</td>
+<td style="text-align:right">20.9</td>
+<td style="text-align:right">36.21</td>
+<td style="text-align:right">19.61</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">46.05</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">11.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">22.9</td>
+<td style="text-align:right">15.5</td>
+<td style="text-align:right">53.44</td>
+<td style="text-align:right">35.75</td>
+<td style="text-align:right">31.37</td>
+<td style="text-align:right">19.71</td>
+<td style="text-align:right">30.93</td>
+<td style="text-align:right">20.71</td>
+<td style="text-align:right">43.0</td>
+<td style="text-align:right">38.0</td>
+<td style="text-align:right">25.00</td>
+<td style="text-align:right">13.87</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">36.45</td>
+<td style="text-align:right">25.32</td>
+<td style="text-align:right">40.68</td>
+</tr>
+<tr>
+<td style="text-align:right">43</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">41.4</td>
+<td style="text-align:right">31.9</td>
+<td style="text-align:right">20.9</td>
+<td style="text-align:right">36.21</td>
+<td style="text-align:right">19.61</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">46.05</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">11.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">22.9</td>
+<td style="text-align:right">15.5</td>
+<td style="text-align:right">53.44</td>
+<td style="text-align:right">35.75</td>
+<td style="text-align:right">31.37</td>
+<td style="text-align:right">19.71</td>
+<td style="text-align:right">30.93</td>
+<td style="text-align:right">20.71</td>
+<td style="text-align:right">43.0</td>
+<td style="text-align:right">38.0</td>
+<td style="text-align:right">25.00</td>
+<td style="text-align:right">13.87</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">36.45</td>
+<td style="text-align:right">25.32</td>
+<td style="text-align:right">40.68</td>
+</tr>
+<tr>
+<td style="text-align:right">44</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">9.83</td>
+<td style="text-align:right">18.83</td>
+<td style="text-align:right">16.58</td>
+<td style="text-align:right">41.4</td>
+<td style="text-align:right">31.9</td>
+<td style="text-align:right">20.9</td>
+<td style="text-align:right">36.21</td>
+<td style="text-align:right">19.61</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">46.05</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">28.4</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">39.9</td>
+<td style="text-align:right">32.5</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">53.44</td>
+<td style="text-align:right">35.75</td>
+<td style="text-align:right">31.37</td>
+<td style="text-align:right">19.71</td>
+<td style="text-align:right">30.93</td>
+<td style="text-align:right">20.71</td>
+<td style="text-align:right">43.0</td>
+<td style="text-align:right">38.0</td>
+<td style="text-align:right">25.00</td>
+<td style="text-align:right">13.87</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">36.45</td>
+<td style="text-align:right">25.32</td>
+<td style="text-align:right">40.68</td>
+</tr>
+<tr>
+<td style="text-align:right">45</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">41.4</td>
+<td style="text-align:right">31.9</td>
+<td style="text-align:right">20.9</td>
+<td style="text-align:right">36.21</td>
+<td style="text-align:right">19.61</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">46.05</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">28.4</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">39.9</td>
+<td style="text-align:right">32.5</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">53.44</td>
+<td style="text-align:right">35.75</td>
+<td style="text-align:right">31.37</td>
+<td style="text-align:right">19.71</td>
+<td style="text-align:right">30.93</td>
+<td style="text-align:right">20.71</td>
+<td style="text-align:right">43.0</td>
+<td style="text-align:right">38.0</td>
+<td style="text-align:right">25.00</td>
+<td style="text-align:right">13.87</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">36.45</td>
+<td style="text-align:right">25.32</td>
+<td style="text-align:right">40.68</td>
+</tr>
+<tr>
+<td style="text-align:right">46</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">46.8</td>
+<td style="text-align:right">35.7</td>
+<td style="text-align:right">23.3</td>
+<td style="text-align:right">36.21</td>
+<td style="text-align:right">19.61</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">46.05</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">28.4</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">39.9</td>
+<td style="text-align:right">32.5</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">61.16</td>
+<td style="text-align:right">40.79</td>
+<td style="text-align:right">35.56</td>
+<td style="text-align:right">22.45</td>
+<td style="text-align:right">35.13</td>
+<td style="text-align:right">23.52</td>
+<td style="text-align:right">43.0</td>
+<td style="text-align:right">38.0</td>
+<td style="text-align:right">25.00</td>
+<td style="text-align:right">13.87</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">36.45</td>
+<td style="text-align:right">25.32</td>
+<td style="text-align:right">40.68</td>
+</tr>
+<tr>
+<td style="text-align:right">47</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">46.8</td>
+<td style="text-align:right">35.7</td>
+<td style="text-align:right">23.3</td>
+<td style="text-align:right">36.21</td>
+<td style="text-align:right">19.61</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">46.05</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">28.4</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">39.9</td>
+<td style="text-align:right">32.5</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">61.16</td>
+<td style="text-align:right">40.79</td>
+<td style="text-align:right">35.56</td>
+<td style="text-align:right">22.45</td>
+<td style="text-align:right">35.13</td>
+<td style="text-align:right">23.52</td>
+<td style="text-align:right">43.0</td>
+<td style="text-align:right">38.0</td>
+<td style="text-align:right">25.00</td>
+<td style="text-align:right">13.87</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">36.45</td>
+<td style="text-align:right">25.32</td>
+<td style="text-align:right">40.68</td>
+</tr>
+<tr>
+<td style="text-align:right">48</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">46.8</td>
+<td style="text-align:right">35.7</td>
+<td style="text-align:right">23.3</td>
+<td style="text-align:right">36.21</td>
+<td style="text-align:right">19.61</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">46.05</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">28.4</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">39.9</td>
+<td style="text-align:right">32.5</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">61.16</td>
+<td style="text-align:right">40.79</td>
+<td style="text-align:right">35.56</td>
+<td style="text-align:right">22.45</td>
+<td style="text-align:right">35.13</td>
+<td style="text-align:right">23.52</td>
+<td style="text-align:right">43.0</td>
+<td style="text-align:right">38.0</td>
+<td style="text-align:right">25.00</td>
+<td style="text-align:right">13.87</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">36.45</td>
+<td style="text-align:right">25.32</td>
+<td style="text-align:right">40.68</td>
+</tr>
+<tr>
+<td style="text-align:right">49</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">46.8</td>
+<td style="text-align:right">35.7</td>
+<td style="text-align:right">23.3</td>
+<td style="text-align:right">36.21</td>
+<td style="text-align:right">19.61</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">46.05</td>
+<td style="text-align:right">29.45</td>
+<td style="text-align:right">28.4</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">39.9</td>
+<td style="text-align:right">32.5</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">61.16</td>
+<td style="text-align:right">40.79</td>
+<td style="text-align:right">35.56</td>
+<td style="text-align:right">22.45</td>
+<td style="text-align:right">35.13</td>
+<td style="text-align:right">23.52</td>
+<td style="text-align:right">43.0</td>
+<td style="text-align:right">38.0</td>
+<td style="text-align:right">25.00</td>
+<td style="text-align:right">13.87</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">36.45</td>
+<td style="text-align:right">25.32</td>
+<td style="text-align:right">40.68</td>
+</tr>
+<tr>
+<td style="text-align:right">50</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">46.8</td>
+<td style="text-align:right">35.7</td>
+<td style="text-align:right">23.3</td>
+<td style="text-align:right">53.72</td>
+<td style="text-align:right">29.30</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">63.56</td>
+<td style="text-align:right">39.14</td>
+<td style="text-align:right">28.4</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">39.9</td>
+<td style="text-align:right">32.5</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">61.16</td>
+<td style="text-align:right">40.79</td>
+<td style="text-align:right">35.56</td>
+<td style="text-align:right">22.45</td>
+<td style="text-align:right">35.13</td>
+<td style="text-align:right">23.52</td>
+<td style="text-align:right">43.0</td>
+<td style="text-align:right">38.0</td>
+<td style="text-align:right">25.00</td>
+<td style="text-align:right">13.87</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">36.45</td>
+<td style="text-align:right">25.32</td>
+<td style="text-align:right">53.42</td>
+</tr>
+<tr>
+<td style="text-align:right">51</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">54.4</td>
+<td style="text-align:right">41.0</td>
+<td style="text-align:right">26.6</td>
+<td style="text-align:right">53.72</td>
+<td style="text-align:right">29.30</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">63.56</td>
+<td style="text-align:right">39.14</td>
+<td style="text-align:right">28.4</td>
+<td style="text-align:right">18.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">39.9</td>
+<td style="text-align:right">32.5</td>
+<td style="text-align:right">29.9</td>
+<td style="text-align:right">22.5</td>
+<td style="text-align:right">69.13</td>
+<td style="text-align:right">45.93</td>
+<td style="text-align:right">39.79</td>
+<td style="text-align:right">25.23</td>
+<td style="text-align:right">38.71</td>
+<td style="text-align:right">25.92</td>
+<td style="text-align:right">51.5</td>
+<td style="text-align:right">47.0</td>
+<td style="text-align:right">33.00</td>
+<td style="text-align:right">20.31</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">44.45</td>
+<td style="text-align:right">31.76</td>
+<td style="text-align:right">53.42</td>
+</tr>
+<tr>
+<td style="text-align:right">52</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">54.4</td>
+<td style="text-align:right">41.0</td>
+<td style="text-align:right">26.6</td>
+<td style="text-align:right">53.72</td>
+<td style="text-align:right">29.30</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">63.56</td>
+<td style="text-align:right">39.14</td>
+<td style="text-align:right">35.4</td>
+<td style="text-align:right">23.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">46.9</td>
+<td style="text-align:right">39.5</td>
+<td style="text-align:right">34.9</td>
+<td style="text-align:right">27.5</td>
+<td style="text-align:right">69.13</td>
+<td style="text-align:right">45.93</td>
+<td style="text-align:right">39.79</td>
+<td style="text-align:right">25.23</td>
+<td style="text-align:right">38.71</td>
+<td style="text-align:right">25.92</td>
+<td style="text-align:right">51.5</td>
+<td style="text-align:right">47.0</td>
+<td style="text-align:right">33.00</td>
+<td style="text-align:right">20.31</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">44.45</td>
+<td style="text-align:right">31.76</td>
+<td style="text-align:right">53.42</td>
+</tr>
+<tr>
+<td style="text-align:right">53</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">54.4</td>
+<td style="text-align:right">41.0</td>
+<td style="text-align:right">26.6</td>
+<td style="text-align:right">53.72</td>
+<td style="text-align:right">29.30</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">63.56</td>
+<td style="text-align:right">39.14</td>
+<td style="text-align:right">35.4</td>
+<td style="text-align:right">23.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">46.9</td>
+<td style="text-align:right">39.5</td>
+<td style="text-align:right">34.9</td>
+<td style="text-align:right">27.5</td>
+<td style="text-align:right">69.13</td>
+<td style="text-align:right">45.93</td>
+<td style="text-align:right">39.79</td>
+<td style="text-align:right">25.23</td>
+<td style="text-align:right">38.71</td>
+<td style="text-align:right">25.92</td>
+<td style="text-align:right">51.5</td>
+<td style="text-align:right">47.0</td>
+<td style="text-align:right">33.00</td>
+<td style="text-align:right">20.31</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">44.45</td>
+<td style="text-align:right">31.76</td>
+<td style="text-align:right">53.42</td>
+</tr>
+<tr>
+<td style="text-align:right">54</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">54.4</td>
+<td style="text-align:right">41.0</td>
+<td style="text-align:right">26.6</td>
+<td style="text-align:right">53.72</td>
+<td style="text-align:right">29.30</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">63.56</td>
+<td style="text-align:right">39.14</td>
+<td style="text-align:right">35.4</td>
+<td style="text-align:right">23.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">46.9</td>
+<td style="text-align:right">39.5</td>
+<td style="text-align:right">34.9</td>
+<td style="text-align:right">27.5</td>
+<td style="text-align:right">69.13</td>
+<td style="text-align:right">45.93</td>
+<td style="text-align:right">39.79</td>
+<td style="text-align:right">25.23</td>
+<td style="text-align:right">38.71</td>
+<td style="text-align:right">25.92</td>
+<td style="text-align:right">51.5</td>
+<td style="text-align:right">47.0</td>
+<td style="text-align:right">33.00</td>
+<td style="text-align:right">20.31</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">44.45</td>
+<td style="text-align:right">31.76</td>
+<td style="text-align:right">53.42</td>
+</tr>
+<tr>
+<td style="text-align:right">55</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">54.4</td>
+<td style="text-align:right">41.0</td>
+<td style="text-align:right">26.6</td>
+<td style="text-align:right">53.72</td>
+<td style="text-align:right">29.30</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">63.56</td>
+<td style="text-align:right">39.14</td>
+<td style="text-align:right">35.4</td>
+<td style="text-align:right">23.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">46.9</td>
+<td style="text-align:right">39.5</td>
+<td style="text-align:right">34.9</td>
+<td style="text-align:right">27.5</td>
+<td style="text-align:right">69.13</td>
+<td style="text-align:right">45.93</td>
+<td style="text-align:right">39.79</td>
+<td style="text-align:right">25.23</td>
+<td style="text-align:right">38.71</td>
+<td style="text-align:right">25.92</td>
+<td style="text-align:right">51.5</td>
+<td style="text-align:right">47.0</td>
+<td style="text-align:right">33.00</td>
+<td style="text-align:right">20.31</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">44.45</td>
+<td style="text-align:right">31.76</td>
+<td style="text-align:right">53.42</td>
+</tr>
+<tr>
+<td style="text-align:right">56</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">59.9</td>
+<td style="text-align:right">44.8</td>
+<td style="text-align:right">29.0</td>
+<td style="text-align:right">53.72</td>
+<td style="text-align:right">29.30</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">63.56</td>
+<td style="text-align:right">39.14</td>
+<td style="text-align:right">35.4</td>
+<td style="text-align:right">23.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">46.9</td>
+<td style="text-align:right">39.5</td>
+<td style="text-align:right">34.9</td>
+<td style="text-align:right">27.5</td>
+<td style="text-align:right">76.49</td>
+<td style="text-align:right">50.71</td>
+<td style="text-align:right">43.76</td>
+<td style="text-align:right">27.83</td>
+<td style="text-align:right">42.46</td>
+<td style="text-align:right">28.43</td>
+<td style="text-align:right">51.5</td>
+<td style="text-align:right">47.0</td>
+<td style="text-align:right">33.00</td>
+<td style="text-align:right">20.31</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">44.45</td>
+<td style="text-align:right">31.76</td>
+<td style="text-align:right">53.42</td>
+</tr>
+<tr>
+<td style="text-align:right">57</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">59.9</td>
+<td style="text-align:right">44.8</td>
+<td style="text-align:right">29.0</td>
+<td style="text-align:right">53.72</td>
+<td style="text-align:right">29.30</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">63.56</td>
+<td style="text-align:right">39.14</td>
+<td style="text-align:right">35.4</td>
+<td style="text-align:right">23.4</td>
+<td style="text-align:right">4.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">46.9</td>
+<td style="text-align:right">39.5</td>
+<td style="text-align:right">34.9</td>
+<td style="text-align:right">27.5</td>
+<td style="text-align:right">76.49</td>
+<td style="text-align:right">50.71</td>
+<td style="text-align:right">43.76</td>
+<td style="text-align:right">27.83</td>
+<td style="text-align:right">42.46</td>
+<td style="text-align:right">28.43</td>
+<td style="text-align:right">51.5</td>
+<td style="text-align:right">47.0</td>
+<td style="text-align:right">33.00</td>
+<td style="text-align:right">20.31</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">44.45</td>
+<td style="text-align:right">31.76</td>
+<td style="text-align:right">53.42</td>
+</tr>
+<tr>
+<td style="text-align:right">58</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">59.9</td>
+<td style="text-align:right">44.8</td>
+<td style="text-align:right">29.0</td>
+<td style="text-align:right">53.72</td>
+<td style="text-align:right">29.30</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">63.56</td>
+<td style="text-align:right">39.14</td>
+<td style="text-align:right">35.4</td>
+<td style="text-align:right">23.4</td>
+<td style="text-align:right">4.6</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">47.4</td>
+<td style="text-align:right">40.0</td>
+<td style="text-align:right">35.4</td>
+<td style="text-align:right">28.0</td>
+<td style="text-align:right">76.49</td>
+<td style="text-align:right">50.71</td>
+<td style="text-align:right">43.76</td>
+<td style="text-align:right">27.83</td>
+<td style="text-align:right">42.46</td>
+<td style="text-align:right">28.43</td>
+<td style="text-align:right">51.5</td>
+<td style="text-align:right">47.0</td>
+<td style="text-align:right">33.00</td>
+<td style="text-align:right">20.31</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">44.45</td>
+<td style="text-align:right">31.76</td>
+<td style="text-align:right">53.42</td>
+</tr>
+<tr>
+<td style="text-align:right">59</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">59.9</td>
+<td style="text-align:right">44.8</td>
+<td style="text-align:right">29.0</td>
+<td style="text-align:right">53.72</td>
+<td style="text-align:right">29.30</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">63.56</td>
+<td style="text-align:right">39.14</td>
+<td style="text-align:right">42.9</td>
+<td style="text-align:right">28.9</td>
+<td style="text-align:right">4.6</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">54.9</td>
+<td style="text-align:right">47.5</td>
+<td style="text-align:right">40.9</td>
+<td style="text-align:right">33.5</td>
+<td style="text-align:right">76.49</td>
+<td style="text-align:right">50.71</td>
+<td style="text-align:right">43.76</td>
+<td style="text-align:right">27.83</td>
+<td style="text-align:right">42.46</td>
+<td style="text-align:right">28.43</td>
+<td style="text-align:right">51.5</td>
+<td style="text-align:right">47.0</td>
+<td style="text-align:right">33.00</td>
+<td style="text-align:right">20.31</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">44.45</td>
+<td style="text-align:right">31.76</td>
+<td style="text-align:right">53.42</td>
+</tr>
+<tr>
+<td style="text-align:right">60</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">59.9</td>
+<td style="text-align:right">44.8</td>
+<td style="text-align:right">29.0</td>
+<td style="text-align:right">63.92</td>
+<td style="text-align:right">31.94</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">73.76</td>
+<td style="text-align:right">41.78</td>
+<td style="text-align:right">42.9</td>
+<td style="text-align:right">28.9</td>
+<td style="text-align:right">4.6</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">54.9</td>
+<td style="text-align:right">47.5</td>
+<td style="text-align:right">40.9</td>
+<td style="text-align:right">33.5</td>
+<td style="text-align:right">76.49</td>
+<td style="text-align:right">50.71</td>
+<td style="text-align:right">43.76</td>
+<td style="text-align:right">27.83</td>
+<td style="text-align:right">42.46</td>
+<td style="text-align:right">28.43</td>
+<td style="text-align:right">51.5</td>
+<td style="text-align:right">47.0</td>
+<td style="text-align:right">33.00</td>
+<td style="text-align:right">20.31</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">44.45</td>
+<td style="text-align:right">31.76</td>
+<td style="text-align:right">66.03</td>
+</tr>
+<tr>
+<td style="text-align:right">61</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">50.5</td>
+<td style="text-align:right">49.1</td>
+<td style="text-align:right">31.7</td>
+<td style="text-align:right">63.92</td>
+<td style="text-align:right">31.94</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">73.76</td>
+<td style="text-align:right">41.78</td>
+<td style="text-align:right">42.9</td>
+<td style="text-align:right">28.9</td>
+<td style="text-align:right">4.6</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">54.9</td>
+<td style="text-align:right">47.5</td>
+<td style="text-align:right">40.9</td>
+<td style="text-align:right">33.5</td>
+<td style="text-align:right">84.76</td>
+<td style="text-align:right">56.12</td>
+<td style="text-align:right">48.37</td>
+<td style="text-align:right">30.80</td>
+<td style="text-align:right">44.77</td>
+<td style="text-align:right">29.98</td>
+<td style="text-align:right">64.0</td>
+<td style="text-align:right">58.5</td>
+<td style="text-align:right">39.00</td>
+<td style="text-align:right">24.96</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">50.45</td>
+<td style="text-align:right">36.41</td>
+<td style="text-align:right">66.03</td>
+</tr>
+<tr>
+<td style="text-align:right">62</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">66.2</td>
+<td style="text-align:right">49.1</td>
+<td style="text-align:right">31.7</td>
+<td style="text-align:right">63.92</td>
+<td style="text-align:right">31.94</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">73.76</td>
+<td style="text-align:right">41.78</td>
+<td style="text-align:right">42.9</td>
+<td style="text-align:right">28.9</td>
+<td style="text-align:right">4.6</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">54.9</td>
+<td style="text-align:right">47.5</td>
+<td style="text-align:right">40.9</td>
+<td style="text-align:right">33.5</td>
+<td style="text-align:right">84.76</td>
+<td style="text-align:right">56.12</td>
+<td style="text-align:right">48.37</td>
+<td style="text-align:right">30.80</td>
+<td style="text-align:right">44.77</td>
+<td style="text-align:right">29.98</td>
+<td style="text-align:right">64.0</td>
+<td style="text-align:right">58.5</td>
+<td style="text-align:right">39.00</td>
+<td style="text-align:right">24.96</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">50.45</td>
+<td style="text-align:right">36.41</td>
+<td style="text-align:right">66.03</td>
+</tr>
+<tr>
+<td style="text-align:right">63</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">66.2</td>
+<td style="text-align:right">49.1</td>
+<td style="text-align:right">31.7</td>
+<td style="text-align:right">63.92</td>
+<td style="text-align:right">31.94</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">73.76</td>
+<td style="text-align:right">41.78</td>
+<td style="text-align:right">42.9</td>
+<td style="text-align:right">28.9</td>
+<td style="text-align:right">4.6</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">54.9</td>
+<td style="text-align:right">47.5</td>
+<td style="text-align:right">40.9</td>
+<td style="text-align:right">33.5</td>
+<td style="text-align:right">84.76</td>
+<td style="text-align:right">56.12</td>
+<td style="text-align:right">48.37</td>
+<td style="text-align:right">30.80</td>
+<td style="text-align:right">44.77</td>
+<td style="text-align:right">29.98</td>
+<td style="text-align:right">64.0</td>
+<td style="text-align:right">58.5</td>
+<td style="text-align:right">39.00</td>
+<td style="text-align:right">24.96</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">50.45</td>
+<td style="text-align:right">36.41</td>
+<td style="text-align:right">66.03</td>
+</tr>
+<tr>
+<td style="text-align:right">64</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">11.07</td>
+<td style="text-align:right">37.52</td>
+<td style="text-align:right">30.95</td>
+<td style="text-align:right">66.2</td>
+<td style="text-align:right">49.1</td>
+<td style="text-align:right">31.7</td>
+<td style="text-align:right">63.92</td>
+<td style="text-align:right">31.94</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">73.76</td>
+<td style="text-align:right">41.78</td>
+<td style="text-align:right">42.9</td>
+<td style="text-align:right">28.9</td>
+<td style="text-align:right">4.6</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">54.9</td>
+<td style="text-align:right">47.5</td>
+<td style="text-align:right">40.9</td>
+<td style="text-align:right">33.5</td>
+<td style="text-align:right">84.76</td>
+<td style="text-align:right">56.12</td>
+<td style="text-align:right">48.37</td>
+<td style="text-align:right">30.80</td>
+<td style="text-align:right">44.77</td>
+<td style="text-align:right">29.98</td>
+<td style="text-align:right">64.0</td>
+<td style="text-align:right">58.5</td>
+<td style="text-align:right">39.00</td>
+<td style="text-align:right">24.96</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">50.45</td>
+<td style="text-align:right">36.41</td>
+<td style="text-align:right">66.03</td>
+</tr>
+<tr>
+<td style="text-align:right">65</td>
+<td style="text-align:right">29.73</td>
+<td style="text-align:right">23.32</td>
+<td style="text-align:right">9.69</td>
+<td style="text-align:right">39.42</td>
+<td style="text-align:right">33.01</td>
+<td style="text-align:right">66.2</td>
+<td style="text-align:right">49.1</td>
+<td style="text-align:right">31.7</td>
+<td style="text-align:right">63.92</td>
+<td style="text-align:right">31.94</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">73.76</td>
+<td style="text-align:right">41.78</td>
+<td style="text-align:right">42.9</td>
+<td style="text-align:right">28.9</td>
+<td style="text-align:right">4.6</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">54.9</td>
+<td style="text-align:right">47.5</td>
+<td style="text-align:right">40.9</td>
+<td style="text-align:right">33.5</td>
+<td style="text-align:right">84.76</td>
+<td style="text-align:right">56.12</td>
+<td style="text-align:right">48.37</td>
+<td style="text-align:right">30.80</td>
+<td style="text-align:right">44.77</td>
+<td style="text-align:right">29.98</td>
+<td style="text-align:right">64.0</td>
+<td style="text-align:right">58.5</td>
+<td style="text-align:right">39.00</td>
+<td style="text-align:right">24.96</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">50.45</td>
+<td style="text-align:right">36.41</td>
+<td style="text-align:right">66.03</td>
+</tr>
+<tr>
+<td style="text-align:right">66</td>
+<td style="text-align:right">29.73</td>
+<td style="text-align:right">23.32</td>
+<td style="text-align:right">9.69</td>
+<td style="text-align:right">39.42</td>
+<td style="text-align:right">33.01</td>
+<td style="text-align:right">67.5</td>
+<td style="text-align:right">50.1</td>
+<td style="text-align:right">32.4</td>
+<td style="text-align:right">63.92</td>
+<td style="text-align:right">31.94</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">73.76</td>
+<td style="text-align:right">41.78</td>
+<td style="text-align:right">47.4</td>
+<td style="text-align:right">32.4</td>
+<td style="text-align:right">5.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">59.9</td>
+<td style="text-align:right">52.5</td>
+<td style="text-align:right">44.9</td>
+<td style="text-align:right">37.5</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">44.77</td>
+<td style="text-align:right">29.98</td>
+<td style="text-align:right">64.0</td>
+<td style="text-align:right">58.5</td>
+<td style="text-align:right">39.00</td>
+<td style="text-align:right">24.96</td>
+<td style="text-align:right">11.45</td>
+<td style="text-align:right">50.45</td>
+<td style="text-align:right">36.41</td>
+<td style="text-align:right">66.03</td>
+</tr>
+<tr>
+<td style="text-align:right">67</td>
+<td style="text-align:right">29.73</td>
+<td style="text-align:right">23.32</td>
+<td style="text-align:right">9.69</td>
+<td style="text-align:right">39.42</td>
+<td style="text-align:right">33.01</td>
+<td style="text-align:right">67.5</td>
+<td style="text-align:right">50.1</td>
+<td style="text-align:right">32.4</td>
+<td style="text-align:right">63.92</td>
+<td style="text-align:right">31.94</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">73.76</td>
+<td style="text-align:right">41.78</td>
+<td style="text-align:right">47.4</td>
+<td style="text-align:right">32.4</td>
+<td style="text-align:right">5.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">59.9</td>
+<td style="text-align:right">52.5</td>
+<td style="text-align:right">44.9</td>
+<td style="text-align:right">37.5</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">44.77</td>
+<td style="text-align:right">29.98</td>
+<td style="text-align:right">64.0</td>
+<td style="text-align:right">58.5</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">66.03</td>
+</tr>
+<tr>
+<td style="text-align:right">68</td>
+<td style="text-align:right">29.73</td>
+<td style="text-align:right">23.32</td>
+<td style="text-align:right">9.69</td>
+<td style="text-align:right">39.42</td>
+<td style="text-align:right">33.01</td>
+<td style="text-align:right">67.5</td>
+<td style="text-align:right">50.1</td>
+<td style="text-align:right">32.4</td>
+<td style="text-align:right">63.92</td>
+<td style="text-align:right">31.94</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">73.76</td>
+<td style="text-align:right">41.78</td>
+<td style="text-align:right">47.4</td>
+<td style="text-align:right">32.4</td>
+<td style="text-align:right">5.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">59.9</td>
+<td style="text-align:right">52.5</td>
+<td style="text-align:right">44.9</td>
+<td style="text-align:right">37.5</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">44.77</td>
+<td style="text-align:right">29.98</td>
+<td style="text-align:right">64.0</td>
+<td style="text-align:right">58.5</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">66.03</td>
+</tr>
+<tr>
+<td style="text-align:right">69</td>
+<td style="text-align:right">29.73</td>
+<td style="text-align:right">23.32</td>
+<td style="text-align:right">9.69</td>
+<td style="text-align:right">39.42</td>
+<td style="text-align:right">33.01</td>
+<td style="text-align:right">67.5</td>
+<td style="text-align:right">50.1</td>
+<td style="text-align:right">32.4</td>
+<td style="text-align:right">63.92</td>
+<td style="text-align:right">31.94</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">73.76</td>
+<td style="text-align:right">41.78</td>
+<td style="text-align:right">47.4</td>
+<td style="text-align:right">32.4</td>
+<td style="text-align:right">5.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">59.9</td>
+<td style="text-align:right">52.5</td>
+<td style="text-align:right">44.9</td>
+<td style="text-align:right">37.5</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">44.77</td>
+<td style="text-align:right">29.98</td>
+<td style="text-align:right">64.0</td>
+<td style="text-align:right">58.5</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">66.03</td>
+</tr>
+<tr>
+<td style="text-align:right">70</td>
+<td style="text-align:right">29.73</td>
+<td style="text-align:right">23.32</td>
+<td style="text-align:right">9.69</td>
+<td style="text-align:right">39.42</td>
+<td style="text-align:right">33.01</td>
+<td style="text-align:right">67.5</td>
+<td style="text-align:right">50.1</td>
+<td style="text-align:right">32.4</td>
+<td style="text-align:right">63.92</td>
+<td style="text-align:right">31.94</td>
+<td style="text-align:right">9.84</td>
+<td style="text-align:right">73.76</td>
+<td style="text-align:right">41.78</td>
+<td style="text-align:right">47.4</td>
+<td style="text-align:right">32.4</td>
+<td style="text-align:right">5.1</td>
+<td style="text-align:right">7.4</td>
+<td style="text-align:right">59.9</td>
+<td style="text-align:right">52.5</td>
+<td style="text-align:right">44.9</td>
+<td style="text-align:right">37.5</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">44.77</td>
+<td style="text-align:right">29.98</td>
+<td style="text-align:right">64.0</td>
+<td style="text-align:right">58.5</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">NA</td>
+<td style="text-align:right">66.03</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Die Beiträge befinden sich im <em>Wide-Format</em> - also jede Spalte enthält einen Tarif mit dem Beitragssatz zum jeweiligen Alter der Versicherungsnehmerin. Für die weitere Analyse wandle ich den Datensatz ins <em>Long-Format</em> um. Weiterhin generiere ich eine Spalte für den jährlich fälligen Beitrag und ergänze den Datensatz mit den Beiträgen um einige allgemeine Tarifinformationen.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Reshapen der Beitrage Wide to Long</span>
+</span></span><span style="display:flex;"><span>Beitrag.Long <span style="color:#666">&lt;-</span> <span style="color:#06287e">gather</span>(Beitrag.Wide, <span style="color:#666">-</span>Alter, 
+</span></span><span style="display:flex;"><span>                              key <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Tarif&#34;</span>, 
+</span></span><span style="display:flex;"><span>                              value <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Beitrag&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Jahresbeitrag generieren</span>
+</span></span><span style="display:flex;"><span>Beitrag.Long <span style="color:#666">&lt;-</span> Beitrag.Long <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(Beitrag_Jahr <span style="color:#666">=</span> Beitrag<span style="color:#666">*</span><span style="color:#40a070">12</span>) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Allgemeine Tarifmerkmale anspielen</span>
+</span></span><span style="display:flex;"><span>Tarife.Beitrag <span style="color:#666">&lt;-</span> Tarife <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(Versicherer, Tarif, Gruppe, Zahnersatz) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">left_join</span>(Beitrag.Long, by<span style="color:#666">=</span><span style="color:#4070a0">&#34;Tarif&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">as_tibble</span>()
+</span></span></code></pre></div><p>Die Daten sehen nun so aus:</p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Versicherer</th>
+<th style="text-align:left">Tarif</th>
+<th style="text-align:left">Gruppe</th>
+<th style="text-align:left">Zahnersatz</th>
+<th style="text-align:right">Alter</th>
+<th style="text-align:right">Beitrag</th>
+<th style="text-align:right">Beitrag_Jahr</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">20</td>
+<td style="text-align:right">6.90</td>
+<td style="text-align:right">82.80</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">21</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">22</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">23</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">24</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">25</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">26</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">27</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">28</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">29</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">30</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">31</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">32</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">33</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">34</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">35</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">36</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">37</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">38</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">39</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">40</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">41</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">42</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">43</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">44</td>
+<td style="text-align:right">9.00</td>
+<td style="text-align:right">108.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">45</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">46</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">47</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">48</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">49</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">50</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">51</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">52</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">53</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">54</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">55</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">57</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">58</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">59</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">60</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">61</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">62</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">63</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">64</td>
+<td style="text-align:right">26.45</td>
+<td style="text-align:right">317.40</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">65</td>
+<td style="text-align:right">29.73</td>
+<td style="text-align:right">356.76</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">66</td>
+<td style="text-align:right">29.73</td>
+<td style="text-align:right">356.76</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">67</td>
+<td style="text-align:right">29.73</td>
+<td style="text-align:right">356.76</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">68</td>
+<td style="text-align:right">29.73</td>
+<td style="text-align:right">356.76</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">69</td>
+<td style="text-align:right">29.73</td>
+<td style="text-align:right">356.76</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z90</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">90%</td>
+<td style="text-align:right">70</td>
+<td style="text-align:right">29.73</td>
+<td style="text-align:right">356.76</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">20</td>
+<td style="text-align:right">5.31</td>
+<td style="text-align:right">63.72</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">21</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">22</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">23</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">24</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">25</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">26</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">27</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">28</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">29</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">30</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">31</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">32</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">33</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">34</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">35</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">36</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">37</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">38</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">39</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">40</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">41</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">42</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">43</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">44</td>
+<td style="text-align:right">6.75</td>
+<td style="text-align:right">81.00</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">45</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">46</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">47</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">48</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">49</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">50</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">51</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">52</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">53</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">54</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">55</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">57</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">58</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">59</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">60</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">61</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">62</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">63</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">64</td>
+<td style="text-align:right">19.88</td>
+<td style="text-align:right">238.56</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">65</td>
+<td style="text-align:right">23.32</td>
+<td style="text-align:right">279.84</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">66</td>
+<td style="text-align:right">23.32</td>
+<td style="text-align:right">279.84</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">67</td>
+<td style="text-align:right">23.32</td>
+<td style="text-align:right">279.84</td>
+</tr>
+<tr>
+<td style="text-align:left">inter Versicherungsgruppe</td>
+<td style="text-align:left">INT_Z80</td>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:left">80%</td>
+<td style="text-align:right">68</td>
+<td style="text-align:right">23.32</td>
+<td style="text-align:right">279.84</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<p>Besonders relevant ist die Entwicklung der Beiträge im Zeitverlauf. Dafür wird der durchschnittliche Beitrag über eine gegebene Laufzeit berechnet. Man benötigt für diese Rechnung das Alter des Versicherungsnehmers bei Abschluss der Versicherung und eine maximale Altersgrenze - also ab wann die Versicherung ausläuft. Einige Tarife legen hier selbst eine Grenze fest. Ich nehme an, dass ich nach meinem 65. Geburtstag die Versicherung auflöse.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Eingaben</span>
+</span></span><span style="display:flex;"><span>alter_eintritt <span style="color:#666">&lt;-</span> <span style="color:#40a070">27</span> <span style="color:#60a0b0;font-style:italic"># Eintrittsalter</span>
+</span></span><span style="display:flex;"><span>alter_grenze <span style="color:#666">&lt;-</span> <span style="color:#40a070">65</span> <span style="color:#60a0b0;font-style:italic"># Austrittsalter</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Berechnung: durchschnittlicher Monatlicher Beitrag über Versicherungszeitraum</span>
+</span></span><span style="display:flex;"><span>Vers.Dauer.Mittel <span style="color:#666">&lt;-</span> <span style="color:#06287e">list</span>()
+</span></span><span style="display:flex;"><span><span style="color:#06287e">for </span>(i in alter_eintritt<span style="color:#40a070">+1</span><span style="color:#666">:</span>alter_grenze){
+</span></span><span style="display:flex;"><span>  alter_austritt <span style="color:#666">&lt;-</span> i
+</span></span><span style="display:flex;"><span>  Vers.Dauer.Mittel[[i]] <span style="color:#666">&lt;-</span> Beitrag.Long <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">filter</span>(Alter <span style="color:#666">&gt;=</span> alter_eintritt <span style="color:#666">&amp;</span> Alter <span style="color:#666">&lt;=</span> alter_austritt) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">group_by</span>(Tarif) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">summarise</span>(Beitrag_Durchschnitt <span style="color:#666">=</span> <span style="color:#06287e">round</span>(<span style="color:#06287e">mean</span>(Beitrag), digits<span style="color:#666">=</span><span style="color:#40a070">2</span>)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">mutate</span>(Laufzeit <span style="color:#666">=</span> alter_austritt <span style="color:#666">-</span> alter_eintritt) 
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Liste zu Data Frame konvertieren</span>
+</span></span><span style="display:flex;"><span>Vers.Dauer.Mittel <span style="color:#666">&lt;-</span> <span style="color:#06287e">bind_rows</span>(Vers.Dauer.Mittel)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Allgemeine Tarifmerkmale anspielen</span>
+</span></span><span style="display:flex;"><span>Vers.Dauer.Mittel <span style="color:#666">&lt;-</span> Tarife <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(Versicherer, Tarif, Gruppe, Zahnersatz) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">left_join</span>(Vers.Dauer.Mittel, by<span style="color:#666">=</span><span style="color:#4070a0">&#34;Tarif&#34;</span>)
+</span></span></code></pre></div><p>Als nächstes wird die gleiche Herangehensweise zur Ermittlung des kumulativen Beitrags über die Laufzeit verwendet - also wie hoch die Gesamtsumme der gezahlten Versicherungsbeiträge für eine bestimmte Laufzeit ist.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Eingaben</span>
+</span></span><span style="display:flex;"><span>alter_eintritt <span style="color:#666">&lt;-</span> <span style="color:#40a070">27</span>
+</span></span><span style="display:flex;"><span>alter_grenze <span style="color:#666">&lt;-</span> <span style="color:#40a070">65</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Berechnung: Kumulativer Jahresbeitrag über Versicherungszeitraum</span>
+</span></span><span style="display:flex;"><span>Vers.Dauer.Kumulativ <span style="color:#666">&lt;-</span> <span style="color:#06287e">list</span>()
+</span></span><span style="display:flex;"><span><span style="color:#06287e">for </span>(i in <span style="color:#40a070">28</span><span style="color:#666">:</span>alter_grenze){
+</span></span><span style="display:flex;"><span>  alter_austritt <span style="color:#666">&lt;-</span> i
+</span></span><span style="display:flex;"><span>  Vers.Dauer.Kumulativ[[i]] <span style="color:#666">&lt;-</span> Beitrag.Long <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">filter</span>(Alter <span style="color:#666">&gt;=</span> alter_eintritt <span style="color:#666">&amp;</span> Alter <span style="color:#666">&lt;=</span> alter_austritt) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">group_by</span>(Tarif) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">summarise</span>(Beitrag_Gesamt <span style="color:#666">=</span> <span style="color:#06287e">sum</span>(Beitrag_Jahr)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">mutate</span>(Laufzeit <span style="color:#666">=</span> alter_austritt <span style="color:#666">-</span> alter_eintritt) 
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Liste zu Data Frame konvertieren</span>
+</span></span><span style="display:flex;"><span>Vers.Dauer.Kumulativ <span style="color:#666">&lt;-</span> <span style="color:#06287e">bind_rows</span>(Vers.Dauer.Kumulativ)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Allgemeine Tarifmerkmale anspielen</span>
+</span></span><span style="display:flex;"><span>Vers.Dauer.Kumulativ <span style="color:#666">&lt;-</span> Tarife <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(Versicherer, Tarif, Gruppe, Zahnersatz) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">left_join</span>(Vers.Dauer.Kumulativ, by<span style="color:#666">=</span><span style="color:#4070a0">&#34;Tarif&#34;</span>)
+</span></span></code></pre></div>
+
+
+
+<h2 id="datenanalyse"><strong>Datenanalyse</strong>
+  <a href="#datenanalyse"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Unten findet man eine Übersicht wie viele Tarife sich in den von mir erstellten Leistungsgruppen befinden.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Leistungsgruppe</th>
+<th style="text-align:right">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Prophylaxe</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td style="text-align:left">Zahnbehandlung</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td style="text-align:left">Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:right">3</td>
+</tr>
+<tr>
+<td style="text-align:left">Zahnersatz</td>
+<td style="text-align:right">6</td>
+</tr>
+<tr>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung</td>
+<td style="text-align:right">4</td>
+</tr>
+<tr>
+<td style="text-align:left">Zahnersatz, Zahnbehandlung, Prophylaxe</td>
+<td style="text-align:right">20</td>
+</tr>
+</tbody>
+</table>
+<p>Ich werde mich zunächst auf Tarife beschränken, welche ausschließlich den Zahnersatz abdecken, da dies von der Stiftung Warentest als wichtigste Leistung angesehen wird. Es gibt auch Premium-Tarife, welche einen zusätzlichen Leistungsumfang wie Prophylaxe und Zahn- oder Wurzelbehandlung beinhalten. Diese sind aufgrund des Leistungsumfangs dann teurer. Da der Zahnersatz die größte potentielle Kostenposition darstellt, will ich nur diese versichern. Im ersten Plot unten ist eine Gegenüberstellung bzgl. der Beitragsentwicklung laut Angabe in der Tabelle des Versicherers dargestellt. Mit zunehmendem Lebensalter steigen die Beiträge an. Bei allen Tarifen geschieht dies stufenweise, sodass die Beiträge einige Jahre konstant sind, bevor sie sprunghaft ansteigen.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>Tarife.Beitrag <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(Zahnersatz <span style="color:#666">=</span> <span style="color:#06287e">fct_relevel</span>(Zahnersatz,
+</span></span><span style="display:flex;"><span>                                  <span style="color:#4070a0">&#34;70%&#34;</span>,<span style="color:#4070a0">&#34;80%&#34;</span>,<span style="color:#4070a0">&#34;85%&#34;</span>,<span style="color:#4070a0">&#34;90%&#34;</span>,<span style="color:#4070a0">&#34;100%&#34;</span>)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(Gruppe <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Zahnersatz&#34;</span>) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> Alter, y <span style="color:#666">=</span> Beitrag, color <span style="color:#666">=</span> Tarif)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">facet_grid</span>(. <span style="color:#666">~</span> Zahnersatz) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">10</span>,<span style="color:#40a070">20</span>,<span style="color:#40a070">30</span>,<span style="color:#40a070">40</span>,<span style="color:#40a070">50</span>), limits <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">50</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Alter des Versicherungsnehmers&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Monatlicher Beitragssatz in €&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme</span>(legend.position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;bottom&#34;</span>, legend.direction <span style="color:#666">=</span> <span style="color:#4070a0">&#34;horizontal&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/tarif_plot-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>In der nächsten Darstellung sieht man die durchschnittliche Beitragslast über die Laufzeit. Bei den Tarifen mit 100%-Kostenerstattung erkennt man, dass der <code>dentZE.100</code> Tarif der Halleschen Versicherung bis zu einer Laufzeit von knapp 23 Jahren günstiger ist als der <code>MediZ-Premium</code> Tarif der Gothaer Versicherung. Über diese Laufzeit hinaus ist jedoch der Tarif der Halleschen Versicherung teurer. Bei den Tarifen mit 90%-Kostenerstattung ist der Tarif MediZ-Plus der Gothaer Versicherung am günstigsten.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>Vers.Dauer.Mittel <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(Zahnersatz <span style="color:#666">=</span> <span style="color:#06287e">fct_relevel</span>(Zahnersatz,
+</span></span><span style="display:flex;"><span>                                  <span style="color:#4070a0">&#34;70%&#34;</span>,<span style="color:#4070a0">&#34;80%&#34;</span>,<span style="color:#4070a0">&#34;85%&#34;</span>,<span style="color:#4070a0">&#34;90%&#34;</span>,<span style="color:#4070a0">&#34;100%&#34;</span>)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(Gruppe <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Zahnersatz&#34;</span>) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(x<span style="color:#666">=</span>Laufzeit, y<span style="color:#666">=</span>Beitrag_Durchschnitt, color<span style="color:#666">=</span>Tarif)) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">facet_grid</span>(. <span style="color:#666">~</span> Zahnersatz) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">1</span>,<span style="color:#40a070">5</span>,<span style="color:#40a070">10</span>,<span style="color:#40a070">15</span>,<span style="color:#40a070">20</span>,<span style="color:#40a070">25</span>,<span style="color:#40a070">30</span>,<span style="color:#40a070">35</span>,<span style="color:#40a070">40</span>), limits <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">1</span>,<span style="color:#40a070">40</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">5</span>,<span style="color:#40a070">10</span>,<span style="color:#40a070">15</span>,<span style="color:#40a070">20</span>,<span style="color:#40a070">25</span>,<span style="color:#40a070">30</span>), limits <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">1</span>,<span style="color:#40a070">30</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Versicherungszeitraum&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Durchschnittlicher Monatsbeitrag in €&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme</span>(legend.position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;bottom&#34;</span>, legend.direction <span style="color:#666">=</span> <span style="color:#4070a0">&#34;horizontal&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/mittel_plot-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Unten sieht man die kumulative Beitragslast, die anfallen würde, wenn man über die jeweilige Laufzeit versichert ist. Hier kann man sich orientieren, welche Kosten die Versicherung für eine bestimmte Laufzeit verursacht. Die Tarife mit 100%-Kostenerstattung verschlingen bspw. nach 12 Jahren Versicherungszeit gut 2.500 €.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>Vers.Dauer.Kumulativ <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(Zahnersatz <span style="color:#666">=</span> <span style="color:#06287e">fct_relevel</span>(Zahnersatz,
+</span></span><span style="display:flex;"><span>                                  <span style="color:#4070a0">&#34;70%&#34;</span>,<span style="color:#4070a0">&#34;80%&#34;</span>,<span style="color:#4070a0">&#34;85%&#34;</span>,<span style="color:#4070a0">&#34;90%&#34;</span>,<span style="color:#4070a0">&#34;100%&#34;</span>)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(Gruppe <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Zahnersatz&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(x<span style="color:#666">=</span>Laufzeit, y<span style="color:#666">=</span>Beitrag_Gesamt, color<span style="color:#666">=</span>Tarif)) <span style="color:#666">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">facet_grid</span>(. <span style="color:#666">~</span> Zahnersatz) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_x_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">1</span>,<span style="color:#40a070">5</span>,<span style="color:#40a070">10</span>,<span style="color:#40a070">15</span>,<span style="color:#40a070">20</span>,<span style="color:#40a070">25</span>,<span style="color:#40a070">30</span>,<span style="color:#40a070">35</span>,<span style="color:#40a070">40</span>), limits <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">1</span>,<span style="color:#40a070">40</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">500</span>,<span style="color:#40a070">2500</span>,<span style="color:#40a070">5000</span>,<span style="color:#40a070">7500</span>,<span style="color:#40a070">10000</span>,<span style="color:#40a070">12500</span>), 
+</span></span><span style="display:flex;"><span>                     limits <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">1</span>,<span style="color:#40a070">14000</span>), 
+</span></span><span style="display:flex;"><span>                     labels <span style="color:#666">=</span> scales<span style="color:#666">::</span><span style="color:#06287e">dollar_format</span>(big.mark <span style="color:#666">=</span> <span style="color:#4070a0">&#34;.&#34;</span>, decimal.mark <span style="color:#666">=</span> <span style="color:#4070a0">&#34;,&#34;</span>,
+</span></span><span style="display:flex;"><span>                                                    suffix <span style="color:#666">=</span> <span style="color:#4070a0">&#34;€&#34;</span>, prefix <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Versicherungszeitraum&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Kumulativer Jahresbeitrag in €&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme</span>(legend.position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;bottom&#34;</span>, legend.direction <span style="color:#666">=</span> <span style="color:#4070a0">&#34;horizontal&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/kumulativ_plot-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Nun folgt ein Vergleich der reinen Zahnersatz-Tarife mit dem Premium-Segment. Ich habe dafür innerhalb der jeweiligen Leistungsgruppe den Mittelwert aller Tarife mit der gleichen prozentualen Kostenerstattung gebildet. Man erkennt, dass man für Prophylaxe und Zahnbehandlung zwischen 10 € und 15 € mehr im Monat zahlen muss. Ob sich dies lohnt, hängt bspw. davon ab, ob die eigene Krankenversicherung schon Prophylaxe-Leistungen übernimmt. Die Versicherung von Zahnbehandlung kann bspw. sinnvoll sein, wenn aufgrund von Vorerkrankungen mit häufigen Eingriffen an den Zähnen zu rechnen ist.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>Tarife.Beitrag <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(Zahnersatz <span style="color:#666">=</span> <span style="color:#06287e">fct_relevel</span>(Zahnersatz,
+</span></span><span style="display:flex;"><span>                                  <span style="color:#4070a0">&#34;70%&#34;</span>,<span style="color:#4070a0">&#34;80%&#34;</span>,<span style="color:#4070a0">&#34;85%&#34;</span>,<span style="color:#4070a0">&#34;90%&#34;</span>,<span style="color:#4070a0">&#34;100%&#34;</span>)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(Gruppe <span style="color:#666">%in%</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;Zahnersatz, Zahnbehandlung, Prophylaxe&#34;</span>,<span style="color:#4070a0">&#34;Zahnersatz&#34;</span>)) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(Alter, Gruppe, Zahnersatz) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarise</span>(mean_beitrag <span style="color:#666">=</span> <span style="color:#06287e">mean</span>(Beitrag, na.rm<span style="color:#666">=</span>T)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> Alter, y <span style="color:#666">=</span> mean_beitrag, color <span style="color:#666">=</span> Gruppe)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">facet_grid</span>(. <span style="color:#666">~</span> Zahnersatz) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">scale_y_continuous</span>(breaks <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">10</span>,<span style="color:#40a070">20</span>,<span style="color:#40a070">30</span>,<span style="color:#40a070">40</span>,<span style="color:#40a070">50</span>,<span style="color:#40a070">60</span>,<span style="color:#40a070">70</span>), limits <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">70</span>)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Alter des Versicherungsnehmers&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Monatlicher Beitragssatz in €&#34;</span>,
+</span></span><span style="display:flex;"><span>       color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Leistungsgruppe&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme</span>(legend.position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;bottom&#34;</span>, legend.direction <span style="color:#666">=</span> <span style="color:#4070a0">&#34;horizontal&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/vergleich-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Unten findet man die durchschnittliche Beitragslast getrennt nach den von mir erstellten Leistungsgruppen.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>Tarife.Beitrag <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(Alter, Gruppe) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarise</span>(mean_Beitrag <span style="color:#666">=</span> <span style="color:#06287e">mean</span>(Beitrag)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> Alter, y <span style="color:#666">=</span> mean_Beitrag, color <span style="color:#666">=</span> Gruppe)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_point</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(x <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Alter des Versicherungsnehmers&#34;</span>,
+</span></span><span style="display:flex;"><span>       y <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Durchschnittlicher Beitragssatz in € nach Tarifgruppe&#34;</span>,
+</span></span><span style="display:flex;"><span>       color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Leistungsgruppe&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">theme</span>(legend.position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;bottom&#34;</span>, legend.direction <span style="color:#666">=</span> <span style="color:#4070a0">&#34;horizontal&#34;</span>)
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/scatter-1.png" data-fig-align="center" width="768" />
+<hr>
+<p>Die Bundesanstalt für Finanzdienstleistungsaufsicht (BaFin) veröffentlicht jährlich eine 
+<a href="https://www.bafin.de/DE/PublikationenDaten/Statistiken/Beschwerde/beschwerdestatistik_node.html" target="_blank" rel="noopener">Beschwerdestatistik</a> von Versicherungsunternehmen unterteilt nach der jeweiligen Versicherungsart. Diese beinhaltet die absolute Anzahl an eingegangen Beschwerden sowie die Anzahl der versicherten Personen. So kann man sich zusätzlich ein Bild über den Versicherungsdienstleister verschaffen, indem man bspw. die Anzahl Beschwerden pro 100.000 Versicherten berechnet und vergleicht.</p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">March 17, 2018</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">22 minute read, 4606 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="https://philippleppert.eu/categories/r">R</a>  <a href="https://philippleppert.eu/categories/finanzen">Finanzen</a>  <a href="https://philippleppert.eu/categories/analyse">Analyse</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://philippleppert.eu/blog/bier-belgien/">&larr; Belgische Biere</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://philippleppert.eu/blog/datenanalyse-carcassonne/">Datenanalyse: Carcassonne &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      
+<div class="post-comments pa0 pa4-l mt4">
+
+</div>
+
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2023 Philipp Leppert
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/legal-notice/" title="Legal notice">Legal notice</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
