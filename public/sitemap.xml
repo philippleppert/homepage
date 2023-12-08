@@ -1,113 +1,232 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url>
-    <loc>https://philippleppert.eu/tutorials/applied-data-analysis/</loc>
-    <lastmod>2023-10-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/tutorials/</loc>
-    <lastmod>2023-10-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/music/electronic/</loc>
-    <lastmod>2023-10-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/music/hip-hop/</loc>
-    <lastmod>2023-10-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/music/</loc>
-    <lastmod>2023-10-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/tag/music/</loc>
-    <lastmod>2023-10-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/</loc>
-    <lastmod>2023-10-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/tags/</loc>
-    <lastmod>2023-10-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/music/trap/</loc>
-    <lastmod>2023-10-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/categories/analyse/</loc>
-    <lastmod>2022-02-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/</loc>
-    <lastmod>2022-02-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/categories/</loc>
-    <lastmod>2022-02-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/dynamik-bu/</loc>
-    <lastmod>2022-02-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/categories/finanzen/</loc>
-    <lastmod>2022-02-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/categories/r/</loc>
-    <lastmod>2022-02-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/flurstuecke-visualisieren/</loc>
-    <lastmod>2021-10-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/categories/kartierung/</loc>
-    <lastmod>2021-10-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/atomkraft-europa/</loc>
-    <lastmod>2021-09-08T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/categories/webscraping/</loc>
-    <lastmod>2021-09-08T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/categories/freizeit/</loc>
-    <lastmod>2021-06-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/spotify-streamingverlauf/</loc>
-    <lastmod>2021-06-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/landtagswahlen-rlp/</loc>
-    <lastmod>2021-03-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/categories/tidy-data/</loc>
-    <lastmod>2021-03-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/datenanalyse-autokauf/</loc>
-    <lastmod>2021-02-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/schwankung-stromerzeugung/</loc>
-    <lastmod>2020-07-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/stromerzeugung-deutschland/</loc>
-    <lastmod>2020-04-05T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/dwd-niederschlagsdaten/</loc>
-    <lastmod>2019-09-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/categories/interaktiv/</loc>
-    <lastmod>2019-09-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/schottland-wetter/</loc>
-    <lastmod>2019-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/bier-belgien/</loc>
-    <lastmod>2018-11-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/datenanalyse-versicherung/</loc>
-    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/datenanalyse-carcassonne/</loc>
-    <lastmod>2017-12-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/datenanalyse-etfs/</loc>
-    <lastmod>2017-09-23T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/blog/mietspiegel-immoscout/</loc>
-    <lastmod>2017-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://philippleppert.eu/about/</loc>
-  </url><url>
-    <loc>https://philippleppert.eu/legal-notice/</loc>
-  </url><url>
-    <loc>https://philippleppert.eu/series/</loc>
-  </url>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://philippleppert.eu/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/about/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/music/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/tutorials/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/legal-notice/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/dynamik-bu/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/flurstuecke-visualisieren/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/atomkraft-europa/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/spotify-streamingverlauf/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/landtagswahlen-rlp/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/page/2/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/music/electronic/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/music/hip-hop/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/music/trap/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/tutorials/applied-data-analysis/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/categories/r/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/categories/finanzen/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/categories/analyse/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/categories/kartierung/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/categories/webscraping/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/categories/freizeit/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/categories/tidy-data/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/datenanalyse-autokauf/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/schwankung-stromerzeugung/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/stromerzeugung-deutschland/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/dwd-niederschlagsdaten/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/schottland-wetter/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/page/3/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/files/binary-regression-1</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/files/descriptive-statistics-1</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/files/difference-in-differences</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/files/linear-regression-1</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/files/linear-regression-2</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/files/linear-regression-3</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/files/panel-data-analysis-1</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/files/regression-discontinuity-design</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/files/statistical-inference-1</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/bier-belgien/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/datenanalyse-versicherung/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/datenanalyse-carcassonne/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/datenanalyse-etfs/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/blog/mietspiegel-immoscout/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://philippleppert.eu/categories/interaktiv/</loc>
+  <lastmod>2023-12-08T20:14:51+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+
+
 </urlset>
