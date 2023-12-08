@@ -1,5 +1,5 @@
 ---
-title: "Browse my tutorials"
+title: Tutorials
 description: Below you find a collection of data analysis tutorials I've done in the past.
 author: ""
 show_post_thumbnail: true

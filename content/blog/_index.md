@@ -1,7 +1,7 @@
 ---
 title: Blog
 description: | 
-  a blog with and about data analysis
+  A blog with and about data analysis.
 author: "Philipp Leppert"
 show_post_thumbnail: true
 thumbnail_left: true # for list-sidebar only

@@ -1,5 +1,5 @@
 ---
-title: "About me"
+title: About
 description: |
   A data science blog
 show_header: false
