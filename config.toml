@@ -102,10 +102,10 @@ enableEmoji = true
       icon      = "github" # icon name without the 'fa-'
       icon_pack = "fab"
       url       = "https://github.com/philippleppert"
-  #[[params.social]]
-  #    icon      = "youtube" # icon name without the 'fa-'
-  #    icon_pack = "fab"
-  #    url       = ""
+  [[params.social]]
+      icon      = "goodreads" # icon name without the 'fa-'
+      icon_pack = "fab"
+      url       = "https://www.goodreads.com/user/show/161648613-philipp"
   #[[params.social]]
   #    icon      = "stack-overflow" # icon name without the 'fa-'
   #    icon_pack = "fab"
