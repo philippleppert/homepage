@@ -9,6 +9,11 @@ tags:
 title: Applied data analysis with R
 ---
 
+<style>
+img {
+  width: 200px;
+}
+</style>
 
 | Title | Content | Link |
 | ----- | ------- | ---- |
