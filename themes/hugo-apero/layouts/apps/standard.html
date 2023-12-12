@@ -4,7 +4,7 @@
     <h2 class="f2 f1-ns lh-solid center fw4">{{ .Title }}</h2>
 	 <p class="f6 f5-ns measure lh-copy center">{{ .Description | markdownify }}</p>
   </section>
-  <section class="page-content mw8 center">
+  <section class="page-content mw9 center">
     {{ if .Params.show_title_as_headline }}<h1 class="f2 f1-m f-headline-l fw5-ns mv4 lh-solid tracked-tight-ns">{{ .Title }}</h1>{{ end }}
     {{ .Content }}
   </section>
