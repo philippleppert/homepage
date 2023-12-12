@@ -428,7 +428,7 @@ footer {
               <a class="applink" href="https://philippleppert.shinyapps.io/Bundestagswahlergebnisse-Thueringen/" target="_blank">
                 <img class="appimg" src="/img/bundestagswahl_th.jpg">
                 <div class="apptitle">Bundestagswahlergebnisse-TH</div>
-                <div class="appdesc">Reintrducing federal election results of non-independent communities for Thuringia.</div>
+                <div class="appdesc">Reintroducing federal election results of non-independent communities for Thuringia.</div>
               </a>
           </div>
         <div class="shinyapp">
