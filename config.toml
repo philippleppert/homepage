@@ -103,6 +103,10 @@ enableEmoji = true
       icon_pack = "fab"
       url       = "https://github.com/philippleppert"
   [[params.social]]
+      icon      = "soundcloud" # icon name without the 'fa-'
+      icon_pack = "fab"
+      url       = "https://soundcloud.com/phle/albums"
+  [[params.social]]
       icon      = "goodreads" # icon name without the 'fa-'
       icon_pack = "fab"
       url       = "https://www.goodreads.com/user/show/161648613-philipp"
@@ -146,15 +150,10 @@ enableEmoji = true
     url = "/blog/"
     weight = 3
   [[menu.header]]
-    name = "Music"
-    title = "Listen to my music"
-    url = "/music/"
-    weight = 4
-  [[menu.header]]
     name = "Tutorials"
     title = "Browse my tutorials"
     url = "/tutorials/"
-    weight = 5
+    weight = 4
 
   # Configure footer
   [[menu.footer]]
