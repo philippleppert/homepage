@@ -1,6 +1,6 @@
 ---
-title: Apps
-description: Below you find some of my Shiny-Apps.
+title: Shiny-Apps
+description: Below you find apps I built with R/shiny.
 layout: standard
 ---
 
@@ -421,21 +421,21 @@ footer {
               <a class="applink" href="https://philippleppert.shinyapps.io/Disney/" target="_blank">
                 <img class="appimg" src="/img/disney_dice.jpg">
                 <div class="apptitle">Disney-Dice</div>
-                <div class="appdesc">Can't agree on a Disney film? This app can help.</div>
+                <div class="appdesc">Can't agree on a Disney film? This app might help.</div>
               </a>
           </div>
         <div class="shinyapp">
               <a class="applink" href="https://philippleppert.shinyapps.io/Bundestagswahlergebnisse-Thueringen/" target="_blank">
                 <img class="appimg" src="/img/bundestagswahl_th.jpg">
                 <div class="apptitle">Bundestagswahlergebnisse-TH</div>
-                <div class="appdesc">Reintroducing federal election results of non-independent communities for Thuringia.</div>
+                <div class="appdesc">Reintroducing federal election results for "Ortsteile" in Thuringia.</div>
               </a>
           </div>
         <div class="shinyapp">
               <a class="applink" href="https://philippleppert.shinyapps.io/Kartierung-Flurstuecknutzung/" target="_blank">
                 <img class="appimg" src="/img/flurstueck_kartierer.jpg">
                 <div class="apptitle">Flurstück-Kartierer</div>
-                <div class="appdesc">This app can process land register data to produce land-use plans.</div>
+                <div class="appdesc">This app processes land register data to generate land-use plans with plotly.</div>
               </a>
           </div>
       </div>

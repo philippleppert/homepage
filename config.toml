@@ -140,14 +140,14 @@ enableEmoji = true
     url = "/about/"
     weight = 1
   [[menu.header]]
-    name = "Apps"
-    title = "Use my shiny apps"
-    url = "/apps/"
-    weight = 2
-  [[menu.header]]
     name = "Blog"
     title = "Read my blog"
     url = "/blog/"
+    weight = 2
+  [[menu.header]]
+    name = "Shiny-Apps"
+    title = "Try my shiny apps"
+    url = "/shiny-apps/"
     weight = 3
   [[menu.header]]
     name = "Tutorials"
